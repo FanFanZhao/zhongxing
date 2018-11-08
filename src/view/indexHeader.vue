@@ -1,9 +1,10 @@
 <template>
   <div id="index-head" class="flex">
     <div class="header-l flex">
-      <div class="logo">
-        <img src="../assets/images/logo.png" alt="">
+      <div class="logo flex alcenter mr90">
+        <img src="../assets/images/new_logo.png" alt="">        
       </div>
+      <!-- <span class="mr60">一带一路交易中心</span> -->
       <router-link to="/" exact>首页</router-link>
       <router-link to="/c2c">c2c交易</router-link>
       <router-link to="/dealCenter">币币交易</router-link>
@@ -100,7 +101,7 @@ export default {
   height: 45px;
   line-height: 45px;
   font-size: 14px;
-  background: #181b2a;
+  background: #2E1B85;
   color: #ccc;
 
   a:hover,
@@ -114,10 +115,11 @@ export default {
   > .header-l {
     align-items: center;
     > .logo {
-      border-radius: 50%;
-      width: 30px;
-      height: 30px;
-      background: #fff;
+      // border-radius: 50%;
+      width: 170px;
+      // height: 30px;
+      // background: #fff;
+      margin-right: 90px;
       > img {
         width: 100%;
       }

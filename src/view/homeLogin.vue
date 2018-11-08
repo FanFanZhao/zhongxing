@@ -119,6 +119,7 @@ export default {
             this.$store.commit("setAccountNum");
             this.userInfo();
             // this.$router.push("/");
+            eventBus.$emit('loginSuccess','success')
           } else {
             layer.msg(res.message);
           }

@@ -14,17 +14,17 @@
             <div class="swiper-wrapper">
                <div class="swiper-slide sliders">
                    <a href="">
-                   <img src="../../static/imgs/swp1.jpg" />
+                   <img src="../../static/imgs/new_banner.png" />
                    </a>
                </div>
                <div class="swiper-slide sliders">
                    <a href="">
-                   <img src="../../static/imgs/swp2.jpg" />
+                   <img src="../../static/imgs/new_banner.png" />
                    </a>
                </div>
                <div class="swiper-slide sliders">
                    <a href="">
-                   <img src="../../static/imgs/swp3.jpg" />
+                   <img src="../../static/imgs/new_banner.png" />
                    </a>
                </div>
                 
@@ -50,11 +50,11 @@
             <div slot="button-prev" class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide"></div>
             <div slot="button-next" class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide"></div>
         </div> -->
-        <!-- <div class="notice">
-           <ul class="flex alcenter around notice_ul">
-               <li v-for="item in noticeList" :key="item.id" class="fl notice_li flex1" style="color: #cdd6e4;"><a class="notice_a ft12" :data-id='item.id'>{{item.name}}</a></li>
+        <div class="notice">
+           <ul class="flex alcenter center notice_ul">
+               <li v-for="item in noticeList" :key="item.id" class="fl notice_li"><a class="notice_a ft14" :data-id='item.id'>{{item.name}}</a></li>
            </ul>
-        </div> -->
+        </div>
         <!-- <div class="active-data clearfix">
             <div class="data high">
                 <div class="name">最高价</div>
@@ -87,15 +87,16 @@
         </div> -->
           <div class="coin-tab">
             <ul class="coins">
-              <li v-for="(coin,index) in quotation" :key="index" @click="nowCoin = coin.name" :class="{activeCoin:nowCoin == coin.name}">对{{coin.name}}交易区<span class='arrow' v-if="nowCoin == coin.name"></span></li>
+              <li v-for="(coin,index) in quotation" :key="index" @click="nowCoin = coin.name" :class="{activeCoin:nowCoin == coin.name}">对{{coin.name}}交易区<span class='' v-if="nowCoin == coin.name"></span></li>
             </ul>
           </div>
         <div class="coins-list">
           <div class="list-title">
             <span>币种对{{nowCoin}}</span>
             <span>价格({{nowCoin}})</span>
+             <span>涨跌</span>
             <span>交易量({{nowCoin}})</span>
-            <span>涨跌</span>
+            
             <!-- <span>操作</span> -->
           </div>
           
@@ -103,17 +104,18 @@
             <li v-for="(li,inde) in item.quotation" :key="inde" :data-name='li.currency_name+"/"+li.legal_name'>
               <div class="two-coin">
                 <img :src="li.logo" alt="" style="width:30px;">
-                <span style="color:#61688a;font-weight:bold">{{li.currency_name}}/{{li.legal_name}}</span>
+                <span style="font-weight:bold"><span class="high_blue">{{li.currency_name}}</span><span class="low_blue">/{{li.legal_name}}</span></span>
               </div>
               <div class="yester">
                 <!-- <span :class="setColor(li.change)">{{li.now_price==null?'0':li.now_price}}</span>/ -->
-                <span >{{li.now_price==null?'0':li.now_price}}</span>
+                <span class="high_blue bold">{{li.now_price==null?'0':li.now_price}}</span>
               </div>
-              <div class="count">{{li.volume == null?'0':li.volume}}</div>
               <div class="yes-toa">
                 <!-- <span :class="setColor(li.last_price,li.yesterday_last_price)">{{li.change == null?'+0.000':li.change}}%</span> -->
-                <span :class="setColor(li.change)">{{(li.change>0?'+':'')+(li.change-0).toFixed(2)}}%</span>
+                <span :class="setColor(li.change)" class="bold">{{(li.change>0?'+':'')+(li.change-0).toFixed(2)}}%</span>
               </div>
+              <div class="count high_blue bold">{{li.volume == null?'0':li.volume}}</div>
+              
               <!-- <div>
                 <span @click="setData({currency_id:item.id,legal_id:li.currency_id,currency_name:item.name,leg_name:li.name,isShow:index})">交易 </span>
               </div> -->
@@ -178,6 +180,66 @@
                 </div>
             </div>
         </div>
+        <!--图文内容-->
+        <div id="content01" class="content01 flex alcenter grayBg center">
+            <div class="text01 mr100 left01">
+              <h1 class="ft26 bold mb30">全球化的数字资产配置及交易服务</h1>
+              <p class="ft16 bold mb10">遍布全球的项目拓展及运营管理体系</p>
+               <p class="ft16 bold mb10">在多个国家设有本地交易服务中心</p>
+                <p class="ft16 bold mb10">服务超过130个国家的数百万用户</p>
+            </div>
+            <img class="imgs01" src="../assets/images/imgs01.png" />
+        </div>
+        <div class="content01 flex alcenter center">
+          <img class="imgs02" src="../assets/images/imgs02.png" />
+            <div class="text01 ml100">
+              <h1 class="ft26 bold mb30">SMART-Chain资产评估模型</h1>
+              <p class="ft16 bold mb10">独立专业的区块链资产研究评估体系</p>
+               <p class="ft16 bold mb10">长期跟踪产业链并提供最权威中立的资产分析</p>
+                <p class="ft16 bold mb10">一站式的项目进度跟踪及信息披露系统</p>
+            </div>
+            
+        </div>
+        <div class="content01 flex alcenter grayBg center">
+            <div class="text01 mr100">
+              <h1 class="ft26 bold mb30">依托4年的数字资产安全风控经验</h1>
+              <p class="ft16 bold mb10">安全稳定运营数字资产交易所超过四年</p>
+               <p class="ft16 bold mb10">管理资产规模超过10亿美金，服务数百万用户</p>
+                <p class="ft16 bold mb10">专业分布式架构和防DDOS攻击系统</p>
+                 <p class="ft16 bold mb10">98%数字资产存储多重签名冷钱包</p>
+            </div>
+            <img class="imgs03" src="../assets/images/imgs03.png" />
+        </div>
+        <div class="content01 flex alcenter center bg01">
+          <img class="imgs04" src="../assets/images/imgs04.png" />
+            <div class="text01 ml100">
+              <h1 class="ft26 bold gray9 mb30">香港  首尔  新加坡  东京</h1>
+              <p class="ft16 bold mb10 tr">遍布世界各地的服务中心</p>
+            </div>
+            
+        </div>
+        <div class="content01 flex alcenter grayBg center bg02">
+            <div class="text01 mr100">
+              <h1 class="ft26 bold mb30">多平台终端接入</h1>
+              <p class="ft16 bold mb10">覆盖IOS、Android、Windows多个平台，支持全业务功能</p>
+            </div>
+            <img class="imgs05" src="../assets/images/imgs05.png" />
+        </div>
+        <!--马上交易-->
+        <div class="go_transfer">
+           <h1 class="bold ft24 mb30 tc">马上交易</h1>
+           <p class="ft14 mb30 tc">欢迎加入我们的团队，共同提升，常悦更好的自己，创造更好的人生价值</p>
+           <div class="login_register flex alcenter center" v-if="!account_number.length">
+             <div class="login_btn mr60" @click="go_login">登录</div>
+             <div class="register_btn white" @click="go_register">注册</div>
+           </div>
+        </div>
+        <!--底部-->
+        <div class="foot flex column alcenter grayBg">
+           <h1 class="ft18 mb15">一带一路交易中心</h1>
+           <p class="ft12 mb30">我/们/在/去/中/心/化/路/上</p>
+           <img src="../assets/images/flags.png" />
+        </div>
         <!-- <div class="bottom">
             <p>温馨提示</p>
             <p>数字资产是创新的投资产品，价格波动较大，具有较高的投资风险，请您投资前 对数字资产充分认知，理性判断自己的投资能力，审慎做出投资决策。</p>
@@ -208,6 +270,7 @@ export default {
       //       {href:'',img:'../assets/images/bg2.png'},
       //       {href:'',img:'../assets/images/bg2.png'}
       //   ],
+      noticeList:'',
       curSwiper: 0,
       curCoinTab: 0,
       coinTabList: [{ title: "USDT行情" }, { title: "BTC行情" }],
@@ -215,12 +278,17 @@ export default {
       coinKline: {},
       swiperList: [],
       coinList: [],
-      coin_list: []
+      coin_list: [],
+      account_number:''
     };
   },
   created() {
     // this.init(this.initKline);
+    this.account_number = window.localStorage.getItem("accountNum") || "";
     this.getQuotation();
+    eventBus.$on('loginSuccess',function(){
+       location.reload();
+    })
   },
   mounted() {
     var mySwiper = new Swiper(".swiper-container01", {
@@ -272,11 +340,35 @@ export default {
     //     }
     // });
     this.connect();
+    window.addEventListener('scroll', this.handleScroll, true);  // 监听（绑定）滚轮滚动事件
   },
   methods: {
+    handleScroll(){
+           console.log('kkkkkkkk')
+            let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;  
+            // 设备/屏幕高度
+            let scrollObj = document.getElementById('content01'); // 滚动区域
+            let scrollTop = scrollObj.scrollTop; // div 到头部的距离
+            let scrollHeight = scrollObj.scrollHeight; // 滚动条的总高度
+            //滚动条到底部的条件
+            if(scrollTop+clientHeight == scrollHeight){
+              console.log('gggggggg')
+                // div 到头部的距离 + 屏幕高度 = 可滚动的总高度
+                $('.left01').addClass('slideInLeft');
+                 $('.img01').addClass('slideInRight');
+            }
+    },
     setData(obj) {
       window.localStorage.setItem("tradeData", JSON.stringify(obj));
       this.$router.push("/dealCenter");
+    },
+    //登录
+    go_login(){
+       this.$router.push('/components/login')
+    },
+    //注册
+    go_register(){
+       this.$router.push('/components/register')
     },
     connect() {
       var that = this;
@@ -499,54 +591,60 @@ export default {
 <style lang='scss' scoped>
 
 .swiper-container {
-  height: 310px;
+  // height: 310px;
 }
 .swiper-container a {
   display: block;
-  height: 310px;
+  // height: 310px;
 }
 .swiper-container img {
   display: block;
-  height: 310px;
+  margin-top: -50px;
+  // height: 310px;
 }
 .coin-tab {
+  max-width: 90%;
+  margin: 0 auto;
   line-height: 52px;
   height: 52px;
-  background: #252e3e;
-  padding: 0 50px;
+  background: #563BD1;
   // color: #c7cce6;
   display: flex;
   > ul {
-    width: 1280px;
+    max-width: 90%;
     display: flex;
-    margin: 0 auto;
     li {
       padding: 0 40px;
       color: #ddd;
+      border-bottom: 1px solid #fff;
+      border-right: 1px solid #fff;
       // box-shadow: 0 0 1px hsla(231, 9%, 54%, 0.2);
     }
     .activeCoin {
       border-bottom: none;
-      color: #d45858;
+      // color: #d45858;
     }
   }
 }
 /* 币种列表 */
 .coins-list {
   margin: 10px auto;
-  max-width: 1280px;
+  max-width: 90%;
   line-height: 51px;
   text-align: center;
+  margin-top: 0;
 
   .list-title {
     display: flex;
     padding: 0 30px;
+    background: #563BD1;
     > span {
       flex: 1;
 
       text-align: center;
       // color: #c7cce6;
       font-size: 14px;
+      color: #fff;
     }
     > span:first-child {
       text-align: left;
@@ -556,22 +654,31 @@ export default {
     }
   }
   .list-con {
-    // background: rgb(32, 36, 55);
+    background: #F0F0F0;
     max-height: 680px;
     overflow: scroll;
+    border:1px solid #563BD1;
+    border-top: none;
 
     li {
       display: flex;
-      border-top: 1px solid #ddd;
+      // border-top: 1px solid #ddd;
       padding: 10px 30px;
       line-height: 30px;
       // color: #c7cce6;
+      .high_blue{
+          color:#563BD1; 
+        }
+        .low_blue{
+          color: #8D75F7;
+        }
       img{
         vertical-align: bottom;
       }
       > div {
         flex: 1;
         text-align: center;
+        
       }
       > div:first-child {
         text-align: left;
@@ -581,7 +688,7 @@ export default {
       }
     }
     li:last-child{
-      border-bottom: 1px solid #ddd;
+      // border-bottom: 1px solid #ddd;
     }
   }
 }
@@ -613,8 +720,13 @@ export default {
   margin-bottom: 5px;
 }
 .notice_li {
-  flex: 1;
+  // flex: 1;
+  
   text-align: center;
+}
+.notice_li a{
+   padding: 0 25px;
+   letter-spacing: 5px;
 }
 .notice_li::after {
   content: "/";
@@ -625,7 +737,7 @@ export default {
   color: #6b80ae;
 }
 .notice_a:hover {
-  color: #6b80ae;
+  color: #563BD1;
   cursor: pointer;
 }
 .coins li {
@@ -644,7 +756,55 @@ export default {
 }
 .coins li:hover {
   cursor: pointer;
-  background: #303e4c;
+  // background: #303e4c;
+}
+.content01{
+  padding: 40px 0;
+  .imgs01{
+      width: 250px;
+  }
+  .imgs02{
+    width: 500px;
+  }
+  .imgs03{
+    width: 300px;
+  }
+  .imgs04{
+    width: 500px;
+  }
+  .imgs05{
+    width: 150px;
+  }
+}
+.bg01{
+  background: url('../assets/images/content_bg01.png') center no-repeat;
+  width: 100%;
+  // height: 300px;
+  background-size: cover;
+  padding: 150px 0;
+}
+.bg02{
+  background: url('../assets/images/content_bg02.png') center no-repeat;
+  width: 100%;
+  background-size: cover;
+}
+.login_btn{
+  padding: 15px 80px;
+  border:1px solid rgba(0,0,0,1);
+  border-radius:5px;
+  cursor: pointer;
+}
+.register_btn{
+  padding: 15px 80px;
+  background:#563BD1;
+  border-radius:5px;
+  cursor: pointer;
+}
+.go_transfer{
+  padding: 50px 0;
+}
+.foot{
+  padding: 50px 0;
 }
 </style>
 
