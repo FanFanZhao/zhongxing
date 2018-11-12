@@ -235,11 +235,11 @@
            </div>
         </div>
         <!--底部-->
-        <div class="foot flex column alcenter grayBg">
+        <!-- <div class="foot flex column alcenter grayBg">
            <h1 class="ft18 mb15">一带一路交易中心</h1>
            <p class="ft12 mb30">我/们/在/去/中/心/化/路/上</p>
            <img src="../assets/images/flags.png" />
-        </div>
+        </div> -->
         <!-- <div class="bottom">
             <p>温馨提示</p>
             <p>数字资产是创新的投资产品，价格波动较大，具有较高的投资风险，请您投资前 对数字资产充分认知，理性判断自己的投资能力，审慎做出投资决策。</p>
