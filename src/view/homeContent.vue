@@ -182,7 +182,7 @@
         </div>
         <!--图文内容-->
         <div id="content01" class="content01 flex alcenter grayBg center">
-            <div class="text01 mr100 left01">
+            <div class="text01 mr100 left01 animated">
               <h1 class="ft26 bold mb30">全球化的数字资产配置及交易服务</h1>
               <p class="ft16 bold mb10">遍布全球的项目拓展及运营管理体系</p>
                <p class="ft16 bold mb10">在多个国家设有本地交易服务中心</p>
@@ -655,7 +655,7 @@ export default {
   }
   .list-con {
     background: #F0F0F0;
-    max-height: 680px;
+    max-height: 400px;
     overflow: scroll;
     border:1px solid #563BD1;
     border-top: none;

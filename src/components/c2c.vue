@@ -736,6 +736,7 @@ export default {
   }
   .bg_active {
     background: #f8f8f8;
+    color: #333;
   }
   border-top: 1px solid #ddd;
   font-size: 14px;
@@ -744,19 +745,27 @@ export default {
     padding: 30px;
     width: 23%;
     ul {
-      background: #dfe8f3;
+      // background: #dfe8f3;
+      background: #563BD1;
+      border: 1px solid #563BD1;
+      color: #fff;
     }
     li {
       padding: 0 10px;
       justify-content: space-between;
       cursor: pointer;
+      border-bottom: 1px solid #f8f8f8;
 
       line-height: 40px;
       &:hover {
         background: #f8f8f8;
+        color: #333;
       }
       .redColor {
         margin-left: 10px;
+      }
+      &:last-child{
+        border: none;
       }
     }
   }
@@ -870,7 +879,9 @@ export default {
         float: right;
         margin: 0 8px;
         padding: 0 10px;
-        background: #d5d6dc;
+        // background: #d5d6dc;
+        background: #8D75F7;
+        color: #fff;
       }
       > .bot-title {
         margin: 30px 0 0;

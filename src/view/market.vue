@@ -39,10 +39,10 @@
             <li v-for="(market,index) in marketList " :key="index" v-if="(legal_index || isShow) == index" >
               <p v-for="(itm,idx) in market"  :key="itm.id" :class="{'active_p':(legal_index || isShow)==index&&idx==(currency_index || ids)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.currency_name,itm,index,market)">
                <!-- <a  @click="changePair(itm,index,market)"> -->
-				   <span class="w36"><img :src="itm.logo" alt=""><i>{{itm.currency_name}}/{{itm.legal_name}}</i></span>
-				   <span class="w30 tr redColor" :data-name='itm.currency_name+"/"+itm.legal_name'>${{itm.now_price || 0}}</span>
+				   <span class="w36"><img :src="itm.logo" alt=""><i><em class="deep_blue bold">{{itm.currency_name}}</em><em class="light_blue bold">/{{itm.legal_name}}</em></i></span>
+				   <span class="w30 tr deep_blue bold" :data-name='itm.currency_name+"/"+itm.legal_name'>${{itm.now_price || 0}}</span>
 				   <!-- <span :class="{'green':itm.proportion>=0}">{{itm.proportion>=0?('+'+(itm.proportion-0).toFixed(2)):(itm.proportion-0).toFixed(2)}}%</span> -->
-				   <span :class="{'green':itm.change>=0}">{{(itm.change>0?'+':'')+(itm.change-0).toFixed(2)}}%</span>
+				   <span :class="{'green':itm.change>=0}" class="bold">{{(itm.change>0?'+':'')+(itm.change-0).toFixed(2)}}%</span>
 			   <!-- </a> -->
 
                 </p>
@@ -393,11 +393,11 @@ export default {
   min-width: 40px;
 }
 .coin-wrap li span:last-child {
-  color: #cc4951;
+  color: #FF6E42;
 }
 /* .coin-wrap li:nth-child(odd){background-color: #181b2a;} */
 .coin-wrap li span.green {
-  color: #55a067;
+  color: #459E80;
 }
 .coin-wrap li p {
   overflow: hidden;
