@@ -119,7 +119,6 @@ export default {
       width: 40px;
       // height: 30px;
       // background: #fff;
-      margin-right: 90px;
       > img {
         width: 100%;
       }
