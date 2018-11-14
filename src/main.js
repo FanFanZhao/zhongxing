@@ -14,10 +14,11 @@ import VueAwesomeSwiper from 'vue-awesome-swiper'
 import store from './store'
 Vue.use(VueAwesomeSwiper)
 Vue.prototype.$echarts = echarts
+Vue.prototype.url = 'http://47.75.200.255:8080/'
 window.eventBus = new Vue()
 let bus = new Vue()
 Vue.prototype.bus = bus
-Vue.use(VueSocketio, 'http://t2.fuwuqian.cn:2134');
+Vue.use(VueSocketio, 'http://47.75.200.255:2220');
 Vue.prototype.$changeTheme = function (type) {
 	var head = document.querySelector('head');
 	var link = document.querySelector('link#darkTheme');

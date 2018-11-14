@@ -74,7 +74,7 @@ export default {
     this.token = localStorage.getItem("token") || "";
     //法币列表
     this.$http({
-      url: this.$utils.laravel_api + "currency/quotation_new",
+      url: '/api/' + "currency/quotation",
       method: "get",
       data: {}
     }).then(res => {
@@ -208,7 +208,7 @@ export default {
       }
       this.$http({
         url:
-          this.$utils.laravel_api + "wallet/list?user_id=" + this.address || "",
+          '/api/' + "wallet/list?user_id=" + this.address || "",
         type: "GET"
       })
         .then(res => {
@@ -231,7 +231,7 @@ export default {
       // var index=layer.load();
       this.address = localStorage.getItem("address") || "";
       this.$http({
-        url: this.$utils.laravel_api + "quotation",
+        url: '/api/' + "quotation",
         method: "post",
         data: {
           address: this.address

@@ -50,7 +50,7 @@ export default {
   },
   created() {
     // this.$http({
-    //   url: this.$utils.laravel_api + "news/list",
+    //   url: '/api/' + "news/list",
     //   method: "get",
     //   data: {}
     // })

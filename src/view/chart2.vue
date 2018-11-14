@@ -33,7 +33,7 @@
             // Chart(){
             
             // this.$http({
-            //         url:this.$utils.laravel_api+'',
+            //         url:'/api/'+'',
             //         method:'post',
             //         data:{
                        
@@ -60,7 +60,7 @@
 
                 })
                     this.$http({
-                        url: this.$utils.laravel_api + 'historical_data',
+                        url: '/api/' + 'historical_data',
                         method:'post',
                         data:{
                            address:this.addrsss

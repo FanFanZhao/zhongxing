@@ -6,20 +6,20 @@
       </div>
       <span class="mr60">一带一路交易中心</span>
       <router-link to="/" exact>首页</router-link>
-      <router-link to="/c2c">c2c交易</router-link>
+      <router-link to="/legalTrade">法币交易</router-link>
       <router-link to="/dealCenter">币币交易</router-link>
-      <router-link to="/userSetting">安全设置</router-link>
-      <router-link to="/components/noticeList">公告</router-link>
+      <!-- <router-link to="/userSetting">安全设置</router-link> -->
+      <!-- <router-link to="/components/noticeList">公告</router-link>
       <div class="coin-box">
         <router-link to="/currencyApply">上币申请</router-link>
         <router-link to="/currencyList" >币种列表</router-link>
-      </div>
-      <div>
+      </div> -->
+      <!-- <div>
         <div class="download">
           <div>app下载</div>
           <img src="../assets/images/ewm.png" alt="">
         </div>
-      </div>
+      </div> -->
     </div>
     <div class="header-r flex">
       <div v-if="!account_number.length" class="flex">

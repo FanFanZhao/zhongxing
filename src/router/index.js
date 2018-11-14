@@ -56,7 +56,10 @@ export default new Router({
 					component: homeContent
 
 				},
-				
+				{
+					path:'/legalTrade',
+					component:() => import ('../components/LegalTrade.vue')
+				},
 				
 				{
 					path: '/dealCenter',

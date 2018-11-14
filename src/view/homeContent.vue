@@ -314,7 +314,7 @@ export default {
     });
     // this.setChart();
     this.$http({
-      url: this.$utils.laravel_api + "news/help",
+      url: '/api/' + "news/help",
       method: "post",
       data: {}
     })
@@ -418,7 +418,7 @@ export default {
     },
     getQuotation() {
       this.$http({
-        url: "/api/currency/quotation_new",
+        url: "/api/currency/quotation",
         method: "get"
       }).then(res => {
         console.log(res.data);
@@ -445,7 +445,7 @@ export default {
       this.curSwiper = index;
     },
     init(callback) {
-      this.$http.post(this.$utils.laravel_api + "quotation").then(res => {
+      this.$http.post('/api/' + "quotation").then(res => {
         if (res.data.type == "ok") {
           this.coinList = res.data.message.coin_list;
           this.swiperList = res.data.message.coin_list;
@@ -456,7 +456,7 @@ export default {
       });
     },
     initKline() {
-      this.$http.post(this.$utils.laravel_api + "historical_data").then(res => {
+      this.$http.post('/api/' + "historical_data").then(res => {
         if (res.data.type == "ok") {
           if (res.data.message.day.length > 0) {
             this.coinKline = res.data.message.day[0].data;
