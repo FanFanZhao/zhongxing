@@ -14,7 +14,7 @@
             <div class="containers scroll" v-if="deList.length>0">
                 <ul v-for="itm in deList" class="list-item color ft12">
                     <li class="clear flex">
-                        <span class=" ">{{itm.time | capitalize}}</span>
+                        <span class=" ">{{itm.time}}</span>
                         <span class="green">{{itm.price}}</span>
                         <span class="">{{itm.number}}</span>
                     </li>
