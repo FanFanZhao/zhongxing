@@ -94,6 +94,9 @@
 			if (token) {
 				this.token = token;
 				this.getCoins();
+
+
+				
 			}
 		},
 		methods: {
