@@ -132,6 +132,7 @@
 						let total = parseInt(res.data.message.total);
 						if (total > 10) {
 							this.pages = Math.ceil(total / 10)
+							
 						}
 					}
 				});
