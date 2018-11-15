@@ -41,6 +41,7 @@ import currencyEdit from '@/view/edit_currency'
 import ForgetPwd from '@/components/ForgetPwd' //忘记密码
 import ResetPwd from '@/components/ResetPwd' //重置密码密码
 import LegalRecord from '@/components/LegalRecord' //法币交易记录
+import LegalPay from '@/components/LegalPay' //法币交易待付款
 import ResetLegalPwd from '@/components/ResetLegalPwd' //重置密码密码
 import withdraw_address from '@/view/accounts/withdraw_address'
 Vue.use(Router)
@@ -61,6 +62,10 @@ export default new Router({
 				{
 					path:'/legalTrade',
 					component:() => import ('../components/LegalTrade.vue')
+				},
+				{
+					path:'/legalPay',
+					component:() => import ('../components/LegalPay.vue')
 				},
 				{
 					path:'/legalRecord',
