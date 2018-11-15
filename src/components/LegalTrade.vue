@@ -240,11 +240,12 @@
 					_this.buyHttp('/api/do_legal_deal', datas, function(res) {
 						if (res.data.message.data.type == 'sell') {
 							setTimeout(function() {
-								_this.$router.push('/components/resetLegalPwd');
+								_this.$router.push({path:'/components/payCannel',query:{id:res.data.message.data.id}});
 							}, 500)
 						} else {
 							setTimeout(function() {
-								_this.$router.push('/components/resetLegalPwd');
+								_this.$router.push({path:'/components/payCannel',query:{id:res.data.message.data.id}});
+								// _this.$router.push({path:'/uapbd/paraset/edit',query:{pk_refinfo:'test',value:'test1'});
 							}, 500)
 						}
 					});
