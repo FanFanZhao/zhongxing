@@ -33,7 +33,9 @@
 					<div>{{item.limitation.min}}-{{item.limitation.max}}CNY</div>
 					<div>{{item.price}}</div>
 					<div>{{item.way_name}}</div>
-					<div @click="buySell(item.price,item.limitation.min,item.limitation.max)"><button>{{classify}}{{name}}</button></div>
+					<div @click="buySell(item.price,item.limitation.min,item.limitation.max)">
+						<button>{{classify}}{{name}}</button>
+					</div>
 				</li>
 			</ul>
 			<!-- 分页 -->
@@ -41,25 +43,35 @@
 			 :container-class="'pages'">
 			</paginate>
 		</div>
-		<div class="modal">
-			<p class="title">{{classify}}{{name}}</p>' + '<p class="price">单价{{prices}}</p>
-			<div class="trade">
-				<p class="trade-name">{{name}}交易</p>
-				<p class="trade-num">{{classify}}数量</p>
-			</div>'+ '<div>' + '<input class="number" type="number" placeholder="请输入欲出售数量">
-				<span class="name">{{name}}</span>
-				<button class="all" type="button" v-if=" type== 'buy' ">全部买入</button>
-				<button class="all" type="button" v-else>全部卖出</button>
-			</div>
-			<div class="maxnum">限额{{minNum}}-{{maxNum}}</div>
-			<div>
-				<p class="total-price">交易总额</p>
-				<p class="prices">￥0.00</p>
-			</div>
-			<p class="tip">请在24小时内联系商家付款，超出24小时将自动取消</p>
-			<div class="btns">
-				<p class="cannel">60s自动取消</p>
-				<button class="comfirm" type="button">下单</button>
+		<div class="modal" v-show="shows">
+			<div class="mask" @click="closeBtn()"></div>
+			<div class="content">
+				<div class="content-list">
+					<p class="title">{{classify}}{{name}}</p>
+					<p class="price">单价{{prices}}</p>
+					<div class="trade">
+						<p :class="['trade-name',{'active':types == 'trade'}]" @click="tabClassify(1)">{{name}}交易</p>
+						<p :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}数量</p>
+					</div>
+					<div class="totals-num">
+						<input v-if=" types == 'trade' " class="number" type="number" placeholder="请输入欲出售数量" v-model="nums">
+						<input v-else class="number" type="number" placeholder="请输入要购买数量" v-model="nums">
+						<button class="all" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
+						<button class="all" type="button" v-else @click="allMoney();">全部卖出</button>
+						<span class="name">{{name}}</span>
+					</div>
+					<div class="maxnum">限额{{minNum}}-{{maxNum}}</div>
+					<div class="trade-totals">
+						<p class="total-price">交易总额</p>
+						<p class="prices" v-if=" types == 'trade' ">￥{{nums | toFixeds}}</p>
+						<p class="prices" v-else>￥{{nums * prices | toFixeds}}</p>
+					</div>
+					<p class="tip">请在24小时内联系商家付款，超出24小时将自动取消</p>
+					<div class="btns">
+						<p class="cannel">{{time}}s自动取消</p>
+						<button class="comfirm" type="button" @click="buyOrder()">下单</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -79,14 +91,19 @@
 				id: 0,
 				page: 1,
 				classify: '购买',
-				name: '',
+				name: 'CNY',
 				pages: 0,
 				prices: 0,
 				minNum: 0,
 				maxNum: 0,
+				names: 'CNY',
+				time: '60',
+				shows: false,
+				types: 'trade',
+				nums: '',
+				totalNums: '0.00'
 			};
 		},
-		template: '',
 		created() {
 			console.log(window.location);
 
@@ -94,9 +111,12 @@
 			if (token) {
 				this.token = token;
 				this.getCoins();
-
-
-				
+			}
+		},
+		filters: {
+			toFixeds: function(value) {
+				value = Number(value);
+				return value.toFixed(2);
 			}
 		},
 		methods: {
@@ -135,9 +155,19 @@
 						let total = parseInt(res.data.message.total);
 						if (total > 10) {
 							this.pages = Math.ceil(total / 10)
-							
+
 						}
 					}
+					// 					else {
+					// 						if (res.data.type == '998') {
+					// 							setTimeout(() => {
+					// 								location.href = 'FiatDeal.html';
+					// 							}, 1500);
+					// 						}
+					// 						if (res.data.type == '999') {
+					// 							location.href = 'login.html'
+					// 						}
+					// 					}
 				});
 			},
 			// 点击改变选中分类
@@ -163,14 +193,104 @@
 			},
 			// 出售或者购买按钮
 			buySell(prices, min, max) {
-
+				let _this = this;
+				_this.shows = true;
+				_this.time = 60;
+				document.getElementsByTagName("body")[0].className = "body";
+				_this.prices = prices;
+				_this.minNum = min;
+				_this.maxNum = max;
+				setInterval(function() {
+					_this.time--;
+					if (_this.time <= 0) {
+						_this.shows = false;
+						document.body.removeAttribute("class", "body");
+					}
+				}, 1000)
+			},
+			// 交易或数量切换
+			tabClassify(num) {
+				if (num == 1) {
+					this.types = 'trade';
+				} else {
+					this.types = 'num';
+				}
+			},
+			// 全部卖出或买入
+			allMoney() {
+				this.nums = this.maxNum;
+			},
+			// 下单
+			buyOrder() {
+				let _this = this;
+				let means = 'money';
+				let ids = window.localStorage.getItem("user_id");
+				let token = window.localStorage.getItem("token") || "";
+				if (_this.nums) {
+					if (_this.types == 'trade') {
+						means = 'money';
+					} else {
+						means = 'number';
+					};
+					let datas = {
+						id: ids,
+						means: means,
+						value: _this.nums
+					};
+					_this.buyHttp('/api/do_legal_deal', datas, function(res) {
+						console.log(res);
+					});
+				} else {
+					if (_this.types == 'trade') {
+						layer.msg('请输入欲出售数量');
+					} else {
+						layer.msg('请输入要购买数量');
+					}
+				}
+			},
+			// 请求
+			buyHttp(urls, params, callback) {
+				let _this = this;
+				_this.$http({
+					url: urls,
+					method: "post",
+					data: params,
+					headers: {
+						Authorization: localStorage.getItem("token")
+					}
+				}).then(res => {
+					console.log(res);
+					if (res.data.type == 'ok') {
+						callback && callback(res)
+					} else {
+						if (res.data.type == '998') {
+							setTimeout(() => {
+								_this.$router.push('/components/resetLegalPwd');
+							}, 500);
+						}
+						
+					}
+				});
+			},
+			// 关闭弹窗
+			closeBtn() {
+				alert(123)
+				this.shows = false;
+				document.body.removeAttribute("class", "body");
 			}
+
 		}
 	};
 </script>
 
 <style lang='scss'>
 	$purple:#563BD1;
+
+	.body {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
 
 	#legaltrade-box {
 		width: 1200px;
@@ -279,10 +399,163 @@
 		}
 
 		>.modal {
-			width: 400px;
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			left: 0;
+			top: 0;
+			right: 0;
+			bottom: 0;
+			overflow: hidden;
 
-			>.title {
-				font-size: 16px;
+			>.mask {
+				width: 100%;
+				height: 100%;
+				position: fixed;
+				top: 0;
+				left: 0;
+				right: 0;
+				bottom: 0;
+				background-color: #000;
+				opacity: 0.3;
+				overflow: hidden;
+			}
+
+			>.content {
+				width: 100%;
+				height: 100%;
+				background-color: rgba(0, 0, 0, 0);
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: 0;
+				bottom: 0;
+				z-index: 100;
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				overflow: hidden;
+
+				>.content-list {
+					width: 400px;
+					border-radius: 10px;
+					margin: auto;
+					background-color: #fff;
+					padding: 15px;
+
+					>.title {
+						font-size: 16px;
+						line-height: 2.0;
+						text-align: center;
+					}
+
+					>.trade {
+						font-size: 0;
+
+						>p {
+							display: inline-block;
+							font-size: 15px;
+							margin: 15px;
+							margin: 10px 10px 10px 0;
+							line-height: 1.5;
+							padding-bottom: 5px;
+						}
+
+						.active {
+							border-bottom: 1px solid $purple;
+							color: $purple;
+						}
+					}
+
+					>.totals-num {
+						width: 100%;
+						height: 40px;
+						border: 1px solid #eee;
+						font-size: 0;
+
+						>input {
+							line-height: 38px;
+							padding-left: 10px;
+							font-size: 15px;
+						}
+
+						>button {
+							background-color: rgba(0, 0, 0, 0);
+							float: right;
+							font-size: 15px;
+							line-height: 20px;
+							margin-right: 15px;
+							margin-top: 9px;
+							padding-left: 20px;
+							border-left: 1px solid #e5e5e5;
+						}
+
+						>span {
+							font-size: 15px;
+							float: right;
+							line-height: 38px;
+							margin-right: 20px;
+						}
+					}
+
+					>.maxnum {
+						margin-top: 15px;
+					}
+
+					>.trade-totals {
+						width: 100%;
+						font-size: 0;
+						height: 40px;
+						line-height: 40px;
+
+						>.total-price {
+							float: left;
+							font-size: 15px;
+						}
+
+						>.prices {
+							font-size: 15px;
+							float: right;
+
+
+						}
+					}
+
+					>.tip {
+						color: $purple;
+						font-size: 14px;
+					}
+
+					>.btns {
+						margin-top: 10px;
+						font-size: 0;
+						height: 40px;
+
+						>.cannel {
+							width: 48%;
+							height: 40px;
+							line-height: 40px;
+							background-color: #eee;
+							color: #333;
+							text-align: center;
+							border-radius: 6px;
+							float: left;
+							font-size: 15px;
+						}
+
+						>.comfirm {
+							float: right;
+							width: 48%;
+							height: 40px;
+							line-height: 40px;
+							background-color: $purple;
+							border-radius: 6px;
+							font-size: 15px;
+							color: #fff;
+						}
+					}
+
+				}
 			}
 		}
 	}
