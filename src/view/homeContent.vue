@@ -315,7 +315,7 @@ export default {
     // this.setChart();
     this.$http({
       url: '/api/' + "news/help",
-      method: "post",
+      method: "get",
       data: {}
     })
       .then(res => {
@@ -340,24 +340,10 @@ export default {
     //     }
     // });
     this.connect();
-    window.addEventListener('scroll', this.handleScroll, true);  // 监听（绑定）滚轮滚动事件
+   
   },
   methods: {
-    handleScroll(){
-           console.log('kkkkkkkk')
-            let clientHeight = document.documentElement.clientHeight || document.body.clientHeight;  
-            // 设备/屏幕高度
-            let scrollObj = document.getElementById('content01'); // 滚动区域
-            let scrollTop = scrollObj.scrollTop; // div 到头部的距离
-            let scrollHeight = scrollObj.scrollHeight; // 滚动条的总高度
-            //滚动条到底部的条件
-            if(scrollTop+clientHeight == scrollHeight){
-              console.log('gggggggg')
-                // div 到头部的距离 + 屏幕高度 = 可滚动的总高度
-                $('.left01').addClass('slideInLeft');
-                 $('.img01').addClass('slideInRight');
-            }
-    },
+    
     setData(obj) {
       window.localStorage.setItem("tradeData", JSON.stringify(obj));
       this.$router.push("/dealCenter");

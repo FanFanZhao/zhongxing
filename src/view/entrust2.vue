@@ -1,6 +1,6 @@
 <template>
     <div class="entrust">
-        <div class="title fColor1">
+        <div class="title">
             <div class="tab_title">
                 <span v-for="(url,index) in urlList" :class="{'active': index == isUrl}" @click="changeType(index,url.url)">{{url.title}}</span>
             </div>
@@ -54,7 +54,7 @@
                 <li class="fl w8 tr">方向</li>
             </ul>
             <div class="container scroll" v-if="hisList.length>0">
-                <ul class="list-item fColor1 ft12">
+                <ul class="list-item ft12">
                     <li v-for="item in hisList" class="clear">
                        <span class="fl w20">{{item.time}}</span>
                         <span class="fl w10">{{item.currency_name}}/{{item.legal_name}}</span>
@@ -161,7 +161,7 @@ export default {
             method: "post",
             data: {
               // address:that.address,
-              type: that.type,
+              type: that.types,
               id: id
             },
             headers: { Authorization: this.token }
