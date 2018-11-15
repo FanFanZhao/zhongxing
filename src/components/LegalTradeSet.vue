@@ -1,26 +1,26 @@
 <template>
-<div id="reset-pwd">
+<div id="legaltrade-set">
     <div class="contentBK">
         <div class="content-wrap">
             <div class="account">
                 <div class="main">
-                    <p class="main_title">重置法币资金密码</p>
+                    <p class="main_title">法币交易设置</p>
                     <div class="register-input">
-                        <span class="register-item">请输入原密码</span>
-                        <input type="password" class="input-main input-content" maxlength="20" v-model="oldPwd" id="account">
+                        <span class="register-item">昵称</span>
+                        <input type="text" class="input-main input-content" maxlength="20" v-model="nickname" id="account">
                     </div>
                      <div class="register-input">
-                        <span class="register-item">请输入新密码（6-20位，由数字与字母组成）</span>
+                        <span class="register-item">法币资金密码（6-20位，由数字与字母组成）</span>
                         <input type="password" class="input-main input-content" maxlength="16" v-model="pwd" id="pwd">
                     </div>
                      <div class="register-input">
-                        <span class="register-item">请再次输入新密码（6-20位，由数字与字母组成）</span>
+                        <span class="register-item">确认法币资金密码（6-20位，由数字与字母组成）</span>
                         <input type="password" class="input-main input-content" maxlength="16" v-model="rePwd">
                     </div>
                      
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
-                        <button type="button" class="register-button curPer redBg" @click="reset" >重置密码</button>
+                        <button type="button" class="register-button curPer redBg" @click="reset" >确认</button>
                         
                     </div>
                     
@@ -37,7 +37,7 @@
 export default {
   data() {
     return {
-      oldPwd: "",
+      nickname: "",
       pwd: "",
       rePwd: ""
     };
@@ -47,12 +47,12 @@ export default {
     
     reset() {
       let msg = "";
-      let oldpassword = this.oldPwd;
+      let nickname = this.nickname;
 
       let password = this.pwd;
       let re_password = this.rePwd;
       if (
-        oldpassword == "" ||
+        nickname == "" ||
         password == "" ||
         re_password == ""
       ) {
@@ -64,12 +64,12 @@ export default {
         return;
       } else {
         this.$http({
-          url: "/api/safe/update_password",
+          url: "/api/user/setaccount",
           method: "post",
           data: {
-            oldpassword: oldpassword,
+            account: nickname,
             password: password,
-            re_password: re_password
+            repassword: re_password
           },
           headers: { Authorization: localStorage.getItem("token") }
         }).then(res => {
@@ -86,7 +86,7 @@ export default {
 </script>
 
 <style scoped>
-#reset-pwd {
+#legaltrade-set {
   min-height: 1050px;
 }
 /* .content-wrap{background: #fff center bottom 316px repeat-x,-webkit-linear-gradient(top,#21263f,#262a42);} */
