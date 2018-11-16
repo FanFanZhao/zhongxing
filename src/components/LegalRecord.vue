@@ -61,7 +61,7 @@
 export default {
   data(){
     return {
-      currencyId:'1',
+      currencyId:'',
       page:1,
       list:[],
       type:'none',
@@ -86,6 +86,7 @@ export default {
         return;
       }
       var id = this.$route.query.id;//从上一页传过来的币种id，暂时写死为1
+      this.currencyId = id || '';
       this.type = 'none';
       this.status = 'none';
       var i = layer.load();

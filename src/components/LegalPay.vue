@@ -27,7 +27,7 @@
       </div>
       <div>
         <span>商家账户：</span>
-        <router-link to="/" tag="span" style="color:#2E1B85">{{msg.seller_name}}</router-link>
+        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" style="color:#2E1B85">{{msg.seller_name}}</router-link>
       </div>
       <div class="btns">
         <div class="btn" @click="showCancel = true">取消订单</div>
