@@ -4,25 +4,18 @@
     <div class="filter-box">
       <div>
         <span>交易类型：</span>
-        <span :class="{'select':type == 'buy'}" @click="setFilter('type','buy')">购买</span>
-        <span :class="{'select':type == 'sell'}" @click="setFilter('type','sell')">出售</span>
+        <span :class="{'select':filterPms.type == 'sell'}" @click="filterPms.type = 'sell';getList()">购买</span>
+        <span :class="{'select':filterPms.type  == 'buy'}" @click="filterPms.type  = 'buy';getList()">出售</span>
       </div>
       <div>
         <span>订单状态：</span>
-        <span :class="{'select':status == 'unfinish'}" @click="setFilter('status','unfinish')">未完成</span>
-        <span :class="{'select':status == 'finish'}" @click="setFilter('status','finish')">已完成</span>
-        <span :class="{'select':status == 'cancel'}" @click="setFilter('status','cancel')">已取消</span>
-        <span :class="{'select':status == 'pay'}" @click="setFilter('status','pay')">已付款</span>
+        <span :class="{'select':filterPms.isSure == 0}" @click="filterPms.isSure = 0;getList()">未完成</span>
+        <span :class="{'select':filterPms.isSure == 1}" @click="filterPms.isSure = 1;getList()">已完成</span>
+        <span :class="{'select':filterPms.isSure == 2}" @click="filterPms.isSure = 2;getList()">已取消</span>
       </div>
     </div>
-    <ul :class="{'buy-box':type == 'buy','sell-box':type == 'sell',
-    'finish-box':status == 'finish','unfinish-box':status == 'unfinish','cancel-box':status == 'cancel','pay-box':status == 'pay'}">
-      <li v-for="(item,index) in list" :key="index" :class="[item.type == 'sell'?'buy-item':'sell-item',{
-        'unfinish-item':item.is_sure == 0,
-        'finish-item':item.is_sure == 1,
-        'cancel-item':item.is_sure == 2,
-        'pay-item':item.is_sure == 3,
-      }]">
+    <ul>
+      <li v-for="(item,index) in list" :key="index">
         <div class="flex li-t">
           <div>
             <span v-if="item.type == 'sell'">购买</span>
@@ -30,9 +23,9 @@
             <span>{{item.currency_name}}</span>
           </div>
           <div class="status">
-            <router-link to="/" v-if="item.is_sure == 0">未完成 ></router-link>
-            <router-link to="/" v-else-if="item.is_sure == 1">已完成 ></router-link>
-            <router-link to="/" v-else-if="item.is_sure == 2">已取消 ></router-link>
+            <router-link :to="{path:'/legalPay',query:{id:item.id}}" v-if="item.is_sure == 0">未完成 ></router-link>
+            <router-link :to="{path:'/components/payCannel',query:{id:item.id}}" v-else-if="item.is_sure == 1">已完成 ></router-link>
+            <router-link :to="{path:'/components/payCannel',query:{id:item.id}}" v-else-if="item.is_sure == 2">已取消 ></router-link>
             <router-link to="/" v-else>已付款 ></router-link>
           </div>
         </div>
@@ -53,122 +46,118 @@
       </li>
       
     </ul>
-    <div class="more" @click="getList(true)" >加载更多</div>
+    <div class="more" @click="getList(true)" v-if="list.length">加载更多</div>
+    <div v-else class="nomore">暂无更多</div>
   </div>
 </template>
 
 <script>
 export default {
-  data(){
+  data() {
     return {
-      currencyId:'',
-      page:1,
-      list:[],
-      type:'none',
-      status:'none'
+      list: [],
+      filterPms: { type: "none", id: 1, page: 1, isSure: "none" }
+    };
+  },
+  created() {
+    var token = window.localStorage.getItem("token") || "";
+    if (token) {
+      this.token = token;
+      this.filterPms.id = this.$route.query.id || "1";
+      this.getList();
     }
   },
-  created(){
+  methods: {
     
-    this.getList()
-  },
-  methods:{
-    setFilter(type,v){
-      if(this[type] == v){
-        this[type] = 'none'
-      } else {
-        this[type] = v;
+    getList(more = false) {
+      var pms = {};
+      if (!more) {
+        this.filterPms.page = 1;
       }
-    },
-    getList(more=false){
-      var token = window.localStorage.getItem('token')||'';
-      if(!token){
-        return;
+      pms.id = this.filterPms.id;
+      pms.page = this.filterPms.page;
+      if (this.filterPms.type != "none") {
+        pms.type = this.filterPms.type;
       }
-      var id = this.$route.query.id;//从上一页传过来的币种id，暂时写死为1
-			this.currencyId = id || '';
-      this.type = 'none';
-      this.status = 'none';
+      if (this.filterPms.isSure != "none") {
+        pms["is_sure"] = this.filterPms.isSure;
+      }
       var i = layer.load();
       this.$http({
-        url:'/api/legal_user_deal',
-        params:{
-          currency_id:this.currencyId,
-          page:this.page
-        },
-        headers:{Authorization:token}
+        url: "/api/legal_user_deal",
+        params: pms,
+        headers: { Authorization: this.token }
       }).then(res => {
-        layer.close(i)
-        if(res.data.type == 'ok'){
+        layer.close(i);
+        if (res.data.type == "ok") {
           var msg = res.data.message;
-          if(more){
-            if(msg.data.length){
-
+          if (more) {
+            if (msg.data.length) {
               this.list = this.list.concat(msg.data);
             } else {
-              layer.msg('暂无更多')
+              layer.msg("暂无更多");
             }
-            
           } else {
             this.list = msg.data;
-            
           }
-          this.page+=1;
+          if(msg.data.length){
+            this.filterPms.page+=1;
+          }
         }
-        
-      })
+      });
     }
   }
-}
+};
 </script>
 
 <style lang='scss'>
-#legal-record{
+#legal-record {
   width: 1200px;
   margin: 30px auto;
-  >.title{
+  > .title {
     margin-bottom: 30px;
     padding: 0 30px;
     line-height: 50px;
     font-size: 20px;
     background: #f8f8f8;
   }
-  >.filter-box{
+  > .filter-box {
     line-height: 30px;
     background: #f8f8f8;
-    span{
+    span {
       margin-left: 16px;
       cursor: pointer;
-      
     }
-    span:nth-child(n+2){
+    span:nth-child(n + 2) {
       font-weight: 600;
     }
-    .select{
-      color: #563BD1;
+    .select {
+      color: #563bd1;
     }
   }
-  >ul{
+  > ul {
     padding: 10px 30px;
     background: #f8f8f8;
-    li{
-      >div{
+    li {
+      > div {
         justify-content: space-between;
         line-height: 30px;
       }
     }
-    >li:nth-child(n+2){
+    > li:nth-child(n + 2) {
       border-top: 1px solid #ccc;
     }
   }
-  >.buy-box .sell-item,.sell-box .buy-item,.unfinish-box li:not(.unfinish-item),.finish-box li:not(.finish-item),.cancel-box li:not(.cancel-item),.pay-box li:not(.pay-item){
-    display: none;
-  }
-  >.more{
+
+  > .more {
     text-align: center;
     padding: 20px;
     background: #f8f8f8;
     cursor: pointer;
+  }
+  >.nomore{
+    padding: 16px;
+    text-align: center;
   }
 }
 </style>
