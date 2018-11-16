@@ -3,13 +3,13 @@
 		<div class="buy-sell flex">
 			<div class="buy-box">
 				<div class="title">购买</div>
-				<ul :class="['flex',{'now':type == 'buy'}]">
+				<ul :class="['flex',{'now':type == 'sell'}]">
 					<li v-for="(coin,index) in legals" :key="index" :class="{'current':coin.id == id}" @click="changeClassify(coin.id,1,coin.name)">{{coin.name}}</li>
 				</ul>
 			</div>
 			<div class="sell-box">
 				<div class="title">出售</div>
-				<ul :class="['flex',{'now':type=='sell'}]">
+				<ul :class="['flex',{'now':type=='buy'}]">
 					<li v-for="(coin,index) in legals" :key="index" :class="{'current':coin.id == id}" @click="changeClassify(coin.id,2,coin.name)">{{coin.name}}</li>
 				</ul>
 			</div>
@@ -34,7 +34,7 @@
 					<div>{{item.limitation.min}}-{{item.limitation.max}}CNY</div>
 					<div>{{item.price}}</div>
 					<div>{{item.way_name}}</div>
-					<div @click="buySell(item.price,item.limitation.min,item.limitation.max)">
+					<div @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id)">
 						<button>{{classify}}{{name}}</button>
 					</div>
 				</li>
@@ -88,7 +88,7 @@
 			return {
 				legals: [],
 				list: [],
-				type: 'buy',
+				type: 'sell',
 				id: 0,
 				page: 1,
 				classify: '购买',
@@ -102,7 +102,8 @@
 				shows: false,
 				types: 'trade',
 				nums: '',
-				totalNums: '0.00'
+				totalNums: '0.00',
+				ID:''
 			};
 		},
 		created() {
@@ -131,7 +132,7 @@
 							this.legals = list;
 							var id = list[0].id;
 							this.name = list[0].name;
-							this.getList("buy", id, 1);
+							this.getList("sell", id, 1);
 						}
 					}
 				});
@@ -167,10 +168,10 @@
 				console.log(type);
 				_this.id = ids;
 				if (type == 1) {
-					_this.type = 'buy';
+					_this.type = 'sell';
 					_this.classify = '购买'
 				} else {
-					_this.type = 'sell';
+					_this.type = 'buy';
 					_this.classify = '出售'
 				}
 				_this.name = names;
@@ -183,9 +184,10 @@
 				_this.getList(_this.type, _this.id, pageNum);
 			},
 			// 出售或者购买按钮
-			buySell(prices, min, max) {
+			buySell(prices, min, max,id) {
 				let _this = this;
 				_this.shows = true;
+				_this.ID = id;
 				_this.time = 60;
 				document.getElementsByTagName("body")[0].className = "body";
 				_this.prices = prices;
@@ -224,29 +226,33 @@
 						means = 'number';
 					};
 					let datas = {
-						id: ids,
+						id: _this.ID,
 						means: means,
 						value: _this.nums
 					};
 					_this.buyHttp('/api/do_legal_deal', datas, function(res) {
 						if(res.data.type == 'ok'){
-							layer.msg(res.data.message)
-						}
+							// layer.msg(res.data.message)
 						if (res.data.message.data.type == 'sell') {
+							layer.msg(res.data.message.msg)
 							setTimeout(function() {
 								_this.$router.push({path:'/legalPay',query:{id:res.data.message.data.id}});
 							}, 500)
 						} else {
+							layer.msg(res.data.message.msg)
 							setTimeout(function() {
 								_this.$router.push({path:'/components/payCannel',query:{id:res.data.message.data.id}});
 							}, 500)
 						}
+						}else{
+                           layer.msg(res.data.message);
+						}
 					});
 				} else {
 					if (_this.types == 'trade') {
-						layer.msg('请输入欲出售数量');
+						layer.msg('请输入欲购买数量');
 					} else {
-						layer.msg('请输入要购买数量');
+						layer.msg('请输入要出售数量');
 					}
 				}
 			},
