@@ -500,7 +500,7 @@
 					}
 					$.ajax({
 						// url:'http://ice.adminchao.com/api/deal/info?' +
-						url:'http://t2.fuwuqian.cn/api/currency/new_timeshar?' +
+						url:'/api/currency/new_timeshar?' +
 						'from='+rangeStartDate+'&to='+rangeEndDate+'&symbol='+symbolInfo.name+'&period='+resolution,
 						type:'get',
 						success: function(res){

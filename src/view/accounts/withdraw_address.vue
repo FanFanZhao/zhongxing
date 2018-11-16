@@ -2,7 +2,7 @@
     <div class="box">
         <indexHeader></indexHeader>
         <div class="account">
-            <div class="topcontent ft20 redColor bgf8">
+            <div class="topcontent ft16 redColor bgf8">
                 <span ><span class="">资产></span> 提币地址管理</span>
             </div>
             <div class="content">
@@ -33,7 +33,7 @@
                    <div class="account_title ttBk white flex">
                        <div class="ml20">地址列表</div>
                    </div>
-                   <div class="contentBK 1  pdlr20 pdtb20 ft12 bgf8">
+                   <div class="contentBK 1  pdlr20 pdtb20 ft12 bgf8 rec">
                        <div class="flex alcenter">
                            <span class="flex1">币种</span>
                            <span class="flex1">提币地址</span>
@@ -50,7 +50,7 @@
                                 <span class="flex1" @click="delAddress(item.id,index)">撤销</span>
                             </div>
                        </div>
-                        <div class="none color1 tc" v-if="!list.length" style="padding: 20px 0">
+                        <div class="none color1 tc" v-if="!list.length" style="padding: 40px 0">
                             暂无记录
                         </div>
                        
@@ -187,7 +187,7 @@ select {
   //background-color: transparent;
   padding: 10px;
 //   color: #c7cce6;
-  font-size: 18px;
+  font-size: 14px;
   border-radius: 3px;
   border: 1px solid #ccc;
 }
@@ -201,7 +201,7 @@ select > option {
 input {
   padding: 10px;
   border: 1px solid #ccc;
-  font-size: 18px;
+  font-size: 14px;
 //   color: #c7cce6;
   border-radius: 3px;
   //background-color: transparent;
@@ -214,6 +214,9 @@ input {
 }
 .add .baseBtn {
   width: 200px;
+}
+.rec{
+    min-height: 300px;
 }
 </style>
 

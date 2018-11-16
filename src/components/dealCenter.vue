@@ -38,9 +38,9 @@
             <detail></detail>
         </div> -->
 
-				<div class="currency_box">
+				<!-- <div class="currency_box">
           <currency></currency>
-        </div>
+        </div> -->
 				<!-- <div class="depth-map flex btween" >
 					<deal></deal>
 				</div> -->

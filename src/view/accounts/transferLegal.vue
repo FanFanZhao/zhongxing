@@ -24,7 +24,7 @@
            <span style="color:#61688a">{{coins[coinIndex].currency_name}}</span>
            <span class="all" @click="number = coins[coinIndex].legal_balance">全部</span>
        </div>
-       <div class="balance" style="line-height:60px;margin:20px 0 30px">可用：{{coins[coinIndex].legal_balance}}</div>
+       <div class="balance" style="line-height:60px;margin:20px 0 30px">可用：{{coins[coinIndex].legal_balance}}{{coins[coinIndex].currency_name}}</div>
        <button type='button' class="transfer" @click="transfer">划转</button>
     </div>
 </template>
@@ -84,6 +84,8 @@ export default {
                     
                     
                     // this.$router.push({path:'/legalAccount'})
+                }else{
+                    layer.msg(res.data.message)
                 }
             })
         }
@@ -139,7 +141,7 @@ export default {
         //   color:#f2f5ff;
           background: none;
           line-height: 40px;
-          width: 800px;
+          width: 80%;
       border-bottom: 2px solid #ccc;
 
       }
