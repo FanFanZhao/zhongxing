@@ -24,9 +24,9 @@
           </div>
           <div class="status">
             <router-link :to="{path:'/legalPay',query:{id:item.id}}" v-if="item.is_sure == 0">未完成 ></router-link>
-            <router-link :to="{path:'/components/payCannel',query:{id:item.id}}" v-else-if="item.is_sure == 1">已完成 ></router-link>
-            <router-link :to="{path:'/components/payCannel',query:{id:item.id}}" v-else-if="item.is_sure == 2">已取消 ></router-link>
-            <router-link to="/" v-else>已付款 ></router-link>
+            <router-link :to="{path:'/legalPayDetail',query:{id:item.id}}" v-else-if="item.is_sure == 1">已完成 ></router-link>
+            <router-link :to="{path:'/legalPayDetail',query:{id:item.id}}" v-else-if="item.is_sure == 2">已取消 ></router-link>
+            <router-link :to="{path:'/legalPayDetail',query:{id:item.id}}" v-else>已付款 ></router-link>
           </div>
         </div>
         <div class="flex li-b">

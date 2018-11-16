@@ -71,6 +71,10 @@ export default new Router({
 					component:() => import ('../components/LegalPay.vue')
 				},
 				{
+					path:'/legalPayDetail',
+					component:() => import ('../components/LegalPayDetail.vue')
+				},
+				{
 					path:'/legalRecord',
 					component:() => import ('../components/LegalRecord.vue')
 				},
@@ -81,6 +85,14 @@ export default new Router({
 				{
 					path:'/legalSeller',
 					component:() => import ('../components/LegalSeller.vue')
+				},
+				{
+					path:'/myLegalShops',
+					component:() => import ('../components/MyLegalShops.vue')
+				},
+				{
+					path:'/legalShopDetail',
+					component:() => import ('../components/LegalShopDetail.vue')
 				},
 				
 				{
