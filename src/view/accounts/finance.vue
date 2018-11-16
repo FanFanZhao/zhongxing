@@ -2,7 +2,7 @@
     <div class="bgf8">
         <div class="header bgf8">
             <p class="fl">总资产折合：<span class="asset_num">0.0000000</span><span class="asset_name"> BTC</span><span class="ft12 "> ≈ <span>0.00</span>CNY</span>
-            <label class="min_lab ft14"><input type="checkbox" />隐藏小额资产</label><i></i><label class="inp_lab"><input  type="text"/><i></i></label>
+            <!-- <label class="min_lab ft14"><input type="checkbox" />隐藏小额资产</label><i></i><label class="inp_lab"><input  type="text"/><i></i></label> -->
             </p>
             <p class="fr right_text">
                 <!-- <span class="record" @click="record">财务记录</span> -->
@@ -42,8 +42,8 @@
                          </div>
                          <!-- <img class="ewm_img" :class="{'hide':isHide}" src="../../assets/images/ewm.jpg" /> -->
                        </span></p>
-                       <p class="ft12 fColor2 mb50">查看<span class="excharge_record">充币记录</span>跟踪状态</p>
-                       <p class="ft12 fColor2 mb15">温馨提示</p>
+                       <!-- <p class="ft12 fColor2 mb50">查看<span class="excharge_record">充币记录</span>跟踪状态</p> -->
+                       <p class="ft12 fColor2 mb15 mt80">温馨提示</p>
                        <ul class="tips_ul ft12 fColor2" style="list-style:disc inside">
                            <li class="tips_li" style="list-style:disc inside" v-for="item in tip_list">{{item}}</li>
                        </ul>
@@ -52,7 +52,7 @@
                    <div class="hide_div" v-if="index == active01">
                        <p class="fColor2 ft12 mb15">提币地址</p>
                        <input class="address_inp  mb30" type="text" v-model="address" />
-                       <p class="fColor2 ft12 mb15 flex between alcenter"><span>数量</span><span>可用：<span class="use_num">{{balance}}</span><span>限额：<span>1500.000000000</span><span class="advance">提升额度</span></span></span></p>
+                       <p class="fColor2 ft12 mb15 flex between alcenter"><span>数量</span><span>可用：<span class="use_num">{{balance}} {{coinname}}</span><span></span></span></p>
                        <label class="num_lab flex between mb30">
                             <input class="" type="text" :placeholder="min_number" v-model="number" />
                             <span>{{coinname}}</span>
@@ -63,7 +63,7 @@
                                    <span>手续费</span>
                                    <span>范围：<span>{{ratenum}}</span></span>
                                </p>
-                               <label class="range_lab flex alcenter between"><input class=""  type="text" v-model="rate" /><span>{{coinname}}</span></label>
+                               <label class="range_lab flex alcenter between"><input class="" disabled  type="text" v-model="rate" /><span>{{coinname}}</span></label>
                            </div>
                            <div class="right_inp_wrap flex1">
                                <p class=" mb15">
@@ -134,7 +134,7 @@ export default {
             coinname:'',
             balance:'',
             ratenum:'',
-            reachnum:'',
+            // reachnum:'',
             min_number:'',
             currency:'',
             asset_list:[],
@@ -151,6 +151,11 @@ export default {
     components:{
         indexHeader,
         left
+    },
+    computed:{
+         reachnum(){
+             return this.number - this.number*this.rate/100;
+         }   
     },
     methods:{
         goRecord(){
@@ -320,7 +325,7 @@ export default {
                         that.min_number='最小提币数量'+res.message.min_number;
                         that.minnumber=res.message.min_number;
                         that.ratenum=res.message.rate+'-'+res.message.rate;
-                        that.reachnum=0.0000;
+                        // that.reachnum=this.number - this.number*res.message.rate;
                         that.rate=res.message.rate;
                         
                     }else{
@@ -370,12 +375,12 @@ export default {
                 success: function(res){
                     console.log(res)
                     if (res.type=="ok"){
-                        layer.alert(res.message)
+                        layer.msg(res.message)
                         setTimeout(() => {
                           window.location.reload();
                     }, 1500);
                     }else{
-                        layer.alert(res.message)
+                        layer.msg(res.message)
                     }
                 }
             })

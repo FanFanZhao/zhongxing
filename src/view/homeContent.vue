@@ -9,7 +9,7 @@
             </div>
         </div> -->
         <!-- <home-login></home-login> -->
-        <home-login></home-login>
+        <!-- <home-login></home-login> -->
         <div class="swiper-container banner_wrap swiper-container-horizontal">
             <div class="swiper-wrapper">
                <div class="swiper-slide sliders">
