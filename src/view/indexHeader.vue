@@ -4,7 +4,7 @@
       <div class="logo flex alcenter mr20">
         <img src="../assets/images/new_logo01.png" alt="">        
       </div>
-      <span class="mr60">一带一路交易中心</span>
+      <span class="mr60">一带一路</span>
       <router-link to="/" exact>首页</router-link>
       <router-link to="/legalTrade">法币交易</router-link>
       <router-link to="/dealCenter">币币交易</router-link>
