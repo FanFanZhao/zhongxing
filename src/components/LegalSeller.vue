@@ -124,7 +124,7 @@ export default {
     return {
       token: "",
       page: 1,
-      sellerId: 1,
+      sellerId: 6,
       info: { lists: { data: [] } },
       showWhich: "none",
       showDetail: false,
@@ -196,27 +196,37 @@ export default {
         value = this.detail.money;
         if (value == "") {
           return;
-        } else if (value < this.detail.limitation.min) {
+        } else if ((value -0 - this.detail.limitation.min)<0) {
           layer.msg("不能低于最低限额");
           return;
-        } else if (value > this.detail.limitation.max) {
+        } else if ((value -0 - this.detail.limitation.max) > 0) {
           layer.msg("不能超出最大限额");
           return;
         }
       } else {
         value = this.detail.num;
-        if(num == ''){
+        if(value == ''){
           return;
-        } else if(num>this.detail.surplus_number){
+        } else if(value>this.detail.surplus_number){
           layer.msg('不能超出最大数量');return;
         }
       }
       this.$http({
         url: "/api/do_legal_deal",
         method: "post",
-        data: { means: this.detail.which, value: value, id: this.detail.id }
+        data: { means: this.detail.which, value: value, id: this.detail.id },
+        headers:{Authorization:this.token}
       }).then(res => {
-        console.log(res);
+        this.showDetail = false;
+        if(res.data.type == 'ok'){
+          var message = res.data.message;
+          layer.msg(message.msg)
+          if(this.detail.type == 'sell'){
+            this.$router.push({path:'/legalPay',query:{id:msg.data.id}})
+          } else {
+            this.$router.push({path:'/components/payCannel',query:{id:msg.data.id}})
+          }
+        }
         
       })
     },

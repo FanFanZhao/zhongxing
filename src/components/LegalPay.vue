@@ -71,7 +71,7 @@ export default {
       showConfirm:false,
       showCancel:false,
       hasPay:false,
-      id:100
+      id:''
     };
   },
   created() {
@@ -79,11 +79,13 @@ export default {
       // this.id = this.$route.query.id;
     if (token) {
       this.token = token;
+      this.id = this.$route.query.id;
       this.getData();
     }
   },
   methods: {
     getData() {
+      var i = layer.load();
       this.$http({
         url: "/api/legal_deal",
         params: {
@@ -91,6 +93,7 @@ export default {
         },
         headers: { Authorization: this.token }
       }).then(res => {
+        layer.close(i);
         console.log(res);
         if (res.data.type == "ok") {
           this.msg = res.data.message;
@@ -158,12 +161,17 @@ export default {
     >.btns{
       padding: 20px 0;
       cursor: pointer;
-      .btn{
+      >div{
         color: #fff;
         border-radius: 2px;
         padding: 0 16px;
         background: #2E1B85;
         margin-right: 30px;
+        font-size: 14px;
+      }
+      >div:first-child{
+        background: #ccc;
+        color: #333;
       }
     }
   }
