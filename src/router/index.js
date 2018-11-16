@@ -46,6 +46,7 @@ import LegalSeller from '@/components/LegalSeller' //法币商家详情
 import LegalPay from '@/components/LegalPay' //法币交易待付款
 import ResetLegalPwd from '@/components/ResetLegalPwd' //重置密码密码
 import withdraw_address from '@/view/accounts/withdraw_address'
+import PayCannel from '@/components/PayCannel'  //取消订单
 Vue.use(Router)
 export default new Router({
 	routes: [
@@ -136,6 +137,11 @@ export default new Router({
 					path: '/components/resetLegalPwd',
 					name: 'ResetLegalPwd',
 					component: ResetLegalPwd
+				},
+				{
+					path: '/components/PayCannel',
+					name: 'PayCannel',
+					component: PayCannel
 				},
 				{
 					path: '/userCenter',
@@ -299,8 +305,6 @@ export default new Router({
 			name: 'setCash',
 			component: setCash
 		},
-
-
-
+		
 	]
 })

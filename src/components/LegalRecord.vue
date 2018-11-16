@@ -31,9 +31,9 @@
           </div>
           <div class="status">
             <router-link to="/" v-if="item.is_sure == 0">未完成 ></router-link>
-            <router-link v-else-if="item.is_sure == 1">已完成 ></router-link>
-            <router-link v-else-if="item.is_sure == 2">已取消 ></router-link>
-            <router-link v-else>已付款 ></router-link>
+            <router-link to="/" v-else-if="item.is_sure == 1">已完成 ></router-link>
+            <router-link to="/" v-else-if="item.is_sure == 2">已取消 ></router-link>
+            <router-link to="/" v-else>已付款 ></router-link>
           </div>
         </div>
         <div class="flex li-b">
@@ -86,7 +86,7 @@ export default {
         return;
       }
       var id = this.$route.query.id;//从上一页传过来的币种id，暂时写死为1
-      this.currencyId = id || '';
+			this.currencyId = id || '';
       this.type = 'none';
       this.status = 'none';
       var i = layer.load();
