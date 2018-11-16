@@ -13,6 +13,7 @@
 					<li v-for="(coin,index) in legals" :key="index" :class="{'current':coin.id == id}" @click="changeClassify(coin.id,2,coin.name)">{{coin.name}}</li>
 				</ul>
 			</div>
+			<div class="record" @click="recordList()">订单记录</div>
 		</div>
 		<div class="list-box">
 			<div class="list-title flex">
@@ -158,16 +159,6 @@
 
 						}
 					}
-					// 					else {
-					// 						if (res.data.type == '998') {
-					// 							setTimeout(() => {
-					// 								location.href = 'FiatDeal.html';
-					// 							}, 1500);
-					// 						}
-					// 						if (res.data.type == '999') {
-					// 							location.href = 'login.html'
-					// 						}
-					// 					}
 				});
 			},
 			// 点击改变选中分类
@@ -240,11 +231,11 @@
 					_this.buyHttp('/api/do_legal_deal', datas, function(res) {
 						if (res.data.message.data.type == 'sell') {
 							setTimeout(function() {
-								_this.$router.push('/components/resetLegalPwd');
+								_this.$router.push({path:'/legalPay',query:{id:res.data.message.data.id}});
 							}, 500)
 						} else {
 							setTimeout(function() {
-								_this.$router.push('/components/resetLegalPwd');
+								_this.$router.push({path:'/components/payCannel',query:{id:res.data.message.data.id}});
 							}, 500)
 						}
 					});
@@ -273,18 +264,17 @@
 					} else {
 						if (res.data.type == '998') {
 							setTimeout(() => {
-								_this.$router.push('/components/resetLegalPwd');
+								_this.$router.push('/legalTradeSet');
 							}, 500);
 						}
 
 					}
 				});
 			},
-			// 关闭弹窗
-			closeBtn() {
-				alert(123)
-				this.shows = false;
-				document.body.removeAttribute("class", "body");
+			// 跳转订单记录
+			recordList(){
+				let _this = this;
+				_this.$router.push({path:'/LegalRecord',query:{id:_this.id}});
 			}
 
 		}
@@ -305,6 +295,7 @@
 		margin: 30px auto;
 
 		>.buy-sell {
+			position: relative;
 			>.buy-box {
 				padding: 20px;
 				border-right: 1px solid #ccc;
@@ -333,6 +324,13 @@
 						border-bottom: 2px solid $purple;
 					}
 				}
+			}
+			>.record{
+				font-size: 16px;
+				position: absolute;
+				right: 0;
+				text-align: right;
+				top: 30px;
 			}
 		}
 
