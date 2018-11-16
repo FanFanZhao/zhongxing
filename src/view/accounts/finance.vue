@@ -30,7 +30,7 @@
                        <span @click="excharge(index,item.currency)" >充币</span>
                        <span @click="withdraw(index,item.currency)">提币</span>
                        <!-- <span @click="exchange">兑换</span> -->
-                       <span @click="rec(index)">记录</span>
+                       <span @click="rec(index,item.currency)">记录</span>
                    </p>
                    </div>
                    <!--充币区-->
@@ -86,19 +86,19 @@
                    <!--记录区-->
                    <div class="hide_div rec-box" v-if="index == active02">
                        <div class="rec-con">
-
                         <div class="rec-title">
                             <span>数量</span>
                             <span>记录</span>
                             <span>时间</span>
                         </div>
                         <ul class="rec-list">
-                            <li v-for="(reItem,reIndex) in recData[index]" :key="reIndex">
-                                <span>{{reItem.value}}</span>
-                                <span>{{reItem.info}}</span>
-                                <span>{{reItem.created_time}}</span>
+                            <li v-for="(reItem,reIndex) in recData" v-if="recData.length !=0" :key="reIndex">
+                                <span>{{reItem.change}}</span>
+                                <span>{{reItem.memo}}</span>
+                                <span>{{reItem.create_time}}</span>
                             </li>
-                            
+                            <li class="no_rec mt10 light_blue" v-if="recData.length !=0" @click="more(item.currency)">{{moreLog}}</li>
+                            <li class="no_rec mt10 light_blue" v-show="recData.length ==0">暂无记录</li>
                         </ul>
                        </div>
                    </div>
@@ -143,7 +143,9 @@ export default {
             ],
             tip_list01:[
                 '请勿向上述地址充值任何非USDT资产，否则资产将不可找回。','USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。','请勿向上述地址充值任何非USDT资产，否则资产将不可找回。','USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。'
-            ]
+            ],
+            page:1,
+            moreLog:'加载更多'
         }
     },
     components:{
@@ -248,19 +250,55 @@ export default {
         },
         //记录
         rec(index,currency){
+            
              if(this.flag){
                 this.flag = false;
                 this.active = 'a';
                 this.active01 = 'a'
                  this.active02 = 'a';
+                 console.log(index)
             }else{
+                 console.log(index)
                 this.flag = true;
                  this.active02 = index;
                  this.active = 'a';
-                  this.active01 = 'a'
+                  this.active01 = 'a';
+                  //充币、提币记录
+                  this.page = 1;
+                 this.recData = [];
+                  this.getLog(currency);
                 
             }
         },
+        
+        getLog(currency){
+            
+            this.$http({
+                        url: '/api/wallet/legal_log',
+                        method:'post',
+                        data:{type:'2',currency:currency,page:this.page},
+                        headers:{'Authorization':this.token}
+                    }).then( res => {
+                        console.log(res);
+                        console.log(res.data.message.list)
+                        if(res.data.type == 'ok'){
+                            console.log(res);
+                            this.recData = this.recData.concat(res.data.message.list);
+                            if(res.data.message.list.length != 0){
+                                this.moreLog = '加载更多'
+                            }else{
+                                this.moreLog = '没有更多记录了'
+                            }
+                        }
+                    })
+        },
+        //加载更多记录
+        more(currency){
+            this.moreLog = '加载中...'
+            this.page++;
+            this.getLog(currency);
+        },
+
         getNum(currency){
             var that = this;
             $.ajax({
@@ -405,19 +443,21 @@ export default {
             }).then(res=>{
                 console.log(res.data)
                 that.asset_list=res.data.message.change_wallet.balance;
-                this.asset_list.forEach((item,index) => {
-                    this.$http({
-                        url: '/api/wallet/legal_log',
-                        method:'post',
-                        data:{type:'change',currency:item.currency},
-                        headers:{'Authorization':this.token}
-                    }).then( res => {
-                        console.log(res);
-                        if(res.data.type == 'ok'){
-                            this.recData[index] = res.data.message.list;
-                        }
-                    })
-                })
+                // this.asset_list.forEach((item,index) => {
+                //     this.$http({
+                //         url: '/api/wallet/legal_log',
+                //         method:'post',
+                //         data:{type:'2',currency:item.currency},
+                //         headers:{'Authorization':this.token}
+                //     }).then( res => {
+                //         console.log(res);
+                //         console.log(res.data.message.list)
+                //         if(res.data.type == 'ok'){
+                //             this.recData[index] = res.data.message.list;
+                //             console.log(this.recData[index])
+                //         }
+                //     })
+                // })
             }).catch(error=>{
                 console.log(error)
             })
@@ -581,7 +621,22 @@ export default {
         display: none;
     }
     .rec-box{
-        
+        max-height: 400px;
+        overflow: auto;
+        &::-webkit-scrollbar {/*滚动条整体样式*/
+        width: 2px;     /*高宽分别对应横竖滚动条的尺寸*/
+        height: 8px;
+           }
+        &::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+                border-radius: 10px;
+                -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+                background: #9e9898;
+            }
+        &::-webkit-scrollbar-track {/*滚动条里面轨道*/
+                -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+                border-radius: 10px;
+                background: #EDEDED;
+        }
         .rec-con{
             margin: 10px;
             padding: 0 20px;
@@ -605,6 +660,12 @@ export default {
                 // color: #728daf;
                 // border-top: 1px solid #181b2a;
             }
+        }
+    }
+    .no_rec{
+        justify-content: center!important;
+        &:hover{
+            cursor: pointer;
         }
     }
 </style>

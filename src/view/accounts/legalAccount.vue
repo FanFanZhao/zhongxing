@@ -25,10 +25,16 @@
                <span class="ft14">记录</span>
                <span class="ft14">时间</span>
            </p>
-           <p style="text-align:center;margin:30px 0;">暂无记录</p>
+           
            <ul>
-              <li class="flex arround ft12"></li>
+              <li class="flex around ft12" v-for="(item,index) in recData" :key="index">
+                  <span class="flex1 ft12 ptb tc">{{item.change}}</span>
+                  <span class="flex1 ft12 ptb tc">{{item.memo}}</span>
+                  <span class="flex1 ft12 ptb tc">{{item.create_time}}</span>
+              </li>
            </ul>
+           <p style="text-align:center;margin:30px 0;" v-show="recData.length == 0">暂无记录</p>
+           <p style="text-align:center;margin:30px 0;" v-show="recData.length != 0" @click="more">{{moreLog}}</p>
         </div>
         <router-link tag="p" class="huazhuan redBg" to='/transferLegal'>划转</router-link>
     </div>
@@ -40,7 +46,10 @@ export default {
            legal_name:'',
            legal_balance:'',
            lock_legal_balance:'',
-           ustd_price:''
+           ustd_price:'',
+           recData:[],
+           moreLog:'加载更多',
+           page:1
         }
     },
     created(){
@@ -48,6 +57,7 @@ export default {
     },
     mounted(){
         this.init();
+       
     },
     methods:{
         init(){
@@ -68,6 +78,7 @@ export default {
                             that.legal_balance = msg.legal_balance;
                             that.lock_legal_balance = msg.lock_legal_balance;
                             that.ustd_price = msg.ustd_price;
+                             this.getLog(msg.currencyId);
                         }else{
                             layer.msg(res.message);
                         }
@@ -75,6 +86,33 @@ export default {
                         console.log(error)
                     })
                         
+        },
+        //获取记录
+        getLog(currencyId){
+            
+            this.$http({
+                        url: '/api/wallet/legal_log',
+                        method:'post',
+                        data:{type:'1',currency:currencyId,page:this.page},
+                        headers:{'Authorization':this.token}
+                    }).then( res => {
+                        console.log(res);
+                        console.log(res.data.message.list)
+                        if(res.data.type == 'ok'){
+                            console.log(res);
+                            this.recData = this.recData.concat(res.data.message.list);
+                            if(res.data.message.list.length != 0){
+                                this.moreLog = '加载更多'
+                            }else{
+                                this.moreLog = '没有更多记录了'
+                            }
+                        }
+                    })
+        },
+        //加载更多
+        more(currencyId){
+            this.page++;
+            this.getLog(currencyId)
         }
     }
 }
@@ -121,5 +159,8 @@ export default {
    }
    .huazhuan:hover{
        cursor: pointer;
+   }
+   .ptb{
+       padding: 8px 0;
    }
 </style>

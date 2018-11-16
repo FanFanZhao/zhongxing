@@ -23,13 +23,13 @@
 						children:['finance']
 					},
 
-					{
-						src1: require("@/assets/images/icon_delegate.png"),
-						src2: require("@/assets/images/icon_delegate_s.png"),
-						text: '杠杆账户',
-						page:'lever',
-						children:['lever']
-					},
+					// {
+					// 	src1: require("@/assets/images/icon_delegate.png"),
+					// 	src2: require("@/assets/images/icon_delegate_s.png"),
+					// 	text: '杠杆账户',
+					// 	page:'lever',
+					// 	children:['lever']
+					// },
 					{
 						src1: require("@/assets/images/icon_delegate.png"),
 						src2: require("@/assets/images/icon_delegate_s.png"),
