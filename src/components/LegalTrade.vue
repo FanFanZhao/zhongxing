@@ -198,7 +198,7 @@
 				let _this = this;
 				_this.shows = true;
 				_this.ID = id;
-				_this.time = 10;
+				_this.time = 60;
 				document.getElementsByTagName("body")[0].className = "body";
 				_this.prices = prices;
 				_this.minNum = min;
