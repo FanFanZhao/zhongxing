@@ -229,6 +229,9 @@
 						value: _this.nums
 					};
 					_this.buyHttp('/api/do_legal_deal', datas, function(res) {
+						if(res.data.type == 'ok'){
+							layer.msg(res.data.message)
+						}
 						if (res.data.message.data.type == 'sell') {
 							setTimeout(function() {
 								_this.$router.push({path:'/legalPay',query:{id:res.data.message.data.id}});
