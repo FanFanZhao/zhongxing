@@ -26,6 +26,9 @@
           <div>完成率</div>
         </div>
       </div>
+      <div class="submit flex">
+        <div>发布</div>
+      </div>
     </div>
     <div class="md flex">
       <div>
@@ -51,71 +54,74 @@
     </div>
     <div class="list">
       <div class="tab">
-        <span  :class="{'now':showWhich == 'sell'}" @click="showWhich = showWhich == 'sell'?'none':'sell'">在线出售</span>
-        <span :class="{'now':showWhich == 'buy'}" @click="showWhich = showWhich == 'buy'?'none':'buy'">在线购买</span>
+        <div class="flex">
+          <div>类型：</div>
+          <div>
+            <span  :class="{'now':filterPms.type == 'sell'}" @click="filterPms.type = 'sell';getList()">我的出售</span>
+          <span :class="{'now':filterPms.type == 'buy'}" @click="filterPms.type = 'buy';getList()">我的求购</span>
+          </div>
+        </div>
+        <div class="flex">
+          <div>状态：</div>
+          <div>
+            <span  :class="{'now':filterPms.wasDone == false}" @click="filterPms.wasDone = false;getList()">未完成</span>
+          <span :class="{'now':filterPms.wasDone == true}" @click="filterPms.wasDone = true;getList()">已完成</span>
+          </div>
+        </div>
       </div>
-      <div class="ul-head flex">
-        <div class="">币种</div>
-        <div class="w10">数量</div>
+      <div class="ul-head">
+        <div class="w10">币种</div>
+        <div class="w15">数量</div>
         <div class="w25">限额</div>
         <div class="w10">单价</div>
         <div class="w10">支付方式</div>
         <div>操作</div>
       </div>
-      <ul :class="[showWhich+'-box']">
-        <li v-for="(item,index) in info.lists.data" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']">
-          <div class="">{{item.currency_name}}</div>
-          <div class="w10">{{item.surplus_number}}</div>
+      <ul :class="[showWhich+'-box']" >
+        <li v-for="(item,index) in list" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']">
+          <div class="w10">{{item.currency_name}}</div>
+          <div class="w15">{{item.surplus_number}}</div>
           <div class="w25">{{(item.limitation.min-0).toFixed(4)}}-{{(item.limitation.max-0).toFixed(4)}}</div>
           <div class="w10">{{item.price}}</div>
           <div class="w10">{{item.way_name}}</div>
           <div>
-            <span>异常</span>
-            <span>撤回</span>
-            <span>查看订单</span>
-            <span v-if="item.type == 'buy'" @click="setDetail(item)">出售</span>
-            <span v-else @click="setDetail(item)">购买</span>
+            <span @click="changeOrder('error_send',item.id)">异常</span>
+            <span @click="changeOrder('back_send',item.id)">撤回</span>
+            <router-link tag="span" :to="{path:'/shopLegalRecord',query:{id:item.id}}">查看订单</router-link>
           </div>
         </li>
       </ul>
-      <div class="more" @click="getSellerInfo(true)">加载更多</div>
+      <div class="more" @click="getList(true)" v-if="list.length">加载更多</div>
+      <div class="more" v-else>暂无更多</div>
     </div>
-    <div class="buy-sell-box" v-if="showDetail">
+    <div class="submit-box">
       <div class="content">
-
-        <div class="flex">
-          <span>{{detail.type == 'buy'?'出售':'购买'}}</span><span>{{detail.currency_name}}</span>
-        </div>
-        <div class="flex">
-          <span>单价：</span><span>{{detail.price}}</span>
-        </div>
-        <div class="flex">
-          <span>限额：</span><span>{{detail.limitation.min}}-{{detail.limitation.max}}</span>
-        </div>
-        <div class="flex">
-          <span>数量：</span><span>{{detail.surplus_number}}</span>
-        </div>
         <div class="tab">
-          <span :class="{'selected':detail.which == 'money'}" @click="detail.which = 'money'">CNY交易</span>
-          <span :class="{'selected':detail.which == 'number'}" @click="detail.which = 'number'">{{detail.type == 'buy'?'卖出':'买入'}}数量</span>
+          <div>请选择类型：</div>
+         <div :class="{'now':true}">出售</div>
+         <div>求购</div>
         </div>
-        <div class="inp" v-if="detail.which == 'money'">
-          <input type="number" :placeholder="'请输入欲'+detail.type == 'buy'?'出售':'购买'+'法币总额'" v-model="detail.money">
-          <span>CNY</span>
-          <span class="all" @click="detail.money = detail.limitation.max">全部{{detail.type == 'buy'?'卖出':'买入'}}</span>
+        <div class="flex">
+          <span>币种：</span>
+          <span>{{info.currency_name}}</span>
         </div>
-        <div class="inp" v-if="detail.which == 'number'">
-          <input type="number" :placeholder="'请输入欲'+detail.type == 'buy'?'出售':'购买'+'数量'" v-model="detail.num">
-          <span>{{detail.currency_name}}</span>
-          <span class="all" @click="detail.num = detail.surplus_number">全部{{detail.type == 'buy'?'卖出':'买入'}}</span>
+        <div class="flex">
+          <span>支付方式：</span>
+          <input type="text">
         </div>
-        <div class="tip">请在24小时内联系商家付款，超出24小时将自动取消</div>
-        <div class="btns flex">
-          <div class="cancel" @click="cancel">
-            <span ref="remainTime">60</span><span>秒后自动取消</span></div>
-          <div class="ok" @click="buySell('buy')" v-if="detail.type == 'sell'">下单</div>
-          <div class="ok" @click="buySell('sell')" v-if="detail.type == 'buy'">下单</div>
+        <div class="flex">
+          <span>单价：</span>
+          <input type="text" name="" id="">
         </div>
+        <div class="flex">
+          <span>数量：</span>
+          <input type="text">
+        </div>
+        <div class="flex">
+          <span>最小交易数量：</span>
+          <input type="text">
+        </div>
+        <div class="btn">发布</div>
       </div>
     </div>
   </div>
@@ -126,20 +132,23 @@ export default {
   data() {
     return {
       token: "",
-      page: 1,
-      sellerId: '',
+      sellerId: "",
       info: { lists: { data: [] } },
       showWhich: "none",
       showDetail: false,
       detail: { money: "", num: "" },
-      timer: ""
+      timer: "",
+      filterPms: { id: "", page: 1, wasDone: false, type: "buy" },
+      list: [],
+      submitPms:{type:'sell'}
     };
   },
   created() {
     this.token = window.localStorage.getItem("token") || "";
     if (this.token) {
-      this.sellerId = this.$route.query.id || '';
+      this.sellerId = this.$route.query.id || "";
       this.getSellerInfo();
+      this.getList();
     }
   },
   methods: {
@@ -153,27 +162,65 @@ export default {
         url: "/api/seller_info",
         params: {
           id: this.sellerId,
-          page: this.page
+          page: 1
         },
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
         // console.log(res);
         if (res.data.type == "ok") {
-          var oldlist = this.info.lists.data;
-          var newlist = res.data.message.lists.data;
-          // this.info =Object.assign({}, res.data.message);
-          this.page += 1;
-
+          this.info = Object.assign({}, res.data.message);
+        }
+      });
+    },
+    getList(more = false) {
+      var pms = {};
+      if (!more) {
+        this.filterPms.page = 1;
+      }
+      pms.page = this.filterPms.page;
+      if (this.filterPms.type != "none") {
+        pms.type = this.filterPms.type;
+      }
+      if (this.filterPms.wasDone != "none") {
+        pms.was_done = this.filterPms.wasDone;
+      }
+      pms.id = this.sellerId;
+      var i = layer.load();
+      this.$http({
+        url: "/api/seller_trade",
+        params: pms,
+        headers: { Authorization: this.token }
+      }).then(res => {
+        layer.close(i);
+        if (res.data.type == "ok") {
+          var msg = res.data.message;
           if (more) {
-            if (newlist.length) {
-              this.info.lists.data = newlist.concat(oldlist);
+            if (msg.data.length) {
+              this.list = msg.data.concat(this.list);
+              this.filterPms.page += 1;
             } else {
-              layer.msg("没有更多数据");
+              layer.msg("没有更多了");
             }
           } else {
-            this.info = Object.assign({}, res.data.message);
+            this.list = msg.data;
+            if (msg.data.length) {
+              this.filterPms.page += 1;
+            }
           }
+        }
+      });
+    },
+    changeOrder(url, id) {
+      this.$http({
+        url: "/api/" + url,
+        method: "post",
+        data: { id: id },
+        headers: { Authorization: this.token }
+      }).then(res => {
+        if (res.data.type == "ok") {
+          layer.msg(res.data.message);
+          this.getList();
         }
       });
     },
@@ -199,39 +246,45 @@ export default {
         value = this.detail.money;
         if (value == "") {
           return;
-        } else if ((value -0 - this.detail.limitation.min)<0) {
+        } else if (value - 0 - this.detail.limitation.min < 0) {
           layer.msg("不能低于最低限额");
           return;
-        } else if ((value -0 - this.detail.limitation.max) > 0) {
+        } else if (value - 0 - this.detail.limitation.max > 0) {
           layer.msg("不能超出最大限额");
           return;
         }
       } else {
         value = this.detail.num;
-        if(value == ''){
+        if (value == "") {
           return;
-        } else if(value>this.detail.surplus_number){
-          layer.msg('不能超出最大数量');return;
+        } else if (value > this.detail.surplus_number) {
+          layer.msg("不能超出最大数量");
+          return;
         }
       }
       this.$http({
         url: "/api/do_legal_deal",
         method: "post",
         data: { means: this.detail.which, value: value, id: this.detail.id },
-        headers:{Authorization:this.token}
+        headers: { Authorization: this.token }
       }).then(res => {
         this.showDetail = false;
-        if(res.data.type == 'ok'){
+        if (res.data.type == "ok") {
           var message = res.data.message;
-          layer.msg(message.msg)
-          if(this.detail.type == 'sell'){
-            this.$router.push({path:'/legalPay',query:{id:msg.data.id}})
+          layer.msg(message.msg);
+          if (this.detail.type == "sell") {
+            this.$router.push({
+              path: "/legalPay",
+              query: { id: msg.data.id }
+            });
           } else {
-            this.$router.push({path:'/components/payCannel',query:{id:msg.data.id}})
+            this.$router.push({
+              path: "/components/payCannel",
+              query: { id: msg.data.id }
+            });
           }
         }
-        
-      })
+      });
     },
     cancel() {
       clearInterval(this.timer);
@@ -271,6 +324,21 @@ export default {
         text-align: center;
       }
     }
+    > .submit {
+      align-items: center;
+      justify-content: flex-end;
+      > div {
+        border-radius: 2px;
+        margin-left: 30px;
+        color: #fff;
+        padding: 0 16px;
+        font-size: 14px;
+        height: 30px;
+        line-height: 30px;
+        background: #2e1b85;
+        cursor: pointer;
+      }
+    }
   }
   > .md {
     background: #f8f8f8;
@@ -287,44 +355,44 @@ export default {
   > .list {
     background: #f8f8f8;
     margin-top: 20px;
-    padding: 16px 30px;
+    padding: 5px 30px 16px;
     > .tab {
       margin: 16px 0;
+      > .flex {
+        > div:first-child {
+          width: 80px;
+        }
+      }
       span {
         margin-right: 20px;
         cursor: pointer;
       }
-      > .now {
+      .now {
         color: #2e1b85;
         font-weight: 600;
       }
     }
     > .ul-head {
-      justify-content: space-between;
+      height: 30px;
       > div {
         // text-align: center;
+        float: left;
       }
-      // > div:nth-child(3) {
-      //   flex: 2;
-      // }
-      // > div:first-child {
-      //   text-align: left;
-      // }
-      // > div:last-child {
-      //   text-align: right;
-      // }
+      > div:last-child {
+        float: right;
+      }
     }
     > ul {
       li {
-        display: flex;
-        justify-content: space-between;
         padding: 16px 0;
+        height: 62px;
         border-bottom: 1px solid #ddd;
         > div {
-          // flex: 1;
-          // text-align: center;
+          float: left;
         }
-
+        > div:last-child {
+          float: right;
+        }
         // > div:nth-child(3) {
         //   flex: 2;
         // }
@@ -354,12 +422,12 @@ export default {
       display: none;
     }
     .more {
-      padding: 0 20px;
+      padding: 20px 20px;
       text-align: center;
       cursor: pointer;
     }
   }
-  > .buy-sell-box {
+  > .submit-box {
     position: fixed;
     top: 0;
     left: 0;
@@ -368,18 +436,41 @@ export default {
     background: rgba(0, 0, 0, 0.8);
     > .content {
       margin: 100px auto 0;
-      border-radius: 2px;
+      border-radius: 4px;
       width: 440px;
       padding: 20px 30px 26px 30px;
       background: #fff;
       line-height: 30px;
-      > div:first-child {
-        font-weight: 600;
+      >.tab{
+        display: flex;
+        >div{
+          margin-right: 50px;
+
+        }
+        .now{
+          font-weight: 600;
+          padding-bottom: 3px;
+          color: #2e1b85;
+          border-bottom: 2px solid #2e1b85;
+        }
+      }
+      >.btn{
+        background: #2e1b85;
+        color: #fff;
+        border-radius: 2px;
+        text-align: center;
+        line-height: 40px;
       }
       > .flex {
         // display: flex;
-        span:first-child {
-          width: 80px;
+        margin-bottom: 20px;
+        span{
+          width: 130px;
+        }
+        input{
+          border-radius: 2px;
+          border: 1px solid #ccc;
+          padding: 0 16px;
         }
       }
       > .tab {

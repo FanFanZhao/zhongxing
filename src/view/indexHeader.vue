@@ -43,11 +43,11 @@
           </div>
         </div>
       </div>
-      <!-- <div class=" theme flex">
+      <div class=" theme flex">
           <img src="../assets/images/light.png" @click="$changeTheme('light')" alt="">
           <img src="../assets/images/dark.png"  @click="$changeTheme('dark')" alt="">
           
-        </div> -->
+        </div>
     </div>
   </div>
 </template>
