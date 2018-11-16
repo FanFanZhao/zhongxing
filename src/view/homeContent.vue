@@ -313,22 +313,22 @@ export default {
       observeParents: true //修改swiper的父元素时，自动初始化swiper
     });
     // this.setChart();
-    this.$http({
-      url: '/api/' + "news/help",
-      method: "get",
-      data: {}
-    })
-      .then(res => {
-        console.log(res);
-        if (res.status === 200) {
-          this.noticeList = res.data.message;
-        } else {
-          layer.msg(res.message);
-        }
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // this.$http({
+    //   url: '/api/' + "news/help",
+    //   method: "get",
+    //   data: {}
+    // })
+    //   .then(res => {
+    //     console.log(res);
+    //     if (res.status === 200) {
+    //       this.noticeList = res.data.message;
+    //     } else {
+    //       layer.msg(res.message);
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
     //  eventBus.$on('toNew', function (data) {
     //   console.log(data);
     //   if(data){
