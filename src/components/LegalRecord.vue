@@ -14,6 +14,7 @@
         <span :class="{'select':filterPms.isSure == 2}" @click="filterPms.isSure = 2;getList()">已取消</span>
       </div>
     </div>
+    
     <ul>
       <li v-for="(item,index) in list" :key="index">
         <div class="flex li-t">
@@ -47,7 +48,9 @@
       
     </ul>
     <div class="more" @click="getList(true)" v-if="list.length">加载更多</div>
+   
     <div v-else class="nomore">暂无更多</div>
+     
   </div>
 </template>
 
@@ -56,14 +59,14 @@ export default {
   data() {
     return {
       list: [],
-      filterPms: { type: "none", id: 1, page: 1, isSure: "none" }
+      filterPms: { type: "none", id: '', page: 1, isSure: "none" }
     };
   },
   created() {
     var token = window.localStorage.getItem("token") || "";
     if (token) {
       this.token = token;
-      this.filterPms.id = this.$route.query.id || "1";
+      this.filterPms.id = this.$route.query.id || "";
       this.getList();
     }
   },
@@ -159,5 +162,8 @@ export default {
     padding: 16px;
     text-align: center;
   }
+}
+.log_wrap{
+  overflow: auto;
 }
 </style>

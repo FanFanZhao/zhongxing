@@ -107,8 +107,15 @@ export default {
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
+        
         // console.log(res);
-        lay.msg(res.data.message);
+        layer.msg(res.data.message);
+        if(res.data.type == 'ok'){
+          setTimeout(() => {
+            this.$router.push('/legalRecord')
+          }, 1000);
+          
+        }
         
       }).then(() => {
         this.showCancel = false;
@@ -122,7 +129,12 @@ export default {
         headers:{Authorization:this.token}
       }).then(res => {
         // console.log(res);
-        lay.msg(res.data.message);
+        layer.msg(res.data.message);
+        if(res.data.type == 'ok'){
+          setTimeout(() => {
+            this.$router.push('/legalRecord')
+          }, 1000);
+        }
         
       }).then(() => {
         this.showConfirm = false;

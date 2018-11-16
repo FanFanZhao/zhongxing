@@ -26,15 +26,18 @@
 			</div>
 			<ul class="list">
 				<li v-for="(item,index) in list" :key="index" class="flex">
-					<div>
+					<div class="flex alcenter">
 						<img :src="url+'upload/'+item.currency_logo" alt="">
+						<div class="flex column center">
+							<span class="light_blue">{{item.seller_name}}</span>
 						<span>{{item.currency_name}}</span>
+						</div>
 					</div>
-					<div>{{item.surplus_number}}</div>
-					<div>{{item.limitation.min}}-{{item.limitation.max}}CNY</div>
-					<div>{{item.price}}</div>
-					<div>{{item.way_name}}</div>
-					<div @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id)">
+					<div class="flex alcenter">{{item.surplus_number}}</div>
+					<div class="flex alcenter">{{(item.limitation.min-0).toFixed(2)}}-{{(item.limitation.max-0).toFixed(2)}}CNY</div>
+					<div class="flex alcenter">{{item.price}}</div>
+					<div class="flex alcenter">{{item.way_name}}</div>
+					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type)">
 						<button>{{classify}}{{name}}</button>
 					</div>
 				</li>
@@ -55,8 +58,8 @@
 						<p :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}数量</p>
 					</div>
 					<div class="totals-num">
-						<input v-if=" types == 'trade' " class="number" type="number" placeholder="请输入欲出售数量" v-model="nums">
-						<input v-else class="number" type="number" placeholder="请输入要购买数量" v-model="nums">
+						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
+						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
 						<button class="all" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
 						<button class="all" type="button" v-else @click="allMoney();">全部卖出</button>
 						<span class="name">{{name}}</span>
@@ -103,7 +106,8 @@
 				types: 'trade',
 				nums: '',
 				totalNums: '0.00',
-				ID:''
+				ID:'',
+				money_type:''
 			};
 		},
 		created() {
@@ -184,20 +188,28 @@
 				_this.getList(_this.type, _this.id, pageNum);
 			},
 			// 出售或者购买按钮
-			buySell(prices, min, max,id) {
+			buySell(prices, min, max,id,type) {
+				console.log(type)
+				if(type == 'sell'){
+					this.money_type = '购买'
+				}else if(type == 'buy'){
+					this.money_type = '出售'
+				}
 				let _this = this;
 				_this.shows = true;
 				_this.ID = id;
-				_this.time = 60;
+				_this.time = 10;
 				document.getElementsByTagName("body")[0].className = "body";
 				_this.prices = prices;
 				_this.minNum = min;
 				_this.maxNum = max;
-				setInterval(function() {
+			      var t1 = setInterval(function() {
 					_this.time--;
 					if (_this.time <= 0) {
 						_this.shows = false;
 						document.body.removeAttribute("class", "body");
+						//清除定时器
+						clearInterval(t1);
 					}
 				}, 1000)
 			},

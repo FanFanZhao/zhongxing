@@ -104,6 +104,11 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {    -webkit-a
         -ms-flex-pack: center;
             justify-content: center;
 }
+.end{
+    -webkit-box-pack: flex-end;
+        -ms-flex-pack: flex-end;
+            justify-content: flex-end;
+}
 .tc{
 	text-align: center;
 }
