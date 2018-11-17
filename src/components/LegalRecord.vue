@@ -1,7 +1,7 @@
 <template>
-  <div id="legal-record">
-    <div class="title">法币交易记录</div>
-    <div class="filter-box">
+  <div id="legal-record" class="clr-part">
+    <div class="title bg-part ft16">法币交易记录</div>
+    <div class="filter-box bg-part ft14">
       <div>
         <span>交易类型：</span>
         <span :class="{'select':filterPms.type == 'sell'}" @click="filterPms.type = 'sell';getList()">购买</span>
@@ -15,9 +15,9 @@
       </div>
     </div>
     
-    <ul>
+    <ul class="bg-part">
       <li v-for="(item,index) in list" :key="index">
-        <div class="flex li-t">
+        <div class="flex li-t ft14">
           <div>
             <span v-if="item.type == 'sell'">购买</span>
             <span v-else>出售</span>
@@ -32,22 +32,22 @@
         </div>
         <div class="flex li-b">
           <div>
-            <div>时间</div>
-            <div>{{item.create_time}}</div>
+            <div class="ft14">时间</div>
+            <div class="ft12">{{item.create_time}}</div>
           </div>
           <div>
-            <div>数量</div>
-            <div>{{item.number}}</div>
+            <div class="ft14">数量</div>
+            <div class="ft12">{{item.number}}</div>
           </div>
           <div>
-            <div>交易总额（{{item.currency_name}})</div>
-            <div>{{item.deal_money}}</div>
+            <div class="ft14">交易总额（{{item.currency_name}})</div>
+            <div class="ft12">{{item.deal_money}}</div>
           </div>
         </div>
       </li>
       
     </ul>
-    <div class="more" @click="getList(true)" v-if="list.length">加载更多</div>
+    <div class="more bg-part" @click="getList(true)" v-if="list.length">加载更多</div>
    
     <div v-else class="nomore">暂无更多</div>
      
@@ -119,9 +119,9 @@ export default {
   margin: 30px auto;
   > .title {
     margin-bottom: 30px;
-    padding: 0 30px;
+    padding: 0 20px;
     line-height: 50px;
-    font-size: 20px;
+    // font-size: 20px;
     background: #f8f8f8;
   }
   > .filter-box {
