@@ -1,6 +1,6 @@
 <template>
-  <div id="legal-pay-detail">
-    <div class="title">
+  <div id="legal-pay-detail" class="clr-part">
+    <div class="title bg-part">
       <span v-if="msg.is_sure == 1">已完成</span>
       <span v-if="msg.is_sure == 2">已取消</span>
       <span v-if="msg.is_sure == 3">已付款</span>
@@ -8,7 +8,7 @@
       <div v-if="msg.is_sure == 2">订单已取消，无法查看支付信息</div>
       <div v-if="msg.is_sure == 3">已付款，无法查看支付信息</div>
     </div>
-    <div class="info">
+    <div class="info bg-part ft14">
       <div>
         <span>交易总额：</span>
         <span>{{msg.deal_money}}</span>
@@ -35,17 +35,17 @@
       </div>
       <div>
         <span>商家账户：</span>
-        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" style="color:#2E1B85">{{msg.seller_name}}</router-link>
+        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" >{{msg.seller_name}}</router-link>
       </div>
       <div class="btns">
         <div class="btn" @click="showCancel = true">取消订单</div>
         <div class="btn" @click="showConfirm = true">我已付款，点击确认</div>
       </div>
     </div>
-    <div class="cancel-box" v-if="showCancel">
+    <div class="cancel-box clr-part" v-if="showCancel">
       <div class="content">
         <div>取消交易</div>
-        <div>如您已向卖家付款请千万不要取消交易</div>
+        <div class="ft14">如您已向卖家付款请千万不要取消交易</div>
         <!-- <div>
           <input type="checkbox" v-model="hasPay" id="haspay">
           <label for="haspay">我还没有付款给对方</label>
@@ -56,11 +56,11 @@
         </div>
       </div>
     </div>
-    <div class="confirm-box" v-if="showConfirm">
+    <div class="confirm-box  clr-part" v-if="showConfirm">
       <div class="content">
         <div>付款确认</div>
-        <div>请确认您已向卖家付款</div>
-        <div>恶意点击将直接冻结账户</div>
+        <div class="ft14">请确认您已向卖家付款</div>
+        <div class="ft14">恶意点击将直接冻结账户</div>
         <div class="yes-no flex">
           <div @click="showConfirm = false">取消</div>
           <div @click="confirm">确认</div>
@@ -207,10 +207,11 @@ export default {
     height: 100%;
     background: rgba(0,0,0,.7);
     >.content{
+      background: #26292b;
       margin: 200px auto 0;
       border-radius: 2px;
       width: 360px;
-      background: #fff;
+      border-radius: 5px;
       line-height: 40px;
       text-align: center;
       >div:first-child{

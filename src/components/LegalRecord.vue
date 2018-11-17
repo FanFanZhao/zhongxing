@@ -1,5 +1,5 @@
 <template>
-  <div id="legal-record" class="clr-part">
+  <div id="legal-record" class="clr-part bg-main">
     <div class="title bg-part ft16">法币交易记录</div>
     <div class="filter-box bg-part ft14">
       <div>
@@ -17,7 +17,7 @@
     </div>
     
     <ul class="bg-part">
-      <li v-for="(item,index) in list" :key="index">
+      <li class="bdr-part" v-for="(item,index) in list" :key="index">
         <div class="flex li-t ft14">
           <div>
             <span v-if="item.type == 'sell'">购买</span>
@@ -143,10 +143,14 @@ export default {
     padding: 10px 30px;
     background: #f8f8f8;
     li {
+      padding: 10px 0;
       > div {
         justify-content: space-between;
         line-height: 30px;
       }
+    }
+    >li:first-child{
+      border: none;
     }
     > li:nth-child(n + 2) {
       border-top: 1px solid #ccc;
@@ -166,5 +170,10 @@ export default {
 }
 .log_wrap{
   overflow: auto;
+}
+.status{
+      background: #272f5d;
+    padding: 0 6px;
+    border-radius: 3px;
 }
 </style>
