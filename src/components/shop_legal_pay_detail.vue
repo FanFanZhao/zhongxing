@@ -41,7 +41,7 @@
         <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" style="color:#2E1B85">{{msg.seller_name}}</router-link>
       </div>
       <div class="btns">
-        <div class="btn" @click="showCancel = true" v-if="msg.is_sure == 0 && msg.type =='sell'">取消订单</div>
+        <div class="btn" @click="showCancel = true" v-if="msg.is_sure == 0 && msg.type =='buy'">取消订单</div>
         <div class="btn" @click="showConfirm = true" v-if="(msg.is_sure == 3) && (msg.type =='sell')">确认已收款</div>
       </div>
     </div>
