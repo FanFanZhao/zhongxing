@@ -1,5 +1,5 @@
 <template>
-    <div class="account-box wrap fColor1">
+    <div class="account-box wrap fColor1 bg-part clr-part">
         <div class="title">
                 身份认证
                 
@@ -13,7 +13,7 @@
                     </div>
                     <div class="flex alcenter center mt20">
                         <span>身份证：</span>
-                        <input type="text" placeholder="请输入身份证号" id="card" v-model="card_id">
+                        <input type="number" placeholder="请输入身份证号" id="card" v-model="card_id">
                     </div>
                 </div>
                 <div class="mt40 fColor1 ft14 tc">请上传身份证正反面，第一张为正面，第二张为反面。</div>
@@ -170,17 +170,16 @@ export default {
 </script>
 <style scoped lang="scss">
     .account-box{
-        background: #273041;
+        margin: 30px auto 0;
+        width: 1200px;
         min-height: 1080px;
         .title{
             width: 100%;
             line-height: 60px;
-            background: #181b2a;
             border-radius: 4px;
             padding-left: 20px;
         }
         .main-content{
-            background: #181b2a;
             min-height: 1080px;
             border-radius: 2px;
             .main-input{
@@ -195,10 +194,8 @@ export default {
                     min-height: 46px;
                     border: 1px solid #4e5b85;
                     padding: 0 20px;
-                    color: #c7cce6;
                     font-size: 14px;
                     border-radius: 3px;
-                    background-color: #1e2235;
                 }
             }
             .idimg{
@@ -228,7 +225,6 @@ export default {
                     width: 300px;
                     height: 45px;
                     border-radius: 4px;
-                    color: #c7cce6;
                     font-size: 14px;
                     margin: 0 auto;
                     margin-left: 100px;
