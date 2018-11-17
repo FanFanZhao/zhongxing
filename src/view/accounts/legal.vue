@@ -1,10 +1,10 @@
 <template>
-    <div class="bgf8">
+    <div class="bgf8 bg-part clr-part main-wrap">
         <div class="top">
             <p>法币账户  总资产折合：{{totle}}（CNY）<span class='ft12 all_account'><span class=""></span>≈ <span>{{totle/6.5}}</span> USDT</span></p>
         </div>
-        <ul class="list">
-            <li v-for="(item,index) in list" :key="index" @click="go_legalAccount(item.currency)">
+        <ul class="list ft12">
+            <li class="bdr-part" v-for="(item,index) in list" :key="index" @click="go_legalAccount(item.currency)">
                 <p class="legal_name">{{item.currency_name}}</p>
                 <div class="balance_detail">
                     <div class="use_balance flex1">
@@ -105,6 +105,10 @@ export default {
    }
    .convert{
        padding: 10px 0;
+   }
+   .main-wrap{
+       height: 820px;
+       overflow: auto;
    }
 </style>
 
