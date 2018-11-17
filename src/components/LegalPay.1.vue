@@ -1,8 +1,8 @@
 <template>
   <div id="legal-pay" class="bg-main clr-part">
-    
+    <!-- 购买 -->
     <div class="title bg-part ft16">
-      <span v-if="msg.is_sure == 0">请等待买家付款</span>
+      <span v-if="msg.is_sure == 0">请向以下账户付款</span>
       <span v-if="msg.is_sure == 0">￥{{msg.deal_money}}</span>
        <span v-if="msg.is_sure == 1">已完成</span>
       <span v-if="msg.is_sure == 2">已取消</span>
@@ -20,27 +20,27 @@
         <span>交易数量：</span>
         <span>{{msg.number}}{{msg.currency_name}}</span>
       </div>
-      <!-- <div>
-        <span>付款信息：</span>
+      <div>
+        <span>收款方式：</span>
         <span>{{msg.way_name}}</span>
-      </div> -->
+      </div>
       <!-- <div>
         <span>账户：</span>
         <span>{{msg.hes_account}}</span>
       </div> -->
       <div>
-        <span>买家姓名：</span>
-        <span>{{msg.hes_realname}}</span>
+        <span>卖家姓名：</span>
+        <span>{{msg.seller_name}}</span>
       </div>
-       <div>
-        <span>买家电话：</span>
+      <div>
+        <span>卖家电话：</span>
         <span>{{msg.seller_phone}}</span>
       </div>
       <div>
         <span>商家账户：</span>
         <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span">{{msg.seller_name}}</router-link>
       </div>
-      <div class="btns" v-show="is_sure==3">
+      <div class="btns"  v-show="is_sure==0">
         <div class="btn" @click="showCancel = true">取消订单</div>
         <div class="btn" @click="showConfirm = true">我已付款，点击确认</div>
       </div>
@@ -72,7 +72,6 @@
     </div>
   </div>
 </template>
-
 <script>
 export default {
   data() {
@@ -94,6 +93,7 @@ export default {
       this.token = token;
       this.id = this.$route.query.id;
       this.type=this.$route.query.type;
+      
       console.log(this.$route.query.id,this.id)
       this.getData();
     }
