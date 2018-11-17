@@ -8,6 +8,7 @@
       <router-link to="/" exact>首页</router-link>
       <router-link to="/legalTrade">法币交易</router-link>
       <router-link to="/dealCenter">币币交易</router-link>
+      <router-link to="/myLegalShops" v-if="isShow">我的商铺</router-link>
       <!-- <router-link to="/userSetting">安全设置</router-link> -->
       <!-- <router-link to="/components/noticeList">公告</router-link>
       <div class="coin-box">
@@ -57,10 +58,13 @@ export default {
   data() {
     return {
       account_number: "",
-      extension_code: ""
+      extension_code: "",
+      token:'',
+      isShow:false
     };
   },
   created() {
+     this.token = window.localStorage.getItem("token") || "";
     this.account_number = window.localStorage.getItem("accountNum") || "";
     this.extension_code = window.localStorage.getItem("extension_code") || "";
     eventBus.$on("toHeader", msg => {
@@ -69,6 +73,7 @@ export default {
         this.extension_code = msg.extension_code;
       }
     });
+    this.init();
   },
   mounted() {
     eventBus.$on("toHeader", msg => {
@@ -88,6 +93,22 @@ export default {
       window.localStorage.removeItem("user_id");
       window.localStorage.removeItem("extension_code");
       this.$router.push('/components/login');
+    },
+    init(){
+      this.$http({
+        url:'api/user/info',
+        method:'GET',
+        data:{},
+        headers:{Authorization:this.token}
+      }).then(res => {
+        console.log(res)
+        if(res.data.type == 'ok'){
+            if(res.data.message.is_seller == '1'){
+               this.isShow = true;
+            }
+        }
+        
+      })
     }
   }
 };
