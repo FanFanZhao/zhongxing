@@ -9,7 +9,7 @@
         </div>
         <p class="">© 2013-2018 环球数贸信息平台</p>
     </div> -->
-    <div class="foot flex column alcenter grayBg">
+    <div class="foot flex column alcenter bg-main clr-part">
            <h1 class="ft18 mb15">一带一路交易中心</h1>
            <p class="ft12 mb30">我/们/在/去/中/心/化/路/上</p>
            <img src="../assets/images/flags.png" />
