@@ -1,6 +1,6 @@
 <template>
   <div id="legal-shop-detail">
-    <div class="top flex">
+    <div class="top flex bg-part clr-part">
       <div class="top-t flex">
         <div class="logo">k</div>
         <div>
@@ -30,7 +30,7 @@
         <div @click="showSubmit = true">发布</div>
       </div>
     </div>
-    <div class="md flex">
+    <div class="md flex clr-part bg-part">
       <div>
         <span>邮箱认证</span>
         <img v-if="info.prove_email == 1" src="../assets/images/success.png" alt="">
@@ -52,7 +52,7 @@
         <img v-else src="../assets/images/icon_error.png" alt="">
       </div>
     </div>
-    <div class="list">
+    <div class="list bg-part clr-part">
       <div class="tab">
         <div class="flex">
           <div>类型：</div>
@@ -96,6 +96,7 @@
     </div>
     <div class="submit-box" v-if="showSubmit">
       <div class="content">
+        <div class="close" @click="showSubmit = false;submitPms = {type:'sell',way:'-1',price:'',min_number:'',total_number:''}">X</div>
         <div class="tab">
           <div>请选择类型：</div>
          <div :class="{'now':submitPms.type == 'sell'}" @click="submitPms.type = 'sell'">出售</div>
@@ -343,7 +344,7 @@ export default {
         cursor: pointer;
       }
       .now {
-        color: #2e1b85;
+        color: #8D75F7;
         font-weight: 600;
       }
     }
@@ -410,12 +411,20 @@ export default {
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
     > .content {
+      position: relative;
       margin: 100px auto 0;
       border-radius: 4px;
       width: 440px;
       padding: 20px 30px 26px 30px;
       background: #fff;
       line-height: 30px;
+      >.close{
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 2px 10px;
+        cursor: pointer;
+      }
       >.tab{
         display: flex;
         >div{

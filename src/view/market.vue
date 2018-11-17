@@ -37,7 +37,7 @@
                 <span v-for="item in newData">{{item}}</span>
             </li> -->
             <li v-for="(market,index) in marketList " :key="index" v-if="(legal_index || isShow) == index" >
-              <p v-for="(itm,idx) in market"  :key="itm.id" :class="[{'bg-sel':(index-0)%2 != 0},{'active_p':(legal_index || isShow)==index&&idx==(currency_index || ids)}]" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.currency_name,itm,index,market)">
+              <p v-for="(itm,idx) in market"  :key="itm.id" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(legal_index || isShow)==index&&idx==(currency_index || ids)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.currency_name,itm,index,market)">
                <!-- <a  @click="changePair(itm,index,market)"> -->
 				   <span class="w36"><img :src="itm.logo" alt=""><i><em class="deep_blue bold">{{itm.currency_name}}</em><em class="light_blue bold">/{{itm.legal_name}}</em></i></span>
 				   <span class="w30 tr deep_blue bold" :data-name='itm.currency_name+"/"+itm.legal_name'>${{itm.now_price || 0}}</span>
@@ -356,10 +356,10 @@ export default {
   overflow-y: auto;
 }
 .coin-wrap li p:nth-child(even) {
-  background: #f8f8f8;
+  /* background: #f8f8f8; */
 }
 .coin-wrap li p:hover {
-  background: #eee;
+  /* background: #eee; */
 }
 .coin-wrap li {
   height: 30px;

@@ -21,7 +21,7 @@
 					</div>
         </div>
 				<div class="parts  flex between" >
-					<div class="trade-wrap part-l bg-part" >
+					<div class="trade-wrap part-l bg-part" style="padding-bottom:16px;">
 						<trade></trade>
 					</div>
 					<div class="deatil_box bg-part" style="width:33%;margin:0 8px">

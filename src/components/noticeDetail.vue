@@ -1,5 +1,5 @@
 <template>
-    <div class="noticeDetail">
+    <div class="noticeDetail clr-part bg-part">
         <indexHeader></indexHeader>
         <div class="account-wrap">
             <div class="account">
