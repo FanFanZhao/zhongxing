@@ -1,8 +1,8 @@
 <template>
-    <div class="exchange" style="margin-top:30px">
+    <div class="exchange clr-part " style="margin-top:30px">
 		<!-- <div class="title fColor1">交易所</div> -->
         <div class="content">
-            <div class="new_price">
+            <div class="new_price bdr-part">
                 <span class="ft14">最新价 {{newData}}{{currency_name}}</span>
             </div>
             <div class="exchange_title ft14 clear tc">
@@ -16,7 +16,7 @@
                     <span style="font-weight:600">{{out.price}}</span>
                     <span>{{out.number}}</span>
                 </li>
-                <div class="line"></div>
+                <div class="line bdr-part"></div>
                  <li class="curPer redColor" v-for="(buy,index) in inlist" @click="price(buy.price)">
                     <span>买 {{index+1}}</span>
                     <span style="font-weight:600">{{buy.price}}</span>

@@ -27,7 +27,7 @@
         </div>
       </div>
       <div class="submit flex">
-        <div>发布</div>
+        <div @click="showSubmit = true">发布</div>
       </div>
     </div>
     <div class="md flex">
@@ -94,12 +94,12 @@
       <div class="more" @click="getList(true)" v-if="list.length">加载更多</div>
       <div class="more" v-else>暂无更多</div>
     </div>
-    <div class="submit-box">
+    <div class="submit-box" v-if="showSubmit">
       <div class="content">
         <div class="tab">
           <div>请选择类型：</div>
-         <div :class="{'now':true}">出售</div>
-         <div>求购</div>
+         <div :class="{'now':submitPms.type == 'sell'}" @click="submitPms.type = 'sell'">出售</div>
+         <div :class="{'now':submitPms.type == 'buy'}" @click="submitPms.type = 'buy'">求购</div>
         </div>
         <div class="flex">
           <span>币种：</span>
@@ -107,21 +107,26 @@
         </div>
         <div class="flex">
           <span>支付方式：</span>
-          <input type="text">
+          <select name="" id="" v-model="submitPms.way">
+            <option value="-1">请选择</option>
+            <option value="ali_pay">支付宝</option>
+            <option value="we_chat">微信</option>
+            <option value="bank">银行卡</option>
+          </select>
         </div>
         <div class="flex">
           <span>单价：</span>
-          <input type="text" name="" id="">
+          <input type="number" v-model="submitPms.price">
         </div>
         <div class="flex">
           <span>数量：</span>
-          <input type="text">
+          <input type="number" v-model="submitPms.total_number">
         </div>
         <div class="flex">
           <span>最小交易数量：</span>
-          <input type="text">
+          <input type="number" v-model="submitPms.min_number">
         </div>
-        <div class="btn">发布</div>
+        <div class="btn" @click="legalSend">发布</div>
       </div>
     </div>
   </div>
@@ -133,14 +138,15 @@ export default {
     return {
       token: "",
       sellerId: "",
+      currencyId:'',
       info: { lists: { data: [] } },
       showWhich: "none",
-      showDetail: false,
+      showSubmit: false,
       detail: { money: "", num: "" },
       timer: "",
-      filterPms: { id: "", page: 1, wasDone: false, type: "buy" },
+      filterPms: { id: "", page: 1, wasDone: false, type: "sell" },
       list: [],
-      submitPms:{type:'sell'}
+      submitPms:{type:'sell',price:'',way:'-1',total_number:'',min_number:''}
     };
   },
   created() {
@@ -170,6 +176,7 @@ export default {
         // console.log(res);
         if (res.data.type == "ok") {
           this.info = Object.assign({}, res.data.message);
+          this.currencyId = res.data.message.currency_id;
         }
       });
     },
@@ -224,72 +231,40 @@ export default {
         }
       });
     },
-    setDetail(item) {
-      this.detail = Object.assign({ which: "money", money: "", num: "" }, item);
-      this.showDetail = true;
-      var time = 60;
-      var that = this;
-      that.timer = setInterval(function() {
-        time--;
-        that.$refs.remainTime.innerHTML = time;
-        if (time == 0) {
-          that.showDetail = false;
-          clearInterval(that.timer);
-        }
-      }, 1000);
-    },
-    buySell() {
-      // this.detail = Object.assign({which:'money'},item)
-      // var value = this.detail.which == 'money'?detail.money:detail.num;
-      var value = "";
-      if (this.detail.which == "money") {
-        value = this.detail.money;
-        if (value == "") {
-          return;
-        } else if (value - 0 - this.detail.limitation.min < 0) {
-          layer.msg("不能低于最低限额");
-          return;
-        } else if (value - 0 - this.detail.limitation.max > 0) {
-          layer.msg("不能超出最大限额");
-          return;
-        }
-      } else {
-        value = this.detail.num;
-        if (value == "") {
-          return;
-        } else if (value > this.detail.surplus_number) {
-          layer.msg("不能超出最大数量");
-          return;
-        }
+    legalSend(){
+      if(this.submitPms.way == '-1'){
+        layer.msg('请选择支付方式');return;
+      } else if(this.submitPms.price == ''){
+        layer.msg('请输入价格');return;
+      } else if(this.submitPms.min_number == ''){
+        layer.msg('请输入最小数量');return;
+      } else if(this.submitPms.total_number == ''){
+        layer.msg('请输入数量');return;
+      } else if((this.submitPms.min_number-0 -this.submitPms.total_number)>0){
+        layer.msg('最小数量不能大于总数量');return;
       }
+      var pms = Object.assign({currency_id:this.currencyId},this.submitPms);
+      var i = layer.load();
       this.$http({
-        url: "/api/do_legal_deal",
-        method: "post",
-        data: { means: this.detail.which, value: value, id: this.detail.id },
-        headers: { Authorization: this.token }
+        url:'/api/legal_send',
+        method:'post',
+        data:pms,
+        headers:{Authorization:this.token}
       }).then(res => {
-        this.showDetail = false;
-        if (res.data.type == "ok") {
-          var message = res.data.message;
-          layer.msg(message.msg);
-          if (this.detail.type == "sell") {
-            this.$router.push({
-              path: "/legalPay",
-              query: { id: msg.data.id }
-            });
-          } else {
-            this.$router.push({
-              path: "/components/payCannel",
-              query: { id: msg.data.id }
-            });
-          }
+        layer.close(i);
+        layer.msg(res.data.message);
+        console.log(res);
+        this.showSubmit = false;
+        this.filterPms.wasDone = false;
+        this.filterPms.type = pms.type;
+        this.getList();
+        this.submitPms = {type:'sell',way:'-1',price:'',min_number:'',total_number:''};
+        if(res.data.type == 'ok'){
         }
-      });
-    },
-    cancel() {
-      clearInterval(this.timer);
-      this.showDetail = false;
+      })
     }
+    
+    
   }
 };
 </script>
@@ -460,6 +435,7 @@ export default {
         border-radius: 2px;
         text-align: center;
         line-height: 40px;
+        cursor: pointer;
       }
       > .flex {
         // display: flex;

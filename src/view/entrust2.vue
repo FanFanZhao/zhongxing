@@ -1,7 +1,7 @@
 <template>
-    <div class="entrust">
+    <div class="entrust clr-part">
         <div class="title">
-            <div class="tab_title">
+            <div class="tab_title clr-part">
                 <span v-for="(url,index) in urlList" :class="{'active': index == isUrl}" @click="changeType(index,url.url)">{{url.title}}</span>
             </div>
             <div class="tab_title fr ft12" v-if="isUrl == 0">
@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="content" v-show="isUrl==0" >
-            <ul class="list-title fColor2 ft12 clear">
+            <ul class="list-title fColor2 ft12 clear bdr-part">
                 <li class="fl w20">时间</li>
                 <li class="fl w12">交易对</li>
                 <li class="fl w12">方向</li>
@@ -328,7 +328,6 @@ export default {
 .content {
   padding: 0 40px 0 30px;
   height: 300px;
-  border: 1px solid rgb(204, 204, 204);
 }
 .list-title {
   line-height: 40px;
