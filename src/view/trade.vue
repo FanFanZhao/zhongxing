@@ -1,5 +1,5 @@
 <template>
-    <div class="trade">
+    <div class="trade clr-part" style="">
         <div class="title_box">
             <div class="tabtitle 1 ft16curPer">
                 <!-- <span :class="{active:show == true}">限价交易</span>
@@ -12,11 +12,11 @@
             <div class="w50 fl first brcolor">
                
                 <div class="ft14">
-                    <div class="available clear 1" v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
+                    <div class="available clear 1 " v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
                     或 <span class="redColor curPer" @click="goNext('register')">注册</span>
                     开始交易
                     </div>
-                    <div class="clear available" v-else>
+                    <div class="clear available bdr-part" v-else>
                         <span class="fl 1">可用 {{user_legal}} {{currency_name}}</span>
                         <!-- <span class="fr redColor curPer" @click="goNext('account')">充币</span> -->
                     </div>
@@ -42,11 +42,11 @@
             </div>
             <div class="w50 fl second">
                 <div class="ft14">
-                    <div class="available clear 1" v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
+                    <div class="available clear 1 bdr-part" v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
                     或 <span class="redColor curPer" @click="goNext('register')">注册</span>
                     开始交易
                     </div>
-                    <div class="clear available" v-else>
+                    <div class="clear available bdr-part" v-else>
                         <span class="fl 1">可用 {{user_currency}} {{legal_name}}</span>
                         <!-- <span class="fr redColor curPer" @click="goNext('account')">充币</span> -->
                     </div>

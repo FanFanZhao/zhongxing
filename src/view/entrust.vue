@@ -1,5 +1,5 @@
 <template>
-    <div class="entrust">
+    <div class="entrust clr-part">
         <div class="title fColor1 topshadow">
             <div class="tab_title color">
                 <span>当前委托</span>

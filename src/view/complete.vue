@@ -1,19 +1,19 @@
 <template>
-    <div class="detail">
+    <div class="detail clr-part">
         <div class="title  topshadow">
             <div class="inblock">
                 <span>全站交易</span>
             </div>
         </div>
         <div class="content" style="overflow:hidden">
-            <ul class="list-title fColor2 ft14 clear">
+            <ul class="list-title fColor2 ft14 clear bdr-part">
                 <li class="fl w12">时间</li>
                 <li class="fl w12">价格</li>
                 <li class="fl w12">交易量</li>
             </ul>
             <div class="containers scroll" v-if="deList.length>0">
                 <ul v-for="itm in deList" class="list-item color ft12">
-                    <li class="clear flex">
+                    <li class="clear flex clr-part">
                         <span class=" ">{{itm.time}}</span>
                         <span class="green">{{itm.price}}</span>
                         <span class="">{{itm.number}}</span>

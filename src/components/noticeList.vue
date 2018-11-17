@@ -1,5 +1,5 @@
 <template>
-    <div class="notice">
+    <div class="notice clr-part bdr-part">
         <!-- <indexHeader></indexHeader> -->
         <div class="account-wrap">
             <div class="account" style="width:auto">
@@ -16,7 +16,7 @@
                     </div>
                     <div>
                         <ul class="noticeList">
-                            <li class="clear curPer" v-for="item in newList" :key="item.id">
+                            <li class="clear curPer bdr-part" v-for="item in newList" :key="item.id">
                                 <div class=""  @click="goDetail(item.id)">
                                         <div class="">{{item.title}}</div>
                                         <span class="fr">{{item.update_time}}</span>

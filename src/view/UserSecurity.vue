@@ -132,9 +132,10 @@ export default {
         .then(res => {
           console.log(res);
           if (res.data.type == "ok") {
-            this.email = res.data.message.email;
+            this.email = res.data.message.email || '未绑定';
             console.log(this.email);
-            this.esrc = require("@/assets/images/success.png");
+            this.esrc = this.email == '未绑定'?require("@/assets/images/icon_error.png"):require("@/assets/images/success.png");
+            
             if (res.data.message.phone) {
               this.account = res.data.message.phone;
               this.psrc = require("@/assets/images/success.png");
