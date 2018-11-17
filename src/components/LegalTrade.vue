@@ -50,14 +50,14 @@
 		<div class="modal" v-show="shows">
 			<div class="mask" @click="closeBtn()"></div>
 			<div class="content">
-				<div class="content-list">
+				<div class="content-list layerBg">
 					<p class="title">{{classify}}{{name}}</p>
 					<p class="price">单价{{prices}}</p>
 					<div class="trade">
 						<p :class="['trade-name',{'active':types == 'trade'}]" @click="tabClassify(1)">{{name}}交易</p>
 						<p :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}数量</p>
 					</div>
-					<div class="totals-num">
+					<div class="totals-num bdr-part">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
 						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
 						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
@@ -312,6 +312,9 @@
 	}
 	.btn{
 		cursor: pointer;
+	}
+	.number{
+		background: #acafc3;
 	}
   
 	#legaltrade-box {
@@ -574,7 +577,7 @@
 							width: 48%;
 							height: 40px;
 							line-height: 40px;
-							background-color: #eee;
+							background-color: #acafc3;
 							color: #333;
 							text-align: center;
 							border-radius: 6px;
