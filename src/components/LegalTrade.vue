@@ -60,8 +60,8 @@
 					<div class="totals-num">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
 						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
-						<button class="all" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
-						<button class="all" type="button" v-else @click="allMoney();">全部卖出</button>
+						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
+						<button class="all clr-part" type="button" v-else @click="allMoney();">全部卖出</button>
 						<span class="name">{{name}}</span>
 					</div>
 					<div class="maxnum">限额{{minNum}}-{{maxNum}}</div>
@@ -310,7 +310,7 @@
 		height: 100%;
 		overflow: hidden;
 	}
-
+  
 	#legaltrade-box {
 		width: 1200px;
 		margin: 30px auto;
@@ -476,7 +476,7 @@
 					width: 400px;
 					border-radius: 10px;
 					margin: auto;
-					background-color: #fff;
+					background-color: #26292b;
 					padding: 15px;
 
 					>.title {

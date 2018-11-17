@@ -1,10 +1,10 @@
 <template>
-  <div id="legal-pay">
-    <div class="title">
+  <div id="legal-pay" class="bg-main clr-part">
+    <div class="title bg-part ft16">
       <span>请付款</span>
       <span>￥{{msg.deal_money}}</span>
     </div>
-    <div class="info">
+    <div class="info bg-part ft14">
       <div>
         <span>交易单价：</span>
         <span>{{msg.price}}</span>
@@ -27,7 +27,7 @@
       </div>
       <div>
         <span>商家账户：</span>
-        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" style="color:#2E1B85">{{msg.seller_name}}</router-link>
+        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span">{{msg.seller_name}}</router-link>
       </div>
       <div class="btns">
         <div class="btn" @click="showCancel = true">取消订单</div>
@@ -151,7 +151,7 @@ export default {
   > .title {
     background: #f8f8f8;
     margin-bottom: 20px;
-    font-size: 20px;
+    // font-size: 20px;
     line-height: 60px;
     > span {
       padding: 0 30px;
