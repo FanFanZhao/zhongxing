@@ -24,14 +24,9 @@
             <span v-else>出售</span>
             <span>{{item.currency_name}}</span>
           </div>
-          <div class="status">
-            <span  @click="gotoNext(item.id)" v-if="item.is_sure == 0">未完成 ></span>
-            <span  @click="gotoNext(item.id)" v-else-if="item.is_sure == 1">已完成 ></span>
-            <span  @click="gotoNext(item.id)" v-else-if="item.is_sure == 2">已取消 ></span>
-            <span  @click="gotoNext(item.id)"  v-else>已付款 ></span>
-          </div>
+          
         </div>
-        <div class="flex li-b">
+        <div class="flex li-b alcenter">
           <div>
             <div class="ft14">时间</div>
             <div class="ft12">{{item.create_time}}</div>
@@ -43,6 +38,12 @@
           <div>
             <div class="ft14">交易总额（{{item.currency_name}})</div>
             <div class="ft12">{{item.deal_money}}</div>
+          </div>
+          <div class="status">
+            <span  @click="gotoNext(item.id)" v-if="item.is_sure == 0">未完成 ></span>
+            <span  @click="gotoNext(item.id)" v-else-if="item.is_sure == 1">已完成 ></span>
+            <span  @click="gotoNext(item.id)" v-else-if="item.is_sure == 2">已取消 ></span>
+            <span  @click="gotoNext(item.id)"  v-else>已付款 ></span>
           </div>
         </div>
       </li>

@@ -128,7 +128,8 @@ export default {
         layer.msg(res.data.message);
         if(res.data.type == 'ok'){
           setTimeout(() => {
-            this.$router.push('/legalRecord')
+            location.reload();
+            // this.$router.push('/legalRecord')
           }, 1000);
           
         }
@@ -148,7 +149,8 @@ export default {
         layer.msg(res.data.message);
         if(res.data.type == 'ok'){
           setTimeout(() => {
-            this.$router.push('/legalRecord')
+            location.reload();
+            // this.$router.push('/legalRecord')
           }, 1000);
         }
         
@@ -167,10 +169,14 @@ export default {
   > .title {
     background: #f8f8f8;
     margin-bottom: 20px;
+    padding: 20px 0;
     // font-size: 20px;
-    line-height: 60px;
+    // line-height: 60px;
     > span {
       padding: 0 30px;
+    }
+    >div{
+      padding: 20px 30px 0;
     }
     > span:last-child {
       font-weight: 600;
