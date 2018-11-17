@@ -25,10 +25,10 @@
             <span>{{item.currency_name}}</span>
           </div>
           <div class="status">
-            <router-link :to="{path:'/legalPay',query:{id:item.id}}" v-if="item.is_sure == 0">未完成 ></router-link>
-            <router-link :to="{path:'/legalPayDetail',query:{id:item.id}}" v-else-if="item.is_sure == 1">已完成 ></router-link>
-            <router-link :to="{path:'/legalPayDetail',query:{id:item.id}}" v-else-if="item.is_sure == 2">已取消 ></router-link>
-            <router-link :to="{path:'/legalPayDetail',query:{id:item.id}}" v-else>已付款 ></router-link>
+            <span  @click="gotoNext(item.id)" v-if="item.is_sure == 0">未完成 ></span>
+            <span  @click="gotoNext(item.id)" v-else-if="item.is_sure == 1">已完成 ></span>
+            <span  @click="gotoNext(item.id)" v-else-if="item.is_sure == 2">已取消 ></span>
+            <span  @click="gotoNext(item.id)"  v-else>已付款 ></span>
           </div>
         </div>
         <div class="flex li-b">
@@ -72,7 +72,16 @@ export default {
     }
   },
   methods: {
-    
+    gotoNext(id){
+      var type=this.filterPms.type;
+      console.log(this.filterPms.type)
+      if(type=='sell'){
+        this.$router.push({path: '/legalPay2',query:{ id,type:this.filterPms.type}});
+      }else{
+        // 购买
+        this.$router.push({path: '/legalPay',query:{ id,type:this.filterPms.type}});
+      }
+    },
     getList(more = false) {
       var pms = {};
       if (!more) {
@@ -110,7 +119,8 @@ export default {
         }
       });
     }
-  }
+  },
+
 };
 </script>
 
