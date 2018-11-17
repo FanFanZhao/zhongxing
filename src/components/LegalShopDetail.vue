@@ -1,8 +1,8 @@
 <template>
   <div id="legal-shop-detail">
-    <div class="top flex bg-part clr-part">
+    <div class="top flex bg-part clr-part" v-if="info.name">
       <div class="top-t flex">
-        <div class="logo">k</div>
+        <div class="logo">{{info.name.charAt(0)}}</div>
         <div>
           <div>{{info.name}}</div>
           <div>注册时间：{{info.create_time}}</div>
@@ -22,7 +22,7 @@
           <div>完成单</div>
         </div>
         <div>
-          <div>100%</div>
+          <div>{{(info.done == 0 || info.total_number == 0)?0:((info.done-0)/(info.total-0)).toFixed(4)*100}}%</div>
           <div>完成率</div>
         </div>
       </div>
@@ -290,6 +290,7 @@ export default {
         border-radius: 50%;
         width: 50px;
         height: 50px;
+        line-height: 50px;
         background: #2e1b85;
         text-align: center;
       }

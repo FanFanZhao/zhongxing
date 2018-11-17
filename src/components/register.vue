@@ -1,5 +1,5 @@
 <template>
-    <div id="register-box">
+    <div id="register-box" class="bg-part clr-part">
         <indexHeader></indexHeader>
         <div class="reg-content">
             <div class="title">注册</div>
@@ -15,11 +15,11 @@
                     <input type="text" v-model="account">
                 </div>
                     <div class="tip" style="margin-bottom:10px">请输入验证码</div>
-                <div class="code-box">
+                <div class="code-box bdr-part">
                     <input type="text" v-model="code" class="code">
-                    <button type='button' class="code-btn redBg" @click="sendCode">发送验证码</button>
+                    <button type='button' class="code-btn purple_bg clr-part" @click="sendCode">发送验证码</button>
                 </div>
-                <button class="confirm-btn redBg" @click="checkCode" type="button">确认</button>
+                <button class="confirm-btn purple_bg" @click="checkCode" type="button">确认</button>
             </div>
             <div class="setpass" v-show="codeTrue">
                 <!-- <div class="title">设置地区</div> -->
@@ -323,11 +323,14 @@ export default {
     }
     > .tab {
       margin: 10px 0 20px;
+      cursor: pointer;
       span {
         margin: 0 20px;
       }
     }
     .code-box {
+      display: flex;
+      justify-content: space-between;
       width: 520px;
       height: 46px;
       //background-color: #1e2235;
