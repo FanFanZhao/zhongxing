@@ -2,7 +2,7 @@
     <div class="manger">
         <indexHeader></indexHeader>
         <div class="content ft14">
-            <div class="topcontent ft20 fColor1">
+            <div class="topcontent ft20 fColor1 bg-part clr-part">
                 <span class="baseColor">杠杆账户</span>
                 <span class="ft12" style="padding:0 10px">></span>
                 <span>杠杆管理</span>
