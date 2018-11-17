@@ -184,7 +184,7 @@
             </div>
         </div>
         <!--图文内容-->
-        <div id="content01" class="content01 flex alcenter   center">
+        <div id="content01" class="content01 flex alcenter   center" style="background:#fff;">
             <div class="text01 mr100 left01 animated">
               <h1 class="ft26 bold mb30">全球化的数字资产配置及交易服务</h1>
               <p class="ft16 bold mb10">遍布全球的项目拓展及运营管理体系</p>
@@ -203,7 +203,7 @@
             </div>
             
         </div>
-        <div class="content01 flex alcenter grayBg center">
+        <div class="content01 flex alcenter grayBg center" style="background:#fff;">
             <div class="text01 mr100">
               <h1 class="ft26 bold mb30">依托4年的数字资产安全风控经验</h1>
               <p class="ft16 bold mb10">安全稳定运营数字资产交易所超过四年</p>
@@ -229,7 +229,7 @@
             <img class="imgs05" src="../assets/images/imgs05.png" />
         </div>
         <!--马上交易-->
-        <div class="go_transfer clr-part">
+        <div class="go_transfer">
            <h1 class="bold ft24 mb30 tc">马上交易</h1>
            <p class="ft14 mb30 tc">欢迎加入我们的团队，共同提升，常悦更好的自己，创造更好的人生价值</p>
            <div class="login_register flex alcenter center" v-if="!account_number.length">
