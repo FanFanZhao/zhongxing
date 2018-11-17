@@ -204,12 +204,13 @@ export default {
         time--;
       }, 1000);
       let data = { user_string: this.account };
-
+      var loa = layer.load();
       this.$http({
         url: "/api/" + url,
         method: "post",
         data: data
       }).then(res => {
+        layer.close(loa);
         //console.log(res);
         layer.msg(res.data.message);
       });
@@ -232,12 +233,13 @@ export default {
         } else {
           data = { email_code: this.code };
         }
-       
+       var loa = layer.load();
         this.$http({
           url: "/api/" + url,
           method: "post",
           data: data
         }).then(res => {
+          layer.close(loa);
           layer.msg(res.data.message);
 
           if (res.data.type == "ok") {
@@ -277,12 +279,13 @@ export default {
       data.re_password = this.repwd;
       data.extension_code = this.invite;
       //console.log(data);return;
-      
+      var loa = layer.load();
       this.$http({
         url: "/api/" + "user/register",
         data: data,
         method: "post"
       }).then(res => {
+        layer.close(loa);
         layer.msg(res.data.message);
         if (res.data.type == "ok") {
           this.$router.push("/components/login");
@@ -296,6 +299,9 @@ export default {
 <style lang='scss'>
 #register-box {
   min-height: 1050px;
+  button{
+    border-radius: 2px;
+  }
   .tip {
     margin: 10px 0;
     // color: #61688a;

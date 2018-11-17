@@ -57,12 +57,12 @@
 
 			var theme=window.localStorage.getItem('theme') || '';
 			if(theme=='dark'){
-				that.bg='#fff';
-				that.grid='#ccc';
+				that.bg='#ffffff';
+				that.grid='#cccccc';
 				that.csspath='bundles/newdark.css';
 				that.createWidget();
 			}else{
-				that.bg='#181b2a ';
+				that.bg='#181b2a';
 				that.grid='#1E2740';
 				that.csspath='bundles/new.css'
 				that.createWidget();
@@ -74,8 +74,8 @@
 					return;
 				}
 				if(data=='dark'){
-					that.bg='#fff';
-					that.grid='#ccc';
+					that.bg='#ffffff';
+					that.grid='#cccccc';
 					that.csspath='bundles/newdark.css'
 					that.createWidget();
 					
