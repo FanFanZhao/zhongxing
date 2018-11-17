@@ -210,7 +210,7 @@ export default {
 .code-box {
   width: 520px;
   border: 1px solid #ccc;
-  border-radius: 2px;
+  border-radius: 4px;
   background: #fff;
 }
 .code-box .input-main {

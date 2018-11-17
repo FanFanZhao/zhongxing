@@ -285,7 +285,7 @@ export default {
   border: 1px solid #ccc;
   /* background: #1e2235; */
   background: #fff;
-  border-radius: 2px;
+  border-radius: 4px;
 }
 .code-box .input-main {
   width: 419px;
