@@ -1,7 +1,7 @@
 <template>
   <div id="myshops" class=" clr-part">
     <div class="title clr-part bg-part">我的店铺</div>
-    <div class="list-box clr-part bg-part">
+    <div class="list-box ft14 clr-part bg-part">
       <div class="list-header flex">
         <div>名称</div>
         <div>所属法币</div>
