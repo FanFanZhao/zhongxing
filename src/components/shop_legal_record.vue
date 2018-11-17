@@ -77,8 +77,8 @@ export default {
       if (!more) {
         this.filterPms.page = 1;
       }
-    //   pms.id = this.filterPms.id;
-     pms.id = '55'
+      pms.id = this.filterPms.id;
+    //  pms.id = '55'
       pms.page = this.filterPms.page;
       if (this.filterPms.type != "none") {
         pms.type = this.filterPms.type;
