@@ -11,13 +11,13 @@
                 <span>数量({{legal_name}})</span>
             </div>
             <ul class="list-item ft12 tc">
-                <li class="curPer ceilColor" v-for="(out,index) in outlist" @click="price(out.price)">
+                <li :class="['curPer','ceilColor','bg-hov',{'bg-evev':index%2 != 0}]" v-for="(out,index) in outlist" @click="price(out.price)" :key="index">
                     <span >卖 {{outlist.length-index}}</span>
                     <span style="font-weight:600">{{out.price}}</span>
                     <span>{{out.number}}</span>
                 </li>
                 <div class="line bdr-part"></div>
-                 <li class="curPer redColor" v-for="(buy,index) in inlist" @click="price(buy.price)">
+                 <li class="curPer redColor bg-hov" v-for="(buy,index) in inlist" @click="price(buy.price)">
                     <span>买 {{index+1}}</span>
                     <span style="font-weight:600">{{buy.price}}</span>
                     <span>{{buy.number}}</span>
@@ -214,12 +214,7 @@ export default {
 .red {
   color: #cc4951;
 }
-.list-item li:nth-child(odd) {
-  background: #f8f8f8;
-}
-.list-item li:hover {
-  background: #ccc;
-}
+
 .line {
   height: 5px;
   border-bottom: 1px solid #ccc;

@@ -73,7 +73,9 @@ export default {
         this.extension_code = msg.extension_code;
       }
     });
-    this.init();
+    if(this.token){
+      this.init();
+    }
   },
   mounted() {
     eventBus.$on("toHeader", msg => {

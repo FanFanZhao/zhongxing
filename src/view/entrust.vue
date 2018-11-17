@@ -105,6 +105,9 @@ export default {
         },
         // 撤销
         revoke(indexs,id){
+            if(!this.token){
+                return;
+            }
             console.log(indexs)
             var that =this;
             var id = id;
@@ -141,6 +144,7 @@ export default {
             });
         },
         getData(){
+            if(!this.token){return;}
             var that = this;
             var url = that.url;
             var page = that.page;
