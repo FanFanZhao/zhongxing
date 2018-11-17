@@ -19,7 +19,7 @@
                     <input type="text" v-model="code" class="code">
                     <button type='button' class="code-btn redBg " @click="sendCode">发送验证码</button>
                 </div>
-                <button class="confirm-btn redbg" @click="checkCode" type="button">确认</button>
+                <button class="confirm-btn redBg" @click="checkCode" type="button">确认</button>
             </div>
             <div class="setpass" v-show="codeTrue">
                 <!-- <div class="title">设置地区</div> -->
