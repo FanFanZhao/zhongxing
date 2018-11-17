@@ -1,12 +1,12 @@
 <template>
-    <div class="box">
+    <div class="box clr-part">
         <indexHeader></indexHeader>
         <div class="account">
-            <div class="topcontent ft16 redColor bgf8">
+            <div class="topcontent ft16 redColor bgf8 bg-part">
                 <span ><span class="">资产></span> 提币地址管理</span>
             </div>
-            <div class="content">
-               <div class="con_box bgf8">
+            <div class="content ">
+               <div class="con_box bgf8  bg-part">
                   
                    <div class="contentBK 1  pdlr20 pdtb20 ft12">
                        <div class="flex alcenter">
@@ -29,11 +29,11 @@
                        </div>
                    </div>
                </div>
-               <div class="con_box mt15 ">
-                   <div class="account_title ttBk white flex">
+               <div class="con_box mt15  bg-part">
+                   <div class="account_title ttBk white flex bg-part">
                        <div class="ml20">地址列表</div>
                    </div>
-                   <div class="contentBK 1  pdlr20 pdtb20 ft12 bgf8 rec">
+                   <div class="contentBK 1  pdlr20 pdtb20 ft12 bgf8 rec bg-part">
                        <div class="flex alcenter">
                            <span class="flex1">币种</span>
                            <span class="flex1">提币地址</span>
