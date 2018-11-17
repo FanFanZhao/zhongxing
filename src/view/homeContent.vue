@@ -50,6 +50,9 @@
             <div slot="button-prev" class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide"></div>
             <div slot="button-next" class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide"></div>
         </div> -->
+      <div style="background:#fff!important;color:#333!important">
+
+     
         <div class="notice">
            <ul class="flex alcenter center notice_ul">
                <li v-for="item in noticeList" :key="item.id" class="fl notice_li"><a class="notice_a ft14" :data-id='item.id'>{{item.name}}</a></li>
@@ -245,7 +248,7 @@
             <p>数字资产是创新的投资产品，价格波动较大，具有较高的投资风险，请您投资前 对数字资产充分认知，理性判断自己的投资能力，审慎做出投资决策。</p>
         </div> -->
     </div>
-    
+     </div>
 </template>
 
 

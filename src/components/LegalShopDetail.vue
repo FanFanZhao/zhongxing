@@ -1,7 +1,7 @@
 <template>
   <div id="legal-shop-detail">
-    <div class="top flex bg-part clr-part" v-if="info.name">
-      <div class="top-t flex">
+    <div class="top flex bg-part clr-part ft14" v-if="info.name">
+      <div class="top-t flex bdr-part">
         <div class="logo">{{info.name.charAt(0)}}</div>
         <div>
           <div>{{info.name}}</div>
@@ -22,7 +22,7 @@
           <div>完成单</div>
         </div>
         <div>
-          <div>{{(info.done == 0 || info.total_number == 0)?0:((info.done-0)/(info.total-0)).toFixed(4)*100}}%</div>
+          <div>{{(info.done == 0 || info.total_number == 0)?0:(((info.done-0)/(info.total-0)-0)*100).toFixed(4)}}%</div>
           <div>完成率</div>
         </div>
       </div>
@@ -30,7 +30,7 @@
         <div @click="showSubmit = true">发布</div>
       </div>
     </div>
-    <div class="md flex clr-part bg-part">
+    <div class="md flex clr-part bg-part ft14">
       <div>
         <span>邮箱认证</span>
         <img v-if="info.prove_email == 1" src="../assets/images/success.png" alt="">
@@ -52,7 +52,7 @@
         <img v-else src="../assets/images/icon_error.png" alt="">
       </div>
     </div>
-    <div class="list bg-part clr-part">
+    <div class="list bg-part clr-part ft14">
       <div class="tab">
         <div class="flex">
           <div>类型：</div>
@@ -78,7 +78,7 @@
         <div>操作</div>
       </div>
       <ul :class="[showWhich+'-box']" >
-        <li v-for="(item,index) in list" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']">
+        <li v-for="(item,index) in list" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']" class="bdr-part">
           <div class="w10">{{item.currency_name}}</div>
           <div class="w15">{{item.surplus_number}}</div>
           <div class="w25">{{(item.limitation.min-0).toFixed(4)}}-{{(item.limitation.max-0).toFixed(4)}}</div>
@@ -220,15 +220,19 @@ export default {
       });
     },
     changeOrder(url, id) {
+      var i = layer.load();
       this.$http({
         url: "/api/" + url,
         method: "post",
         data: { id: id },
         headers: { Authorization: this.token }
       }).then(res => {
+        layer.close(i)
         if (res.data.type == "ok") {
           layer.msg(res.data.message);
           this.getList();
+        }else{
+          layer.msg(res.data.message);
         }
       });
     },
