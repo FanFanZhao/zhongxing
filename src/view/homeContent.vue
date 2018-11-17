@@ -181,7 +181,7 @@
             </div>
         </div>
         <!--图文内容-->
-        <div id="content01" class="content01 flex alcenter grayBg center">
+        <div id="content01" class="content01 flex alcenter  bg-main clr-part center">
             <div class="text01 mr100 left01 animated">
               <h1 class="ft26 bold mb30">全球化的数字资产配置及交易服务</h1>
               <p class="ft16 bold mb10">遍布全球的项目拓展及运营管理体系</p>
@@ -190,7 +190,7 @@
             </div>
             <img class="imgs01" src="../assets/images/imgs01.png" />
         </div>
-        <div class="content01 flex alcenter center">
+        <div class="content01 flex alcenter center bg-main clr-part">
           <img class="imgs02" src="../assets/images/imgs02.png" />
             <div class="text01 ml100">
               <h1 class="ft26 bold mb30">SMART-Chain资产评估模型</h1>
@@ -210,7 +210,7 @@
             </div>
             <img class="imgs03" src="../assets/images/imgs03.png" />
         </div>
-        <div class="content01 flex alcenter center bg01">
+        <div class="content01 flex alcenter center bg01   ">
           <img class="imgs04" src="../assets/images/imgs04.png" />
             <div class="text01 ml100">
               <h1 class="ft26 bold gray9 mb30">香港  首尔  新加坡  东京</h1>
@@ -226,11 +226,11 @@
             <img class="imgs05" src="../assets/images/imgs05.png" />
         </div>
         <!--马上交易-->
-        <div class="go_transfer">
+        <div class="go_transfer clr-part">
            <h1 class="bold ft24 mb30 tc">马上交易</h1>
            <p class="ft14 mb30 tc">欢迎加入我们的团队，共同提升，常悦更好的自己，创造更好的人生价值</p>
            <div class="login_register flex alcenter center" v-if="!account_number.length">
-             <div class="login_btn mr60" @click="go_login">登录</div>
+             <div class="login_btn mr60 bdr-part" @click="go_login">登录</div>
              <div class="register_btn white" @click="go_register">注册</div>
            </div>
         </div>

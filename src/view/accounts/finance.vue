@@ -1,6 +1,6 @@
 <template>
-    <div class="bgf8">
-        <div class="header bgf8">
+    <div class="bgf8 bg-part clr-part main-wrap">
+        <div class="header bgf8 bg-part">
             <p class="fl">总资产折合：<span class="asset_num">0.0000000</span><span class="asset_name"> BTC</span><span class="ft12 "> ≈ <span>0.00</span>CNY</span>
             <!-- <label class="min_lab ft14"><input type="checkbox" />隐藏小额资产</label><i></i><label class="inp_lab"><input  type="text"/><i></i></label> -->
             </p>
@@ -20,7 +20,7 @@
            </div>
            <ul class="content_ul">
                <li v-for="(item,index) in asset_list" :key="index">
-                    <div class="content_li flex alcenter between">
+                    <div class="content_li flex alcenter between bdr-part">
                    <p class="flex1 tc">{{item.currency_name}}</p>
                    <p class="flex1 tc">{{item.change_balance}}</p>
                    <p class="flex1 tc">{{item.lock_change_balance}}</p>
@@ -34,7 +34,7 @@
                    </p>
                    </div>
                    <!--充币区-->
-                   <div class="hide_div" v-if="index == active">
+                   <div class="hide_div bdr-part" v-if="index == active">
                        <p class="fColor2 ft12">充币地址</p>
                        <p class="mt50 mb50"><span class="ft18  excharge_address" :class="{'bg':flags}">{{excharge_address}}</span><span id="copy" @click="copy" class="copy ft14">复制</span><span class="ewm_wrap"><span class="ewm ft14" @click="show_ewm">二维码</span>
                          <div class="ewm_img" id="code" :class="{'hide':isHide}">
@@ -49,12 +49,12 @@
                        </ul>
                    </div>
                    <!--提币区-->
-                   <div class="hide_div" v-if="index == active01">
+                   <div class="hide_div bdr-part" v-if="index == active01">
                        <p class="fColor2 ft12 mb15">提币地址</p>
-                       <input class="address_inp  mb30" type="text" v-model="address" />
+                       <input class="address_inp clr-part  mb30" type="text" v-model="address" />
                        <p class="fColor2 ft12 mb15 flex between alcenter"><span>数量</span><span>可用：<span class="use_num">{{balance}} {{coinname}}</span><span></span></span></p>
                        <label class="num_lab flex between mb30">
-                            <input class="" type="text" :placeholder="min_number" v-model="number" />
+                            <input class="clr-part" type="text" :placeholder="min_number" v-model="number" />
                             <span>{{coinname}}</span>
                         </label>
                        <div class="flex mb50">
@@ -63,13 +63,13 @@
                                    <span>手续费</span>
                                    <span>范围：<span>{{ratenum}}</span></span>
                                </p>
-                               <label class="range_lab flex alcenter between"><input class="" disabled  type="text" v-model="rate" /><span>{{coinname}}</span></label>
+                               <label class="range_lab flex alcenter between"><input class="clr-part" disabled  type="text" v-model="rate" /><span>{{coinname}}</span></label>
                            </div>
                            <div class="right_inp_wrap flex1">
                                <p class=" mb15">
                                    <span class="fColor2 ft12">到账数量</span>
                                </p>
-                               <label class="get_lab flex alcenter between"><input class="" disabled v-model="reachnum" type="number" /><span>{{coinname}}</span></label>
+                               <label class="get_lab flex alcenter between"><input class="clr-part" disabled v-model="reachnum" type="number" /><span>{{coinname}}</span></label>
                            </div>
                        </div>
                        <div class="flex">
@@ -84,7 +84,7 @@
                        </div>
                    </div>
                    <!--记录区-->
-                   <div class="hide_div rec-box" v-if="index == active02">
+                   <div class="hide_div bdr-part rec-box" v-if="index == active02">
                        <div class="rec-con">
                         <div class="rec-title">
                             <span>数量</span>
@@ -672,6 +672,10 @@ export default {
         &:hover{
             cursor: pointer;
         }
+    }
+    .main-wrap{
+        height: 820px;
+        overflow: auto;
     }
 </style>
 
