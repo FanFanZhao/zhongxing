@@ -50,7 +50,7 @@ export default {};
       width: 150px;
       line-height: 40px;
       text-align: center;
-      min-height: 200px;
+      min-height: 800px;
       img{
         width: 20px;
         height: 20px;

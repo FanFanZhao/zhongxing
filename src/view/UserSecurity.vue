@@ -181,6 +181,7 @@ $fColor2: #637085;
   padding-left: 34px;
   padding-right: 34px;
   padding-top: 34px;
+  min-height: 800px;
   .bar-bottom {
     width: 320px;
     height: 8px;

@@ -276,7 +276,7 @@ export default {
         list.now_price = "0.0";
       }
 
-      let arr = list.now_price.split(".")[1];
+      let arr = (list.now_price+'').split(".")[1];
 
       this.$store.state.priceScale = Math.pow(10, arr.length); //根据最新价小数点后几位改变价格精度
       this.$store.state.symbol = list.currency_name + "/" + this.exName; //交易对
