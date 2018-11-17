@@ -38,7 +38,7 @@
 					<div class="flex alcenter">{{item.price}}</div>
 					<div class="flex alcenter">{{item.way_name}}</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type)">
-						<button>{{classify}}{{name}}</button>
+						<button class="btn">{{classify}}{{name}}</button>
 					</div>
 				</li>
 			</ul>
@@ -309,6 +309,9 @@
 		width: 100%;
 		height: 100%;
 		overflow: hidden;
+	}
+	.btn{
+		cursor: pointer;
 	}
   
 	#legaltrade-box {
