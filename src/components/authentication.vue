@@ -1,8 +1,8 @@
 <template>
     <div class="account-box wrap fColor1 bg-part clr-part">
         <div class="title">
-                身份认证
-                
+                 身份认证
+                <span class="fr  curPer" @click="goBefore">&lt;&lt;返回</span>  
         </div>
         <div class="main-content mt20">
             <div v-show="review_status==0">
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="updata tc">
-                    <input type="button" value="提交" @click="updata">
+                    <input type="button" class="redBg" value="提交" @click="updata">
                 </div>
             </div>
             <div  v-show="review_status==1">
@@ -66,6 +66,9 @@ export default {
         this.token=localStorage.getItem('token')
     },
     methods:{
+        goBefore(){
+            this.$router.back(-1);
+        },
         file1(){
             var that = this;
             var reader = new FileReader();
@@ -143,13 +146,19 @@ export default {
                 headers: {'Authorization':  that.token}    
             }).then(res=>{
                 console.log(res);
-                    layer.msg(res.data.message)
+                    
+                    if(res.data.type=='ok'){
+                        layer.msg(res.data.message)
+                        that.$router.back(-1);
+                    }
+                   
 
                 }).catch(error=>{
                     
             })  
         },
         Info(){
+            var i =layer.load();
             var that = this;
             this.$http({
                 url: '/api/'+'user/info',
@@ -157,6 +166,7 @@ export default {
                 data:{},  
                 headers: {'Authorization':  that.token}   
             }).then(res=>{
+                layer.close(i);
                 that.review_status=res.data.message.review_status;
                 }).catch(error=>{
                     
@@ -177,7 +187,7 @@ export default {
             width: 100%;
             line-height: 60px;
             border-radius: 4px;
-            padding-left: 20px;
+            padding:0 20px;
         }
         .main-content{
             min-height: 1080px;
@@ -229,7 +239,7 @@ export default {
                     margin: 0 auto;
                     margin-left: 100px;
                     margin-top: 60px;
-                    background: #5697f4
+                    // background: #5697f4
                 }
             }
             .au-statue{
