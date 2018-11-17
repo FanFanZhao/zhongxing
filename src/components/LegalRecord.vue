@@ -1,7 +1,7 @@
 <template>
-  <div id="legal-record">
-    <div class="title">法币交易记录</div>
-    <div class="filter-box">
+  <div id="legal-record" class="clr-part bg-main">
+    <div class="title bg-part ft16">法币交易记录</div>
+    <div class="filter-box bg-part ft14">
       <div>
         <span>交易类型：</span>
         <span :class="{'select':filterPms.type == 'sell'}" @click="filterPms.type = 'sell';getList()">购买</span>
@@ -12,42 +12,43 @@
         <span :class="{'select':filterPms.isSure == 0}" @click="filterPms.isSure = 0;getList()">未完成</span>
         <span :class="{'select':filterPms.isSure == 1}" @click="filterPms.isSure = 1;getList()">已完成</span>
         <span :class="{'select':filterPms.isSure == 2}" @click="filterPms.isSure = 2;getList()">已取消</span>
+        <span :class="{'select':filterPms.isSure == 3}" @click="filterPms.isSure = 3;getList()">已付款</span>
       </div>
     </div>
     
-    <ul>
-      <li v-for="(item,index) in list" :key="index">
-        <div class="flex li-t">
+    <ul class="bg-part">
+      <li class="bdr-part" v-for="(item,index) in list" :key="index">
+        <div class="flex li-t ft14">
           <div>
             <span v-if="item.type == 'sell'">购买</span>
             <span v-else>出售</span>
             <span>{{item.currency_name}}</span>
           </div>
           <div class="status">
-            <router-link :to="{path:'/legalPay',query:{id:item.id}}" v-if="item.is_sure == 0">未完成 ></router-link>
-            <router-link :to="{path:'/legalPayDetail',query:{id:item.id}}" v-else-if="item.is_sure == 1">已完成 ></router-link>
-            <router-link :to="{path:'/legalPayDetail',query:{id:item.id}}" v-else-if="item.is_sure == 2">已取消 ></router-link>
-            <router-link :to="{path:'/legalPayDetail',query:{id:item.id}}" v-else>已付款 ></router-link>
+            <span  @click="gotoNext(item.id)" v-if="item.is_sure == 0">未完成 ></span>
+            <span  @click="gotoNext(item.id)" v-else-if="item.is_sure == 1">已完成 ></span>
+            <span  @click="gotoNext(item.id)" v-else-if="item.is_sure == 2">已取消 ></span>
+            <span  @click="gotoNext(item.id)"  v-else>已付款 ></span>
           </div>
         </div>
         <div class="flex li-b">
           <div>
-            <div>时间</div>
-            <div>{{item.create_time}}</div>
+            <div class="ft14">时间</div>
+            <div class="ft12">{{item.create_time}}</div>
           </div>
           <div>
-            <div>数量</div>
-            <div>{{item.number}}</div>
+            <div class="ft14">数量</div>
+            <div class="ft12">{{item.number}}</div>
           </div>
           <div>
-            <div>交易总额（{{item.currency_name}})</div>
-            <div>{{item.deal_money}}</div>
+            <div class="ft14">交易总额（{{item.currency_name}})</div>
+            <div class="ft12">{{item.deal_money}}</div>
           </div>
         </div>
       </li>
       
     </ul>
-    <div class="more" @click="getList(true)" v-if="list.length">加载更多</div>
+    <div class="more bg-part" @click="getList(true)" v-if="list.length">加载更多</div>
    
     <div v-else class="nomore">暂无更多</div>
      
@@ -71,7 +72,16 @@ export default {
     }
   },
   methods: {
-    
+    gotoNext(id){
+      var type=this.filterPms.type;
+      console.log(this.filterPms.type)
+      if(type=='sell'){
+        this.$router.push({path: '/legalPay2',query:{ id,type:this.filterPms.type}});
+      }else{
+        // 购买
+        this.$router.push({path: '/legalPay',query:{ id,type:this.filterPms.type}});
+      }
+    },
     getList(more = false) {
       var pms = {};
       if (!more) {
@@ -109,7 +119,8 @@ export default {
         }
       });
     }
-  }
+  },
+
 };
 </script>
 
@@ -119,9 +130,9 @@ export default {
   margin: 30px auto;
   > .title {
     margin-bottom: 30px;
-    padding: 0 30px;
+    padding: 0 20px;
     line-height: 50px;
-    font-size: 20px;
+    // font-size: 20px;
     background: #f8f8f8;
   }
   > .filter-box {
@@ -142,10 +153,14 @@ export default {
     padding: 10px 30px;
     background: #f8f8f8;
     li {
+      padding: 10px 0;
       > div {
         justify-content: space-between;
         line-height: 30px;
       }
+    }
+    >li:first-child{
+      border: none;
     }
     > li:nth-child(n + 2) {
       border-top: 1px solid #ccc;
@@ -165,5 +180,10 @@ export default {
 }
 .log_wrap{
   overflow: auto;
+}
+.status{
+      background: #272f5d;
+    padding: 0 6px;
+    border-radius: 3px;
 }
 </style>

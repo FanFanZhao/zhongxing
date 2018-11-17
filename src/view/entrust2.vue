@@ -1,7 +1,7 @@
 <template>
-    <div class="entrust">
+    <div class="entrust clr-part">
         <div class="title">
-            <div class="tab_title">
+            <div class="tab_title clr-part">
                 <span v-for="(url,index) in urlList" :class="{'active': index == isUrl}" @click="changeType(index,url.url)">{{url.title}}</span>
             </div>
             <div class="tab_title fr ft12" v-if="isUrl == 0">
@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="content" v-show="isUrl==0" >
-            <ul class="list-title fColor2 ft12 clear">
+            <ul class="list-title fColor2 ft12 clear bdr-part">
                 <li class="fl w20">时间</li>
                 <li class="fl w12">交易对</li>
                 <li class="fl w12">方向</li>
@@ -42,7 +42,7 @@
             </div>
         </div>
         <div class="content" v-show="isUrl==1">
-            <ul class="list-title fColor2 ft12 clear">
+            <ul class="list-title fColor2 ft12 clear bdr-part">
                 <li class="fl w20">时间</li>
                 <li class="fl w10">交易对</li>
                 <li class="fl w8">数量</li>
@@ -152,6 +152,9 @@ export default {
       this.getHistory();
     },
     revoke(id) {
+      if(!this.token){
+        return;
+      }
       var that = this;
       layer.confirm("确认要删除吗？", ["确定", "取消"], () => {
         // var id = id;
@@ -191,6 +194,9 @@ export default {
     getdata(url, type) {
       console.log(type);
       var page = this.page;
+      if(!this.token){
+        return;
+      }
       this.$http({
         url: "/api/" + url,
         method: "post",
@@ -255,6 +261,9 @@ export default {
     },
     //历史委托
     getHistory() {
+      if(!this.token){
+        return;
+      }
       var page01 = this.page01;
       this.$http({
         url: "/api/" + "transaction_complete",
@@ -328,7 +337,6 @@ export default {
 .content {
   padding: 0 40px 0 30px;
   height: 300px;
-  border: 1px solid rgb(204, 204, 204);
 }
 .list-title {
   line-height: 40px;

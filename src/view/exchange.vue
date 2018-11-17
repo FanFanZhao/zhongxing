@@ -1,8 +1,8 @@
 <template>
-    <div class="exchange" style="margin-top:30px">
+    <div class="exchange clr-part " style="margin-top:30px">
 		<!-- <div class="title fColor1">交易所</div> -->
         <div class="content">
-            <div class="new_price">
+            <div class="new_price bdr-part">
                 <span class="ft14">最新价 {{newData}}{{currency_name}}</span>
             </div>
             <div class="exchange_title ft14 clear tc">
@@ -11,13 +11,13 @@
                 <span>数量({{legal_name}})</span>
             </div>
             <ul class="list-item ft12 tc">
-                <li class="curPer ceilColor" v-for="(out,index) in outlist" @click="price(out.price)">
+                <li :class="['curPer','ceilColor','bg-hov',{'bg-evev':index%2 != 0}]" v-for="(out,index) in outlist" @click="price(out.price)" :key="index">
                     <span >卖 {{outlist.length-index}}</span>
                     <span style="font-weight:600">{{out.price}}</span>
                     <span>{{out.number}}</span>
                 </li>
-                <div class="line"></div>
-                 <li class="curPer redColor" v-for="(buy,index) in inlist" @click="price(buy.price)">
+                <div class="line bdr-part"></div>
+                 <li class="curPer redColor bg-hov" v-for="(buy,index) in inlist" @click="price(buy.price)">
                     <span>买 {{index+1}}</span>
                     <span style="font-weight:600">{{buy.price}}</span>
                     <span>{{buy.number}}</span>
@@ -214,12 +214,7 @@ export default {
 .red {
   color: #cc4951;
 }
-.list-item li:nth-child(odd) {
-  background: #f8f8f8;
-}
-.list-item li:hover {
-  background: #ccc;
-}
+
 .line {
   height: 5px;
   border-bottom: 1px solid #ccc;

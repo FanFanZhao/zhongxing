@@ -1,5 +1,5 @@
 <template>
-    <div class="main bgf8">
+    <div class="main bgf8 bg-part clr-part">
         <p class="legal_name">{{legal_name}}</p>
         <div class="legalAccount_msg flex between">
           <div>
@@ -25,7 +25,7 @@
                <span class="ft14">记录</span>
                <span class="ft14">时间</span>
            </p>
-           <div class="log_wrap">
+           <div class="log_wrap bdr-part">
            <ul>
               <li class="flex around ft12" v-for="(item,index) in recData" :key="index">
                   <span class="flex1 ft12 ptb tc">{{item.change}}</span>

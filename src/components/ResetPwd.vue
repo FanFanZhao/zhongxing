@@ -1,6 +1,6 @@
 <template>
 <div id="reset-pwd">
-    <div class="contentBK">
+    <div class="contentBK clr-part bg-main">
         <div class="content-wrap">
             <div class="account">
                 <div class="main">
@@ -19,7 +19,7 @@
                     </div>
                      <div class="register-input">
                         <span class="register-item">请输入验证码</span>
-                        <div class="code-box">
+                        <div class="code-box bdr-part">
                             <input type="text" class="input-main input-content" maxlength="16" v-model="code">
                             <button type="button" class="redBg" @click="sendCode">{{resetSeconds}}</button>
                         </div>
@@ -218,9 +218,13 @@ export default {
   font-size: 14px;
 }
 .code-box {
-  border-radius: 2px;
+  border-radius: 4px;
   border: 1px solid #ccc;
   width: 520px;
+  background: #fff;
+}
+button{
+  border-radius: 2px;
 }
 .code-box input {
   width: 406px;

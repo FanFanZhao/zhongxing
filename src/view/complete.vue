@@ -1,19 +1,19 @@
 <template>
-    <div class="detail">
+    <div class="detail clr-part">
         <div class="title  topshadow">
             <div class="inblock">
                 <span>全站交易</span>
             </div>
         </div>
         <div class="content" style="overflow:hidden">
-            <ul class="list-title fColor2 ft14 clear">
+            <ul class="list-title fColor2 ft14 clear bdr-part">
                 <li class="fl w12">时间</li>
                 <li class="fl w12">价格</li>
                 <li class="fl w12">交易量</li>
             </ul>
             <div class="containers scroll" v-if="deList.length>0">
                 <ul v-for="itm in deList" class="list-item color ft12">
-                    <li class="clear flex">
+                    <li class="clear flex clr-part bg-hov">
                         <span class=" ">{{itm.time}}</span>
                         <span class="green">{{itm.price}}</span>
                         <span class="">{{itm.number}}</span>
@@ -119,11 +119,11 @@ export default {
 }
 </script>
 <style scoped>
-.title{height: 48px;line-height: 46px;padding: 0 40px 0 30px;}
-.tab_title{display: inline-block;line-height: 46px;height: 46px;}
+.title{height: 48px;line-height: 40px;padding: 0 10px;}
+.tab_title{display: inline-block;line-height: 30px;height: 30px;}
 .tab_title span{cursor: pointer;}
 .tab_title span:not(:last-child) {margin-right: 40px;}
-.content{padding: 0 40px 0 30px;height: 330px;}
+.content{padding: 0 10px;height: 330px;}
 .list-title{line-height: 40px; border-bottom: 1px solid #ccc;height: 40px;}
 .list-title li{
     width: 33%;
@@ -131,10 +131,10 @@ export default {
 }
 .no_data{padding: 50px 0;}
 .containers{height: 260px;overflow: auto;}
-.list-item li{line-height: 45px; display: flex;}
+.list-item li{line-height: 30px; display: flex;}
 .list-item li span{display: inline-block; float: left; width: 33.3%;text-align: center;}
 
-.list-item li:hover{background-color: #eee; color: #de5959;}
+/* .list-item li:hover{background-color: #eee; color: #de5959;} */
 .list-item li span.green{color: #36a792}
 .containers ul li{
     display: flex;

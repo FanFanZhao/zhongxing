@@ -1,7 +1,7 @@
 <template>
-	<div id="legaltrade-box">
-		<div class="buy-sell flex">
-			<div class="buy-box">
+	<div id="legaltrade-box" class="clr-part">
+		<div class="buy-sell flex bg-part">
+			<div class="buy-box bdr-part">
 				<div class="title">购买</div>
 				<ul :class="['flex',{'now':type == 'sell'}]">
 					<li v-for="(coin,index) in legals" :key="index" :class="{'current':coin.id == id}" @click="changeClassify(coin.id,1,coin.name)">{{coin.name}}</li>
@@ -15,8 +15,8 @@
 			</div>
 			<div class="record light_blue" @click="recordList()">订单记录</div>
 		</div>
-		<div class="list-box">
-			<div class="list-title flex">
+		<div class="list-box bg-part">
+			<div class="list-title flex ft14">
 				<div>商家</div>
 				<div>数量</div>
 				<div>限额</div>
@@ -24,8 +24,8 @@
 				<div>支付方式</div>
 				<div>操作</div>
 			</div>
-			<ul class="list">
-				<li v-for="(item,index) in list" :key="index" class="flex">
+			<ul class="list ft12">
+				<li v-for="(item,index) in list" :key="index" class="flex bdr-part">
 					<div class="flex alcenter">
 						<img :src="url+'upload/'+item.currency_logo" alt="">
 						<div class="flex column center">
@@ -38,7 +38,7 @@
 					<div class="flex alcenter">{{item.price}}</div>
 					<div class="flex alcenter">{{item.way_name}}</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type)">
-						<button>{{classify}}{{name}}</button>
+						<button class="btn">{{classify}}{{name}}</button>
 					</div>
 				</li>
 			</ul>
@@ -60,8 +60,8 @@
 					<div class="totals-num">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
 						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
-						<button class="all" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
-						<button class="all" type="button" v-else @click="allMoney();">全部卖出</button>
+						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
+						<button class="all clr-part" type="button" v-else @click="allMoney();">全部卖出</button>
 						<span class="name">{{name}}</span>
 					</div>
 					<div class="maxnum">限额{{minNum}}-{{maxNum}}</div>
@@ -310,13 +310,18 @@
 		height: 100%;
 		overflow: hidden;
 	}
-
+	.btn{
+		cursor: pointer;
+	}
+  
 	#legaltrade-box {
 		width: 1200px;
 		margin: 30px auto;
 
 		>.buy-sell {
 			position: relative;
+			padding: 20px 20px 20px 0;
+			border-radius: 3px;
 			>.buy-box {
 				padding: 20px;
 				border-right: 1px solid #ccc;
@@ -354,7 +359,7 @@
 				cursor: pointer;
 				font-size: 16px;
 				position: absolute;
-				right: 0;
+				right: 20px;
 				text-align: right;
 				top: 30px;
 			}
@@ -362,6 +367,8 @@
 
 		>.list-box {
 			margin-top: 20px;
+			padding: 20px;
+			border-radius: 3px;
 
 			>.list-title {
 				>div {
@@ -472,7 +479,7 @@
 					width: 400px;
 					border-radius: 10px;
 					margin: auto;
-					background-color: #fff;
+					background-color: #26292b;
 					padding: 15px;
 
 					>.title {

@@ -1,9 +1,9 @@
 <template>
-	<div class="leftNav ft14 bgf8">
-		<ul class="">
+	<div class="leftNav ft14 bgf8 bg-part clr-part">
+		<ul class="bg-part">
 			<li v-for="(item,index) in array" :class="index == curActive ? 'active' :''" @click="goto(index,item.page)">
 				<img :src="index == curActive ? item.src2 : item.src1"/>
-				<span>{{item.text}}</span>
+				<span class="clr-part">{{item.text}}</span>
 			</li>
 		</ul>
 	</div>

@@ -45,6 +45,7 @@ import LegalRecord from '@/components/LegalRecord' //法币交易记录
 import LegalTradeSet from '@/components/LegalTradeSet' //法币交易设置
 import LegalSeller from '@/components/LegalSeller' //法币商家详情
 import LegalPay from '@/components/LegalPay' //法币交易待付款
+import LegalPay2 from '@/components/LegalPay.1' //法币交易除待付款
 import ResetLegalPwd from '@/components/ResetLegalPwd' //重置密码密码
 import withdraw_address from '@/view/accounts/withdraw_address'
 import PayCannel from '@/components/PayCannel'  //取消订单
@@ -70,6 +71,10 @@ export default new Router({
 				{
 					path:'/legalPay',
 					component:() => import ('../components/LegalPay.vue')
+				},
+				{
+					path:'/legalPay2',
+					component:() => import ('../components/LegalPay.1.vue')
 				},
 				{
 					path:'/legalPayDetail',

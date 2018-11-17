@@ -1,7 +1,7 @@
 <template>
-  <div id="myshops">
-    <div class="title">我的店铺</div>
-    <div class="list-box">
+  <div id="myshops" class=" clr-part">
+    <div class="title clr-part bg-part">我的店铺</div>
+    <div class="list-box clr-part bg-part">
       <div class="list-header flex">
         <div>名称</div>
         <div>所属法币</div>
@@ -13,7 +13,7 @@
       <ul class="list">
         <li class="flex" v-for="(item,index) in list" :key="index">
           <div class="flex">
-            <span class="icon">k</span>
+            <span class="icon">{{item.name.charAt(0)}}</span>
             <span>{{item.name}}</span>
           </div>
           <div>{{item.currency_name}}</div>
@@ -65,6 +65,8 @@ export default {
 <style lang='scss'>
 #myshops {
   margin: 30px auto 0;
+  width: 1200px;
+  height: 100%;
   > .title {
     margin-bottom: 20px;
     padding: 0 30px;

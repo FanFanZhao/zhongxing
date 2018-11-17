@@ -24,6 +24,7 @@ ins,a{text-decoration:none}
 }
 .purple_bg{
     background: #2E1B85;
+    color: rgba(255,255,255,.8);
 }
 .deep_blue{
     color: #563BD1;
@@ -36,7 +37,7 @@ ins,a{text-decoration:none}
 }
 html,body{
     width: 100%;
-    height: 100%;
+    min-height: 100%;
 }
 a{
 	color:inherit;
@@ -268,3 +269,22 @@ button{border: none;outline: none;}
     // box-shadow: 0 5px 5px #1b1e2e;
 }
 .brcolor{border-right: 1px dashed #ccc}
+
+.bg-main{
+    background: #262a42 !important; 
+}
+.bg-part{
+    background: #181b2a !important;
+}
+.clr-part{
+    color: rgba(255,255,255,.8) !important;
+}
+.bdr-part{
+    border-color: #2e355d !important;
+}
+.bg-even{
+    background: #1a1f2f !important;
+}
+.bg-hov:hover,.bg-sel{
+    background: #2d3346 !important;
+}

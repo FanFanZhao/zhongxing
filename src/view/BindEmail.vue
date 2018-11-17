@@ -1,5 +1,5 @@
 <template>
-<div id="bind-email">
+<div id="bind-email" class="bg-main clr-part">
     <!-- <indexHeader></indexHeader> -->
     <div class="contentBK">
         <div class="content-wrap">
@@ -210,6 +210,8 @@ export default {
 .code-box {
   width: 520px;
   border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
 }
 .code-box .input-main {
   width: 419px;

@@ -1,34 +1,34 @@
 <template>
-	<div class="home">
+	<div class="home home-box bg-main">
 		<div class="main">
 			<div class="main-l fl" >
-				<div class="sidebar">
+				<div class="sidebar bg-part">
           <market></market>
         </div>
-				<div class="notice_box" style="margin-top:10px">
+				<div class="notice_box bg-part" style="margin-top:8px;">
         <notice></notice>
       </div>
 			</div>
 			<div class="main-r">
 				<div class="chart_wrap flex">
           <!-- <chart></chart> -->
-          <div style="min-width:67%">
+          <div style="min-width:67%" class="bg-part">
             <!--<kline></kline>-->
 			      <tv></tv>
           </div>
-          <div class="deadl-wrap part-r" style="width:33%;padding-left:10px">
+          <div class="deadl-wrap part-r bg-part" style="width:33%;margin:0 8px">
 						<exchange></exchange>
 					</div>
         </div>
 				<div class="parts  flex between" >
-					<div class="trade-wrap part-l">
+					<div class="trade-wrap part-l bg-part" style="padding-bottom:16px;">
 						<trade></trade>
 					</div>
-					<div class="deatil_box" style="width:33%">
+					<div class="deatil_box bg-part" style="width:33%;margin:0 8px">
           <complete></complete>
         </div>
 				</div>
-        <div class="entrust_box" >
+        <div class="entrust_box bg-part" style="margin:8px 8px 0px 18px">
           <entrust></entrust>
         </div>
         <!-- <div class="entrust_box">
@@ -105,46 +105,42 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.home {
+.home-box {
+  padding-top: 8px;
   .main {
       overflow: hidden;
     .main-l {
       width: 350px;
       height: 100%;
-      margin: 10px 10px  0 0;
+      margin: 0 8px;
       > div {
-        // background: #fff;
-        border: 1px solid #C8DAE2;
-        // background: #181b2a;
-        margin: 0 10px 10px;
+        padding: 0 10px;
+        
       }
     }
     .main-r {
-      margin-left: 360px;
-      border-left: 1px solid #ccc;
-      padding: 0 10px 10px 20px;
+      margin-left: 348px;
+      
       .parts {
-        margin-top: 10px;
+        margin-top: 8px;
         max-height: 530px;
 
         > .part-l {
           // background: #181b2a;
           min-width: 67%;
-          padding-bottom: 20px;
+          
         }
         > .part-r {
           width: 33%;
           > div {
-            margin-left: 10px;
-            // background: #181b2a;
+            
             height: 100%;
             padding-bottom: 20px;
           }
         }
       }
       >div{
-        //  background: #181b2a;
-         margin-top: 10px;
+        
       }
       .depth-map {
         max-height: 500px;

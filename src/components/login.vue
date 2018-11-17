@@ -1,5 +1,5 @@
 <template>
-<div class="login">
+<div class="login bg-main clr-part">
     <indexHeader></indexHeader>
     <div class="contentBK">
         <div class="content-wrap">
@@ -16,13 +16,13 @@
                     </div>
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
-                        <button class="register-button curPer redBg" @click="login">登录</button>
+                        <button class="register-button curPer redBg " @click="login">登录</button>
                         <div class="have-account">
                             <router-link tag="span" class="redColor" to="/forgetPwd" style="cursor:pointer">忘记密码</router-link>
                         </div>
                     </div>
                     <div class="right-tip ">
-                        <p>还不是HQ的用户？</p>
+                        <p>还不是一带一路的用户？</p>
                         <p>立即注册，在全球领先的数字资产交易平台开始交易。</p>
                         <router-link :to="{ name: 'register'}">
                             <p class="redColor mt20">免费注册</p>

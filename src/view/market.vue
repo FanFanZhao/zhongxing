@@ -1,5 +1,5 @@
 <template>
-    <div class="market" >
+    <div class="market clr-part">
 		<div class="m_title  clear">
             <span class=" fl">市场</span>
             <div class="m_search fr hide">
@@ -14,10 +14,10 @@
                 <!-- <span class="active">USDT</span>
                 <span>JNB</span>
                 <span>JNB</span> -->
-                <span v-for="(tab,index) in tabList " :key="index" :class="{'active': index == (legal_index || isShow)}" @click="changeType(index,tab.name,tab.id)">{{tab.name}}</span>
+                <span v-for="(tab,index) in tabList " :key="index" :class="['bdr-part',{'active': index == (legal_index || isShow)}]" @click="changeType(index,tab.name,tab.id)">{{tab.name}}</span>
             </div>
         </div>
-        <div class="coin-title clear">
+        <div class="coin-title clear clr-part">
             <div>
                 <span>币种</span>
                 <img src="../assets/images/select0.png" alt="">
@@ -37,7 +37,7 @@
                 <span v-for="item in newData">{{item}}</span>
             </li> -->
             <li v-for="(market,index) in marketList " :key="index" v-if="(legal_index || isShow) == index" >
-              <p v-for="(itm,idx) in market"  :key="itm.id" :class="{'active_p':(legal_index || isShow)==index&&idx==(currency_index || ids)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.currency_name,itm,index,market)">
+              <p v-for="(itm,idx) in market"  :key="itm.id" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(legal_index || isShow)==index&&idx==(currency_index || ids)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.currency_name,itm,index,market)">
                <!-- <a  @click="changePair(itm,index,market)"> -->
 				   <span class="w36"><img :src="itm.logo" alt=""><i><em class="deep_blue bold">{{itm.currency_name}}</em><em class="light_blue bold">/{{itm.legal_name}}</em></i></span>
 				   <span class="w30 tr deep_blue bold" :data-name='itm.currency_name+"/"+itm.legal_name'>${{itm.now_price || 0}}</span>
@@ -74,7 +74,7 @@ export default {
     this.token = localStorage.getItem("token") || "";
     //法币列表
     this.$http({
-      url: '/api/' + "currency/quotation",
+      url: "/api/" + "currency/quotation",
       method: "get",
       data: {}
     }).then(res => {
@@ -97,10 +97,10 @@ export default {
         //     ? this.marketList[0][0].now_price.length
         //     : 0
         // );
-        this.$store.state.priceScale =100000;
-        console.log(this.$store.state.priceScale )
+        this.$store.state.priceScale = 100000;
+        console.log(this.$store.state.priceScale);
         this.$store.state.symbol =
-        this.marketList[0][0].currency_name + "/" + this.exName;
+          this.marketList[0][0].currency_name + "/" + this.exName;
         //默认法币id和name
         this.currency_id = arr_quota[0][0].legal_id;
         var id = arr_quota[0][0].currency_id;
@@ -111,7 +111,7 @@ export default {
           currency_name: this.currency_name,
           leg_name: legal_name
         };
-        console.log(tradeDatas)
+        console.log(tradeDatas);
         //组件间传值
         setTimeout(() => {
           eventBus.$emit("toTrade0", tradeDatas);
@@ -120,7 +120,7 @@ export default {
           eventBus.$emit("toExchange0", tradeDatas);
         }, 1000);
         // socket连接
-        this.connect()
+        this.connect();
       }
     });
   },
@@ -161,24 +161,25 @@ export default {
       that.$socket.on("daymarket", msg => {
         // console.log(msg);
         if (msg.type == "daymarket") {
-            var cname = msg.currency_name+'/'+msg.legal_name;
-            var newprice = msg.now_price;
-            var newup = msg.change;
-            // console.log(cname)
-            if(newup<0){
-              newup = newup + "%";
-              $("span[data-name='" + cname + "']")
-                .next()
-                .css("color", "#cc4951");
-            }else{
-              newup = newup + "%";
-              $("span[data-name='" + cname + "']")
-                .next()
-                .css("color", "#55a067");
-            }
+          var cname = msg.currency_name + "/" + msg.legal_name;
+          var newprice = msg.now_price;
+          var newup = msg.change;
+          // console.log(cname)
+          if (newup < 0) {
+            newup = newup + "%";
             $("span[data-name='" + cname + "']")
-                .html("$" + newprice)
-                .next().html(newup)
+              .next()
+              .css("color", "#cc4951");
+          } else {
+            newup = newup + "%";
+            $("span[data-name='" + cname + "']")
+              .next()
+              .css("color", "#55a067");
+          }
+          $("span[data-name='" + cname + "']")
+            .html("$" + newprice)
+            .next()
+            .html(newup);
         }
       });
     },
@@ -207,8 +208,7 @@ export default {
         return false;
       }
       this.$http({
-        url:
-          '/api/' + "wallet/list?user_id=" + this.address || "",
+        url: "/api/" + "wallet/list?user_id=" + this.address || "",
         type: "GET"
       })
         .then(res => {
@@ -231,7 +231,7 @@ export default {
       // var index=layer.load();
       this.address = localStorage.getItem("address") || "";
       this.$http({
-        url: '/api/' + "quotation",
+        url: "/api/" + "quotation",
         method: "post",
         data: {
           address: this.address
@@ -276,7 +276,7 @@ export default {
         list.now_price = "0.0";
       }
 
-      let arr = list.now_price.split(".")[1];
+      let arr = (list.now_price+'').split(".")[1];
 
       this.$store.state.priceScale = Math.pow(10, arr.length); //根据最新价小数点后几位改变价格精度
       this.$store.state.symbol = list.currency_name + "/" + this.exName; //交易对
@@ -356,10 +356,10 @@ export default {
   overflow-y: auto;
 }
 .coin-wrap li p:nth-child(even) {
-  background: #f8f8f8;
+  /* background: #f8f8f8; */
 }
 .coin-wrap li p:hover {
-  background: #eee;
+  /* background: #eee; */
 }
 .coin-wrap li {
   height: 30px;
@@ -374,10 +374,17 @@ export default {
   text-align: center;
   height: 30px;
 }
-.coin-wrap li span.w36{width: 36%}
-.coin-wrap li span.w36 i{padding-left: 5px;}
-.coin-wrap li span.w30{width: 30%;text-align: right;}
-.coin-wrap li span:first-child{
+.coin-wrap li span.w36 {
+  width: 36%;
+}
+.coin-wrap li span.w36 i {
+  padding-left: 5px;
+}
+.coin-wrap li span.w30 {
+  width: 30%;
+  text-align: right;
+}
+.coin-wrap li span:first-child {
   padding-left: 18px;
   text-align: left;
   /* display: flex; */
@@ -393,11 +400,11 @@ export default {
   min-width: 40px;
 }
 .coin-wrap li span:last-child {
-  color: #FF6E42;
+  color: #ff6e42;
 }
 /* .coin-wrap li:nth-child(odd){background-color: #181b2a;} */
 .coin-wrap li span.green {
-  color: #459E80;
+  color: #459e80;
 }
 .coin-wrap li p {
   overflow: hidden;

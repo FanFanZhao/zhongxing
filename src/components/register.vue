@@ -1,5 +1,5 @@
 <template>
-    <div id="register-box">
+    <div id="register-box" class="bg-main clr-part">
         <indexHeader></indexHeader>
         <div class="reg-content">
             <div class="title">注册</div>
@@ -15,9 +15,9 @@
                     <input type="text" v-model="account">
                 </div>
                     <div class="tip" style="margin-bottom:10px">请输入验证码</div>
-                <div class="code-box">
+                <div class="code-box bdr-part">
                     <input type="text" v-model="code" class="code">
-                    <button type='button' class="code-btn redBg" @click="sendCode">发送验证码</button>
+                    <button type='button' class="code-btn redBg " @click="sendCode">发送验证码</button>
                 </div>
                 <button class="confirm-btn redBg" @click="checkCode" type="button">确认</button>
             </div>
@@ -204,12 +204,13 @@ export default {
         time--;
       }, 1000);
       let data = { user_string: this.account };
-
+      var loa = layer.load();
       this.$http({
         url: "/api/" + url,
         method: "post",
         data: data
       }).then(res => {
+        layer.close(loa);
         //console.log(res);
         layer.msg(res.data.message);
       });
@@ -232,12 +233,13 @@ export default {
         } else {
           data = { email_code: this.code };
         }
-       
+       var loa = layer.load();
         this.$http({
           url: "/api/" + url,
           method: "post",
           data: data
         }).then(res => {
+          layer.close(loa);
           layer.msg(res.data.message);
 
           if (res.data.type == "ok") {
@@ -277,12 +279,13 @@ export default {
       data.re_password = this.repwd;
       data.extension_code = this.invite;
       //console.log(data);return;
-      
+      var loa = layer.load();
       this.$http({
         url: "/api/" + "user/register",
         data: data,
         method: "post"
       }).then(res => {
+        layer.close(loa);
         layer.msg(res.data.message);
         if (res.data.type == "ok") {
           this.$router.push("/components/login");
@@ -296,6 +299,9 @@ export default {
 <style lang='scss'>
 #register-box {
   min-height: 1050px;
+  button{
+    border-radius: 2px;
+  }
   .tip {
     margin: 10px 0;
     // color: #61688a;
@@ -323,11 +329,14 @@ export default {
     }
     > .tab {
       margin: 10px 0 20px;
+      cursor: pointer;
       span {
         margin: 0 20px;
       }
     }
     .code-box {
+      display: flex;
+      justify-content: space-between;
       width: 520px;
       height: 46px;
       //background-color: #1e2235;
@@ -343,6 +352,7 @@ export default {
         border: none;
         line-height: 45px;
         width: 93px;
+        color: #fff;
         // color: #c7cce6;
         // border-left: 1px solid #c7cce6;
         // //background: #1e2235;

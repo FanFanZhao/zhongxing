@@ -1,5 +1,5 @@
 <template>
-<div class="forget-box">
+<div class="forget-box bg-main clr-part">
     <indexHeader></indexHeader>
     <div class="contentBK">
         <div class="content-wrap">
@@ -285,6 +285,7 @@ export default {
   border: 1px solid #ccc;
   /* background: #1e2235; */
   background: #fff;
+  border-radius: 4px;
 }
 .code-box .input-main {
   width: 419px;

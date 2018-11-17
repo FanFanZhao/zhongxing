@@ -1,5 +1,5 @@
 <template>
-<div id="reset-pwd">
+<div id="reset-pwd" class="bg-main clr-part">
     <div class="contentBK">
         <div class="content-wrap">
             <div class="account">
@@ -168,9 +168,11 @@ export default {
   font-size: 14px;
 }
 .code-box {
-  border-radius: 2px;
+  border-radius: 4px;
   border: 1px solid #ccc;
   width: 520px;
+  background: #fff;
+
 }
 .code-box input {
   width: 406px;

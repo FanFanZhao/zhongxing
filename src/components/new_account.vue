@@ -1,5 +1,5 @@
 <template>
-    <div class="box">
+    <div class="box bg-main">
         <!-- <indexHeader></indexHeader> -->
         <div class="account">
             <div class="topcontent ft20 ">
