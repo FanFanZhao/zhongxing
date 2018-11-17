@@ -64,7 +64,7 @@ export default {
     };
   },
   created() {
-     this.token = window.localStorage.getItem("token") || "";
+    this.token = window.localStorage.getItem("token") || "";
     this.account_number = window.localStorage.getItem("accountNum") || "";
     this.extension_code = window.localStorage.getItem("extension_code") || "";
     eventBus.$on("toHeader", msg => {

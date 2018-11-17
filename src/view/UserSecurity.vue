@@ -59,6 +59,13 @@
                 <!-- <span  class="fr red mouseDefault"  @click="goPwd()">修改</span> -->
                 <router-link to="/components/resetLegalPwd" class="fr red">修改</router-link>
             </li>
+            <li ><img  :src="asrc">
+                <span  class="ml20">身份认证</span>
+                <p  class="fl">互联网账号存在被盗风险，进行身份认证以保护账户安全。</p>
+                <span  class="fr red ml25 mouseDefault"></span>
+                <router-link to="/components/authentication" class="fr red" v-if="authen==0">去认证</router-link>
+                <span class="fr red" v-else>{{authen==1?'审核中':'已认证'}}</span>       
+            </li>
             <li class="hide"><img  src="@/assets/images/icon_error.png">
                 <span  class="ml20">提币密码</span>
                 <p  class="fl">请设置提币专用密码，建议提现密码区别于登录密码。</p>
@@ -76,6 +83,7 @@
                 <p  class="fl">请先进行实名认证。</p>
                 <span  class="fr red ml25 mouseDefault"></span>
                 <span  class="fr red mouseDefault"  @click="goNone()">认证</span>
+                <span class="fr red"></span>
             </li>
             <li class="hide"><img  src="@/assets/images/icon_error.png">
                 <span  class="ml20">我的地址</span>
@@ -104,8 +112,11 @@ export default {
       account: "未绑定",
       email: "未绑定",
       extension_code: "",
+      authen:0,
+      austatus:'去认证',
       psrc: require("@/assets/images/icon_error.png"),
-      esrc: require("@/assets/images/icon_error.png")
+      esrc: require("@/assets/images/icon_error.png"),
+      asrc: require("@/assets/images/icon_error.png"),
     };
   },
   created() {
@@ -133,7 +144,6 @@ export default {
           console.log(res);
           if (res.data.type == "ok") {
             this.email = res.data.message.email;
-            console.log(this.email);
             this.esrc = require("@/assets/images/success.png");
             if (res.data.message.phone) {
               this.account = res.data.message.phone;
@@ -143,6 +153,8 @@ export default {
               
             }
             this.extension_code = res.data.message.extension_code;
+            this.authen=res.data.message.review_status;
+            if(this.authen==2){this.asrc=require("@/assets/images/success.png")}
           }
         })
         .catch(error => {});
