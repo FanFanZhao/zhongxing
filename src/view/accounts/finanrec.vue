@@ -1,5 +1,5 @@
 <template>
-    <div class="box clr-part">
+    <div class="box">
         <indexHeader></indexHeader>
         <div class="account">
             <div class="topcontent ft20 ">

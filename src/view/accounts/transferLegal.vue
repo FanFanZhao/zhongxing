@@ -1,12 +1,12 @@
 <template>
-    <div id="transfer-legal" v-if="coins.length" class="bgf8">
+    <div id="transfer-legal" v-if="coins.length" class="bgf8 bg-part main-wrap clr-part">
        <div class="title">划转</div>
        <ul class="coins">
            <li v-for="(coin,index) in coins" :key="index" :class="{active:index == coinIndex}" @click="coinIndex = index;number = ''">
                {{coin.currency_name}}
            </li>
        </ul>
-       <div class="types">
+       <div class="types ft14">
            <div class="types-l">
                <div>从</div>
                <div>到</div>
@@ -16,15 +16,15 @@
                    <div>{{types[0]}}</div>
                    <div>{{types[1]}}</div>
                </div>
-               <img src="../../../static/imgs/transfer1.png" alt="" @click="types.reverse()">
+               <img class="arrow" src="../../../static/imgs/transfer1.png" alt="" @click="types.reverse()">
            </div>
        </div>
-       <div class="number">
+       <div class="number ft14">
            <input type="number" placeholder="请输入划转数量" v-model="number">
            <span style="color:#61688a">{{coins[coinIndex].currency_name}}</span>
            <span class="all" @click="number = coins[coinIndex].legal_balance">全部</span>
        </div>
-       <div class="balance" style="line-height:60px;margin:20px 0 30px">可用：{{coins[coinIndex].legal_balance}}{{coins[coinIndex].currency_name}}</div>
+       <div class="balance ft14" style="line-height:60px;margin:20px 0 30px">可用：{{coins[coinIndex].legal_balance}}{{coins[coinIndex].currency_name}}</div>
        <button type='button' class="transfer" @click="transfer">划转</button>
     </div>
 </template>
@@ -95,6 +95,10 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.main-wrap{
+    height: 820px;
+
+}
 #transfer-legal {
   padding: 0 30px;
 //   color: #c7cce6;
@@ -107,6 +111,7 @@ export default {
     display: flex;
     justify-content: center;
     li {
+        cursor: pointer;
       margin-right: 20px;
       padding: 5px 20px;
       color: #fff;
@@ -149,9 +154,11 @@ export default {
           margin-left: 10px;
           padding-left: 10px;
           border-left: 1px solid #ccc;
+          cursor: pointer;
       }
   }
   .transfer{
+      cursor: pointer;
       display: block;
       margin: 0 auto;
       line-height: 40px;
@@ -159,6 +166,9 @@ export default {
       background: #d45858;
       color: #fff;
       border: none;
+  }
+  .arrow{
+      cursor: pointer;
   }
 }
 </style>
