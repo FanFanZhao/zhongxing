@@ -171,6 +171,7 @@ export default {
   border-radius: 2px;
   border: 1px solid #ccc;
   width: 520px;
+  background: #fff;
 }
 .code-box input {
   width: 406px;
