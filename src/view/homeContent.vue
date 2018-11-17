@@ -181,7 +181,7 @@
             </div>
         </div>
         <!--图文内容-->
-        <div id="content01" class="content01 flex alcenter bg-main clr-part center">
+        <div id="content01" class="content01 flex alcenter  bg-main clr-part center">
             <div class="text01 mr100 left01 animated">
               <h1 class="ft26 bold mb30">全球化的数字资产配置及交易服务</h1>
               <p class="ft16 bold mb10">遍布全球的项目拓展及运营管理体系</p>
@@ -190,7 +190,7 @@
             </div>
             <img class="imgs01" src="../assets/images/imgs01.png" />
         </div>
-        <div class="content01 flex alcenter center">
+        <div class="content01 flex alcenter center bg-main clr-part">
           <img class="imgs02" src="../assets/images/imgs02.png" />
             <div class="text01 ml100">
               <h1 class="ft26 bold mb30">SMART-Chain资产评估模型</h1>
@@ -200,7 +200,7 @@
             </div>
             
         </div>
-        <div class="content01 flex alcenter grayBg center bg-main clr-part">
+        <div class="content01 flex alcenter grayBg center">
             <div class="text01 mr100">
               <h1 class="ft26 bold mb30">依托4年的数字资产安全风控经验</h1>
               <p class="ft16 bold mb10">安全稳定运营数字资产交易所超过四年</p>
