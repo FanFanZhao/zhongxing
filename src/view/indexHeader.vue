@@ -6,7 +6,7 @@
       </div>
       <span class="mr60">一带一路</span>
       <router-link to="/" exact>首页</router-link>
-      <router-link to="/legalTrade">法币交易</router-link>
+      <router-link to="/legalTrade" v-if="token">法币交易</router-link>
       <router-link to="/dealCenter">币币交易</router-link>
       <router-link to="/myLegalShops" v-if="isShow">我的商铺</router-link>
       <router-link to="/finance">我的资产</router-link>
@@ -46,8 +46,8 @@
         </div>
       </div>
       <div class=" theme flex">
-          <img src="../assets/images/light.png" @click="$changeTheme('light')" alt="">
-          <img src="../assets/images/dark.png"  @click="$changeTheme('dark')" alt="">
+          <img src="../assets/images/dark.png"  @click="$changeTheme('light')" alt="">
+          <img src="../assets/images/light.png" @click="$changeTheme('dark')" alt="">
           
         </div>
     </div>

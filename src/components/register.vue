@@ -1,5 +1,5 @@
 <template>
-    <div id="register-box" class="bg-part clr-part">
+    <div id="register-box" class="bg-main clr-part">
         <indexHeader></indexHeader>
         <div class="reg-content">
             <div class="title">注册</div>
@@ -17,9 +17,9 @@
                     <div class="tip" style="margin-bottom:10px">请输入验证码</div>
                 <div class="code-box bdr-part">
                     <input type="text" v-model="code" class="code">
-                    <button type='button' class="code-btn purple_bg clr-part" @click="sendCode">发送验证码</button>
+                    <button type='button' class="code-btn redBg " @click="sendCode">发送验证码</button>
                 </div>
-                <button class="confirm-btn purple_bg" @click="checkCode" type="button">确认</button>
+                <button class="confirm-btn redbg" @click="checkCode" type="button">确认</button>
             </div>
             <div class="setpass" v-show="codeTrue">
                 <!-- <div class="title">设置地区</div> -->
@@ -346,6 +346,7 @@ export default {
         border: none;
         line-height: 45px;
         width: 93px;
+        color: #fff;
         // color: #c7cce6;
         // border-left: 1px solid #c7cce6;
         // //background: #1e2235;

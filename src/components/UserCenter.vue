@@ -1,8 +1,8 @@
 <template>
-  <div id="user-center">
+  <div id="user-center" class="bg-main">
     <!-- <div class="title">个人中心</div> -->
     <div class="content">
-      <ul class="content-l">
+      <ul class="content-l bg-part clr-part">
         <li>
           <!-- <img src="../assets/images/logo.png" alt=""> -->
           <router-link to="/userCenter">账户设置</router-link>
@@ -16,7 +16,7 @@
           <router-link to="/dealCenter">账户设置</router-link>
         </li> -->
       </ul>
-      <div class="content-r">
+      <div class="content-r bg-part clr-part">
         <router-view></router-view>
       </div>
 
