@@ -38,7 +38,7 @@
 					<div class="flex alcenter">{{item.price}}</div>
 					<div class="flex alcenter">{{item.way_name}}</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type)">
-						<button>{{classify}}{{name}}</button>
+						<button class="btn">{{classify}}{{name}}</button>
 					</div>
 				</li>
 			</ul>
@@ -50,14 +50,14 @@
 		<div class="modal" v-show="shows">
 			<div class="mask" @click="closeBtn()"></div>
 			<div class="content">
-				<div class="content-list">
+				<div class="content-list layerBg">
 					<p class="title">{{classify}}{{name}}</p>
 					<p class="price">单价{{prices}}</p>
 					<div class="trade">
 						<p :class="['trade-name',{'active':types == 'trade'}]" @click="tabClassify(1)">{{name}}交易</p>
 						<p :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}数量</p>
 					</div>
-					<div class="totals-num">
+					<div class="totals-num bdr-part">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
 						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
 						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
@@ -310,6 +310,12 @@
 		height: 100%;
 		overflow: hidden;
 	}
+	.btn{
+		cursor: pointer;
+	}
+	.number{
+		background: #acafc3;
+	}
   
 	#legaltrade-box {
 		width: 1200px;
@@ -461,7 +467,7 @@
 				width: 100%;
 				height: 100%;
 				background-color: rgba(0, 0, 0, 0);
-				position: absolute;
+				position: fixed;
 				left: 0;
 				right: 0;
 				top: 0;
@@ -571,7 +577,7 @@
 							width: 48%;
 							height: 40px;
 							line-height: 40px;
-							background-color: #eee;
+							background-color: #acafc3;
 							color: #333;
 							text-align: center;
 							border-radius: 6px;

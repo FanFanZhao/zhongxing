@@ -8,6 +8,7 @@ import c2c from '@/components/c2c'
 import login from '@/components/login'
 import UserCenter from '@/components/UserCenter'
 import BindEmail from '@/view/BindEmail'
+import authentication from '@/components/authentication'
 import UserSecurity from '@/view/UserSecurity'
 import register from '@/components/register'
 import account from '@/components/account'
@@ -155,6 +156,11 @@ export default new Router({
 					component: BindEmail
 				},
 				{
+					path: '/components/authentication',
+					name: 'authentication',
+					component: authentication
+				},
+				{
 					path: '/components/resetPwd',
 					name: 'ResetPwd',
 					component: ResetPwd
@@ -218,6 +224,7 @@ export default new Router({
 				}
 			]
 		},
+
 		// {
 		// 	path:'/dealCenter',
 		// 	name:'dealCenter',

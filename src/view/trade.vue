@@ -9,7 +9,7 @@
         </div>
         <!-- 限价交易 -->
         <div class="content clear">
-            <div class="w50 fl first brcolor">
+            <div class="w50 fl first brcolor bdr-part">
                
                 <div class="ft14">
                     <div class="available clear 1 " v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
@@ -22,13 +22,13 @@
                     </div>
                     <div class="mt40 input-item clear">
                         <label>买入价</label>
-                        <input type="number" v-model="buyInfo.buyPrice" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
-                        <input type="number" v-model="lastPrice" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" v-model="buyInfo.buyPrice" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
                         <span>{{currency_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
                         <label>买入量</label>
-                        <input type="number" v-model="buyInfo.buyNum" @keydown.69.prevent  @keyup="numFilter($event)">
+                        <input class="clr-part bg-main bdr-part" type="number" v-model="buyInfo.buyNum" @keydown.69.prevent  @keyup="numFilter($event)">
                         <span>{{legal_name}}</span>
                     </div>
                     <!-- <div class="mt40 input-item clear">
@@ -52,13 +52,13 @@
                     </div>
                     <div class="mt40 input-item clear">
                         <label>卖出价</label>
-                        <input type="number" @keydown.69.prevent v-model="sellInfo.sellPrice" v-if="!disabled">
-                        <input type="number" @keydown.69.prevent v-model="lastPrice" :disabled='disabled' v-if="disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="sellInfo.sellPrice" v-if="!disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice" :disabled='disabled' v-if="disabled">
                         <span>{{currency_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
                         <label>卖出量</label>
-                        <input type="number" @keydown.69.prevent  @keyup="numFilter($event)" v-model="sellInfo.sellNum">
+                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent  @keyup="numFilter($event)" v-model="sellInfo.sellNum">
                         <span>{{legal_name}}</span>
                     </div>
                     <!-- <div class="mt40 input-item clear">
