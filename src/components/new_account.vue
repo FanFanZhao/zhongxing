@@ -2,7 +2,7 @@
     <div class="box bg-main">
         <!-- <indexHeader></indexHeader> -->
         <div class="account">
-            <div class="topcontent ft20 ">
+            <div class="topcontent ft20 bg-part clr-part">
                 <span>资产</span>
             </div>
             <div class="leftcontent contentBK">

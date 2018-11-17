@@ -2,7 +2,7 @@
     <div class="box">
         <indexHeader></indexHeader>
         <div class="account">
-            <div class="topcontent ft20 ">
+            <div class="topcontent ft20 bg-part clr-part">
                 <span class="white"><span class="baseColor">交易账户></span> 财务记录</span>
             </div>
             <div class="content">

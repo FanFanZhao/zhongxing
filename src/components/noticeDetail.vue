@@ -19,7 +19,7 @@
                         </div> 
                         <div class=" mt40">
                             <p class="tr">{{abstract}}</p>
-                            <p class="tr mt5">{{update_time}}</p>
+                            <p class="tr mt5">{{update_time }}</p>
                         </div>
                     </div>
                 </div>
@@ -51,12 +51,17 @@ export default {
         }).then(res=>{
             res = res.data;
             if(res.type  === 'ok'){
+                console.log('uuuuu')
                 console.log(res.message)
                 this.title=res.message.title;
                 this.content=res.message.content;
                 this.abstract=res.message.abstract;
-                this.update_time=res.message.update_time;
-                this.setProperty();
+                var time=res.message.update_time;
+                console.log(res.message.update_time,time)
+                this.update_time= this.timestampToTime(time);
+                
+                // this.setProperty(this.timestampToTime(res.message.update_time));
+                console.log('ppp')
             }else{
                 layer.msg(res.message);
             }
@@ -78,17 +83,35 @@ export default {
         goBefore(){
             this.$router.back(-1);
         },
-       setProperty(){
-            var tags=document.getElementsByTagName('p');
-            HTMLCollection.prototype.forEach=function(callback){
-                    [].slice.call(this).forEach(callback);
-            };
-            tags.forEach(function(e, i){
-                    e.style.backgroundColor='#666 !important'
-            });
+    //    setProperty(){
+    //         var tags=document.getElementsByTagName('p');
+    //         HTMLCollection.prototype.forEach=function(callback){
+    //                 [].slice.call(this).forEach(callback);
+    //         };
+    //         tags.forEach(function(e, i){
+    //                 e.style.backgroundColor='#666 !important'
+    //         });
             
             
-       }
+    //    },
+       
+        timestampToTime(timestamp) {
+            var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            var D = this.change(date.getDate()) + ' ';
+            var h = this.change(date.getHours()) + ':';
+            var m = this.change(date.getMinutes()) + ':';
+            var s = this.change(date.getSeconds());
+            return Y + M + D + h + m + s;
+        },
+        change(t) {
+            if (t < 10) {
+                return "0" + t;
+            } else {
+                return t;
+            }
+        }
     }
 }
 </script>

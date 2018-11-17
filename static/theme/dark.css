@@ -28,3 +28,6 @@ body .bg-hov:hover,
 body .bg-sel {
   background: #ccc !important;
 }
+body .layerBg {
+  background: #fff!important;
+}
