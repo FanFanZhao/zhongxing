@@ -1,5 +1,5 @@
 <template>
-<div id="legaltrade-set">
+<div id="legaltrade-set" class="bg-main clr-part">
     <div class="contentBK">
         <div class="content-wrap">
             <div class="account">

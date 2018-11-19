@@ -1,6 +1,6 @@
 <template>
-  <div id="legal-record">
-    <div class="title">订单记录</div>
+  <div id="legal-record" class="clr-part">
+    <div class="title bg-part">订单记录</div>
     <!-- <div class="filter-box">
       <div>
         <span>交易类型：</span>
@@ -15,8 +15,8 @@
       </div>
     </div> -->
     
-    <ul>
-      <li v-for="(item,index) in list" :key="index">
+    <ul class="bg-part ft14">
+      <li v-for="(item,index) in list" :key="index" class="bdr-part">
         <div class="flex li-t">
           <div>
             <span v-if="item.type == 'sell'">购买</span>
@@ -47,7 +47,7 @@
       </li>
       
     </ul>
-    <div class="more" @click="getList(true)" v-if="list.length">加载更多</div>
+    <div class="more bg-part" @click="getList(true)" v-if="list.length">加载更多</div>
    
     <div v-else class="nomore">暂无更多</div>
      
@@ -143,6 +143,7 @@ export default {
     padding: 10px 30px;
     background: #f8f8f8;
     li {
+      padding: 10px 0;
       > div {
         justify-content: space-between;
         line-height: 30px;
@@ -150,6 +151,9 @@ export default {
     }
     > li:nth-child(n + 2) {
       border-top: 1px solid #ccc;
+    }
+    >li:first-child{
+      border:none;
     }
   }
 
@@ -166,5 +170,10 @@ export default {
 }
 .log_wrap{
   overflow: auto;
+}
+.status{
+      background: #272f5d;
+    padding: 0 6px;
+    border-radius: 3px;
 }
 </style>

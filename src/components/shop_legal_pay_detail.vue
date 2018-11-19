@@ -1,6 +1,6 @@
 <template>
-  <div id="legal-pay-detail">
-    <div class="title">
+  <div id="legal-pay-detail" class="clr-part">
+    <div class="title bg-part">
          <span v-if="msg.is_sure == 0">未完成</span>
       <span v-if="msg.is_sure == 1">已完成</span>
       <span v-if="msg.is_sure == 2">已取消</span>
@@ -11,7 +11,7 @@
       <div v-if="msg.is_sure == 3">买家已付款，请核实后确认</div>
      
     </div>
-    <div class="info">
+    <div class="info bg-part ft14">
       <div>
         <span>交易总额：</span>
         <span>{{msg.deal_money}}</span>
@@ -38,7 +38,7 @@
       </div>
       <div>
         <span>商家账户：</span>
-        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" style="color:#2E1B85">{{msg.seller_name}}</router-link>
+        <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" class="light_blue seller">{{msg.seller_name}}</router-link>
       </div>
       <div class="btns">
         <div class="btn" @click="showCancel = true" v-if="msg.is_sure == 0 && msg.type =='buy'">取消订单</div>
@@ -231,6 +231,9 @@ export default {
         }
       }
     }
+  }
+  .seller{
+    cursor: pointer;
   }
 }
 </style>

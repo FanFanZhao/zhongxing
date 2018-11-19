@@ -1,6 +1,6 @@
 <template>
-  <div id="legal-seller">
-    <div class="top flex">
+  <div id="legal-seller" class=" clr-part">
+    <div class="top flex bg-part ft14">
       <div class="top-t flex">
         <div class="logo">k</div>
         <div>
@@ -27,7 +27,7 @@
         </div>
       </div>
     </div>
-    <div class="md flex">
+    <div class="md flex bg-part ft14">
       <div>
         <span>邮箱认证</span>
         <img v-if="info.prove_email == 1" src="../assets/images/success.png" alt="">
@@ -49,7 +49,7 @@
         <img v-else src="../assets/images/icon_error.png" alt="">
       </div>
     </div>
-    <div class="list">
+    <div class="list bg-part ft14">
       <div class="tab">
         <span  :class="{'now':showWhich == 'sell'}" @click="showWhich = showWhich == 'sell'?'none':'sell'">在线出售</span>
         <span :class="{'now':showWhich == 'buy'}" @click="showWhich = showWhich == 'buy'?'none':'buy'">在线购买</span>
@@ -292,8 +292,10 @@ export default {
         cursor: pointer;
       }
       > .now {
-        color: #2e1b85;
-        font-weight: 600;
+           color: #785df5;
+            font-weight: 600;
+            border-bottom: 1px solid #785df5;
+            font-weight: 600;
       }
     }
     > .ul-head {
