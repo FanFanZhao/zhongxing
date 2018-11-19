@@ -60,8 +60,8 @@
 					<div class="totals-num bdr-part">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
 						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
-						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">全部买入</button>
-						<button class="all clr-part" type="button" v-else @click="allMoney();">全部卖出</button>
+						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">全部卖出</button>
+						<button class="all clr-part" type="button" v-else @click="allMoney();">全部买入</button>
 						<span class="name">{{name}}</span>
 					</div>
 					<div class="maxnum">限额{{minNum}}-{{maxNum}}</div>
@@ -145,6 +145,7 @@
 				this.type = type;
 				this.id = id;
 				this.page = page;
+				var i = layer.load(); 
 				this.$http({
 					url: "/api/legal_deal_platform",
 					params: {
@@ -156,7 +157,9 @@
 						Authorization: this.token
 					}
 				}).then(res => {
+					layer.close(i);
 					if (res.data.type == 'ok') {
+						
 						this.list = res.data.message.data;
 						let total = parseInt(res.data.message.total);
 						if (total > 10) {
@@ -257,6 +260,8 @@
 							}, 500)
 						}
 						}else{
+							console.log('lllll');
+							console.log(res.data.message)
                            layer.msg(res.data.message);
 						}
 					});
@@ -287,6 +292,9 @@
 							setTimeout(() => {
 								_this.$router.push('/legalTradeSet');
 							}, 500);
+						}
+						if(res.data.type == 'error'){
+							layer.msg(res.data.message)
 						}
 
 					}
