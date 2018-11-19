@@ -1,5 +1,5 @@
 <template>
-    <div class="exchange clr-part " style="margin-top:30px">
+    <div class="exchange clr-part ">
 		<!-- <div class="title fColor1">交易所</div> -->
         <div class="content">
             <div class="new_price bdr-part">

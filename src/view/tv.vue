@@ -22,8 +22,8 @@
 				ws:null,
 				lists:[],
 				newData:'',
-				bg:'#181b2a',
-				grid:'#f7f8fa',
+				bg:'#ffffff',
+				grid:'#cccccc',
 				theme:'',
 				csspath:'bundles/new.css'
 
@@ -57,13 +57,13 @@
 
 			var theme=window.localStorage.getItem('theme') || '';
 			if(theme=='dark'){
-				that.bg='#ffffff';
-				that.grid='#cccccc';
+				that.bg='#181b2a';
+				that.grid='#f7f8fa';
 				that.csspath='bundles/newdark.css';
 				that.createWidget();
 			}else{
-				that.bg='#181b2a';
-				that.grid='#1E2740';
+				that.bg='#ffffff';
+				that.grid='#cccccc';
 				that.csspath='bundles/new.css'
 				that.createWidget();
 				
@@ -74,13 +74,13 @@
 					return;
 				}
 				if(data=='dark'){
-					that.bg='#ffffff';
-					that.grid='#cccccc';
+					that.bg='#181b2a';
+					that.grid='#f7f8fa';
 					that.csspath='bundles/newdark.css'
 					that.createWidget();
 					
 				}else{
-					that.bg='#181b2a';
+					that.bg='#ffffff';
 					that.grid='#1E2740';
 					that.csspath='bundles/new.css'
 					that.createWidget();
