@@ -277,7 +277,7 @@ export default {
       }
 
       let arr = (list.now_price+'').split(".")[1];
-
+      
       this.$store.state.priceScale = Math.pow(10, arr.length); //根据最新价小数点后几位改变价格精度
       this.$store.state.symbol = list.currency_name + "/" + this.exName; //交易对
       //    console.log(idx,id,legal_name);
@@ -297,9 +297,8 @@ export default {
 
 <style scoped>
 .m_title {
-  height: 55px;
-  padding: 15px 30px 0;
-  line-height: 25px;
+  line-height: 30px;
+  padding: 0 20px;
   position: relative;
 }
 .m_search input {
