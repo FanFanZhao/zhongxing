@@ -191,14 +191,14 @@ export default {
       } else {
       }
       var time = 60;
-
-      this.timer = setInterval(function() {
+      var timer = null;
+      timer = setInterval(function() {
         e.target.innerHTML = time + "秒";
         e.target.disabled = true;
         if (time == 0) {
-          clearInterval(this.timer);
           e.target.innerHTML = "验证码";
           e.target.disabled = false;
+          clearInterval(timer);
           return;
         }
         time--;

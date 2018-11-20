@@ -41,6 +41,7 @@ import currencyEdit from '@/view/edit_currency'
 
 import ForgetPwd from '@/components/ForgetPwd' //忘记密码
 import ResetPwd from '@/components/ResetPwd' //重置密码密码
+import bindPhone from '@/components/bindPhone'//绑定手机号
 import LegalRecord from '@/components/LegalRecord' //法币交易记录
 import LegalTradeSet from '@/components/LegalTradeSet' //法币交易设置
 import LegalSeller from '@/components/LegalSeller' //法币商家详情
@@ -246,6 +247,11 @@ export default new Router({
 			path: '/forgetPwd',
 			name: 'forgetPwd',
 			component: ForgetPwd
+		},
+		{
+			path: '/components/bindPhone',
+			name: 'bindPhone',
+			component: bindPhone
 		},
 		
 		{

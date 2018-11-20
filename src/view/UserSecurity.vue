@@ -6,13 +6,13 @@
                 </div>
             <div  class="fl ml30">
                 <p  class="ft16 ">您的账号安全等级 :
-                    <span  class="ml10">低</span>
+                    <span  class="ml10">{{lever}}</span>
                 </p>
                 <div  class="bar-bottom">
-                    <div  class="bar-top" style="width: 25%;"></div>
+                    <div  class="bar-top" :style="widthBar"></div>
                 </div>
                 <p  class="fColor2 ft14">
-                    您的账号安全等级 低，强烈建议开启更多身份验证</p>
+                    您的账号安全等级 {{lever}}，完善更多资料，保证账号安全</p>
                 <p  class="fColor2 ft14" style="display: none;">
                     您的账号安全等级 低，恭喜您!</p>
             </div>
@@ -33,6 +33,8 @@
                 </p>
                 <span  class="fr red ml25 mouseDefault"></span>
                 <span  class="fr red mouseDefault"></span>
+                <router-link class="fr red" to="/components/bindPhone" v-if="account == '未绑定'">去绑定</router-link>
+                <span class="fr" v-else>已绑定</span>
             </li>
             <li class="bdr-part">
                 <img  :src="esrc">
@@ -110,6 +112,9 @@ export default {
       ],
       account: "未绑定",
       email: "未绑定",
+      lever:'低',
+      widthBar:'width: 25%',
+      bar:25,
       extension_code: "",
       authen:0,
       austatus:'去认证',
@@ -142,20 +147,35 @@ export default {
         .then(res => {
           console.log(res);
           if (res.data.type == "ok") {
-            this.email = res.data.message.email || '未绑定';
-            console.log(this.email);
-            this.esrc = this.email == '未绑定'?require("@/assets/images/icon_error.png"):require("@/assets/images/success.png");
+            
             
             if (res.data.message.phone) {
               this.account = res.data.message.phone;
               this.psrc = require("@/assets/images/success.png");
+              this.bar=this.bar+25;
             }
             if (res.data.message.email) {
-              
+              this.email = res.data.message.email || '未绑定';
+              this.esrc = this.email == '未绑定'?require("@/assets/images/icon_error.png"):require("@/assets/images/success.png");
+              if(this.esrc=='已绑定'){
+                this.bar=this.bar+25;
+              }
             }
             this.extension_code = res.data.message.extension_code;
             this.authen=res.data.message.review_status;
-            if(this.authen==2){this.asrc=require("@/assets/images/success.png")}
+            if(this.authen==2){
+              this.asrc=require("@/assets/images/success.png")
+              this.bar=this.bar+25;
+            }
+            console.log(this.bar)
+            if(this.bar==50){
+              this.lever='中';
+            }else if(this.bar==75){
+              this.lever='高'; 
+            }else if(this.bar==100){
+              this.lever='强';
+            }
+            this.widthBar='width:'+this.bar+'%';
           }
         })
         .catch(error => {});
