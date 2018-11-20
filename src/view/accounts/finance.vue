@@ -45,7 +45,15 @@
                        <!-- <p class="ft12 fColor2 mb50">查看<span class="excharge_record">充币记录</span>跟踪状态</p> -->
                        <p class="ft12 fColor2 mb15 mt80">温馨提示</p>
                        <ul class="tips_ul ft12 fColor2" style="list-style:disc inside">
-                           <li class="tips_li" style="list-style:disc inside" v-for="item in tip_list">{{item}}</li>
+                           <!-- <li class="tips_li" style="list-style:disc inside" v-for="item in tip_list">{{item}}</li> -->
+                           <li>
+                               请勿向上述地址充值任何非{{item.currency_name}}资产，否则资产将不可找回。<br>
+                                {{item.currency_name}}充币仅支持simple send的方法，使用其他方法的充币暂时无法上账，请您谅解。<br>
+                                您充值至上述地址后，需要整个网络节点的确认，1次网络确认后到账，6次网络确认可提币。<br>
+                                最小充值金额：{{rate}} {{item.currency_name}},小于最小金额的充值将不会上账且无法退回。
+                                您的充值地址不会经常改变，可以重复充值;如有更改，我们会尽量通过网络公告或邮件通知您。<br>
+                                请务必确认电脑及浏览器安全，防止信息被篡改或泄露。 
+                           </li>
                        </ul>
                    </div>
                    <!--提币区-->
@@ -76,7 +84,15 @@
                         <div class="flex2">
                        <p class="ft12 fColor2 mb15">温馨提示</p>
                        <ul class="tips_ul ft12 fColor2" style="list-style:disc inside">
-                           <li class="tips_li" style="list-style:disc inside" v-for="item in tip_list01">{{item}}</li>
+                           <!-- <li class="tips_li" style="list-style:disc inside" v-for="(item,index) in tip_list01" :key="index">{{item}}</li> -->
+                           <li>
+                                请勿向上述地址充值任何非{{item.currency_name}}资产，否则资产将不可找回。<br>
+                                {{item.currency_name}}充币仅支持simple send的方法，使用其他方法的充币暂时无法上账，请您谅解。<br>
+                                您充值至上述地址后，需要整个网络节点的确认，1次网络确认后到账，6次网络确认可提币。<br>
+                                最小充值金额：{{rate}} {{item.currency_name}},小于最小金额的充值将不会上账且无法退回。
+                                您的充值地址不会经常改变，可以重复充值;如有更改，我们会尽量通过网络公告或邮件通知您。<br>
+                                请务必确认电脑及浏览器安全，防止信息被篡改或泄露。
+                           </li>
                        </ul>
                        </div>
                        <div class="flex1 tc"><button class="withdraw_btn" @click="mention">提币</button></div>
@@ -145,7 +161,8 @@ export default {
                 '请勿向上述地址充值任何非USDT资产，否则资产将不可找回。','USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。','请勿向上述地址充值任何非USDT资产，否则资产将不可找回。','USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。'
             ],
             page:1,
-            moreLog:'加载更多'
+            moreLog:'加载更多',
+            rete:''
         }
     },
     components:{
@@ -170,6 +187,18 @@ export default {
                 alert('复制失败')
             });
         },
+        getRate(currency){
+           this.$http({
+                        url: '/api/wallet/get_info',
+                        method:'post',
+                        data:{currency:currency},
+                        headers:{'Authorization':this.token}
+                    }).then( res => {
+                        if(res.data.type == 'ok'){
+                            this.rate = res.data.message.rate
+                        }
+                    }) 
+        },
         //充币
         excharge(index,currency){
             console.log(currency);
@@ -185,7 +214,8 @@ export default {
                 this.active01 = 'a';
                  this.active02 = 'a';
             }
-            this.sendData(currency)
+            this.sendData(currency);
+            this.getRate(currency);
         },
         sendData(currency){
             var that = this;
@@ -252,6 +282,7 @@ export default {
                  this.active02 = 'a';
             }
             this.getNum(currency);
+             this.getRate(currency);
         },
         //记录
         rec(index,currency){

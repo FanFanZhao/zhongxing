@@ -9,7 +9,7 @@
       <router-link to="/legalTrade" v-if="token">法币交易</router-link>
       <router-link to="/dealCenter">币币交易</router-link>
       <router-link to="/myLegalShops" v-if="isShow">我的商铺</router-link>
-      <router-link to="/finance">我的资产</router-link>
+      <router-link to="/finance" v-if="token">我的资产</router-link>
       <!-- <router-link to="/userSetting">安全设置</router-link> -->
       <!-- <router-link to="/components/noticeList">公告</router-link>
       <div class="coin-box">
@@ -45,11 +45,11 @@
           </div>
         </div>
       </div>
-      <div class=" theme flex">
+      <!-- <div class=" theme flex">
           <img src="../assets/images/dark.png"  @click="$changeTheme('light')" alt="">
           <img src="../assets/images/light.png" @click="$changeTheme('dark')" alt="">
           
-        </div>
+        </div> -->
     </div>
   </div>
 </template>
