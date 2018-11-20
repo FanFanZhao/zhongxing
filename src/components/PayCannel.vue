@@ -6,7 +6,7 @@
 				<p class="status-text">{{statusText}}</p>
 			</div>
 			<div class="content-header-right">
-				<p class="contact-text">联系方式: {{datas.phone}}</p>
+				<p class="contact-text">联系方式: {{datas.seller_phone}}</p>
 			</div>
 		</div>
 		<div class="total">

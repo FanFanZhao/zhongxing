@@ -76,7 +76,7 @@ export default {
     gotoNext(id,_type){
       var type=this.filterPms.type;
       console.log(this.filterPms.type)
-      if(_type=='sell'){
+      if(_type=='buy'){
         this.$router.push({path: '/components/payCannel',query:{ id,type:this.filterPms.type}});
       }else{
         // 购买
