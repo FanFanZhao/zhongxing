@@ -205,7 +205,10 @@
 
 <style lang='scss'>
 	$purple:#563BD1;
-
+    .status{
+		background: none;
+		color: #333;
+	}
 	.body {
 		height: 100%;
 		overflow: hidden;
