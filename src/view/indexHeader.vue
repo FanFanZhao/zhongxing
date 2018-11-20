@@ -99,7 +99,7 @@ export default {
     },
     init(){
       this.$http({
-        url:'api/user/info',
+        url:'/api/user/info',
         method:'GET',
         data:{},
         headers:{Authorization:this.token}

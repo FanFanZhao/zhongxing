@@ -1,7 +1,7 @@
 <template>
     <div class="bgf8 bg-part clr-part main-wrap">
         <div class="header bgf8 bg-part">
-            <p class="fl">总资产折合：<span class="asset_num">0.0000000</span><span class="asset_name"> BTC</span><span class="ft12 "> ≈ <span>0.00</span>CNY</span>
+            <p class="fl">总资产折合：<span class="asset_num">{{total}}</span><span class="asset_name"> USDT</span><span class="ft12 "> ≈ <span>{{totalCNY}}</span>CNY</span>
             <!-- <label class="min_lab ft14"><input type="checkbox" />隐藏小额资产</label><i></i><label class="inp_lab"><input  type="text"/><i></i></label> -->
             </p>
             <p class="fr right_text">
@@ -162,7 +162,9 @@ export default {
             ],
             page:1,
             moreLog:'加载更多',
-            rete:''
+            rete:'',
+            total:'',
+            totalCNY:''
         }
     },
     components:{
@@ -479,6 +481,8 @@ export default {
             }).then(res=>{
                 console.log(res.data)
                 that.asset_list=res.data.message.change_wallet.balance;
+                that.total = res.data.message.change_wallet.total;
+                that.totalCNY = res.data.message.change_wallet.totalCNY;
                 // this.asset_list.forEach((item,index) => {
                 //     this.$http({
                 //         url: '/api/wallet/legal_log',

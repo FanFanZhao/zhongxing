@@ -2,13 +2,12 @@
   <div id="legal-pay" class="bg-main clr-part">
     
     <div class="title bg-part ft16">
-      <span v-if="msg.is_sure == 0&&msg.type =='sell'">请付款</span>
-      <span v-if="msg.is_sure == 0&&msg.type =='buy'">等待买家付款</span>
-      <div v-if="msg.is_sure == 1">订单已完成，无法查看支付信息</div>
-      <div v-if="msg.is_sure == 2">订单已取消，无法查看支付信息</div>
-      <div v-if="msg.is_sure == 3">已付款，{{msg.type == 'sell'?'等待商家确认收款':'请确认收款'}}</div>
+      <span v-if="msg.is_sure == 0&&msg.type =='sell'">请付款，请向以下账户付款</span>
+      <div v-if="msg.is_sure == 1">订单已完成</div>
+      <div v-if="msg.is_sure == 2">订单已取消</div>
+      <div v-if="msg.is_sure == 3&&msg.type =='sell'">已付款，等待商家确认收款</div>
       
-      <span v-if="msg.is_sure == 0 || msg.is_sure == 1">￥{{msg.deal_money}}</span>
+      <span v-if="msg.is_sure == 0 && msg.type =='sell'">￥{{msg.deal_money}}</span>
       
     </div>
     <div class="info bg-part ft14">
@@ -40,6 +39,9 @@
         <div class="btn" @click="showCancel = true">取消订单</div>
         <div class="btn" @click="showConfirm = true">我已付款，点击确认</div>
       </div>
+      <!-- <div class="btns flex" v-show="msg.is_sure==3&&msg.type=='sell'">
+        <div class="btn" @click="">确认收款</div>
+      </div> -->
     </div>
     <div class="cancel-box" v-if="showCancel">
       <div class="content">
@@ -113,7 +115,7 @@ export default {
     },
     cancel() {
       this.$http({
-        url: "api/user_legal_pay_cancel",
+        url: "/api/user_legal_pay_cancel",
         method: "post",
         data: { id: this.id },
         headers: { Authorization: this.token }
@@ -134,7 +136,7 @@ export default {
     },
     confirm() {
       this.$http({
-        url: "api/user_legal_pay",
+        url: "/api/user_legal_pay",
         method: "post",
         data: { id: this.id },
         headers: { Authorization: this.token }
