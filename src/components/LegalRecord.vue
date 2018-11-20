@@ -183,7 +183,10 @@ export default {
   overflow: auto;
 }
 .status{
-      background: #272f5d;
+      background: #563BD1;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
     padding: 0 6px;
     border-radius: 3px;
 }
