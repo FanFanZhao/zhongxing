@@ -43,7 +43,7 @@
 				</li>
 			</ul>
 			<!-- 分页 -->
-			<paginate v-show="pages" :page-count="pages" :click-handler="pagesList" :prev-text="'上一页'" :next-text="'下一页'"
+			<paginate v-model="currentpage" v-show="pages" :page-count="pages" :click-handler="pagesList" :prev-text="'上一页'" :next-text="'下一页'"
 			 :container-class="'pages'">
 			</paginate>
 		</div>
@@ -55,15 +55,15 @@
 					<p class="title">{{classify}}{{name}}</p>
 					<p class="price">单价{{prices}}</p>
 					<div class="trade">
-						<p :class="['trade-name',{'active':types == 'trade'}]" @click="tabClassify(1)">{{name}}交易</p>
-						<p :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}数量</p>
+						<p class="cur" :class="['trade-name',{'active':types == 'trade'}]" @click="tabClassify(1)">{{name}}交易</p>
+						<p class="cur" :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}数量</p>
 					</div>
 					<div class="totals-num bdr-part">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
 						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
 						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">全部卖出</button>
 						<button class="all clr-part" type="button" v-else @click="allMoney();">全部买入</button>
-						<span class="name">{{name}}</span>
+						<span class="name">{{name01}}</span>
 					</div>
 					<div class="maxnum">限额{{minNum}}-{{maxNum}}</div>
 					<div class="trade-totals">
@@ -108,7 +108,9 @@
 				nums: '',
 				totalNums: '0.00',
 				ID:'',
-				money_type:''
+				money_type:'',
+				currentpage:1,
+				name01:'CNY'
 			};
 		},
 		created() {
@@ -191,6 +193,7 @@
                
 				console.log(pageNum)
 				let _this = this;
+				_this.currentpage = pageNum;
 				_this.getList(_this.type, _this.id, pageNum);
 			},
 			// 出售或者购买按钮
@@ -223,8 +226,10 @@
 			tabClassify(num) {
 				if (num == 1) {
 					this.types = 'trade';
+					this.name01 = 'CNY'
 				} else {
 					this.types = 'num';
+					this.name01 = this.name
 				}
 			},
 			// 全部卖出或买入
@@ -233,6 +238,7 @@
 			},
 			// 下单
 			buyOrder() {
+				
 				let _this = this;
 				let means = 'money';
 				let ids = window.localStorage.getItem("user_id");
@@ -249,6 +255,7 @@
 						value: _this.nums
 					};
 					_this.buyHttp('/api/do_legal_deal', datas, function(res) {
+						
 						if(res.data.type == 'ok'){
 							// layer.msg(res.data.message)
 						if (res.data.message.data.type == 'sell') {
@@ -278,6 +285,7 @@
 			},
 			// 请求
 			buyHttp(urls, params, callback) {
+				var i = layer.load();
 				let _this = this;
 				_this.$http({
 					url: urls,
@@ -287,11 +295,14 @@
 						Authorization: localStorage.getItem("token")
 					}
 				}).then(res => {
+					layer.close(i);
 					console.log(res);
 					if (res.data.type == 'ok') {
+						layer.msg(res.data.message.msg)
 						callback && callback(res)
 					} else {
 						if (res.data.type == '998') {
+							layer.msg(res.data.message)
 							setTimeout(() => {
 								_this.$router.push('/legalTradeSet');
 							}, 500);
@@ -315,7 +326,9 @@
 
 <style lang='scss'>
 	$purple:#563BD1;
-
+    .cur{
+		cursor: pointer;
+	}
 	.body {
 		width: 100%;
 		height: 100%;

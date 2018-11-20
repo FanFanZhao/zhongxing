@@ -17,7 +17,7 @@
                     </div>
                     <div class="convert flex1">
                        <p class="ft12 mincny">折合</p>
-                       <p class="lock_balance_num">{{item.ustd_price}}（CNY）</p>
+                       <p class="lock_balance_num">{{item.cny_price}}（CNY）</p>
                     </div>
                 </div>
             </li>

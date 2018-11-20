@@ -13,7 +13,7 @@
                     </div>
                     <div class="flex alcenter center mt20">
                         <span>身份证：</span>
-                        <input type="number" placeholder="请输入身份证号" id="card" v-model="card_id">
+                        <input type="text" placeholder="请输入身份证号" id="card" v-model="card_id">
                     </div>
                 </div>
                 <div class="mt40 fColor1 ft14 tc">请上传身份证正反面，第一张为正面，第二张为反面。</div>
@@ -126,12 +126,18 @@ export default {
             var that = this;
             let name = this.$utils.trim(that.name);
             let card_id = this.$utils.trim(that.card_id);
+            var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
             if(this.name.length == ''){
                 layer.tips('请输入姓名!', '#name');
                 return;
+                
             }
             if(this.card_id.length == ''){
                 layer.tips('请输入身份证号!', '#card');
+                return;
+            }
+            if(!reg.test(card_id)){
+                layer.tips('请输入合法的身份证号!', '#card');
                 return;
             }
             this.$http({
@@ -143,13 +149,19 @@ export default {
                     front_pic:that.src1,
                     reverse_pic:that.src2
                 },  
-                headers: {'Authorization':  that.token}    
+               
+                headers: {
+                    'Authorization':  that.token,
+                   'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+                }    
             }).then(res=>{
                 console.log(res);
                     
                     if(res.data.type=='ok'){
                         layer.msg(res.data.message)
                         that.$router.back(-1);
+                    }else{
+                        layer.msg(res.data.message)
                     }
                    
 
