@@ -116,7 +116,7 @@ export default {
     },
     cancel() {
       this.$http({
-        url: "api/user_legal_pay_cancel",
+        url: "/api/user_legal_pay_cancel",
         method: "post",
         data: { id: this.id },
         headers: { Authorization: this.token }
@@ -137,7 +137,7 @@ export default {
     },
     confirm() {
       this.$http({
-        url: "api/user_legal_pay",
+        url: "/api/user_legal_pay",
         method: "post",
         data: { id: this.id },
         headers: { Authorization: this.token }
