@@ -130,7 +130,7 @@ export default {
     },
     cancel(){
       this.$http({
-        url:'api/user_legal_pay_cancel',
+        url:'/api/user_legal_pay_cancel',
         method:'post',
         data:{id:this.id},
         headers:{Authorization:this.token}
@@ -144,7 +144,7 @@ export default {
     },
     confirm(){
       this.$http({
-        url:'api/legal_deal_user_sure',
+        url:'/api/legal_deal_user_sure',
         method:'post',
         data:{id:this.id},
         headers:{Authorization:this.token}
