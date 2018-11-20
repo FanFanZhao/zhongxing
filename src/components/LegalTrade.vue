@@ -51,6 +51,7 @@
 			<div class="mask" @click="closeBtn()"></div>
 			<div class="content">
 				<div class="content-list layerBg">
+					<p class="close light_blue" @click="shows=false">X</p>
 					<p class="title">{{classify}}{{name}}</p>
 					<p class="price">单价{{prices}}</p>
 					<div class="trade">
@@ -485,13 +486,20 @@
 				justify-content: center;
 				align-items: center;
 				overflow: hidden;
-
+                
 				>.content-list {
 					width: 400px;
 					border-radius: 10px;
 					margin: auto;
 					background-color: #26292b;
 					padding: 15px;
+					position: relative;
+					.close{
+						position: absolute;
+						top:5px;
+						right: 10px;
+						cursor: pointer;
+					}
 
 					>.title {
 						font-size: 16px;
