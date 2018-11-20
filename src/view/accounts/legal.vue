@@ -1,7 +1,7 @@
 <template>
     <div class="bgf8 bg-part clr-part main-wrap">
         <div class="top">
-            <p>法币账户  总资产折合：{{totle}}（CNY）<span class='ft12 all_account'><span class=""></span>≈ <span>{{totle/6.5}}</span> USDT</span></p>
+            <p>法币账户  总资产折合：{{total}}USDT<span class='ft12 all_account'><span class=""></span>≈ <span>{{totalCNY}}</span> CNY</span></p>
         </div>
         <ul class="list ft12">
             <li class="bdr-part" v-for="(item,index) in list" :key="index" @click="go_legalAccount(item.currency)">
@@ -29,7 +29,9 @@ export default {
     data(){
         return{
           totle:'',
-          list:[]
+          list:[],
+          total:'',
+          totalCNY:''
         }
     },
     created(){
@@ -52,7 +54,8 @@ export default {
                         
                         if(res.data.type  =='ok'){
                             that.list = res.data.message.legal_wallet.balance;
-                            this.totle = res.data.message.legal_wallet.totle;
+                            this.total = res.data.message.legal_wallet.total;
+                            this.totalCNY = res.data.message.legal_wallet.totalCNY;
                         }else{
                             layer.msg(res.message);
                         }

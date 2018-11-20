@@ -188,6 +188,8 @@
 			},
 			// 分页改变
 			pagesList(pageNum) {
+
+				console.log(pageNum)
 				let _this = this;
 				_this.getList(_this.type, _this.id, pageNum);
 			},

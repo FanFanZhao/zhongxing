@@ -5,10 +5,12 @@
       <span v-if="msg.is_sure == 1">已完成</span>
       <span v-if="msg.is_sure == 2">已取消</span>
       <span v-if="msg.is_sure == 3">已付款</span>
-       <div v-if="msg.is_sure == 0">请等待买家付款</div>
+       <div v-if="msg.is_sure == 0&&msg.type == 'sell'">请等待买家付款</div>
+        <div v-if="msg.is_sure == 0&&msg.type == 'buy'">请确认，向卖家付款</div>
       <div v-if="msg.is_sure == 1">订单已完成</div>
       <div v-if="msg.is_sure == 2">订单已取消</div>
-      <div v-if="msg.is_sure == 3">买家已付款，请核实后确认</div>
+      <div v-if="msg.is_sure == 3&&msg.type == 'sell'">买家已付款，请核实后确认</div>
+       <div v-if="msg.is_sure == 3&&msg.type == 'buy'">请等待卖家确认</div>
      
     </div>
     <div class="info bg-part ft14">
@@ -142,13 +144,16 @@ export default {
     },
     confirm(){
       this.$http({
-        url:'/api/user_legal_pay',
+        url:'/api/legal_deal_user_sure',
         method:'post',
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
         // console.log(res);
-        lay.msg(res.data.message);
+        layer.msg(res.data.message);
+        setTimeout(() => {
+           location.reload()
+        }, 1000);
         
       }).then(() => {
         this.showConfirm = false;
