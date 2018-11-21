@@ -175,7 +175,6 @@ export default {
             if (res.type === "ok") {
               layer.msg(res.message);
               that.getdata(that.urls, that.types);
-              that.connect();
             } else {
               layer.msg(res.message);
             }
@@ -185,12 +184,7 @@ export default {
           });
       });
     },
-    connect() {
-      this.$socket.emit("login", localStorage.getItem("user_id"));
-      this.$socket.on("transaction", msg => {
-        console.log(msg);
-      });
-    },
+
     getdata(url, type) {
       console.log(type);
       var page = this.page;
@@ -300,17 +294,20 @@ export default {
   },
   mounted() {
     var that = this;
+    console.log('entrust2')
     if (this.token != "") {
       that.getdata(this.urls, this.types);
-      eventBus.$on("toTrade", function() {
-        that.isUrl = 0;
-        that.isChoosed = 0;
-        that.getdata(that.urls, that.types);
-      });
-      eventBus.$on("buyTrade", function() {
-        that.getdata(that.urls, that.types);
-      });
+      // eventBus.$on("toTrade", function() {
+      //   that.isUrl = 0;
+      //   that.isChoosed = 0;
+      //   that.getdata(that.urls, that.types);
+      // });
     }
+    eventBus.$on('tradeOk',function(data){  
+        if(data.status == 'ok'){
+            that.getdata(that.urls, that.types);
+        }
+    })
   }
 };
 </script>
