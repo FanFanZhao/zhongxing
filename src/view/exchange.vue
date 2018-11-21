@@ -134,7 +134,7 @@ export default {
           })
           var inData = JSON.parse(msg.in);
           var outData = JSON.parse(msg.out);
-          if (msg.currency_id == that.legal_id && msg.legal_id == that.currency_id) {
+          if (msg.legal_id == that.legal_id && msg.currency_id == that.currency_id) {
             that.inlist = inData;
             that.outlist = outData;
           }
