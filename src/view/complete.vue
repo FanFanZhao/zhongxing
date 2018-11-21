@@ -92,30 +92,24 @@ export default {
         }
       },
     mounted(){
-         var that = this;
-          eventBus.$on('toTrade0', function (data0) {
-                that.currency_id=data0.currency_id
-                that.legal_id=data0.legal_id
-                that.complete(data0.legal_id,data0.currency_id)
-          });
-           eventBus.$on('toTrade', function (data0) {
-                that.currency_id=data0.currency_id
-                that.legal_id=data0.legal_id
-                that.complete(data0.legal_id,data0.currency_id)
-          })
-          eventBus.$on('tradeOk',function(data){
-              
-              if(data.status == 'ok'){
-                  that.complete(that.legal_id,that.currency_id)
-              }
-          })
-          eventBus.$on('buyTrade', function (data) {
-            //  that.connect();
+        var that = this;
+        eventBus.$on('toTrade0', function (data0) {
+            that.currency_id=data0.currency_id
+            that.legal_id=data0.legal_id
+            that.complete(data0.legal_id,data0.currency_id)
         });
-       
-    }
-
-    
+        eventBus.$on('toTrade', function (data0) {
+            that.currency_id=data0.currency_id
+            that.legal_id=data0.legal_id
+            that.complete(data0.legal_id,data0.currency_id)
+        })
+        eventBus.$on('tradeOk',function(data){
+            
+            if(data.status == 'ok'){
+                that.complete(that.legal_id,that.currency_id)
+            }
+        })
+    } 
 }
 </script>
 <style scoped>

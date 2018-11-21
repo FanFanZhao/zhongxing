@@ -91,10 +91,11 @@ export default {
   methods: {
     signOut() {
       this.account_number = "";
-      window.localStorage.removeItem("token");
-      window.localStorage.removeItem("accountNum");
-      window.localStorage.removeItem("user_id");
-      window.localStorage.removeItem("extension_code");
+      // window.localStorage.removeItem("token");
+      // window.localStorage.removeItem("accountNum");
+      // window.localStorage.removeItem("user_id");
+      // window.localStorage.removeItem("extension_code");
+      window.localStorage.clear();
       this.$router.push('/components/login');
     },
     init(){

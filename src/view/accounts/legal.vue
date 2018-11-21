@@ -16,8 +16,8 @@
                        <p class="lock_balance_num">{{item.lock_legal_balance}}</p>
                     </div>
                     <div class="convert flex1">
-                       <p class="ft12 mincny">折合</p>
-                       <p class="lock_balance_num">{{item.cny_price}}（CNY）</p>
+                       <p class="ft12 mincny">折合(CNY)</p>
+                       <p class="lock_balance_num">{{item.usdt_price}}</p>
                     </div>
                 </div>
             </li>

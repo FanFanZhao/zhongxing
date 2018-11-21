@@ -47,7 +47,7 @@
                     开始交易
                     </div>
                     <div class="clear available bdr-part" v-else>
-                        <span class="fl 1">可用 {{user_currency}} {{legal_name}}</span>
+                        <span class="fl 1">可用 {{user_currency}} {{currency_name}}</span>
                         <!-- <span class="fr redColor curPer" @click="goNext('account')">充币</span> -->
                     </div>
                     <div class="mt40 input-item clear">
@@ -261,8 +261,8 @@ export default {
         url: "/api/" + this.buyInfo.url,
         method: "post",
         data: {
-          legal_id: this.currency_id,
-          currency_id: this.legal_id,
+          legal_id: this.legal_id,
+          currency_id: this.currency_id,
           price: this.disabled ? this.lastPrice : this.buyPrice,
           num: this.buyNum,
           // pay_password:this.buyInfo.pwd
@@ -279,7 +279,7 @@ export default {
             this.buyPrice = '';
             this.buyNum = '';
             this.buyInfo.pwd='';
-            // that.buy_sell(that.legal_id,that.currency_id)
+            that.buy_sell(that.legal_id,that.currency_id)
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
             console.log(res.data.message);
@@ -314,8 +314,8 @@ export default {
         url: "/api/" + this.sellInfo.url,
         method: "post",
         data: {
-          legal_id: this.currency_id,
-          currency_id: this.legal_id,
+          legal_id: this.legal_id,
+          currency_id: this.currency_id,
           price: this.disabled?this.lastPrice:this.sellPrice,
           num: this.sellNum,
           // pay_password:this.sellInfo.pwd
@@ -333,7 +333,7 @@ export default {
             this.sellInfo.pwd = '';
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
-            // that.buy_sell(that.legal_id,that.currency_id)
+            that.buy_sell(that.legal_id,that.currency_id)
             layer.msg(res.data.message);
           } else {
             layer.msg(res.data.message);
@@ -349,8 +349,8 @@ export default {
         url: "/api/" + "transaction/deal",
         method: "post",
         data: {
-          legal_id: currencys_id,
-          currency_id: legals_id
+          legal_id: legals_id,
+          currency_id: currencys_id
         },
         headers: { Authorization: localStorage.getItem("token") }
       })
