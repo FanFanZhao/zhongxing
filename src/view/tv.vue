@@ -23,7 +23,7 @@
 				lists:[],
 				newData:'',
 				bg:'#ffffff',
-				grid:'#cccccc',
+				grid:'#f7f8fa',
 				theme:'',
 				csspath:'bundles/new.css'
 			}
@@ -63,7 +63,7 @@
 				that.createWidget();
 			}else{
 				that.bg='#ffffff';
-				that.grid='#cccccc';
+				that.grid='#f7f8fa';
 				that.csspath='bundles/new.css'
 				that.createWidget();
 				
@@ -81,7 +81,7 @@
 					
 				}else{
 					that.bg='#ffffff';
-					that.grid='#1E2740';
+					that.grid='#f7f8fa';
 					that.csspath='bundles/new.css'
 					that.createWidget();
 					
