@@ -57,8 +57,8 @@ export default {
            card_id:'',
            src1:'',
            src2:'',
-           src01:'',
-           src02:'',
+           src01:'../../static/imgs/cardFront.jpg',
+           src02:'../../static/imgs/cardBack.jpg',
            review_status:''
         }
     },
@@ -130,7 +130,6 @@ export default {
             if(this.name.length == ''){
                 layer.tips('请输入姓名!', '#name');
                 return;
-                
             }
             if(this.card_id.length == ''){
                 layer.tips('请输入身份证号!', '#card');
@@ -156,7 +155,7 @@ export default {
                 }    
             }).then(res=>{
                 console.log(res);
-                    
+        
                     if(res.data.type=='ok'){
                         layer.msg(res.data.message)
                         that.$router.back(-1);
@@ -179,7 +178,7 @@ export default {
                 headers: {'Authorization':  that.token}   
             }).then(res=>{
                 layer.close(i);
-                that.review_status=res.data.message.review_status;
+                // that.review_status=res.data.message.review_status;
                 }).catch(error=>{
                     
             })
@@ -222,20 +221,23 @@ export default {
             }
             .idimg{
                 div{
-                    width: 160px;
-                    height: 160px;
+                    width: 180px;
+                    height: 110px;
                     overflow: hidden;
                     position: relative;
-                    background: url('../../static/imgs/addimg.png') no-repeat;
+                    // background: url('../../static/imgs/addimg.png') no-repeat;
                     background-size: 100% 100%;
                     border: 1px solid #E2E2E2;
                     margin-left: 50px;
+                    img{
+                        width: 100%;
+                    }
                     input{
                         position: absolute;
                         z-index: 11110;
                         opacity: 0;
                         width: 100%;
-                        height: 160px;
+                        height: 110px;
                         top: 0;
                         cursor: pointer;
                     }
