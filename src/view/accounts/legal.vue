@@ -43,6 +43,7 @@ export default {
     methods:{
          //法币账户
          legal(){
+             var load = layer.load();
              var that = this
                  this.$http({
                     url: '/api/' + 'wallet/list',
@@ -50,6 +51,7 @@ export default {
                     data:{},
                     headers: {'Authorization':  that.token}
                     }).then(res=>{
+                        layer.close(load);
                     console.log(res)
                         
                         if(res.data.type  =='ok'){

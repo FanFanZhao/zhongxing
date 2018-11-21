@@ -64,6 +64,7 @@ export default {
     },
     methods:{
         init(){
+            var load = layer.load();
         var that = this
                  this.$http({
                     url: '/api/' + 'wallet/detail',
@@ -74,6 +75,7 @@ export default {
                     },
                     headers: {'Authorization':  that.token}
                     }).then(res=>{
+                        layer.close(load)
                     console.log(res)  
                         if(res.data.type  =='ok'){
                             var msg = res.data.message;
@@ -92,13 +94,14 @@ export default {
         },
         //获取记录
         getLog(){
-            
+            var load = layer.load();
             this.$http({
                         url: '/api/wallet/legal_log',
                         method:'post',
                         data:{type:'1',currency:this.$route.params.currency_id,page:this.page},
                         headers:{'Authorization':this.token}
                     }).then( res => {
+                        layer.close(load);
                         console.log(res);
                         console.log(res.data.message.list)
                         if(res.data.type == 'ok'){
