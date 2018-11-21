@@ -19,7 +19,7 @@
                     <div class="register-input bdr-part">
                         <span class="register-item">验证码</span>
                         <div class="flex">
-                    <input type="text" v-model="code" class="codes">
+                    <input type="text" v-model="code" class="codes" id="code">
                     <button type='button' class="code-btn redBg " @click="sendCode">发送验证码</button>
                     </div>
                 </div>
@@ -116,7 +116,7 @@ export default {
       })
     },
     login() {
-      var i = layer.load();
+      
       let account_number = this.$utils.trim(this.account_number);
       let password = this.$utils.trim(this.password);
       if (this.account_number.length == "") {
@@ -127,6 +127,11 @@ export default {
         layer.tips("密码不能小于六位!", "#pwd");
         return;
       }
+      if (this.code == '') {
+        layer.tips("验证码不能为空!", "#code");
+        return;
+      }
+      var i = layer.load();
       this.$http({
         url: '/api/' + "user/pc_login",
         method: "post",
