@@ -22,13 +22,13 @@
                     </div>
                     <div class="mt40 input-item clear">
                         <label>买入价</label>
-                        <input class="clr-part bg-main bdr-part" type="number" v-model="buyInfo.buyPrice" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" v-model="buyPrice" min="0" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
                         <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
                         <span>{{currency_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
                         <label>买入量</label>
-                        <input class="clr-part bg-main bdr-part" type="number" v-model="buyInfo.buyNum" @keydown.69.prevent  @keyup="numFilter($event)">
+                        <input class="clr-part bg-main bdr-part" type="number" min="0" v-model="buyNum" @keydown.69.prevent  @keyup="numFilter($event)">
                         <span>{{legal_name}}</span>
                     </div>
                     <!-- <div class="mt40 input-item clear">
@@ -52,13 +52,13 @@
                     </div>
                     <div class="mt40 input-item clear">
                         <label>卖出价</label>
-                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="sellInfo.sellPrice" v-if="!disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="sellPrice" v-if="!disabled" min="0">
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice" :disabled='disabled' v-if="disabled">
                         <span>{{currency_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
                         <label>卖出量</label>
-                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent  @keyup="numFilter($event)" v-model="sellInfo.sellNum">
+                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent  @keyup="numFilter($event)" v-model="sellNum" min="0">
                         <span>{{legal_name}}</span>
                     </div>
                     <!-- <div class="mt40 input-item clear">
@@ -139,10 +139,36 @@ export default {
       disabled: false,
       lastPrice: "111",
       pwd:'',
+      buyPrice:'',
+      buyNum:'',
+      sellNum:'',
+      sellPrice:'',
       buyInfo: { buyPrice: 0, buyNum: 0,pwd:'', url: "transaction/in" },
       sellInfo: { sellPrice: 0, sellNum: 0,pwd:'', url: "transaction/out" },
       tradetype: [{ typetext: "限价交易" }, { typetext: "市价交易" }]
     };
+  },
+  watch:{
+     'buyPrice':function(newVal){
+         if(newVal<0){
+           this.buyPrice = ''
+         }
+     },
+     'sellPrice':function(val){
+       if(val<0){
+           this.sellPrice = ''
+         }
+     },
+     'buyNum':function(val){
+       if(val<0){
+           this.buyNum = ''
+         }
+     },
+     'sellNum':function(val){
+       if(val<0){
+           this.sellNum = ''
+         }
+     }
   },
   created() {
     this.address = localStorage.getItem("token") || "";
@@ -217,12 +243,12 @@ export default {
     buyCoin() {
       // var that = this;
       if (!this.disabled) {
-        if (!this.buyInfo.buyPrice || this.buyInfo.buyPrice <= 0) {
+        if (!this.buyPrice || this.buyPrice <= 0) {
           layer.msg("请输入买入价");
           return;
         }
       }
-      if (!this.buyInfo.buyNum || this.buyInfo.buyNum <= 0) {
+      if (!this.buyNum || this.buyNum <= 0) {
         layer.msg("请输入买入量");
         return;
       }
@@ -237,8 +263,8 @@ export default {
         data: {
           legal_id: this.currency_id,
           currency_id: this.legal_id,
-          price: this.disabled ? this.lastPrice : this.buyInfo.buyPrice,
-          num: this.buyInfo.buyNum,
+          price: this.disabled ? this.lastPrice : this.buyPrice,
+          num: this.buyNum,
           // pay_password:this.buyInfo.pwd
         },
         headers: { Authorization: localStorage.getItem("token") }
@@ -250,8 +276,8 @@ export default {
           if (res.data.type == "ok") {
             eventBus.$emit('tradeOk',{status:'ok'});
             layer.msg(res.data.message);
-            this.buyInfo.buyPrice = 0;
-            this.buyInfo.buyNum = 0;
+            this.buyPrice = '';
+            this.buyNum = '';
             this.buyInfo.pwd='';
             // that.buy_sell(that.legal_id,that.currency_id)
             eventBus.$emit("buyTrade", "tradebuy");
@@ -270,12 +296,12 @@ export default {
 
       var that = this;
       if (!this.disabled) {
-        if (!this.sellInfo.sellPrice || this.sellInfo.sellPrice <= 0) {
+        if (!this.sellPrice || this.sellPrice <= 0) {
           layer.msg("请输入卖出价");
           return;
         }
       }
-      if (!this.sellInfo.sellNum || this.sellInfo.sellNum <= 0) {
+      if (!this.sellNum || this.sellNum <= 0) {
         layer.msg("请输入卖出量");
         return;
       }
@@ -290,8 +316,8 @@ export default {
         data: {
           legal_id: this.currency_id,
           currency_id: this.legal_id,
-          price: this.disabled?this.lastPrice:this.sellInfo.sellPrice,
-          num: this.sellInfo.sellNum,
+          price: this.disabled?this.lastPrice:this.sellPrice,
+          num: this.sellNum,
           // pay_password:this.sellInfo.pwd
         },
         headers: { Authorization: localStorage.getItem("token") }
@@ -302,8 +328,8 @@ export default {
           // layer.msg(res.data.message)
           if (res.data.type == "ok") {
             eventBus.$emit('tradeOk',{status:'ok'});
-            this.sellInfo.sellPrice = 0;
-            this.sellInfo.sellNum = 0;
+            this.sellPrice = '';
+            this.sellNum = '';
             this.sellInfo.pwd = '';
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
@@ -349,10 +375,10 @@ export default {
   },
   computed: {
     buyTotal() {
-      return this.buyInfo.buyPrice * this.buyInfo.buyNum || 0;
+      return this.buyPrice * this.buyNum || 0;
     },
     sellTotal() {
-      return this.sellInfo.sellPrice * this.sellInfo.sellNum || 0;
+      return this.sellPrice * this.sellNum || 0;
     }
   }
 };
