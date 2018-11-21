@@ -92,6 +92,7 @@
 		},
 		methods: {
 			getList(id) {
+				var i = layer.load();
 				let _this = this;
 				_this.$http({
 					url: "/api/legal_deal",
@@ -102,6 +103,7 @@
 						Authorization: _this.token
 					}
 				}).then(res => {
+					layer.close(i);
 					console.log(res);
 					if (res.data.type == 'ok') {
 						_this.datas = res.data.message;
@@ -148,6 +150,7 @@
 			},
 			// 取消订单
 			cannelPay() {
+				var i = layer.load();
 				let _this = this;
 				let ids = this.$route.query.id;
 				let params = {
@@ -161,6 +164,7 @@
 						Authorization: localStorage.getItem("token")
 					}
 				}).then(res => {
+					layer.close(i);
 					console.log(res);
 					layer.msg(res.data.message);
 					_this.getList(ids);
@@ -170,6 +174,7 @@
 			},
 			// 确认订单
 			comfirmPay() {
+				var i = layer.load();
 				let _this = this;
 				let ids = this.$route.query.id;
 				let params = {
@@ -183,6 +188,7 @@
 						Authorization: localStorage.getItem("token")
 					}
 				}).then(res => {
+					layer.close(i);
 					console.log(res);
 					layer.msg(res.data.message);
 					if (res.data.type == 'ok') {

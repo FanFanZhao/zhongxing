@@ -252,12 +252,14 @@ export default {
     },
     // 注册
     register() {
-      
+      var regPsws = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/;
       if (this.pwd == "") {
         layer.msg("请输入密码");
         return;
       }else if(this.pwd.length <6 || this.pwd.length >16){
         layer.msg('密码只能在6-16位之间');return;
+      }else if(!regPsws.test(this.pwd)){
+         layer.msg('密码必须由数字和字母组成');return;
       }
        else if (this.repwd == "") {
         layer.msg("请再次输入密码");
