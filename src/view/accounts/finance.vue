@@ -457,6 +457,7 @@ export default {
             }
         },
         getdata(){
+            var load = layer.load();
             var that = this;
             console.log(that.token)
             // $.ajax({
@@ -482,6 +483,7 @@ export default {
             data:{},
             headers: {'Authorization':  that.token},
             }).then(res=>{
+                layer.close(load)
                 console.log(res.data)
                 that.asset_list=res.data.message.change_wallet.balance;
                 that.total = res.data.message.change_wallet.total;

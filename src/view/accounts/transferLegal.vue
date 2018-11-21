@@ -46,18 +46,21 @@ export default {
   },
   methods: {
     getCoins() {
+        var load = layer.load();
       this.token = window.localStorage.getItem("token") || "";
       this.$http({
         url: "/api/wallet/list",
         method: "post",
         headers: { Authorization: this.token }
       }).then(res => {
+          layer.close(load);
         if (res.data.type == "ok") {
           this.coins = res.data.message.legal_wallet.balance;
         }
       });
     },
     transfer(){
+        var load = layer.load();
         if(this.number == ''){
             layer.msg('请输入划转数量');return;
         } else {
@@ -73,6 +76,7 @@ export default {
                 data:data,
                 headers: { 'Authorization': this.token }
             }).then(res => {
+                layer.close(load);
                 console.log(res);
                 if(res.data.type == 'ok'){
                         layer.msg(res.data.message)
