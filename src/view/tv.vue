@@ -26,11 +26,13 @@
 				grid:'#cccccc',
 				theme:'',
 				csspath:'bundles/new.css'
-
 			}
 		},
 		created(){
-			
+			if(window.localStorage.getItem('tradeData')){
+				var localData=JSON.parse(window.localStorage.getItem('tradeData'))
+				this.$store.state.symbol = localData.currency_name + "/" + localData.legal_name;
+			}
 
 		},
 		sockets: {},
@@ -53,8 +55,6 @@
 		mounted() {
 			var that = this;
 			$('.chart-page').css('background','#131a21')
- 
-
 			var theme=window.localStorage.getItem('theme') || '';
 			if(theme=='dark'){
 				that.bg='#181b2a';

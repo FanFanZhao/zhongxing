@@ -17,26 +17,26 @@
                     开始交易
                     </div>
                     <div class="clear available bdr-part" v-else>
-                        <span class="fl 1">可用 {{user_legal}} {{currency_name}}</span>
+                        <span class="fl 1">可用 {{user_legal}} {{legal_name}}</span>
                         <!-- <span class="fr redColor curPer" @click="goNext('account')">充币</span> -->
                     </div>
                     <div class="mt40 input-item clear">
                         <label>买入价</label>
                         <input class="clr-part bg-main bdr-part" type="number" v-model="buyPrice" min="0" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
                         <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
-                        <span>{{currency_name}}</span>
+                        <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
                         <label>买入量</label>
                         <input class="clr-part bg-main bdr-part" type="number" min="0" v-model="buyNum" @keydown.69.prevent  @keyup="numFilter($event)">
-                        <span>{{legal_name}}</span>
+                        <span>{{currency_name}}</span>
                     </div>
                     <!-- <div class="mt40 input-item clear">
                         <label>资金密码</label>
                         <input type="password" v-model="buyInfo.pwd" @keydown.69.prevent>
                     </div> -->
                     <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div>
-                    <div class="mt50 1 ft16">交易额 {{buyTotal}} {{currency_name}}</div>
+                    <div class="mt50 1 ft16">交易额 {{buyTotal}} {{legal_name}}</div>
                     <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">买{{legal_name}}</div>
                 </div>
             </div>
@@ -54,19 +54,19 @@
                         <label>卖出价</label>
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="sellPrice" v-if="!disabled" min="0">
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice" :disabled='disabled' v-if="disabled">
-                        <span>{{currency_name}}</span>
+                        <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
                         <label>卖出量</label>
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent  @keyup="numFilter($event)" v-model="sellNum" min="0">
-                        <span>{{legal_name}}</span>
+                        <span>{{currency_name}}</span>
                     </div>
                     <!-- <div class="mt40 input-item clear">
                         <label>资金密码</label>
                         <input type="password" v-model="sellInfo.pwd" @keydown.69.prevent>
                     </div> -->
                     <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div>
-                    <div class="mt50 1 ft16">交易额 {{sellTotal}} {{currency_name}}</div>
+                    <div class="mt50 1 ft16">交易额 {{sellTotal}} {{legal_name}}</div>
                     <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">卖{{legal_name}}</div>
                 </div>
             </div>
@@ -185,19 +185,19 @@ export default {
       }
     });
     eventBus.$on("toTrade", function(data) {
-      // console.log(data);
-      (that.currency_id = data.currency_id), (that.legal_id = data.legal_id);
+      console.log(data);
+      that.currency_id = data.currency_id;
+      that.legal_id = data.legal_id;
       that.currency_name = data.currency_name;
-      that.legal_name = data.leg_name;
+      that.legal_name = data.legal_name;
       that.buy_sell(that.legal_id, that.currency_id);
     });
     eventBus.$on("toTrade0", function(data0) {
-      // console.log(data0);
-      (that.currency_id = data0.currency_id), (that.legal_id = data0.legal_id);
+      console.log(data0);
+      that.currency_id = data0.currency_id,
+      that.legal_id = data0.legal_id;
       that.currency_name = data0.currency_name;
-      that.legal_name = data0.leg_name;
-      // console.log(that.currency_name);
-      // console.log(that.legal_name);
+      that.legal_name = data0.legal_name;
       that.buy_sell(that.legal_id, that.currency_id);
     });
     eventBus.$on("tocel", function(datas) {
