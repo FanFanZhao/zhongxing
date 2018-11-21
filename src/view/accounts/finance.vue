@@ -211,16 +211,18 @@ export default {
                 this.active01 = 'a';
                  this.active02 = 'a';
             }else{
+                var i = layer.load();
                 this.flag = true;
                 this.active = index;
                 this.active01 = 'a';
                  this.active02 = 'a';
             }
-            this.sendData(currency);
+            this.sendData(currency,i);
             this.getRate(currency);
         },
-        sendData(currency){
+        sendData(currency,i){   
             var that = this;
+            that.excharge_address = ''
             // $.ajax({
             //     type: "POST",
             //     url: '/api/' + 'wallet/get_in_address',
@@ -253,6 +255,7 @@ export default {
                 data:{currency:currency},
                 headers: {'Authorization':  that.token},
                 }).then(res=>{
+                    layer.close(i);
                     console.log(res)
                     if (res.data.type=="ok"){
                         that.excharge_address=res.data.message;
