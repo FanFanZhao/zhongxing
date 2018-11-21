@@ -98,6 +98,8 @@
             <span>币种对{{nowCoin}}</span>
             <span>价格({{nowCoin}})</span>
              <span>涨跌</span>
+              <span>最高价</span>
+               <span>最低价</span>
             <span>交易量({{nowCoin}})</span>
             
             <!-- <span>操作</span> -->
@@ -116,6 +118,12 @@
               <div class="yes-toa">
                 <!-- <span :class="setColor(li.last_price,li.yesterday_last_price)">{{li.change == null?'+0.000':li.change}}%</span> -->
                 <span :class="setColor(li.change)" class="bold">{{(li.change>0?'+':'')+(li.change-0).toFixed(2)}}%</span>
+              </div>
+              <div>
+                <span class="high_blue bold">{{li.high_price}}</span>
+              </div>
+              <div>
+                <span class="high_blue bold">{{li.low_price}}</span>
               </div>
               <div class="count high_blue bold">{{li.volume == null?'0':li.volume}}</div>
               

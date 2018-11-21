@@ -14,6 +14,15 @@
                         <span class="register-item">密码</span>
                         <input type="password" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
                     </div>
+                    <!--验证码-->
+                   
+                    <div class="register-input bdr-part">
+                        <span class="register-item">验证码</span>
+                        <div class="flex">
+                    <input type="text" v-model="code" class="codes">
+                    <button type='button' class="code-btn redBg " @click="sendCode">发送验证码</button>
+                    </div>
+                </div>
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
                         <button class="register-button curPer redBg " @click="login">登录</button>
@@ -46,7 +55,8 @@ export default {
   data() {
     return {
       account_number: "",
-      password: ""
+      password: "",
+      code:''
     };
   },
   created() {
@@ -72,7 +82,41 @@ export default {
           
       })                       
     },
+    //发送验证码
+    sendCode(e){
+      var i = layer.load();
+       let account_number = this.$utils.trim(this.account_number);
+      
+    this.$http({
+        url: '/api/' + "sms_send",
+        method: "post",
+        data: {
+          user_string: account_number,
+        }
+      }).then(res=>{
+        console.log(res)
+        layer.close(i);
+         layer.msg(res.data.message);
+         if(res.data.type == 'ok'){
+           //验证码倒计时
+           var time = 60;
+      var timer = null;
+      timer = setInterval(function() {
+        e.target.innerHTML = time + "秒";
+        e.target.disabled = true;
+        if (time == 0) {
+          e.target.innerHTML = "验证码";
+          e.target.disabled = false;
+          clearInterval(timer);
+          return;
+        }
+        time--;
+      }, 1000);
+         }
+      })
+    },
     login() {
+      var i = layer.load();
       let account_number = this.$utils.trim(this.account_number);
       let password = this.$utils.trim(this.password);
       if (this.account_number.length == "") {
@@ -84,24 +128,29 @@ export default {
         return;
       }
       this.$http({
-        url: '/api/' + "user/login",
+        url: '/api/' + "user/pc_login",
         method: "post",
         data: {
           user_string: account_number,
           password: password,
+          code:this.code,
           type: 1
         }
       })
         .then(res => {
           console.log(res);
-
+           layer.close(i);
           res = res.data;
           if (res.type === "ok") {
+            layer.msg('登录成功');
             localStorage.setItem("token", res.message);
             localStorage.setItem("accountNum", account_number);
             this.$store.commit("setAccountNum");
             this.userInfo();
-            this.$router.push("/");
+            setTimeout(() => {
+               this.$router.push("/");
+            }, 1000);
+           
           } else {
             layer.msg(res.message);
           }
@@ -115,6 +164,16 @@ export default {
 </script>
 
 <style scoped>
+.codes{
+  width: 430px;
+  padding: 0 20px;
+  min-height: 46px;
+  border:1px solid #ccc;
+}
+.code-btn{
+  width: 90px;
+  min-height: 46px;
+}
 .login{
   min-height: 1050px;
 }
