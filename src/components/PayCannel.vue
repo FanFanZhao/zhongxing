@@ -92,6 +92,7 @@
 		},
 		methods: {
 			getList(id) {
+				var i = layer.load();
 				let _this = this;
 				_this.$http({
 					url: "/api/legal_deal",
@@ -102,6 +103,7 @@
 						Authorization: _this.token
 					}
 				}).then(res => {
+					layer.close(i);
 					console.log(res);
 					if (res.data.type == 'ok') {
 						_this.datas = res.data.message;

@@ -114,6 +114,7 @@ export default {
       });
     },
     cancel() {
+      var i = layer.load();
       this.$http({
         url: "/api/user_legal_pay_cancel",
         method: "post",
@@ -121,6 +122,7 @@ export default {
         headers: { Authorization: this.token }
       })
         .then(res => {
+          layer.close(i);
           // console.log(res);
           layer.msg(res.data.message);
           if (res.data.type == "ok") {
@@ -135,6 +137,7 @@ export default {
         });
     },
     confirm() {
+      var i = layer.load();
       this.$http({
         url: "/api/user_legal_pay",
         method: "post",
@@ -142,6 +145,7 @@ export default {
         headers: { Authorization: this.token }
       })
         .then(res => {
+          layer.close(i)
           // console.log(res);
           layer.msg(res.data.message);
           if (res.data.type == "ok") {

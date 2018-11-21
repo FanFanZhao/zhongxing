@@ -47,7 +47,7 @@
                                 </span>
                                 <span class="flex1">{{item.address}}</span>
                                 <span class="flex1">{{item.notes}}</span>
-                                <span class="flex1" @click="delAddress(item.id,index)">撤销</span>
+                                <span class="flex1 cancel" @click="delAddress(item.id,index)">撤销</span>
                             </div>
                        </div>
                         <div class="none color1 tc" v-if="!list.length" style="padding: 40px 0">
@@ -126,12 +126,14 @@ export default {
         
     },
     delAddress(id,index){
+        var i = layer.load();
         this.$http({
         url: "/api/wallet/deladdress",
         method:'post',
         data:{address_id:id},
         headers: { Authorization: this.token }
       }).then(res => {
+          layer.close(i);
         // console.log(res);
         layer.msg(res.data.message);
         if(res.data.type == 'ok'){
@@ -149,12 +151,17 @@ export default {
             layer.msg('请输入提币地址');return;
         } 
         else {
+            var i = layer.load();
             this.$http({
                 url:'/api/wallet/addaddress',
                 method:'post',
-                headers:{ 'Authorization': this.token },
+                headers:{ 
+                    'Authorization': this.token,
+                     'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'
+                     },
                 data:{currency_id:this.addId,address:this.address,notes:this.notes}
             }).then(res => {
+                layer.close(i);
                 console.log(res);
                 layer.msg(res.data.message);
                 if(res.data.type == 'ok'){
@@ -169,6 +176,10 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.cancel{
+    cursor: pointer;
+    color: #d45858;
+}
 .box .account {
   width: 1200px;
   margin: 0 auto 82px;
