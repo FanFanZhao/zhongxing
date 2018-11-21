@@ -54,7 +54,7 @@ export default {
       that.currency_id = data0.currency_id,
       that.legal_id = data0.legal_id;
       that.currency_name = data0.currency_name;
-      that.legal_name = data0.leg_name;
+      that.legal_name = data0.legal_name;
       // console.log(that.currency_name);
       // console.log(that.legal_name);
         that.buy_sell(data0.legal_id,data0.currency_id);
@@ -65,7 +65,7 @@ export default {
       that.currency_id = data.currency_id,
       that.legal_id = data.legal_id;
       that.currency_name = data.currency_name;
-      that.legal_name = data.leg_name;
+      that.legal_name = data.legal_name;
       // console.log(that.currency_name);
       // console.log(that.legal_name);
       that.buy_sell(data.legal_id,data.currency_id);

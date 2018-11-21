@@ -417,13 +417,15 @@ export default {
           let msg = res.data.message[0];
           let quo = msg.quotation[0];
           var tradeData = {
-            currency_id: msg.id,
-            legal_id: quo.currency_id,
-            currency_name: msg.name,
-            leg_name: quo.name,
+            currency_id: quo.currency_id,
+            legal_id: quo.legal_id,
+            currency_name: quo.currency_name,
+            legal_name: quo.legal_name,
             isShow:0
           };
-          window.localStorage.setItem('tradeData',JSON.stringify(tradeData))
+          if(!window.localStorage.getItem('tradeData')){
+             window.localStorage.setItem('tradeData',JSON.stringify(tradeData))
+          }
         }
       });
     },
