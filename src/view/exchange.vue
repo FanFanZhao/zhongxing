@@ -79,7 +79,7 @@ export default {
     },
     // 第一次默认最新价数据
     buy_sell(legal_id, currency_id) {
-      // var index = layer.load();
+      var i = layer.load();
       this.$http({
         url: "/api/" + "transaction/deal",
         method: "post",
@@ -90,7 +90,7 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          // layer.close(i);
+          layer.close(i);
           if (res.data.type == "ok") {
             this.inlist = res.data.message.in;
             this.outlist = res.data.message.out;

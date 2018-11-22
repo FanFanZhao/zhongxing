@@ -209,7 +209,8 @@ export default {
     });
     // 从exchange传过来的最新价
     eventBus.$on("priceToTrade", function(data) {
-      that.lastPrice = data.lastPrice;
+      console.log(data)
+      that.lastPrice = data;
     });
   },
   methods: {
@@ -219,14 +220,19 @@ export default {
     },
     changeType(index) {
       this.current = index;
-      this.buyPrice = '';
-      this.sellPrice = '';
-      this.buyNum = '';
-      this.sellNum = '';
+     
       if (index == 1) {
+         this.buyPrice = '';
+      this.sellPrice = '';
+         this.buyNum = '';
+      this.sellNum = '';
         this.disabled = true;
       } else {
         this.disabled = false;
+         this.buyPrice = '';
+      this.sellPrice = '';
+      this.buyNum = '';
+      this.sellNum = '';
       }
     },
     goNext(url) {
@@ -281,14 +287,21 @@ export default {
           if (res.data.type == "ok") {
             eventBus.$emit('tradeOk',{status:'ok'});
             layer.msg(res.data.message);
-            this.buyPrice = '';
-            this.buyNum = '';
-            this.buyInfo.pwd='';
+            console.log(this.current)
+            if(this.current == 0){
+              // this.buyPrice = '';
+              this.buyNum = '';
+              this.buyInfo.pwd='';
+            }else{
+              this.buyNum = '';
+              this.buyInfo.pwd='';
+            }
             that.buy_sell(that.legal_id,that.currency_id)
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
             console.log(res.data.message);
           } else {
+            this.buyNum = '';
             layer.msg(res.data.message);
           }
         })
@@ -333,14 +346,20 @@ export default {
           // layer.msg(res.data.message)
           if (res.data.type == "ok") {
             eventBus.$emit('tradeOk',{status:'ok'});
-            this.sellPrice = '';
-            this.sellNum = '';
-            this.sellInfo.pwd = '';
+            if(this.current == 0){
+              // this.sellPrice = '';
+              this.sellNum = '';
+              this.sellInfo.pwd = '';
+            }else{
+               this.sellNum = '';
+              this.sellInfo.pwd = '';
+            }
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
             that.buy_sell(that.legal_id,that.currency_id)
             layer.msg(res.data.message);
           } else {
+            this.sellNum = '';
             layer.msg(res.data.message);
           }
         })
@@ -350,6 +369,7 @@ export default {
     },
     //买入、卖出记录
     buy_sell(legals_id, currencys_id) {
+      var i = layer.load();
       this.$http({
         url: "/api/" + "transaction/deal",
         method: "post",
@@ -360,6 +380,7 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
+          layer.close(i);
           // console.log(res ,222)
           // layer.close(i);
           if (res.data.type == "ok") {
