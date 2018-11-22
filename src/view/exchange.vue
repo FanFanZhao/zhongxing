@@ -93,7 +93,7 @@ export default {
           // layer.close(i);
           if (res.data.type == "ok") {
             this.inlist = res.data.message.in;
-            this.outlist = res.data.message.out.reverse();
+            this.outlist = res.data.message.out;
             this.newData = res.data.message.last_price;
             this.buyInfo.buyPrice = 0;
             this.buyInfo.buyNum = 0;
