@@ -42,7 +42,7 @@
       </div>
       <div class="flex">
         <span>{{msg.type == 'sell'?'商家':'买家'}}电话：</span>
-        <span>{{msg.seller_phone}}</span>
+        <span>{{msg.user_cash_info.account_number}}</span>
       </div>
       
       
