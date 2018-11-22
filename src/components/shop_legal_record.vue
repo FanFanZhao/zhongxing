@@ -38,7 +38,7 @@
           <div>
             <div class="tc" v-if="item.type == 'sell'">买家</div>
             <div class="tc" v-else>卖家</div>
-            <div class="tc">{{item.hes_realname}}</div>
+            <div class="tc">{{item.user_realname}}</div>
           </div>
           <div>
             <div class="tc">数量</div>
