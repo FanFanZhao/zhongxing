@@ -281,9 +281,9 @@
 					});
 				} else {
 					if (_this.types == 'trade') {
-						layer.msg('请输入欲购买数量');
+						layer.msg('请输入欲出售数量');
 					} else {
-						layer.msg('请输入要出售数量');
+						layer.msg('请输入要购买数量');
 					}
 				}
 			},
