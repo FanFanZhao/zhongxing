@@ -2,7 +2,7 @@
   <div id="legal-shop-detail">
     <div class="top flex bg-part clr-part ft14" v-if="info.name">
       <div class="top-t flex bdr-part">
-        <div class="logo">{{info.name.charAt(0)}}</div>
+        <div class="logo white">{{info.name.charAt(0)}}</div>
         <div>
           <div>{{info.name}}</div>
           <div>注册时间：{{info.create_time}}</div>
@@ -339,6 +339,7 @@ export default {
       img {
         width: 16px;
         height: 16px;
+        vertical-align: middle;
       }
     }
   }

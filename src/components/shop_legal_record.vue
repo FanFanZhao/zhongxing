@@ -32,7 +32,7 @@
         </div>
         <div class="flex li-b">
           <div>
-            <div class="tc">时间</div>
+            <div class="tl">时间</div>
             <div class="tc">{{item.create_time}}</div>
           </div>
           <div>
