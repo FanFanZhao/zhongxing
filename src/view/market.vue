@@ -66,11 +66,13 @@ export default {
     // this.init();
     this.token = localStorage.getItem("token") || "";
     //法币列表
+    var load = layer.load();
     this.$http({
       url: "/api/" + "currency/quotation",
       method: "get",
       data: {}
     }).then(res => {
+      layer.close(load);
       // console.log(res);
       if (res.data.type == "ok") {
         this.tabList = res.data.message; 
