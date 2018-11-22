@@ -65,6 +65,7 @@
                 <p  class="fl">互联网账号存在被盗风险，进行身份认证以保护账户安全。</p>
                 <span  class="fr red ml25 mouseDefault"></span>
                 <router-link to="/components/authentication" class="fr red" v-if="authen==0">去认证</router-link>
+                <router-link to="/components/authentication" class="fr red" v-if="authen==3">已拒绝(请重新认证)</router-link>
                 <span class="fr red" v-else>{{authen==1?'审核中':'已认证'}}</span>       
             </li>
             <li class="hide"><img  src="@/assets/images/icon_error.png">

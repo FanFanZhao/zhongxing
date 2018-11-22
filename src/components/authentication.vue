@@ -5,7 +5,8 @@
                 <span class="fr  curPer" @click="goBefore">&lt;&lt;返回</span>  
         </div>
         <div class="main-content mt20">
-            <div v-show="review_status==0">
+            <div class="tc mt10" v-if="review_status==3">拒绝理由：{{reply}}</div>
+            <div v-show="review_status==0||review_status==3">
                 <div class="main-input">
                     <div class="flex alcenter center">
                         <span>姓名：</span>
@@ -65,25 +66,12 @@ export default {
            src01:'../../static/imgs/cardFront.jpg',
            src02:'../../static/imgs/cardBack.jpg',
            src03:'../../static/imgs/hdimg.jpg',
-           review_status:''
+           review_status:'',
+           reply:''
         }
     },
     created(){
         this.token=localStorage.getItem('token')
-        
-        // this.$http({
-        //     url: '/api/'+'user/user_real_info',
-        //     method:'post',
-        //     data:{},
-        //     headers: {'Authorization':  this.token,}    
-        // }).then(res=>{
-        //     console.log(res);
-        //     if(res.data.type=='ok'){
-                
-        //     }else{
-                
-        //     }
-        // })
     },
     methods:{
         goBefore(){
@@ -236,14 +224,30 @@ export default {
                 headers: {'Authorization':  that.token}   
             }).then(res=>{
                 layer.close(i);
-                // that.review_status=res.data.message.review_status;
+                that.review_status=res.data.message.review_status;
                 }).catch(error=>{
                     
             })
+        },
+        replyData(){
+            this.$http({
+            url: '/api/'+'user/user_real_info',
+            method:'get',
+            data:{},
+            headers: {'Authorization':  this.token,}    
+        }).then(res=>{
+            console.log(res);
+            if(res.data.type=='ok'){
+                this.reply=res.data.message.reply;
+            }else{
+                
+            }
+        })
         }
     },
     mounted(){
-    //    this.Info();
+       this.Info();
+       this.replyData();
     }
 }
 </script>
