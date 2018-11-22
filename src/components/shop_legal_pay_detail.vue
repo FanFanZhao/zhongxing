@@ -11,7 +11,7 @@
       <div v-if="msg.is_sure == 2">订单已取消</div>
       <div v-if="msg.is_sure == 3&&msg.type == 'sell'">买家已付款，请核实后确认</div>
        <div v-if="msg.is_sure == 3&&msg.type == 'buy'">请等待卖家确认</div>
-      <div class="mt10 ft14" v-if="msg.is_sure == 3&&msg.type == 'sell'">联系方式：{{msg.phone}}</div>
+      <!-- <div class="mt10 ft14" v-if="msg.is_sure == 3&&msg.type == 'sell'">联系方式：{{msg.phone}}</div> -->
     </div>
     <div class="info bg-part ft14">
       <div>
@@ -50,8 +50,8 @@
       </div>
       <div>
         <span>联系方式：</span>
-        <span v-if="msg.type == 'buy'">{{msg.seller_phone}}</span>
-         <span v-if="msg.type == 'sell'">{{msg.phone}}</span>
+        <span v-if="msg.type == 'buy'">{{msg.seller_phone ||"无"}}</span>
+         <span v-if="msg.type == 'sell'">{{msg.phone ||"无"}}</span>
       </div>
       <div>
         <span>参考号：</span>
