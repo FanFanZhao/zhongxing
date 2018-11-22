@@ -296,8 +296,21 @@
 						means: means,
 						value: _this.nums
 					};
-					var status = window.localStorage.getItem('status');
-					if(status!=2){
+					//获取实名认证状态
+					var review_status;
+					this.$http({
+								url:'/api/user/info',
+								method:'GET',
+								data:{},
+								headers:{Authorization:this.token}
+							}).then(res => {
+								console.log(res)
+								if(res.data.type == 'ok'){
+								    review_status = res.data.message.res.data.message
+								}
+								
+							})
+					if(review_status!=2){
 						layer.msg('请先进行实名认证再下单');
 						return false;
 					}else{
