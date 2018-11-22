@@ -156,7 +156,7 @@ export default {
         return;
       }
       var that = this;
-      layer.confirm("确认要删除吗？", ["确定", "取消"], () => {
+      layer.confirm("确认要撤单吗？", ["确定", "取消"], () => {
         // var id = id;
         that
           .$http({
