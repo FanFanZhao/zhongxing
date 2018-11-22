@@ -239,7 +239,7 @@
         <!--马上交易-->
         <div class="go_transfer">
            <h1 class="bold ft24 mb30 tc">马上交易</h1>
-           <p class="ft14 mb30 tc">欢迎加入我们的团队，共同提升，常悦更好的自己，创造更好的人生价值</p>
+           <p class="ft14 mb30 tc">注册一个一带一路交易中心账号，开启交易旅程</p>
            <div class="login_register flex alcenter center" v-if="!account_number.length">
              <div class="login_btn mr60 bdr-part" @click="go_login">登录</div>
              <div class="register_btn white" @click="go_register">注册</div>
