@@ -38,7 +38,7 @@
 					<div class="flex alcenter">{{(item.limitation.min-0).toFixed(2)}}-{{(item.limitation.max-0).toFixed(2)}}CNY</div>
 					<div class="flex alcenter">{{item.price}}</div>
 					<div class="flex alcenter">{{item.way_name}}</div>
-					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type)">
+					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type,item.surplus_number)">
 						<button class="btn">{{classify}}{{name}}</button>
 					</div>
 				</li>
@@ -116,7 +116,9 @@
 				money_type:'',
 				currentpage:1,
 				name01:'CNY',
-				numbers:''
+				numbers:'',
+				allnum:'',
+				idx:1
 			};
 		},
 
@@ -208,7 +210,7 @@
 				_this.getList(_this.type, _this.id, pageNum);
 			},
 			// 出售或者购买按钮
-			buySell(prices, min, max,id,type) {
+			buySell(prices, min, max,id,type,allnum) {
 				// this.nums = '';
 				// this.numbers = '';
 				console.log(type)
@@ -225,6 +227,7 @@
 				_this.prices = prices;
 				_this.minNum = min;
 				_this.maxNum = max;
+				_this.allnum = allnum;
 			      var t1 = setInterval(function() {
 					_this.time--;
 					if (_this.time <= 0) {
@@ -237,6 +240,8 @@
 			},
 			// 交易或数量切换
 			tabClassify(num) {
+				this.nums = '';
+				this.idx = num;
 				if (num == 1) {
 					this.types = 'trade';
 					this.name01 = 'CNY'
@@ -248,7 +253,12 @@
 			},
 			// 全部卖出或买入
 			allMoney() {
-				this.nums = this.maxNum;
+				if(this.types == 'trade'){
+
+					this.nums = this.maxNum;
+				} else {
+					this.nums = this.allnum;
+				}
 			},
 			// 下单
 			buyOrder() {
@@ -257,12 +267,30 @@
 				let means = 'money';
 				let ids = window.localStorage.getItem("user_id");
 				let token = window.localStorage.getItem("token") || "";
-				if (_this.nums) {
+				// if (_this.nums) {
 					if (_this.types == 'trade') {
 						means = 'money';
 					} else {
 						means = 'number';
 					};
+					if(_this.nums<=0){
+						if(this.type == 'sell' ){
+							if (_this.types == 'trade') {
+								return	layer.msg('请输入欲购买总额');
+							}else{
+								return layer.msg('请输入欲购买数量');
+							}
+						}else {
+							if (_this.types == 'trade') {
+							
+								return layer.msg('请输入欲出售总额');
+							}else{
+							    return layer.msg('请输入欲出售数量');
+							}
+						}
+					}
+					
+					
 					let datas = {
 						id: _this.ID,
 						means: means,
@@ -289,13 +317,10 @@
                            layer.msg(res.data.message);
 						}
 					});
-				} else {
-					if (_this.types == 'trade') {
-						layer.msg('请输入欲出售数量');
-					} else {
-						layer.msg('请输入要购买数量');
-					}
-				}
+				// } else {
+					
+					
+				// }
 			},
 			// 请求
 			buyHttp(urls, params, callback) {
