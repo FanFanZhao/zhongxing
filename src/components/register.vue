@@ -272,12 +272,12 @@ export default {
     },
     // 注册
     register() {
-     
+      console.log(this.code)
       if(this.isMb){
         if(this.account == ''){
           layer.msg('请输入手机号');
           return;
-        }else if(this.code = ''){
+        }else if(this.code == ''){
            layer.msg('请输入验证码');
            return;
         }
@@ -292,7 +292,7 @@ export default {
           layer.msg("您输入的邮箱不符合规则");
           return;
         }
-         if(this.code = ''){
+         if(this.code == ''){
            layer.msg('请输入验证码');
            return;
         }
