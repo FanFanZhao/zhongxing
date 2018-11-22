@@ -11,8 +11,8 @@
               <p>{{lock_legal_balance}}</p>
           </div>
           <div>
-              <p class="ft12 msg_title">折合（CNY）</p>
-              <p>{{ustd_price}}</p>
+              <p class="ft12 msg_title">折合（USDT）</p>
+              <p>{{legal_price}}</p>
           </div>
         </div>
         <div class="rec_wrap">
