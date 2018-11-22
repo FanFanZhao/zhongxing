@@ -20,7 +20,7 @@
                         <span class="register-item">验证码</span>
                         <div class="flex">
                     <input type="text" v-model="code" class="codes" id="code">
-                    <button type='button' class="code-btn redBg " @click="sendCode">发送验证码</button>
+                    <button type='button' class="code-btn redBg curPer" @click="sendCode">发送验证码</button>
                     </div>
                 </div>
                     <div style="margin-top: 10px;">
