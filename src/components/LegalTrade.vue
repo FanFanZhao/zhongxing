@@ -297,7 +297,7 @@
 						value: _this.nums
 					};
 					var status = window.localStorage.getItem('status');
-					if(status == 0||status == 1){
+					if(status!=2){
 						layer.msg('请先进行实名认证再下单');
 						return false;
 					}else{

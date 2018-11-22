@@ -112,7 +112,7 @@ export default {
       }).then(res => {
         console.log(res)
         if(res.data.type == 'ok'){
-          window.localStorage.setItem('status',res.data.message.status);
+          window.localStorage.setItem('status',res.data.message.review_status);
             if(res.data.message.is_seller == '1'){
                this.isShow = true;
             }
