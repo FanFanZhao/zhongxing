@@ -298,43 +298,46 @@
 					};
 					//获取实名认证状态
 					var review_status;
+					var load = layer.load();
 					this.$http({
 								url:'/api/user/info',
 								method:'GET',
 								data:{},
 								headers:{Authorization:this.token}
 							}).then(res => {
+								layer.close(load);
 								console.log(res)
 								if(res.data.type == 'ok'){
-								    review_status = res.data.message.res.data.message
+									review_status = res.data.message.review_status;
+									if(review_status!=2){
+									layer.msg('请先进行实名认证再下单');
+									return false;
+								}else{
+									_this.buyHttp('/api/do_legal_deal', datas, function(res) {
+									
+									if(res.data.type == 'ok'){
+										// layer.msg(res.data.message)
+									if (res.data.message.data.type == 'sell') {
+										layer.msg(res.data.message.msg)
+										setTimeout(function() {
+											_this.$router.push({path:'/legalPay',query:{id:res.data.message.data.id}});
+										}, 500)
+									} else {
+										layer.msg(res.data.message.msg)
+										setTimeout(function() {
+											_this.$router.push({path:'/components/payCannel',query:{id:res.data.message.data.id}});
+										}, 500)
+									}
+									}else{
+										console.log(res.data.message)
+									layer.msg(res.data.message);
+									}
+								});
+								}
 								}
 								
 							})
-					if(review_status!=2){
-						layer.msg('请先进行实名认证再下单');
-						return false;
-					}else{
-						_this.buyHttp('/api/do_legal_deal', datas, function(res) {
-						
-						if(res.data.type == 'ok'){
-							// layer.msg(res.data.message)
-						if (res.data.message.data.type == 'sell') {
-							layer.msg(res.data.message.msg)
-							setTimeout(function() {
-								_this.$router.push({path:'/legalPay',query:{id:res.data.message.data.id}});
-							}, 500)
-						} else {
-							layer.msg(res.data.message.msg)
-							setTimeout(function() {
-								_this.$router.push({path:'/components/payCannel',query:{id:res.data.message.data.id}});
-							}, 500)
-						}
-						}else{
-							console.log(res.data.message)
-                           layer.msg(res.data.message);
-						}
-					});
-					}
+					
 					
 				// } else {
 					
