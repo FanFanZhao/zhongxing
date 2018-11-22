@@ -65,7 +65,7 @@
 						<button class="all clr-part" type="button" v-else @click="allMoney();">全部买入</button>
 						<span class="name">{{name01}}</span>
 					</div>
-					<div class="maxnum">限额{{minNum}}-{{maxNum}}</div>
+					<div class="maxnum">限额{{(minNum-0).toFixed(2)}}-{{(maxNum-0).toFixed(2)}}</div>
 					<div class="trade-totals">
 						<p class="total-price">交易总额</p>
 						<p class="prices" v-if=" types == 'trade' ">￥{{nums | toFixeds}}</p>

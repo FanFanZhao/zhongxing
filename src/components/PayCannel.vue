@@ -10,7 +10,7 @@
 			</div>
 		</div>
 		<div class="total">
-			<p class="total-text">交易总额：<span>￥{{datas.deal_money}}</span></p>
+			<p class="total-text">交易总额：<span>{{datas.deal_money}}CNY</span></p>
 		</div>
 		<ul class="list">
 			<li>
@@ -19,7 +19,7 @@
 			</li>
 			<li>
 				<p class="left">单价</p>
-				<p class="right">{{datas.price}}</p>
+				<p class="right">{{datas.price}}CNY</p>
 			</li>
 			<li>
 				<p class="left">数量</p>
