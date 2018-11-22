@@ -47,7 +47,7 @@ export default {
            legal_name:'',
            legal_balance:'',
            lock_legal_balance:'',
-           ustd_price:'',
+           legal_price:'',
            recData:[],
            moreLog:'加载更多',
            page:1,
@@ -82,7 +82,7 @@ export default {
                             that.legal_name = msg.currency_name;
                             that.legal_balance = msg.legal_balance;
                             that.lock_legal_balance = msg.lock_legal_balance;
-                            that.ustd_price = msg.ustd_price;
+                            that.legal_price = msg.legal_price;
                              
                         }else{
                             layer.msg(res.message);
