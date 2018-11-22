@@ -7,11 +7,11 @@
       <span class="mr60">一带一路</span>
       <router-link to="/" exact>首页</router-link>
       <router-link to="/legalTrade" v-if="token">法币交易</router-link>
-      <router-link to="/components/login" v-else>法币交易</router-link>
+      <div v-else @click="goLogin()">法币交易</div>
       <router-link to="/dealCenter">币币交易</router-link>
       <router-link to="/myLegalShops" v-if="isShow">我的商铺</router-link>
       <router-link to="/finance" v-if="token">我的资产</router-link>
-      <router-link to="/components/login" v-else>我的资产</router-link>
+      <div v-else @click="goLogin()">我的资产</div>
       <!-- <router-link to="/userSetting">安全设置</router-link> -->
       <!-- <router-link to="/components/noticeList">公告</router-link>
       <div class="coin-box">
@@ -100,6 +100,9 @@ export default {
       window.localStorage.clear();
       this.$router.push('/components/login');
     },
+    goLogin(){
+      this.$router.push('/components/login');
+    },
     init(){
       this.$http({
         url:'/api/user/info',
@@ -154,10 +157,14 @@ export default {
     > div {
       margin-right: 30px;
       height: 45px;
+      cursor: pointer;
 
       > a {
         display: block;
       }
+    }
+    >div:hover{
+      color: #d45858;
     }
     > .coin-box {
       position: relative;
