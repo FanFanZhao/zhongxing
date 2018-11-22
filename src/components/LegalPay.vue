@@ -13,7 +13,7 @@
     <div class="info bg-part ft14">
       <div class="flex">
         <span>交易单价：</span>
-        <span>{{msg.price}}</span>
+        <span>{{msg.price}}CNY</span>
       </div>
       <div class="flex">
         <span>交易数量：</span>

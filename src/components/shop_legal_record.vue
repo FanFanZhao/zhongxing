@@ -36,11 +36,16 @@
             <div class="tc">{{item.create_time}}</div>
           </div>
           <div>
+            <div class="tc" v-if="item.type == 'sell'">买家</div>
+            <div class="tc" v-else>卖家</div>
+            <div class="tc">{{item.hes_realname}}</div>
+          </div>
+          <div>
             <div class="tc">数量</div>
             <div class="tc">{{item.number}}</div>
           </div>
           <div>
-            <div class="tc">交易总额（{{item.currency_name}})</div>
+            <div class="tc">交易总额(CNY)</div>
             <div class="tc">{{item.deal_money}}</div>
           </div>
         </div>

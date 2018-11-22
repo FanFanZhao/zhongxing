@@ -126,7 +126,7 @@
 						} else {
 							_this.cannelBtn = false;
 						}
-						if (_this.datas.is_sure == 3 && _this.datas.type == 'sell') {
+						if (_this.datas.is_sure == 3 && _this.datas.type == 'buy') {
 							_this.comfirmBtn = true;
 						} else {
 							_this.comfirmBtn = false;

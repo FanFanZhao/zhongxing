@@ -11,28 +11,35 @@
       <div v-if="msg.is_sure == 2">订单已取消</div>
       <div v-if="msg.is_sure == 3&&msg.type == 'sell'">买家已付款，请核实后确认</div>
        <div v-if="msg.is_sure == 3&&msg.type == 'buy'">请等待卖家确认</div>
-     
+      <div class="mt10 ft14" v-if="msg.is_sure == 3&&msg.type == 'sell'">联系方式：{{msg.phone}}</div>
     </div>
     <div class="info bg-part ft14">
       <div>
         <span>交易总额：</span>
-        <span>{{msg.deal_money}}</span>
+        <span>￥{{msg.deal_money}}</span>
       </div>
       <div>
-        <span>卖家</span>
-        <span>{{msg.seller_name}}</span>
+        <span v-if="msg.type == 'buy'">卖家</span>
+        <span v-if="msg.type == 'sell'">买家</span>
+        <span v-if="msg.type == 'buy'">{{msg.seller_name}}</span>
+        <span v-if="msg.type == 'sell'">{{msg.hes_realname}}</span>
       </div>
       <div>
         <span>单价：</span>
-        <span>{{msg.price}}</span>
+        <span>{{msg.price}}CNY</span>
       </div>
       <div>
         <span>数量：</span>
-        <span>{{msg.number}}</span>
+        <span>{{msg.number}}{{msg.currency_name}}</span>
       </div>
       <div>
         <span>下单时间：</span>
         <span>{{msg.format_create_time}}</span>
+      </div>
+      <div>
+        <span>联系方式：</span>
+        <span v-if="msg.type == 'buy'">{{msg.seller_phone}}</span>
+         <span v-if="msg.type == 'sell'">{{msg.phone}}</span>
       </div>
       <div>
         <span>参考号：</span>
@@ -44,6 +51,7 @@
       </div>
       <div class="btns">
         <div class="btn" @click="showCancel = true" v-if="msg.is_sure == 0 && msg.type =='buy'">取消订单</div>
+        <div class="btn" @click="hasPay = true" v-if="msg.is_sure == 0 && msg.type =='buy'">我已付款，点击确认</div>
         <div class="btn" @click="showConfirm = true" v-if="(msg.is_sure == 3) && (msg.type =='sell')">确认已收款</div>
       </div>
     </div>
@@ -61,14 +69,24 @@
         </div>
       </div>
     </div>
-    <div class="confirm-box" v-if="showConfirm">
+    <div class="confirm-box" v-if="hasPay">
       <div class="content">
         <div>付款确认</div>
         <div>请确认您已向卖家付款</div>
         <div>恶意点击将直接冻结账户</div>
         <div class="yes-no flex">
-          <div @click="showConfirm = false">取消</div>
+          <div @click="hasPay = false">取消</div>
           <div @click="confirm">确认</div>
+        </div>
+      </div>
+    </div>
+    <div class="confirm-box" v-if="showConfirm">
+      <div class="content">
+        <div>确认收款</div>
+        <div>请确认您已收到买家付款</div>
+        <div class="yes-no flex">
+          <div @click="showConfirm = false">取消</div>
+          <div @click="confirm_receive">确认</div>
         </div>
       </div>
     </div>
@@ -142,13 +160,15 @@ export default {
         this.showCancel = false;
       })
     },
-    confirm(){
+    confirm_receive(){
+      var i = layer.load();
       this.$http({
         url:'/api/legal_deal_user_sure',
         method:'post',
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
+        layer.close(i);
         // console.log(res);
         layer.msg(res.data.message);
         setTimeout(() => {
@@ -158,6 +178,26 @@ export default {
       }).then(() => {
         this.showConfirm = false;
       })
+    },
+    confirm(){
+      var i = layer.load();
+      this.$http({
+        url: "/api/user_legal_pay",
+        method: "post",
+        data: { id: this.id },
+        headers: { Authorization: this.token }
+      })
+        .then(res => {
+          layer.close(i)
+          // console.log(res);
+          layer.msg(res.data.message);
+          if (res.data.type == "ok") {
+            setTimeout(() => {
+              location.reload();
+              // this.$router.push('/legalRecord')
+            }, 1000);
+          }
+        })
     }
   }
 };

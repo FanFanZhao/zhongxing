@@ -83,17 +83,17 @@
                        </div>
                        <div class="flex">
                         <div class="flex2">
-                       <p class="ft12 fColor2 mb15">温馨提示</p>
+                       <!-- <p class="ft12 fColor2 mb15">温馨提示</p> -->
                        <ul class="tips_ul ft12 fColor2" style="list-style:disc inside">
                            <!-- <li class="tips_li" style="list-style:disc inside" v-for="(item,index) in tip_list01" :key="index">{{item}}</li> -->
-                           <li>
+                           <!-- <li>
                                 请勿向上述地址充值任何非{{item.currency_name}}资产，否则资产将不可找回。<br>
                                 {{item.currency_name}}充币仅支持simple send的方法，使用其他方法的充币暂时无法上账，请您谅解。<br>
                                 您充值至上述地址后，需要整个网络节点的确认，1次网络确认后到账，6次网络确认可提币。<br>
                                 最小充值金额：{{rate}} {{item.currency_name}},小于最小金额的充值将不会上账且无法退回。
                                 您的充值地址不会经常改变，可以重复充值;如有更改，我们会尽量通过网络公告或邮件通知您。<br>
                                 请务必确认电脑及浏览器安全，防止信息被篡改或泄露。
-                           </li>
+                           </li> -->
                        </ul>
                        </div>
                        <div class="flex1 tc"><button class="withdraw_btn" @click="mention">提币</button></div>
@@ -174,7 +174,7 @@ export default {
     },
     computed:{
          reachnum(){
-             return this.number - this.number*this.rate/100;
+             return this.number - this.number*this.rate;
          }   
     },
     methods:{
