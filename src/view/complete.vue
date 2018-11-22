@@ -65,6 +65,7 @@ export default {
                         },  
                         headers: {'Authorization':  localStorage.getItem('token')},    
                     }).then(res=>{
+                        console.log(res)
                         // console.log(res ,222)
                         // layer.close(i);
                         if(res.data.type == "ok"){
