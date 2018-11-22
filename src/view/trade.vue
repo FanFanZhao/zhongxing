@@ -219,12 +219,13 @@ export default {
     },
     changeType(index) {
       this.current = index;
+      this.buyPrice = '';
+      this.sellPrice = '';
+      this.buyNum = '';
+      this.sellNum = '';
       if (index == 1) {
-       this.buyPrice = '';
-        this.buyNum = '';
         this.disabled = true;
       } else {
-        
         this.disabled = false;
       }
     },
@@ -366,8 +367,8 @@ export default {
             this.user_currency = res.data.message.user_currency;
             this.user_legal = res.data.message.user_legal;
             // console.log(res.data)
-            this.buyPrice = 0;
-            this.buyNum = 0;
+            // this.buyPrice = 0;
+            // this.buyNum = 0;
           } else {
             layer.msg(res.data.message);
           }

@@ -129,9 +129,10 @@ export default {
             eventBus.$emit("toNew", newPrice);
           }, 1000);
           that.newData = msg.last_price;
-          eventBus.$emit('priceToTrade',function(data){
-            that.newData = data.lastPrice;
-          })
+          // eventBus.$emit('priceToTrade',function(data){
+          //   that.newData = data.lastPrice;
+          // })
+          eventBus.$emit("priceToTrade", msg.last_price);
           var inData = JSON.parse(msg.in);
           var outData = JSON.parse(msg.out);
           if (msg.legal_id == that.legal_id && msg.currency_id == that.currency_id) {
