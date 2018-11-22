@@ -111,7 +111,8 @@
 				money_type:'',
 				currentpage:1,
 				name01:'CNY',
-				numbers:''
+				numbers:'',
+				idx:1
 			};
 		},
 		created() {
@@ -231,6 +232,7 @@
 			},
 			// 交易或数量切换
 			tabClassify(num) {
+				this.idx = num;
 				if (num == 1) {
 					this.types = 'trade';
 					this.name01 = 'CNY'
@@ -251,12 +253,30 @@
 				let means = 'money';
 				let ids = window.localStorage.getItem("user_id");
 				let token = window.localStorage.getItem("token") || "";
-				if (_this.nums) {
+				// if (_this.nums) {
 					if (_this.types == 'trade') {
 						means = 'money';
 					} else {
 						means = 'number';
 					};
+					if(_this.nums<=0){
+						if(this.type == 'sell' ){
+							if (_this.types == 'trade') {
+								return	layer.msg('请输入欲购买总额');
+							}else{
+								return layer.msg('请输入欲购买数量');
+							}
+						}else {
+							if (_this.types == 'trade') {
+							
+								return layer.msg('请输入欲出售总额');
+							}else{
+							    return layer.msg('请输入欲出售数量');
+							}
+						}
+					}
+					
+					
 					let datas = {
 						id: _this.ID,
 						means: means,
@@ -283,13 +303,10 @@
                            layer.msg(res.data.message);
 						}
 					});
-				} else {
-					if (_this.types == 'trade') {
-						layer.msg('请输入欲出售数量');
-					} else {
-						layer.msg('请输入要购买数量');
-					}
-				}
+				// } else {
+					
+					
+				// }
 			},
 			// 请求
 			buyHttp(urls, params, callback) {
