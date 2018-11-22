@@ -38,7 +38,7 @@
       </div>
         <div  v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type == 'buy'">
         <span>银行卡：</span>
-        <span>{{msg.user_cash_info.bank_account}}</span>
+        <span>{{msg.user_cash_info.bank_name}}:{{msg.user_cash_info.bank_account}}</span>
       </div>
       <div  v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type == 'buy'">
         <span>微信：</span>
@@ -50,7 +50,7 @@
       </div>
       <div>
         <span>联系方式：</span>
-        <span v-if="msg.type == 'buy'">{{msg.seller_phone ||"无"}}</span>
+        <span v-if="msg.type == 'buy'">{{msg.user_cash_info.account_number ||"无"}}</span>
          <span v-if="msg.type == 'sell'">{{msg.phone ||"无"}}</span>
       </div>
       <div>
