@@ -210,7 +210,7 @@ export default {
         color: #fff;
         border-radius: 2px;
         padding: 0 16px;
-        background: #2e1b85;
+        // background: #2e1b85;
         margin-right: 30px;
         font-size: 14px;
       }
