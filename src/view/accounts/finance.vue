@@ -14,7 +14,7 @@
                <p class="flex1 tc">币种<i></i></p>
                <p class="flex1 tc">可用</p>
                <p class="flex1 tc">冻结</p>
-               <p class="flex1 tc">折合(USDT)</p>
+               <p class="flex1 tc">折合(CNY)</p>
                <!-- <p class="flex1 tc">BTC估值<i></i></p> -->
                <!-- <p class="flex1 tc">锁仓</p> -->
                <p class="flex1 tc">操作</p>
@@ -25,7 +25,7 @@
                    <p class="flex1 tc">{{item.currency_name}}</p>
                    <p class="flex1 tc">{{item.change_balance}}</p>
                    <p class="flex1 tc">{{item.lock_change_balance}}</p>
-                   <p class="flex1 tc">{{item.legal_price}}</p>
+                   <p class="flex1 tc">{{item.cny_price}}</p>
                    <!-- <p class="flex1 tc">{{item.lock_position}}</p> -->
                    <p class="flex1 tc operation">
                        <span @click="excharge(index,item.currency)" >充币</span>

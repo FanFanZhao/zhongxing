@@ -60,16 +60,16 @@ export default {
                         url: '/api/'+'transaction/deal',
                         method:'post',
                         data:{
-                            legal_id:currencys_id,
-                            currency_id:legals_id
+                            legal_id:legals_id,
+                            currency_id:currencys_id
                         },  
                         headers: {'Authorization':  localStorage.getItem('token')},    
                     }).then(res=>{
-                        console.log(res)
-                        // console.log(res ,222)
+                        console.log(res ,222)
                         // layer.close(i);
                         if(res.data.type == "ok"){
                            this.deList = res.data.message.complete;
+                           console.log(this.deList)
                            this.connect();
                         }else{
                             layer.msg(res.data.message)
