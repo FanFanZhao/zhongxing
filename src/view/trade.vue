@@ -37,7 +37,7 @@
                     </div> -->
                     <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div>
                     <div class="mt50 1 ft16">交易额 {{buyTotal}} {{legal_name}}</div>
-                    <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">买{{legal_name}}</div>
+                    <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">买{{currency_name}}</div>
                 </div>
             </div>
             <div class="w50 fl second">
@@ -67,7 +67,7 @@
                     </div> -->
                     <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div>
                     <div class="mt50 1 ft16">交易额 {{sellTotal}} {{legal_name}}</div>
-                    <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">卖{{legal_name}}</div>
+                    <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">卖{{currency_name}}</div>
                 </div>
             </div>
         </div>
