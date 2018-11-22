@@ -70,7 +70,7 @@
     <div class="cancel-box" v-if="showCancel">
       <div class="content">
         <div>取消交易</div>
-        <div>如您已向卖家付款请千万不要取消交易</div>
+        <div>如果买家已向您付款请千万不要取消交易</div>
         <!-- <div>
           <input type="checkbox" v-model="hasPay" id="haspay">
           <label for="haspay">我还没有付款给对方</label>
@@ -159,17 +159,20 @@ export default {
       });
     },
     cancel(){
+      var i = layer.load();
       this.$http({
         url:'/api/user_legal_pay_cancel',
         method:'post',
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
+        layer.close(i);
         // console.log(res);
-        lay.msg(res.data.message);
-        
-      }).then(() => {
-        this.showCancel = false;
+        layer.msg(res.data.message);
+         this.showCancel = false;
+         setTimeout(() => {
+           location.reload()
+        }, 1000);
       })
     },
     confirm_receive(){
