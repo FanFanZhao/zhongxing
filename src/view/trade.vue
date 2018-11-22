@@ -137,7 +137,7 @@ export default {
       current: 0,
       allBalance: 0,
       disabled: false,
-      lastPrice: "111",
+      lastPrice: "",
       pwd:'',
       buyPrice:'',
       buyNum:'',
@@ -178,11 +178,12 @@ export default {
     var that = this;
     that.address = localStorage.getItem("token") || "";
     eventBus.$on("toPrice", function(data) {
+      console.log('-------------------------------------')
       console.log(data);
-      if (data) {
-        that.buyPrice = data;
-        that.sellPrice = data;
-      }
+      // if (data) {
+      //   that.buyPrice = data;
+      //   that.sellPrice = data;
+      // }
     });
     eventBus.$on("toTrade", function(data) {
       console.log(data);
@@ -378,10 +379,10 @@ export default {
   },
   computed: {
     buyTotal() {
-      return this.buyPrice * this.buyNum || 0;
+      return (this.buyPrice||this.lastPrice) * this.buyNum || 0;
     },
     sellTotal() {
-      return this.sellPrice * this.sellNum || 0;
+      return (this.sellPrice||this.lastPrice) * this.sellNum || 0;
     }
   }
 };

@@ -22,7 +22,7 @@
           <div>完成单</div>
         </div>
         <div>
-          <div>{{(info.done == 0 || info.total_number == 0)?0:(((info.done-0)/(info.total-0)-0)*100).toFixed(4)}}%</div>
+          <div>{{(info.done == 0 || info.total == 0)?0:(((info.done-0)/(info.total-0)-0)*100).toFixed(4)}}%</div>
           <div>完成率</div>
         </div>
       </div>
@@ -156,6 +156,15 @@ export default {
       this.sellerId = this.$route.query.id || "";
       this.getSellerInfo();
       this.getList();
+    }
+  },
+  filters:{
+    getPercent(done,total){
+      if(done == 0 || total == 0){
+        return 0;
+      } else {
+
+      }
     }
   },
   methods: {
