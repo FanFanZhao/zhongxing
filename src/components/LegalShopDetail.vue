@@ -214,7 +214,7 @@ export default {
           var msg = res.data.message;
           if (more) {
             if (msg.data.length) {
-              this.list = msg.data.concat(this.list);
+              this.list = this.list.concat(msg.data);
               this.filterPms.page += 1;
             } else {
               layer.msg("没有更多了");
