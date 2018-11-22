@@ -71,18 +71,21 @@ Axios.interceptors.request.use(function (config) {
 	// 对请求错误做些什么
 	return Promise.reject(error)
 })
-// Axios.interceptors.response.use(function (response) {
-// 	if(response.data.type == '999'){
-// 		window.localStorage.removeItem("token");
-// 		window.localStorage.removeItem("accountNum");
-// 		window.localStorage.removeItem("user_id");
-// 		window.localStorage.removeItem("extension_code");
-// 		router.push('/components/login');
-// 	}
-// 	return response;
-// }, function (error) {
-// 	return Promise.reject(error);
-// });
+Axios.interceptors.response.use(function (response) {
+	if(response.data.type == '999'){
+		window.localStorage.removeItem("token");
+		window.localStorage.removeItem("accountNum");
+		window.localStorage.removeItem("user_id");
+		window.localStorage.removeItem("extension_code");
+		layer.msg('登录超时,请重新登录');
+		setTimeout(function(){
+			router.push('/components/login');	
+		},2000)
+	}
+	return response;
+}, function (error) {
+	return Promise.reject(error);
+});
 //Axios.defaults.baseURL = ''
 // Axios.defaults.headers = { 'Content-Type': 'application/json;charset=UTF-8' }application/x-www-form-urlencoded
 // Axios.defaults.withCredentials = true;
