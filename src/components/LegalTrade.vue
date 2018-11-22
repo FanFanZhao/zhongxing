@@ -27,7 +27,8 @@
 			<ul class="list ft12">
 				<li v-for="(item,index) in list" :key="index" class="flex bdr-part">
 					<div class="flex alcenter">
-						<img :src="url+'upload/'+item.currency_logo" alt="">
+						<!-- <img :src="url+'upload/'+item.currency_logo" alt=""> -->
+						<div class="head">{{item.seller_name | formatTime}}</div>
 						<div class="flex column center">
 							<span class="light_blue">{{item.seller_name}}</span>
 						<span>{{item.currency_name}}</span>
@@ -84,6 +85,10 @@
 
 <script>
 	import Paginate from 'vuejs-paginate';
+	import Vue from 'vue'
+	Vue.filter('formatTime', function (value) {
+		return value.substring(0,1)
+	})
 	export default {
 		components: {
 			Paginate
@@ -114,6 +119,7 @@
 				numbers:''
 			};
 		},
+
 		created() {
 			console.log(window.location);
 
@@ -423,7 +429,16 @@
 					>div {
 						flex: 1;
 						line-height: 36px;
-
+						.head{
+							width: 36px;
+							height: 36px;
+							border-radius: 50%;
+							margin-right: 10px;
+							background: #563BD1;
+							color: #fff;
+							text-align: center;
+							font-size: 14px;
+						}
 						>img {
 							width: 36px;
 							height: 36px;
