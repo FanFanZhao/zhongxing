@@ -52,7 +52,7 @@
 		<div class="cannel-order" v-show="comfirmOrder">
 			<div class="cannel-order-modal">
 				<div class="title">付款确认</div>
-				<div class="content">请确认买家已向您付款</div>
+				<div class="content tc">请确认买家已向您付款</div>
 				<div class="btns">
 					<button type="button" @click="cannelBtns()">取消</button>
 					<button class="comfirms" type="button" @click="comfirmPay()">确认</button>
