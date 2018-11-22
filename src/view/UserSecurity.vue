@@ -66,7 +66,8 @@
                 <span  class="fr red ml25 mouseDefault"></span>
                 <router-link to="/components/authentication" class="fr red" v-if="authen==0">去认证</router-link>
                 <router-link to="/components/authentication" class="fr red" v-if="authen==3">已拒绝(请重新认证)</router-link>
-                <span class="fr red" v-else>{{authen==1?'审核中':'已认证'}}</span>       
+                <span class="fr red"  v-if="authen==2">已认证</span>   
+                <span class="fr red"  v-if="authen==1">审核中</span>       
             </li>
             <li class="hide"><img  src="@/assets/images/icon_error.png">
                 <span  class="ml20">提币密码</span>
