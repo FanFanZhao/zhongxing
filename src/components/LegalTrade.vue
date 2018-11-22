@@ -27,7 +27,8 @@
 			<ul class="list ft12">
 				<li v-for="(item,index) in list" :key="index" class="flex bdr-part">
 					<div class="flex alcenter">
-						<img :src="url+'upload/'+item.currency_logo" alt="">
+						<!-- <img :src="url+'upload/'+item.currency_logo" alt=""> -->
+						<div class="head">{{item.seller_name | formatTime}}</div>
 						<div class="flex column center">
 							<span class="light_blue">{{item.seller_name}}</span>
 						<span>{{item.currency_name}}</span>
@@ -37,7 +38,7 @@
 					<div class="flex alcenter">{{(item.limitation.min-0).toFixed(2)}}-{{(item.limitation.max-0).toFixed(2)}}CNY</div>
 					<div class="flex alcenter">{{item.price}}</div>
 					<div class="flex alcenter">{{item.way_name}}</div>
-					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type)">
+					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type,item.surplus_number)">
 						<button class="btn">{{classify}}{{name}}</button>
 					</div>
 				</li>
@@ -84,6 +85,10 @@
 
 <script>
 	import Paginate from 'vuejs-paginate';
+	import Vue from 'vue'
+	Vue.filter('formatTime', function (value) {
+		return value.substring(0,1)
+	})
 	export default {
 		components: {
 			Paginate
@@ -112,9 +117,11 @@
 				currentpage:1,
 				name01:'CNY',
 				numbers:'',
+				allnum:'',
 				idx:1
 			};
 		},
+
 		created() {
 			console.log(window.location);
 
@@ -203,7 +210,7 @@
 				_this.getList(_this.type, _this.id, pageNum);
 			},
 			// 出售或者购买按钮
-			buySell(prices, min, max,id,type) {
+			buySell(prices, min, max,id,type,allnum) {
 				// this.nums = '';
 				// this.numbers = '';
 				console.log(type)
@@ -220,6 +227,7 @@
 				_this.prices = prices;
 				_this.minNum = min;
 				_this.maxNum = max;
+				_this.allnum = allnum;
 			      var t1 = setInterval(function() {
 					_this.time--;
 					if (_this.time <= 0) {
@@ -232,6 +240,7 @@
 			},
 			// 交易或数量切换
 			tabClassify(num) {
+				this.nums = '';
 				this.idx = num;
 				if (num == 1) {
 					this.types = 'trade';
@@ -244,7 +253,12 @@
 			},
 			// 全部卖出或买入
 			allMoney() {
-				this.nums = this.maxNum;
+				if(this.types == 'trade'){
+
+					this.nums = this.maxNum;
+				} else {
+					this.nums = this.allnum;
+				}
 			},
 			// 下单
 			buyOrder() {
@@ -440,7 +454,16 @@
 					>div {
 						flex: 1;
 						line-height: 36px;
-
+						.head{
+							width: 36px;
+							height: 36px;
+							border-radius: 50%;
+							margin-right: 10px;
+							background: #563BD1;
+							color: #fff;
+							text-align: center;
+							font-size: 14px;
+						}
 						>img {
 							width: 36px;
 							height: 36px;
