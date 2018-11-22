@@ -84,11 +84,17 @@ export default {
     },
     //发送验证码
     sendCode(e){
+      var url;
+      var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
       var i = layer.load();
        let account_number = this.$utils.trim(this.account_number);
-      
+      if(emreg.test(account_number)){
+          url = 'sms_mail'
+      }else{
+         url = 'sms_send'
+      }
     this.$http({
-        url: '/api/' + "sms_send",
+        url: '/api/' + url,
         method: "post",
         data: {
           user_string: account_number,

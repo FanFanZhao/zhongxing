@@ -7,13 +7,13 @@
       <div v-if="msg.is_sure == 2">订单已取消</div>
       <div v-if="msg.is_sure == 3&&msg.type =='sell'">已付款，等待商家确认收款</div>
       
-      <span v-if="msg.is_sure == 0 && msg.type =='sell'">￥{{msg.deal_money}}</span>
+      <span v-if="msg.is_sure == 0 && msg.type =='sell'">{{msg.deal_money}}CNY</span>
       
     </div>
     <div class="info bg-part ft14">
       <div class="flex">
         <span>交易单价：</span>
-        <span>{{msg.price}}</span>
+        <span>{{msg.price}}CNY</span>
       </div>
       <div class="flex">
         <span>交易数量：</span>

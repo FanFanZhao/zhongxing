@@ -60,12 +60,12 @@
 					</div>
 					<div class="totals-num bdr-part">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
-						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
+						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="numbers">
 						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">全部卖出</button>
 						<button class="all clr-part" type="button" v-else @click="allMoney();">全部买入</button>
 						<span class="name">{{name01}}</span>
 					</div>
-					<div class="maxnum">限额{{minNum}}-{{maxNum}}</div>
+					<div class="maxnum">限额{{(minNum-0).toFixed(2)}}-{{(maxNum-0).toFixed(2)}}</div>
 					<div class="trade-totals">
 						<p class="total-price">交易总额</p>
 						<p class="prices" v-if=" types == 'trade' ">￥{{nums | toFixeds}}</p>
@@ -110,7 +110,8 @@
 				ID:'',
 				money_type:'',
 				currentpage:1,
-				name01:'CNY'
+				name01:'CNY',
+				numbers:''
 			};
 		},
 		created() {
@@ -228,6 +229,7 @@
 					this.types = 'trade';
 					this.name01 = 'CNY'
 				} else {
+					this.numbers = this.nums/this.prices;
 					this.types = 'num';
 					this.name01 = this.name
 				}

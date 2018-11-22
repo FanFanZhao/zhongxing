@@ -83,7 +83,7 @@
                        </div>
                        <div class="flex">
                         <div class="flex2">
-                       <p class="ft12 fColor2 mb15">温馨提示</p>
+                       <!-- <p class="ft12 fColor2 mb15">温馨提示</p> -->
                        <ul class="tips_ul ft12 fColor2" style="list-style:disc inside">
                            <li>
                                 为保障资金安全，当您账户安全策略变更、密码修改、我们会对提币进行人工审核，请耐心等待工作人员电话或邮件联系。
@@ -171,7 +171,7 @@ export default {
     },
     computed:{
          reachnum(){
-             return this.number - this.number*this.rate/100;
+             return this.number - this.number*this.rate;
          }   
     },
     methods:{
