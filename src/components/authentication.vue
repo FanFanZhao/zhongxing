@@ -85,6 +85,7 @@ export default {
             } 
             var formData = new FormData();
             formData.append("file", event.target.files[0]); 
+            var i= layer.load();
             $.ajax({
                 url: '/api/'+'upload',
                 type: 'post',
@@ -95,6 +96,7 @@ export default {
                     request.setRequestHeader("Authorization", that.token);
                 },
                 success: function (msg) {
+                    layer.close(i);
                     console.log(msg)
                     that.src1=msg.message
 
@@ -112,6 +114,7 @@ export default {
             } 
             var formData = new FormData();
             formData.append("file", event.target.files[0]); 
+            var i= layer.load();
             $.ajax({
                 url: '/api/'+'upload',
                 type: 'post',
@@ -122,6 +125,7 @@ export default {
                     request.setRequestHeader("Authorization", that.token);
                 },
                 success: function (msg) {
+                    layer.close(i);
                     that.src2=msg.message
                 }
             });    
@@ -136,6 +140,7 @@ export default {
             } 
             var formData = new FormData();
             formData.append("file", event.target.files[0]); 
+            var i= layer.load();
             $.ajax({
                 url: '/api/'+'upload',
                 type: 'post',
@@ -146,6 +151,7 @@ export default {
                     request.setRequestHeader("Authorization", that.token);
                 },
                 success: function (msg) {
+                    layer.close(i);
                     that.src3=msg.message
                 }
             });    
@@ -171,6 +177,7 @@ export default {
                 layer.msg('请上传完整身份证件!')
                 return;
             }
+            var i= layer.load();
             this.$http({
                 url: '/api/'+'user/real_name',
                 method:'post',
@@ -189,7 +196,7 @@ export default {
                 }    
             }).then(res=>{
                 console.log(res);
-        
+                    layer.close(i);
                     if(res.data.type=='ok'){
                         layer.msg(res.data.message)
                         setTimeout(function(){
@@ -222,7 +229,7 @@ export default {
         }
     },
     mounted(){
-       this.Info();
+    //    this.Info();
     }
 }
 </script>
