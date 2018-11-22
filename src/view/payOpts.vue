@@ -55,7 +55,7 @@ export default {
       this.$http({
         url: "/api/user/cash_info",
         method: "post",
-        headers: { 'Authorization': this.token,'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'},
+        headers: { 'Authorization': this.token},
         
       }).then(res => {
         if ((res.data.type == "ok")) {
@@ -88,7 +88,7 @@ export default {
           wechat_nickname: this.weChatName,
           wechat_account: this.weChatAccount
         },
-        headers: { 'Authorization': this.token }
+        headers: { 'Authorization': this.token,'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', }
       }).then(res => {
           layer.msg(res.data.message)
       })
