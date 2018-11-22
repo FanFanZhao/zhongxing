@@ -170,7 +170,7 @@
 					_this.cannelOrder = false;
 					_this.comfirmOrder = false;
 					setTimeout(() => {
-						location.reload();
+						// location.reload();
 					}, 1000);
 				});
 			},
