@@ -69,7 +69,7 @@
 					<div class="trade-totals">
 						<p class="total-price">交易总额</p>
 						<p class="prices" v-if=" types == 'trade' ">￥{{nums | toFixeds}}</p>
-						<p class="prices" v-else>￥{{nums * prices | toFixeds}}</p>
+						<p class="prices" v-else>￥{{numbers * prices | toFixeds}}</p>
 					</div>
 					<p class="tip">请在24小时内联系商家付款，超出24小时将自动取消</p>
 					<div class="btns">
@@ -199,6 +199,8 @@
 			},
 			// 出售或者购买按钮
 			buySell(prices, min, max,id,type) {
+				this.nums = '';
+				this.numbers = '';
 				console.log(type)
 				if(type == 'sell'){
 					this.money_type = '购买'

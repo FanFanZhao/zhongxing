@@ -23,6 +23,14 @@
         <span>下单时间：</span>
         <span>{{msg.format_create_time}}</span>
       </div>
+      <div class="flex" v-if="msg.is_sure == 3&&msg.type =='sell'">
+        <span>支付方式：</span>
+        <span>{{msg.user_cash_info.bank_name}}</span>
+      </div>
+      <div class="flex" v-if="msg.is_sure == 3&&msg.type =='sell'">
+        <span>账户名：</span>
+        <span>{{msg.user_cash_info.bank_account}}</span>
+      </div>
       <div class="flex">
         <span>{{msg.type == 'sell'?'商家':'买家'}}账户：</span>
         <span v-if="msg.type == 'buy'">{{msg.seller_name}}</span>

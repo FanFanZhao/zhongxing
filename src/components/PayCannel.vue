@@ -34,18 +34,14 @@
 				<p class="right">{{datas.id}}</p>
 			</li>
 			<li>
-				<button class="right" v-show="cannelBtn" type="button" @click="cannel()">取消交易</button>
+				<button class="right" v-show="datas.is_sure == 0" type="button" @click="cannel()">取消交易</button>
 				<button class="right" v-show="comfirmBtn" type="button" @click="comfirm();">确认已收款</button>
 			</li>
 		</ul>
 		<!-- 取消订单弹窗 -->
-		<div class="cannel-order" v-show="cannelOrder">
+		<div class="cannel-order" v-show="cannelBtn">
 			<div class="cannel-order-modal">
-				<div class="title">确认取消交易</div>
-				<div class="content">如果您已向卖家付款，请千万不要取消交易</div>
-				<div class="select">
-					<input type="checkbox" value=""><span>我还没有付款给对方</span>
-				</div>
+				<div class="title">确认取消交易？</div>
 				<div class="btns">
 					<button type="button" @click="cannelBtns()">取消</button>
 					<button class="comfirms" type="button" @click="cannelPay()">确认</button>
@@ -121,8 +117,8 @@
 							_this.statusText = "买家已付款，请核实后确认";
 						}
 
-						if (_this.datas.is_sure == 0 && _this.datas.type == 'sell') {
-							_this.cannelBtn = true;
+						if (_this.datas.is_sure == 0) {
+							// _this.cannelBtn = true;
 						} else {
 							_this.cannelBtn = false;
 						}
@@ -135,6 +131,7 @@
 				});
 			},
 			cannel() {
+				this.cannelBtn = true;
 				document.getElementsByTagName("body")[0].className = "body";
 				this.cannelOrder = true;
 			},
@@ -144,6 +141,7 @@
 			},
 			// 取消按钮
 			cannelBtns() {
+				this.cannelBtn = false;
 				document.body.removeAttribute("class", "body");
 				this.cannelOrder = false;
 				this.comfirmOrder = false;
@@ -164,12 +162,16 @@
 						Authorization: localStorage.getItem("token")
 					}
 				}).then(res => {
+					this.cannelBtn = false;
 					layer.close(i);
 					console.log(res);
 					layer.msg(res.data.message);
 					_this.getList(ids);
 					_this.cannelOrder = false;
 					_this.comfirmOrder = false;
+					setTimeout(() => {
+						// location.reload();
+					}, 1000);
 				});
 			},
 			// 确认订单
