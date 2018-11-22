@@ -16,7 +16,7 @@
                         <input type="text" placeholder="请输入身份证号" id="card" v-model="card_id">
                     </div>
                 </div>
-                <div class="mt40 fColor1 ft14 tc">请上传身份证正反面，第一张为正面，第二张为反面。</div>
+                <div class="mt40 fColor1 ft14 tc">请上传身份证正反面及手持身份证正面照。</div>
                 <div class="idimg flex center mt40">
                     <div>
                         <img :src="src01" alt="">
