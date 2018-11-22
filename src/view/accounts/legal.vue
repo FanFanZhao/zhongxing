@@ -4,7 +4,7 @@
             <p>法币账户  总资产折合：{{total}}USDT<span class='ft12 all_account'><span class=""></span>≈ <span>{{totalCNY}}</span> CNY</span></p>
         </div>
         <ul class="list ft12">
-            <li class="bdr-part" v-for="(item,index) in list" :key="index" @click="go_legalAccount(item.currency)">
+            <li class="bdr-part curPer" v-for="(item,index) in list" :key="index" @click="go_legalAccount(item.currency)">
                 <p class="legal_name">{{item.currency_name}}</p>
                 <div class="balance_detail">
                     <div class="use_balance flex1">
@@ -16,8 +16,8 @@
                        <p class="lock_balance_num">{{item.lock_legal_balance}}</p>
                     </div>
                     <div class="convert flex1">
-                       <p class="ft12 mincny">折合(USDT)</p>
-                       <p class="lock_balance_num">{{item.usdt_price}}</p>
+                       <p class="ft12 mincny">折合(CNY)</p>
+                       <p class="lock_balance_num">{{item.cny_price}}</p>
                     </div>
                 </div>
             </li>
