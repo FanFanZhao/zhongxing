@@ -220,7 +220,7 @@ export default {
       margin: 200px auto 0;
       border-radius: 2px;
       width: 360px;
-      background: #2E1B85;
+     
       line-height: 40px;
       text-align: center;
       >div:first-child{

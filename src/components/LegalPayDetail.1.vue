@@ -207,7 +207,7 @@ export default {
     height: 100%;
     background: rgba(0,0,0,.7);
     >.content{
-      background: #26292b;
+     
       margin: 200px auto 0;
       border-radius: 2px;
       width: 360px;
