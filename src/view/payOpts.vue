@@ -55,7 +55,8 @@ export default {
       this.$http({
         url: "/api/user/cash_info",
         method: "post",
-        headers: { 'Authorization': this.token }
+        headers: { 'Authorization': this.token,'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8'},
+        
       }).then(res => {
         if ((res.data.type == "ok")) {
             if(res.data.message != null){

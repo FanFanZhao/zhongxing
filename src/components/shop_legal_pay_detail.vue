@@ -21,8 +21,8 @@
       <div>
         <span v-if="msg.type == 'buy'">卖家</span>
         <span v-if="msg.type == 'sell'">买家</span>
-        <span v-if="msg.type == 'buy'">{{msg.seller_name}}</span>
-        <span v-if="msg.type == 'sell'">{{msg.hes_realname}}</span>
+        <span v-if="msg.type == 'buy'">{{msg.hes_realname}}</span>
+        <span v-if="msg.type == 'sell'">{{msg.seller_name}}</span>
       </div>
       <div>
         <span>单价：</span>
