@@ -296,7 +296,12 @@
 						means: means,
 						value: _this.nums
 					};
-					_this.buyHttp('/api/do_legal_deal', datas, function(res) {
+					var status = window.localStorage.getItem('status');
+					if(status == 0||status == 1){
+						layer.msg('请先进行实名认证再下单');
+						return false;
+					}else{
+						_this.buyHttp('/api/do_legal_deal', datas, function(res) {
 						
 						if(res.data.type == 'ok'){
 							// layer.msg(res.data.message)
@@ -312,11 +317,12 @@
 							}, 500)
 						}
 						}else{
-							console.log('lllll');
 							console.log(res.data.message)
                            layer.msg(res.data.message);
 						}
 					});
+					}
+					
 				// } else {
 					
 					

@@ -12,7 +12,7 @@
       <router-link to="/myLegalShops" v-if="isShow">我的商铺</router-link>
       <router-link to="/finance" v-if="token">我的资产</router-link>
       <div v-else @click="goLogin()">我的资产</div>
-      <!-- <router-link to="/userSetting">安全设置</router-link> -->
+      <router-link to="/userSetting">安全设置</router-link>
       <!-- <router-link to="/components/noticeList">公告</router-link>
       <div class="coin-box">
         <router-link to="/currencyApply">上币申请</router-link>
@@ -112,6 +112,7 @@ export default {
       }).then(res => {
         console.log(res)
         if(res.data.type == 'ok'){
+          window.localStorage.setItem('status',res.data.message.status);
             if(res.data.message.is_seller == '1'){
                this.isShow = true;
             }
