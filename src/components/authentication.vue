@@ -20,15 +20,19 @@
                 <div class="idimg flex center mt40">
                     <div>
                         <img :src="src01" alt="">
-                        <input type="file" id="file" accept="image/*" name="file" @change="file1">
+                        <input type="file" id="file1" accept="image/*" name="file1" @change="file1">
                     </div>
                     <div>
                         <img :src="src02" alt="">
-                        <input type="file" id="file" accept="image/*" name="file" @change="file2">
+                        <input type="file" id="file2" accept="image/*" name="file2" @change="file2">
+                    </div>
+                    <div>
+                        <img :src="src03" alt="">
+                        <input type="file" id="file3" accept="image/*" name="file3" @change="file3">
                     </div>
                 </div>
                 <div class="updata tc">
-                    <input type="button" class="redBg" value="提交" @click="updata">
+                    <input type="button" class="redBg curPer" value="提交" @click="updata">
                 </div>
             </div>
             <div  v-show="review_status==1">
@@ -57,8 +61,10 @@ export default {
            card_id:'',
            src1:'',
            src2:'',
+           src3:'',
            src01:'../../static/imgs/cardFront.jpg',
            src02:'../../static/imgs/cardBack.jpg',
+           src03:'../../static/imgs/hdimg.jpg',
            review_status:''
         }
     },
@@ -74,7 +80,6 @@ export default {
             var reader = new FileReader();
             reader.readAsDataURL(event.target.files[0]); 
             reader.onload = function(e){
-                // console.log(e.target.result)
                 that.src1=e.target.result
                 that.src01=e.target.result
             } 
@@ -102,7 +107,6 @@ export default {
             var reader = new FileReader();
             reader.readAsDataURL(event.target.files[0]); 
             reader.onload = function(e){
-                // console.log(e.target.result)
                 that.src2=e.target.result
                 that.src02=e.target.result
             } 
@@ -119,6 +123,30 @@ export default {
                 },
                 success: function (msg) {
                     that.src2=msg.message
+                }
+            });    
+        },
+        file3(){
+            var that = this;
+            var reader = new FileReader();
+            reader.readAsDataURL(event.target.files[0]); 
+            reader.onload = function(e){
+                that.src3=e.target.result
+                that.src03=e.target.result
+            } 
+            var formData = new FormData();
+            formData.append("file", event.target.files[0]); 
+            $.ajax({
+                url: '/api/'+'upload',
+                type: 'post',
+                data: formData,
+                processData: false,
+                contentType: false,
+                beforeSend: function beforeSend(request) {
+                    request.setRequestHeader("Authorization", that.token);
+                },
+                success: function (msg) {
+                    that.src3=msg.message
                 }
             });    
         },
@@ -139,6 +167,10 @@ export default {
                 layer.tips('请输入合法的身份证号!', '#card');
                 return;
             }
+            if((that.src1==''||that.src2=='')||(that.src3=='')){
+                layer.msg('请上传完整身份证件!')
+                return;
+            }
             this.$http({
                 url: '/api/'+'user/real_name',
                 method:'post',
@@ -146,7 +178,9 @@ export default {
                     name:name,
                     card_id:card_id,
                     front_pic:that.src1,
-                    reverse_pic:that.src2
+                    reverse_pic:that.src2,
+                    hand_pic:that.src3
+
                 },  
                
                 headers: {
@@ -158,7 +192,10 @@ export default {
         
                     if(res.data.type=='ok'){
                         layer.msg(res.data.message)
-                        that.$router.back(-1);
+                        setTimeout(function(){
+                            that.$router.back(-1);
+                        },2000)
+                        
                     }else{
                         layer.msg(res.data.message)
                     }
@@ -213,7 +250,7 @@ export default {
                 input{
                     width: 320px;
                     min-height: 46px;
-                    border: 1px solid #4e5b85;
+                    border: 1px solid #eee;
                     padding: 0 20px;
                     font-size: 14px;
                     border-radius: 3px;
