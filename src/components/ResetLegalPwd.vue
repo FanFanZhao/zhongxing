@@ -4,23 +4,23 @@
         <div class="content-wrap">
             <div class="account">
                 <div class="main">
-                    <p class="main_title">重置法币资金密码</p>
-                    <div class="register-input">
+                    <p class="main_title">{{paypassword==0?'设置法币资金密码':'重置法币资金密码'}} </p>
+                    <div class="register-input" v-if="paypassword==1">
                         <span class="register-item">请输入原密码</span>
                         <input type="password" class="input-main input-content" maxlength="20" v-model="oldPwd" id="account">
                     </div>
                      <div class="register-input">
-                        <span class="register-item">请输入新密码（6-20位，由数字与字母组成）</span>
+                        <span class="register-item">请输入密码</span>
                         <input type="password" class="input-main input-content" maxlength="16" v-model="pwd" id="pwd">
                     </div>
                      <div class="register-input">
-                        <span class="register-item">请再次输入新密码（6-20位，由数字与字母组成）</span>
+                        <span class="register-item">请再次输入密码</span>
                         <input type="password" class="input-main input-content" maxlength="16" v-model="rePwd">
                     </div>
                      
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
-                        <button type="button" class="register-button curPer redBg" @click="reset" >重置密码</button>
+                        <button type="button" class="register-button curPer redBg" @click="reset" >{{paypassword==0?'设置密码':'重置密码'}}</button>
                         
                     </div>
                     
@@ -39,47 +39,74 @@ export default {
     return {
       oldPwd: "",
       pwd: "",
-      rePwd: ""
+      rePwd: "",
+      paypassword:0,
     };
   },
-
+  created(){
+    this.$http({
+      url: "/api/" + "user/info",
+      method: "get",
+      data: {},
+      headers: { Authorization: localStorage.getItem("token") }
+    }).then(res => {
+      console.log(res.data.message.paypassword);
+      this.paypassword=res.data.message.paypassword;
+    });
+  },
   methods: {
     
     reset() {
-      let msg = "";
       let oldpassword = this.oldPwd;
-
       let password = this.pwd;
       let re_password = this.rePwd;
-      if (
-        oldpassword == "" ||
-        password == "" ||
-        re_password == ""
-      ) {
-        return;
-      } else if(password.length>20||password.length<6||re_password.length>20||re_password.length<6){
-        layer.msg('密码6-20位，由数字与字母组成');return;
-      } else if (password != re_password) {
-        layer.msg("两次输入的密码不一致");
-        return;
-      } else {
+      if(this.paypassword==1&&oldpassword==''){
+        return layer.msg('请输入与原密码')
+      }
+      if(this.paypassword==1&&(oldpassword.length<6||oldpassword.length>20)){
+        return layer.msg('密码6-20位，由数字或字母组成')
+      }
+      if(password.length>20||password.length<6||re_password.length>20||re_password.length<6){
+        return layer.msg('密码6-20位，由数字或字母组成');
+      } 
+      if (password != re_password) {
+        return layer.msg("两次输入的密码不一致");
+      }
+      if(this.paypassword==0){
         this.$http({
-          url: "/api/safe/update_password",
+          url: "/api/user/setaccount",
           method: "post",
           data: {
-            oldpassword: oldpassword,
             password: password,
-            re_password: re_password
+            repassword: re_password
           },
-          headers: { Authorization: localStorage.getItem("token") }
-        }).then(res => {
-          console.log(res);
-          layer.msg(res.data.message);
-          if (res.data.type == "ok") {
-            this.$router.go(-1)
-          }
+            headers: { Authorization: localStorage.getItem("token") }
+          }).then(res => {
+            console.log(res);
+            layer.msg(res.data.message);
+            if (res.data.type == "ok") {
+              this.$router.go(-1)
+            }
+        });
+      }else{
+        this.$http({
+            url: "/api/safe/update_password",
+            method: "post",
+            data: {
+              oldpassword: oldpassword,
+              password: password,
+              re_password: re_password
+            },
+            headers: { Authorization: localStorage.getItem("token") }
+          }).then(res => {
+            console.log(res);
+            layer.msg(res.data.message);
+            if (res.data.type == "ok") {
+              this.$router.go(-1)
+            }
         });
       }
+        
     }
   }
 };

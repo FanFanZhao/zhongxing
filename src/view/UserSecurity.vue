@@ -58,7 +58,7 @@
                 <p  class="fl">互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</p>
                 <span  class="fr red ml25 mouseDefault"></span>
                 <!-- <span  class="fr red mouseDefault"  @click="goPwd()">修改</span> -->
-                <router-link to="/components/resetLegalPwd" class="fr red">修改</router-link>
+                <router-link to="/components/resetLegalPwd" class="fr red">{{isfPwd==0?'去设置':'修改'}}</router-link>
             </li>
             <li class="bdr-part"><img  :src="asrc">
                 <span  class="ml20">身份认证</span>
@@ -118,9 +118,11 @@ export default {
       extension_code: "",
       authen:0,
       austatus:'去认证',
+      isfPwd:0,
       psrc: require("@/assets/images/icon_error.png"),
       esrc: require("@/assets/images/icon_error.png"),
       asrc: require("@/assets/images/icon_error.png"),
+      fsrc: require("@/assets/images/icon_error.png"),
     };
   },
   created() {
@@ -160,6 +162,10 @@ export default {
               if(this.esrc=='已绑定'){
                 this.bar=this.bar+25;
               }
+            }
+            if (res.data.message.paypassword==1){
+              this.fsrc=require("@/assets/images/success.png");
+              this.isfPwd=1;
             }
             this.extension_code = res.data.message.extension_code;
             this.authen=res.data.message.review_status;

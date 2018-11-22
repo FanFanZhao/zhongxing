@@ -70,6 +70,20 @@ export default {
     },
     created(){
         this.token=localStorage.getItem('token')
+        
+        // this.$http({
+        //     url: '/api/'+'user/user_real_info',
+        //     method:'post',
+        //     data:{},
+        //     headers: {'Authorization':  this.token,}    
+        // }).then(res=>{
+        //     console.log(res);
+        //     if(res.data.type=='ok'){
+                
+        //     }else{
+                
+        //     }
+        // })
     },
     methods:{
         goBefore(){
