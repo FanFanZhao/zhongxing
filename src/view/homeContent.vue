@@ -14,21 +14,14 @@
             <div class="swiper-wrapper">
                <div class="swiper-slide sliders">
                    <a href="">
-                   <img src="../../static/imgs/new_banner.png" />
+                   <img src="../../static/imgs/banner01.png" />
                    </a>
                </div>
                <div class="swiper-slide sliders">
                    <a href="">
-                   <img src="../../static/imgs/new_banner.png" />
+                   <img src="../../static/imgs/banner00.jpg" />
                    </a>
                </div>
-               <div class="swiper-slide sliders">
-                   <a href="">
-                   <img src="../../static/imgs/new_banner.png" />
-                   </a>
-               </div>
-                
-               
             </div>
              <div class="swiper-pagination swiper-pagination02"></div>
         </div>
@@ -598,7 +591,7 @@ export default {
 }
 .swiper-container img {
   display: block;
-  margin-top: -50px;
+  // margin-top: -50px;
   // height: 310px;
 }
 .coin-tab {

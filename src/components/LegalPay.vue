@@ -23,13 +23,17 @@
         <span>下单时间：</span>
         <span>{{msg.format_create_time}}</span>
       </div>
-      <div class="flex" v-if="msg.is_sure == 3&&msg.type =='sell'">
-        <span>支付方式：</span>
-        <span>{{msg.user_cash_info.bank_name}}</span>
-      </div>
-      <div class="flex" v-if="msg.is_sure == 3&&msg.type =='sell'">
-        <span>账户名：</span>
+      <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='sell'">
+        <span>银行卡号：</span>
         <span>{{msg.user_cash_info.bank_account}}</span>
+      </div>
+      <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='sell'">
+        <span>微信：</span>
+        <span>{{msg.user_cash_info.wechat_account}}</span>
+      </div>
+      <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='sell'">
+        <span>支付宝：</span>
+        <span>{{msg.user_cash_info.alipay_account}}</span>
       </div>
       <div class="flex">
         <span>{{msg.type == 'sell'?'商家':'买家'}}账户：</span>
@@ -228,7 +232,6 @@ export default {
       margin: 200px auto 0;
       border-radius: 2px;
       width: 360px;
-      // background: #2e1b85;
       background: #fff;
       line-height: 40px;
       text-align: center;

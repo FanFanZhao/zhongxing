@@ -60,7 +60,7 @@
 					</div>
 					<div class="totals-num bdr-part">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
-						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="numbers">
+						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
 						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">全部卖出</button>
 						<button class="all clr-part" type="button" v-else @click="allMoney();">全部买入</button>
 						<span class="name">{{name01}}</span>
@@ -69,7 +69,7 @@
 					<div class="trade-totals">
 						<p class="total-price">交易总额</p>
 						<p class="prices" v-if=" types == 'trade' ">￥{{nums | toFixeds}}</p>
-						<p class="prices" v-else>￥{{numbers * prices | toFixeds}}</p>
+						<p class="prices" v-else>￥{{nums * prices | toFixeds}}</p>
 					</div>
 					<p class="tip">请在24小时内联系商家付款，超出24小时将自动取消</p>
 					<div class="btns">
@@ -161,6 +161,7 @@
 						Authorization: this.token
 					}
 				}).then(res => {
+					console.log(res)
 					layer.close(i);
 					if (res.data.type == 'ok') {
 						
@@ -170,6 +171,9 @@
 							this.pages = Math.ceil(total / 10)
 
 						}
+					}else{
+						this.list = []
+						layer.msg(res.data.message)
 					}
 				});
 			},
@@ -199,8 +203,8 @@
 			},
 			// 出售或者购买按钮
 			buySell(prices, min, max,id,type) {
-				this.nums = '';
-				this.numbers = '';
+				// this.nums = '';
+				// this.numbers = '';
 				console.log(type)
 				if(type == 'sell'){
 					this.money_type = '购买'
@@ -231,7 +235,7 @@
 					this.types = 'trade';
 					this.name01 = 'CNY'
 				} else {
-					this.numbers = this.nums/this.prices;
+					// this.numbers = this.nums/this.prices;
 					this.types = 'num';
 					this.name01 = this.name
 				}

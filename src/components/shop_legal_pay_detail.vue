@@ -36,6 +36,20 @@
         <span>下单时间：</span>
         <span>{{msg.format_create_time}}</span>
       </div>
+      <div  v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type == 'buy'">
+        <div>
+        <span>银行卡：</span>
+        <span>{{msg.user_cash_info.bank_account}}CNY</span>
+      </div>
+      <div>
+        <span>微信：</span>
+        <span>{{msg.user_cash_info.wechat_account}}</span>
+      </div>
+      <div>
+        <span>支付宝：</span>
+        <span>{{msg.user_cash_info.alipay_account}}</span>
+      </div>
+      </div>
       <div>
         <span>联系方式：</span>
         <span v-if="msg.type == 'buy'">{{msg.seller_phone}}</span>
