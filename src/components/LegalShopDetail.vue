@@ -85,8 +85,8 @@
           <div class="w10">{{item.price}}</div>
           <div class="w10">{{item.way_name}}</div>
           <div>
-            <span @click="changeOrder('error_send',item.id)">异常</span>
-            <span @click="changeOrder('back_send',item.id)">撤回</span>
+            <span @click="changeOrder('error_send',item.id)" v-if="item.is_done!=1">异常</span>
+            <span @click="changeOrder('back_send',item.id)" v-if="item.is_done!=1">撤回</span>
             <router-link tag="span" :to="{path:'/shopLegalRecord',query:{id:item.id}}">查看订单</router-link>
           </div>
         </li>
