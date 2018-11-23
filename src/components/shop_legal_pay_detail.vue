@@ -36,22 +36,22 @@
         <span>下单时间：</span>
         <span>{{msg.format_create_time}}</span>
       </div>
-        <div  v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type == 'buy'">
+        <div  v-if="(msg.is_sure == 0||msg.is_sure == 3)&&msg.type == 'buy'">
         <span>银行卡：</span>
         <span>{{msg.user_cash_info.bank_name}}:{{msg.user_cash_info.bank_account}}</span>
       </div>
-      <div  v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type == 'buy'">
+      <div  v-if="(msg.is_sure == 0||msg.is_sure == 3)&&msg.type == 'buy'">
         <span>微信：</span>
         <span>{{msg.user_cash_info.wechat_account}}</span>
       </div>
-      <div  v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type == 'buy'">
+      <div  v-if="(msg.is_sure == 0||msg.is_sure == 3)&&msg.type == 'buy'">
         <span>支付宝：</span>
         <span>{{msg.user_cash_info.alipay_account}}</span>
       </div>
       <div>
         <span>联系方式：</span>
         <span v-if="msg.type == 'buy'">{{msg.user_cash_info.account_number ||"无"}}</span>
-         <span v-if="msg.type == 'sell'">{{msg.phone ||"无"}}</span>
+        <span v-if="msg.type == 'sell'">{{msg.phone ||"无"}}</span>
       </div>
       <div>
         <span>参考号：</span>

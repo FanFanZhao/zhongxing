@@ -25,7 +25,7 @@
       </div>
       <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='sell'">
         <span>银行卡号：</span>
-        <span>{{msg.user_cash_info.bank_account}}</span>
+        <span>{{msg.user_cash_info.bank_name}}:{{msg.user_cash_info.bank_account}}</span>
       </div>
       <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='sell'">
         <span>微信：</span>
