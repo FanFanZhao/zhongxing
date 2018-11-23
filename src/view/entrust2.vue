@@ -142,8 +142,8 @@ export default {
     getMore() {
       this.page = ++this.page;
       this.loading = true;
-      console.log(this.page);
-      console.log(this.types);
+      // console.log(this.page);
+      // console.log(this.types);
       this.getdata(this.urls, this.types);
     },
     getMore01() {
@@ -171,7 +171,7 @@ export default {
           })
           .then(res => {
             res = res.data;
-            console.log(res);
+            // console.log(res);
             if (res.type === "ok") {
               layer.msg(res.message);
               that.getdata(that.urls, that.types);
@@ -186,7 +186,7 @@ export default {
     },
 
     getdata(url, type) {
-      console.log(type);
+      // console.log(type);
       var page = this.page;
       if(!this.token){
         return;
@@ -200,7 +200,7 @@ export default {
         headers: { Authorization: this.token }
       })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           res = res.data;
           this.loading = false;
           let mlist = [];
@@ -211,11 +211,11 @@ export default {
             //  page = 1;
             //  this.enList = []
             if (page == 1) {
-              console.log("-----------------");
+              // console.log("-----------------");
               this.enList = mlist;
             } else {
               var newEist = mlist;
-              console.log();
+              // console.log();
               if (newEist.length <= 0) {
                 this.more = "没有更多数据了...";
                 return;
@@ -227,7 +227,7 @@ export default {
             for (var i in this.enList) {
               this.enList[i].typeInfo = type;
             }
-            console.log(this.enList);
+            // console.log(this.enList);
           } else {
             //  page = 1;
             //  this.enList = [];
@@ -294,7 +294,7 @@ export default {
   },
   mounted() {
     var that = this;
-    console.log('entrust2')
+    // console.log('entrust2')
     if (this.token != "") {
       that.getdata(this.urls, this.types);
       // eventBus.$on("toTrade", function() {

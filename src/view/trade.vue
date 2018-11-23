@@ -341,11 +341,14 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res);
+          console.log(res,'99999999999999999999999999999999999999999999999999');
           layer.close(i);
           // layer.msg(res.data.message)
           if (res.data.type == "ok") {
+            setTimeout(function(){
               that.buy_sell(that.legal_id,that.currency_id)
+            },3000)
+              
             eventBus.$emit('tradeOk',{status:'ok'});
             if(this.current == 0){
               // this.sellPrice = '';
@@ -381,6 +384,7 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
+          console.log('8888888888888888888888888888888888888888888888')
           layer.close(i);
           // console.log(res ,222)
           // layer.close(i);
