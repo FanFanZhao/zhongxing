@@ -3,7 +3,7 @@
         <div class="account-wrap">
             <div class="account">
                 <div class="notice_box bg-part" style="margin-top:8px;">
-                    <notice></notice>
+                    <notice :title='title'></notice>
                 </div>
              </div>
         </div>
@@ -16,6 +16,11 @@ export default {
     components: {
     notice,
   },
+  data(){
+      return{
+          title:'帮助中心'
+      }
+  }
 };
 </script>
 

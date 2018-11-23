@@ -4,7 +4,7 @@
         <div class="account-wrap">
             <div class="account" style="width:auto">
                 <div>
-                    <div class="back-nav  ft20 clear" style="padding:0 20px;"> 公告
+                    <div class="back-nav  ft20 clear" style="padding:0 20px;"> {{title}}
                         
                     </div>
                     
@@ -47,6 +47,14 @@ export default {
       more: "点击加载更多...",
       newList: []
     };
+  },
+  props:{
+    // header 标题
+    title:{
+      type:String,
+      default:'公告',
+    },
+     
   },
   created() {
     // this.$http({
