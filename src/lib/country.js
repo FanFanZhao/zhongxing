@@ -1,11 +1,5 @@
 export default [
   {
-    "area_code": "+86",
-    "country_id": 37,
-    "name_cn": "中国大陆",
-    "name_en": "China"
-  },
-  {
     "area_code": "+355",
     "country_id": 3,
     "name_cn": "阿尔巴尼亚",
@@ -190,12 +184,6 @@ export default [
     "country_id": 85,
     "name_cn": "柬埔寨",
     "name_en": "Cambodia"
-  },
-  {
-    "area_code": "+1",
-    "country_id": '',
-    "name_cn": "美国",
-    "name_en": "Amerancra"
   },
   {
     "area_code": "+1",
@@ -475,12 +463,6 @@ export default [
     "name_en": "Honduras"
   },
   {
-    "area_code": "+852",
-    "country_id": 71,
-    "name_cn": "中国香港",
-    "name_en": "Hong Kong (China)"
-  },
-  {
     "area_code": "+36",
     "country_id": 72,
     "name_cn": "匈牙利",
@@ -677,6 +659,12 @@ export default [
     "country_id": 109,
     "name_cn": "毛里求斯",
     "name_en": "Mauritius"
+  },
+  {
+    "area_code": "+1",
+    "country_id": '',
+    "name_cn": "美国",
+    "name_en": "Amerancra"
   },
   {
     "area_code": "+52",
@@ -1057,12 +1045,6 @@ export default [
     "name_en": "Switzerland"
   },
   {
-    "area_code": "+886",
-    "country_id": 169,
-    "name_cn": "中国台湾",
-    "name_en": "Taiwan (China)"
-  },
-  {
     "area_code": "+992",
     "country_id": 170,
     "name_cn": "塔吉克斯坦",
@@ -1207,9 +1189,27 @@ export default [
     "name_en": "Zaire"
   },
   {
+    "area_code": "+86",
+    "country_id": 37,
+    "name_cn": "中国大陆",
+    "name_en": "China"
+  },
+  {
     "area_code": "+260",
     "country_id": 193,
     "name_cn": "赞比亚",
     "name_en": "Zambia"
+  },
+  {
+    "area_code": "+886",
+    "country_id": 169,
+    "name_cn": "中国台湾",
+    "name_en": "Taiwan (China)"
+  },
+  {
+    "area_code": "+852",
+    "country_id": 71,
+    "name_cn": "中国香港",
+    "name_en": "Hong Kong (China)"
   }
 ]

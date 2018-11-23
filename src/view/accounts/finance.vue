@@ -29,7 +29,7 @@
                    <!-- <p class="flex1 tc">{{item.lock_position}}</p> -->
                    <p class="flex1 tc operation">
                        <span @click="excharge(index,item.currency)" >充币</span>
-                       <span @click="withdraw(index,item.currency)">提币</span>
+                       <span @click="withdraw(index,item.currency,item.currency_name)">提币</span>
                        <!-- <span @click="exchange">兑换</span> -->
                        <span @click="rec(index,item.currency)">记录</span>
                    </p>
@@ -60,13 +60,17 @@
                    <!--提币区-->
                    <div class="hide_div bdr-part" v-if="index == active01">
                        <p class="fColor2 ft12 mb15">提币地址</p>
-                       <input class="address_inp clr-part  mb30" type="text" v-model="address" />
+                       <!-- <input class="address_inp clr-part  mb30" type="text" v-model="address" /> -->
+                       <select class="address_inp clr-part  mb30" v-model="address">
+                           <option value="">选择提币地址</option>
+                           <option value="item.address" v-for="(item,index) in addressList" :key="index">{{item.address}}</option>
+                       </select>
                        <p class="fColor2 ft12 mb15 flex between alcenter"><span>数量</span><span>可用：<span class="use_num">{{balance}} {{coinname}}</span><span></span></span></p>
                        <label class="num_lab flex between mb30">
                             <input class="clr-part" type="text" :placeholder="min_number" v-model="number" />
                             <span>{{coinname}}</span>
                         </label>
-                       <div class="flex mb50">
+                       <div class="flex mb30">
                            <div class="left_inp_wrap flex1">
                                <p class="fColor2 ft12 mb15">
                                    <span>手续费</span>
@@ -81,6 +85,8 @@
                                <label class="get_lab flex alcenter between"><input class="clr-part" disabled v-model="reachnum" type="number" /><span>{{coinname}}</span></label>
                            </div>
                        </div>
+                        <p class="fColor2 ft12 mb15">提币密码</p>
+                       <input class="address_inp clr-part  mb30" type="text" v-model="password" />
                        <div class="flex">
                         <div class="flex2">
                        <!-- <p class="ft12 fColor2 mb15">温馨提示</p> -->
@@ -163,7 +169,9 @@ export default {
             moreLog:'加载更多',
             rete:'',
             total:'',
-            totalCNY:''
+            totalCNY:'',
+            addressList:[],
+            password:''
         }
     },
     components:{
@@ -201,15 +209,18 @@ export default {
                     }) 
         },
         //获得币种地址
-        getAddress(){
+        getAddress(currency){
+                  var i = layer.load();
+                  this.addressList = [];
                    this.$http({
-                        url: '',
+                        url: '/api/wallet/get_address',
                         method:'post',
-                        data:{},
+                        data:{currency:currency},
                         headers:{'Authorization':this.token}
                     }).then( res => {
+                        layer.close(i);
                         if(res.data.type == 'ok'){
-                            this.rate = res.data.message.rate
+                             this.addressList = res.data.message;
                         }
                     })
         },
@@ -285,7 +296,7 @@ export default {
             })
         },
         //提币
-        withdraw(index,currency){
+        withdraw(index,currency,currency_name){
             this.currency=currency;
              if(this.flag){
                 this.flag = false;
@@ -297,6 +308,7 @@ export default {
                  this.active01 = index;
                  this.active = 'a';
                  this.active02 = 'a';
+                 this.getAddress(currency)
             }
             this.getNum(currency);
              this.getRate(currency);
@@ -391,13 +403,17 @@ export default {
             var rate = this.rate;
             var min_number = this.minnumber;
             if(!address){
-                layer.alert('请输入提币地址');
+                layer.alert('请选择提币地址');
                 return;
             } 
             if(!number){
                 layer.alert('请输入提币数量');
                 return;
             } 
+            if(!this.password){
+                 layer.alert('请输入提币密码');
+                return;
+            }
             if((number-0)<min_number){
                 console.log(number,min_number)
                 return layer.alert('输入的提币数量小于最小值');
@@ -406,6 +422,7 @@ export default {
             //     layer.alert('请输入0-1之间的提币手续费');
             //     return;
             // }
+            var i = layer.load();
             $.ajax({
                 type: "POST",
                 url: '/api/' + 'wallet/out',
@@ -413,7 +430,8 @@ export default {
                     currency:currency,
                     number:number,
                     rate:rate,
-                    address:address
+                    address:address,
+                    password:this.password
                 },
                 dataType: "json",
                 async: true,
@@ -421,6 +439,7 @@ export default {
                     request.setRequestHeader("Authorization", that.token);
                 },
                 success: function(res){
+                    layer.close(i);
                     console.log(res)
                     if (res.type=="ok"){
                         layer.msg(res.message)
