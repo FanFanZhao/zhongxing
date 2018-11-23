@@ -87,20 +87,23 @@ export default {
       if (e.target.disabled) {
         return;
       } else {
-        var reg = /^1[345678]\d{9}$/;
+        // var reg = /^1[345678]\d{9}$/;
         var url = "sms_send";
         var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if (this.account_number == "") {
           layer.tips("请输入账号", "#account");
           return;
-        } else if (reg.test(this.account_number)) {
-        } else if (emreg.test(this.account_number)) {
+        } 
+        // else if (reg.test(this.account_number)) {
+        // } 
+        else if (emreg.test(this.account_number)) {
           url = "sms_mail";
           this.isMb = false;
-        } else {
-          layer.tips("您输入的手机或邮箱账号不符合规则!", "#account");
-          return;
         }
+        //  else {
+        //   layer.tips("您输入的手机或邮箱账号不符合规则!", "#account");
+        //   return;
+        // }
 
         this.sendCode(url);
         var time = 60;
@@ -152,12 +155,13 @@ export default {
       //   return;
       // }
       console.log(data);
-
+       var i = layer.load();
       this.$http({
         url: "/api/" + url,
         method: "post",
         data: data
       }).then(res => {
+        layer.close(i);
         console.log(res);
         layer.msg(res.data.message);
         if (res.data.type == "ok") {
@@ -168,10 +172,18 @@ export default {
       });
     },
     resetPass() {
+      var regPsws = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/;
       if (this.password == "") {
         layer.msg("请输入密码");
         return;
-      } else if (this.re_password == "") {
+      }else if(this.password.length<6||this.password.length>16){
+        layer.msg('密码只能在6-16位之间');
+        return;
+      } else if(!regPsws.test(this.password)){
+        layer.msg('密码必须由数字和字母组成');
+        return;
+      }
+      else if (this.re_password == "") {
         layer.msg("请再次输入密码");
         return;
       } else if (this.password !== this.re_password) {
@@ -184,11 +196,13 @@ export default {
           repassword: this.re_password,
           code: this.phoneCode
         };
+        var i = layer.load();
         this.$http({
           url: "/api/user/forget",
           method: "post",
           data: data
         }).then(res => {
+          layer.close(i);
           //   console.log(res);
           layer.msg(res.data.message);
           if (res.data.type == "ok") {
