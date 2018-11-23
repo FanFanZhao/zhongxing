@@ -1,7 +1,7 @@
 <template>
-    <div class="notice clr-part">
+    <div class="notice clr-part" style="overflow:hidden">
         <!-- <indexHeader></indexHeader> -->
-        <div class="account-wrap">
+        <div class="account-wrap" style="width:1200px">
             <div class="account" style="width:auto">
                 <div>
                     <div class="back-nav  ft20 clear" style="padding:0 20px;"> {{title}}
