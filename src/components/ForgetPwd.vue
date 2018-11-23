@@ -119,10 +119,10 @@ export default {
       }
     },
     check() {
-      var reg = /^1[345678]\d{9}$/;
+      // var reg = /^1[345678]\d{9}$/;
       var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
       let user_string = this.account_number;
-      var isMobile = reg.test(user_string);
+      // var isMobile = reg.test(user_string);
       var isEmail = emreg.test(user_string);
       var url = "user/check_mobile";
       var data = {};
@@ -140,13 +140,17 @@ export default {
       } else if (isEmail) {
         url = "user/check_email";
         data.email_code = this.phoneCode;
-      } else if (isMobile) {
-        url = "user/check_mobile";
+      }else{
         data.mobile_code = this.phoneCode;
-      } else {
-        layer.tips("您输入的邮箱或手机号不符合规则!", "#account");
-        return;
       }
+      
+      //  else if (isMobile) {
+      //   url = "user/check_mobile";
+      //   data.mobile_code = this.phoneCode;
+      // } else {
+      //   layer.tips("您输入的邮箱或手机号不符合规则!", "#account");
+      //   return;
+      // }
       console.log(data);
 
       this.$http({
