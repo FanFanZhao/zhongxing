@@ -113,6 +113,7 @@ export default {
       width: 350px;
       height: 100%;
       margin: 0 8px;
+      overflow: hidden;
       > div {
         padding: 0 10px;
         

@@ -33,7 +33,7 @@ export default {
 .account{
     width: 1500px;
 }
-body .bdr-part{
-    background-color: #f2f3f8 !important;
-}
+// body .bdr-part{
+//     background-color: #f2f3f8 !important;
+// }
 </style>

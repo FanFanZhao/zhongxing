@@ -1,5 +1,5 @@
 <template>
-    <div class="notice clr-part bdr-part">
+    <div class="notice clr-part">
         <!-- <indexHeader></indexHeader> -->
         <div class="account-wrap">
             <div class="account" style="width:auto">
@@ -108,6 +108,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .notice {
+  overflow: hidden;
   .account-wrap {
     // background: url(../assets/images/account_center_bg.jpg) no-repeat;
     // background-size: cover;

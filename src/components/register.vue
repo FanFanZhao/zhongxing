@@ -336,7 +336,10 @@ export default {
       this.$http({
         url: "/api/" + "user/register",
         data: data,
-        method: "post"
+        method: "post",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+        }    
       }).then(res => {
         layer.close(loa);
         layer.msg(res.data.message);
