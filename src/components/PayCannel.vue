@@ -6,7 +6,7 @@
 				<p class="status-text">{{statusText}}</p>
 			</div>
 			<div class="content-header-right">
-				<p class="contact-text">联系方式: {{datas.seller_phone}}</p>
+				<p class="contact-text">联系方式: {{datas.user_cash_info.account_number}}</p>
 			</div>
 		</div>
 		<div class="total">
@@ -15,7 +15,7 @@
 		<ul class="list">
 			<li>
 				<p class="left">买家</p>
-				<p class="right">{{datas.seller_name}}</p>
+				<p class="right">{{datas.user_cash_info.real_name}}</p>
 			</li>
 			<li>
 				<p class="left">单价</p>
@@ -27,7 +27,7 @@
 			</li>
 			<li>
 				<p class="left">下单时间</p>
-				<p class="right">{{datas.format_create_time}}</p>
+				<p class="right">{{datas.create_time}}</p>
 			</li>
 			<li>
 				<p class="left">参考号</p>
@@ -54,7 +54,7 @@
 				<div class="title">付款确认</div>
 				<div class="content tc">请确认买家已向您付款</div>
 				<div class="btns">
-					<button type="button" @click="cannelBtns()">取消</button>
+					<button type="button"  @click="cannelBtns()">取消</button>
 					<button class="comfirms" type="button" @click="comfirmPay()">确认</button>
 				</div>
 			</div>
@@ -122,7 +122,7 @@
 						} else {
 							_this.cannelBtn = false;
 						}
-						if (_this.datas.is_sure == 3 && _this.datas.type == 'buy') {
+						if (_this.datas.is_sure == 3 && _this.datas.type == 'sell') {
 							_this.comfirmBtn = true;
 						} else {
 							_this.comfirmBtn = false;
@@ -289,6 +289,7 @@
 					color: #fff;
 					border-radius: 6px;
 					padding: 10px;
+					cursor: pointer;
 				}
 
 			}
@@ -347,6 +348,7 @@
 						border: none;
 						outline: none;
 						background-color: rgba(0, 0, 0, 0);
+						cursor: pointer;
 					}
 
 					>button:last-child {
