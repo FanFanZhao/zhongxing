@@ -4,6 +4,7 @@ import home from '@/components/home'
 import homeContent from '@/view/homeContent'
 import dealCenter from '@/components/dealCenter'
 import userSetting from '@/components/userSetting'
+import HelpCenter from '@/components/HelpCenter'
 import c2c from '@/components/c2c'
 import login from '@/components/login'
 import UserCenter from '@/components/UserCenter'
@@ -115,6 +116,11 @@ export default new Router({
 					path: '/dealCenter',
 					name: 'dealCenter',
 					component: dealCenter
+				},
+				{
+					path: '/HelpCenter',
+					name: 'HelpCenter',
+					component: HelpCenter,
 				},
 			
 				{

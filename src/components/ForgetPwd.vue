@@ -8,6 +8,9 @@
                     <p class="main_title">忘记密码</p>
                     <div class="register-input">
                         <span class="register-item">账号</span>
+                         <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
+                        <option :value="item.area_code" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
+                      </select>
                         <input type="text" class="input-main input-content" maxlength="20" v-model="account_number" id="account">
                     </div>
                      <div class="register-input code-input" >
@@ -47,6 +50,7 @@
 <script>
 import indexHeader from "@/view/indexHeader";
 import indexFooter from "@/view/indexFooter";
+import country from '../lib/country.js'
 export default {
   components: { indexHeader, indexFooter },
   data() {
@@ -56,7 +60,11 @@ export default {
       phoneCode: "",
       showReset: false,
       password: "",
-      re_password: ""
+      re_password: "",
+      country:country,
+      areaCode:'+86',
+      isMb: true,                  //是否为手机注册
+      account: "",                //用户名
     };
   },
   created() {},
@@ -67,7 +75,8 @@ export default {
         method: "post",
         data: {
           user_string: this.account_number,
-          type: "forget"
+          type: "forget",
+          front:this.areaCode
         }
       }).then(res => {
         console.log(res);
@@ -189,6 +198,16 @@ export default {
 </script>
 
 <style scoped>
+#account{
+  width: 355px;
+}
+.chooseTel{
+    height: 45px;
+    width: 160px;
+    border-color: #ccc;
+    padding: 0 10px;
+    font-size: 14px;
+}
 .forget-box{
   min-height: 1050px;
 }
@@ -220,6 +239,7 @@ export default {
 .register-input {
   position: relative;
   margin-top: 20px;
+  width: 520px;
 }
 .input-box {
   position: relative;
@@ -298,5 +318,8 @@ export default {
   /* color: #7a98f7; */
   /* background: #1e2235; */
   width: 94px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 </style>

@@ -8,18 +8,14 @@
                     <p class="main_title">欢迎登录</p>
                     <div class="register-input">
                         <span class="register-item">账号</span>
-                        <input type="text" class="input-main input-content" maxlength="20" v-model="account_number" id="account">
+                         <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
+                        <option :value="item.area_code" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
+                      </select>
+                       <input type="text" class="input-main input-content phone" maxlength="20" v-model="account_number" id="account">
                     </div>
                      <div class="register-input">
                         <span class="register-item">密码</span>
                         <input type="password" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
-                    </div>
-                    <div class="flex">
-                      <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
-                        <option :value="item.area_code" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
-                      </select>
-                    <input type="text" v-if="isMb" v-model="account" class="phone">
-                    <input type="text" v-if="!isMb" v-model="account" class="">
                     </div>
                     <!--验证码-->
                    
@@ -64,7 +60,11 @@ export default {
     return {
       account_number: "",
       password: "",
-      code:''
+      code:'',
+      country:country,
+      areaCode:'+86',
+      isMb: true,                  //是否为手机注册
+      account: "",                //用户名
     };
   },
   created() {
@@ -106,6 +106,7 @@ export default {
         method: "post",
         data: {
           user_string: account_number,
+          front:this.areaCode
         }
       }).then(res=>{
         console.log(res)
@@ -183,6 +184,20 @@ export default {
 </script>
 
 <style scoped>
+.chooseTel{
+    height: 46px;
+    width: 160px;
+    border-color: #ccc;
+    padding: 0 10px;
+    font-size: 14px;
+}
+.phone{
+  width: 360px!important;
+  border-left: none;
+}
+.code-btn{
+  cursor: pointer;
+}
 .codes{
   width: 430px;
   padding: 0 20px;
