@@ -21,8 +21,9 @@
       <div>
         <span v-if="msg.type == 'buy'">卖家</span>
         <span v-if="msg.type == 'sell'">买家</span>
-        <span v-if="msg.type == 'buy'">{{msg.hes_realname}}</span>
-        <span v-if="msg.type == 'sell'">{{msg.seller_name}}</span>
+        <span>{{msg.user_cash_info.real_name}}</span>
+        <!-- <span v-if="msg.type == 'buy'">{{msg.hes_realname}}</span>
+        <span v-if="msg.type == 'sell'">{{msg.seller_name}}</span> -->
       </div>
       <div>
         <span>单价：</span>
@@ -34,7 +35,7 @@
       </div>
       <div>
         <span>下单时间：</span>
-        <span>{{msg.format_create_time}}</span>
+        <span>{{msg.create_time}}</span>
       </div>
         <div  v-if="(msg.is_sure == 0||msg.is_sure == 3)&&msg.type == 'buy'">
         <span>银行卡：</span>
@@ -57,10 +58,10 @@
         <span>参考号：</span>
         <span>{{msg.id}}</span>
       </div>
-      <div>
+      <!-- <div >
         <span>商家账户：</span>
         <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" class="light_blue seller">{{msg.seller_name}}</router-link>
-      </div>
+      </div> -->
       <div class="btns">
         <div class="btn" @click="showCancel = true" v-if="msg.is_sure == 0">取消订单</div>
         <div class="btn" @click="hasPay = true" v-if="msg.is_sure == 0 && msg.type =='buy'">我已付款，点击确认</div>

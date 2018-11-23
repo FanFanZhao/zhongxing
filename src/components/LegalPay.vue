@@ -2,12 +2,12 @@
   <div id="legal-pay" class="bg-main clr-part">
     
     <div class="title bg-part ft16">
-      <span v-if="msg.is_sure == 0&&msg.type =='sell'">请付款，请向以下账户付款</span>
+      <span v-if="msg.is_sure == 0&&msg.type =='buy'">请付款，请向以下账户付款</span>
       <div v-if="msg.is_sure == 1">订单已完成</div>
       <div v-if="msg.is_sure == 2">订单已取消</div>
-      <div v-if="msg.is_sure == 3&&msg.type =='sell'">已付款，等待商家确认收款</div>
+      <div v-if="msg.is_sure == 3&&msg.type =='buy'">已付款，等待商家确认收款</div>
       
-      <span v-if="msg.is_sure == 0 && msg.type =='sell'">{{msg.deal_money}}CNY</span>
+      <span v-if="msg.is_sure == 0 && msg.type =='buy'">{{msg.deal_money}}CNY</span>
       
     </div>
     <div class="info bg-part ft14">
@@ -21,33 +21,33 @@
       </div>
       <div class="flex">
         <span>下单时间：</span>
-        <span>{{msg.format_create_time}}</span>
+        <span>{{msg.create_time}}</span>
       </div>
-      <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='sell'">
+      <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='buy'">
         <span>银行卡号：</span>
         <span>{{msg.user_cash_info.bank_name}}:{{msg.user_cash_info.bank_account}}</span>
       </div>
-      <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='sell'">
+      <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='buy'">
         <span>微信：</span>
         <span>{{msg.user_cash_info.wechat_account}}</span>
       </div>
-      <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='sell'">
+      <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='buy'">
         <span>支付宝：</span>
         <span>{{msg.user_cash_info.alipay_account}}</span>
       </div>
       <div class="flex">
-        <span>{{msg.type == 'sell'?'商家':'买家'}}账户：</span>
-        <span v-if="msg.type == 'buy'">{{msg.seller_name}}</span>
-      <router-link v-if="msg.type=='sell'" :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span">{{msg.seller_name}}</router-link>
+        <span>{{msg.type == 'buy'?'商家':'买家'}}账户：</span>
+        <span v-if="msg.type == 'buy'">{{msg.user_cash_info.real_name}}</span>
+      <router-link v-if="msg.type=='buy'" :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span">{{msg.seller_name}}</router-link>
       </div>
       <div class="flex">
-        <span>{{msg.type == 'sell'?'商家':'买家'}}电话：</span>
-        <span>{{msg.user_cash_info.account_number}}</span>
+        <span>{{msg.type == 'buy'?'商家':'买家'}}电话：</span>
+        <span v-if="msg.user_cash_info">{{msg.user_cash_info.account_number}}</span>
       </div>
       
       
       
-      <div class="btns flex" v-show="msg.is_sure==0&&msg.type=='sell'">
+      <div class="btns flex" v-show="msg.is_sure==0&&msg.type=='buy'">
         <div class="btn" @click="showCancel = true">取消订单</div>
         <div class="btn" @click="showConfirm = true">我已付款，点击确认</div>
       </div>
