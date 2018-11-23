@@ -14,7 +14,7 @@
                     </div>
                     <div class="flex alcenter center mt20">
                         <span>证件号：</span>
-                        <input type="text" placeholder="请输入身份证号" id="card" v-model="card_id">
+                        <input type="text" placeholder="请输入证件号" id="card" v-model="card_id">
                     </div>
                 </div>
                 <div class="mt40 fColor1 ft14 tc">请上传证件的正反面及手持证件的正面照。</div>
