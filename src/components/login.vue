@@ -14,6 +14,13 @@
                         <span class="register-item">密码</span>
                         <input type="password" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
                     </div>
+                    <div class="flex">
+                      <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
+                        <option :value="item.area_code" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
+                      </select>
+                    <input type="text" v-if="isMb" v-model="account" class="phone">
+                    <input type="text" v-if="!isMb" v-model="account" class="">
+                    </div>
                     <!--验证码-->
                    
                     <div class="register-input bdr-part">
@@ -49,6 +56,7 @@
 <script>
 import indexHeader from "@/view/indexHeader";
 import indexFooter from "@/view/indexFooter";
+import country from '../lib/country.js'
 export default {
   name: "login",
   components: { indexHeader, indexFooter },
