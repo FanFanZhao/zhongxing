@@ -13,11 +13,11 @@
                         <input type="text" placeholder="请输入真实姓名" id="name" v-model="name">
                     </div>
                     <div class="flex alcenter center mt20">
-                        <span>身份证：</span>
+                        <span>证件号：</span>
                         <input type="text" placeholder="请输入身份证号" id="card" v-model="card_id">
                     </div>
                 </div>
-                <div class="mt40 fColor1 ft14 tc">请上传身份证正反面及手持身份证正面照。</div>
+                <div class="mt40 fColor1 ft14 tc">请上传证件的正反面及手持证件的正面照。</div>
                 <div class="idimg flex center mt40">
                     <div>
                         <img :src="src01" alt="">
@@ -162,21 +162,21 @@ export default {
             var that = this;
             let name = this.$utils.trim(that.name);
             let card_id = this.$utils.trim(that.card_id);
-            var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            // var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
             if(this.name.length == ''){
                 layer.tips('请输入姓名!', '#name');
                 return;
             }
             if(this.card_id.length == ''){
-                layer.tips('请输入身份证号!', '#card');
+                layer.tips('请输入证件号!', '#card');
                 return;
             }
-            if(!reg.test(card_id)){
-                layer.tips('请输入合法的身份证号!', '#card');
-                return;
-            }
+            // if(!reg.test(card_id)){
+            //     layer.tips('请输入合法的身份证号!', '#card');
+            //     return;
+            // }
             if((that.src1==''||that.src2=='')||(that.src3=='')){
-                layer.msg('请上传完整身份证件!')
+                layer.msg('请上传完整的证件!')
                 return;
             }
             var i= layer.load();
