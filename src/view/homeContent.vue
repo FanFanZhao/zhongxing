@@ -407,10 +407,12 @@ export default {
       }
     },
     getQuotation() {
+      var i = layer.load();
       this.$http({
         url: "/api/currency/quotation",
         method: "get"
       }).then(res => {
+        layer.close(i);
         console.log(res.data);
         if (res.data.type == "ok" && res.data.message.length != 0) {
           this.quotation = res.data.message;
@@ -648,7 +650,7 @@ export default {
   .list-con {
     background: #F0F0F0;
     max-height: 400px;
-    overflow: scroll;
+    overflow-y: scroll;
     border:1px solid #563BD1;
     border-top: none;
 

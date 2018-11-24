@@ -25,21 +25,25 @@
 				<div>操作</div>
 			</div>
 			<ul class="list ft12">
-				<li v-for="(item,index) in list" :key="index" class="flex bdr-part">
+				<li v-for="(item,index) in list" :key="index" class="flex">
 					<div class="flex alcenter">
 						<!-- <img :src="url+'upload/'+item.currency_logo" alt=""> -->
 						<div class="head">{{item.seller_name | formatTime}}</div>
 						<div class="flex column center">
-							<span class="light_blue">{{item.seller_name}}</span>
-						<span>{{item.currency_name}}</span>
+							<span class="light_blue sellerName">{{item.seller_name}}</span>
+						<span class="currencyName">{{item.currency_name}}</span>
 						</div>
 					</div>
 					<div class="flex alcenter">{{item.surplus_number}}</div>
 					<div class="flex alcenter">{{(item.limitation.min-0).toFixed(2)}}-{{(item.limitation.max-0).toFixed(2)}}CNY</div>
 					<div class="flex alcenter">{{item.price}}</div>
-					<div class="flex alcenter">{{item.way_name}}</div>
+					<div class="flex alcenter">
+						<img v-if="item.way_name == '支付宝'" src="../assets/images/zfb_icon.png" />
+						<img v-if="item.way_name == '微信'" src="../assets/images/wx_icon.png" />
+						<img v-if="item.way_name == '银行'" src="../assets/images/bank_icon.png" />
+					</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type,item.surplus_number)">
-						<button class="btn">{{classify}}{{name}}</button>
+						<button class="btn">{{classify}}</button>
 					</div>
 				</li>
 			</ul>
@@ -139,9 +143,11 @@
 		},
 		methods: {
 			getCoins() {
+				var i = layer.load();
 				this.$http({
 					url: "/api/currency/list"
 				}).then(res => {
+					layer.close(i);
 					if (res.data.type == "ok") {
 						var list = res.data.message.legal;
 						if (list.length) {
@@ -401,6 +407,12 @@
 	.number{
 		background: #acafc3;
 	}
+	.sellerName,.currencyName{
+		line-height: normal;
+	}
+	.sellerName{
+		margin-bottom: 5px;
+	}
   
 	#legaltrade-box {
 		width: 1200px;
@@ -427,19 +439,15 @@
 					margin-top: 20px;
 
 					li {
-						margin-right: 16px;
+						margin-right: 20px;
 						cursor: pointer;
-						    padding: 2px 6px;
 					}
 				}
 
 				>.now {
 					>.current {
-						// color: $purple;
-						// border-bottom: 2px solid $purple;
-						background: #563BD1;
-						color: #fff;
-						padding: 2px 6px;
+						border-bottom: 2px solid #563BD1;
+						color: #563BD1;
 					}
 				}
 			}
@@ -454,11 +462,12 @@
 		}
 
 		>.list-box {
-			margin-top: 20px;
 			padding: 20px;
 			border-radius: 3px;
-
+            min-height: 600px;
 			>.list-title {
+				    padding-bottom: 8px;
+                    border-bottom: 1px solid #eee;
 				>div {
 					flex: 1;
 				}
@@ -487,10 +496,6 @@
 							font-size: 14px;
 						}
 						>img {
-							width: 36px;
-							height: 36px;
-							border-radius: 50%;
-							margin-right: 10px;
 						}
 
 						>span {
@@ -506,10 +511,9 @@
 
 						>button {
 							background-color: $purple;
-							padding: 5px 15px;
+							padding: 8px 20px;
 							color: #fff;
-							border-radius: 8px;
-							line-height: 36px;
+							border-radius: 4px;
 						}
 					}
 				}

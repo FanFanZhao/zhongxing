@@ -38,6 +38,7 @@ import currencyApply from '@/view/currency_apply'
 import payOpts from '@/view/payOpts'
 import currencyList from '@/view/currency_list'
 import currencyEdit from '@/view/edit_currency'
+import advice from '@/view/advice'
 //收款方式
 
 import ForgetPwd from '@/components/ForgetPwd' //忘记密码
@@ -121,6 +122,11 @@ export default new Router({
 					path: '/HelpCenter',
 					name: 'HelpCenter',
 					component: HelpCenter,
+				},
+				{
+					path: '/advice',
+					name: 'advice',
+					component: advice,
 				},
 			
 				{
@@ -237,7 +243,7 @@ export default new Router({
 		// 	name:'dealCenter',
 		// 	component:dealCenter
 		// },
-
+         
 		{
 			path: '/components/login',
 			name: 'login',
