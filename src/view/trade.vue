@@ -252,7 +252,7 @@ export default {
       });
     },
     buyCoin() {
-      // var that = this;
+      var that = this;
       if (!this.disabled) {
         if (!this.buyPrice || this.buyPrice <= 0) {
           layer.msg("请输入买入价");
@@ -281,7 +281,7 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res, 222);
+          console.log(res, '22222222222222222222222222222222222222222222222222222222222222222222222');
           layer.close(i);
 
           if (res.data.type == "ok") {
@@ -341,22 +341,25 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res);
+          console.log(res,'99999999999999999999999999999999999999999999999999');
           layer.close(i);
           // layer.msg(res.data.message)
           if (res.data.type == "ok") {
+            setTimeout(function(){
+              that.buy_sell(that.legal_id,that.currency_id)
+            },3000)
+              
             eventBus.$emit('tradeOk',{status:'ok'});
             if(this.current == 0){
               // this.sellPrice = '';
               this.sellNum = '';
               this.sellInfo.pwd = '';
             }else{
-               this.sellNum = '';
+              this.sellNum = '';
               this.sellInfo.pwd = '';
             }
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
-            that.buy_sell(that.legal_id,that.currency_id)
             layer.msg(res.data.message);
           } else {
             this.sellNum = '';
@@ -369,6 +372,7 @@ export default {
     },
     //买入、卖出记录
     buy_sell(legals_id, currencys_id) {
+      console.log('啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊')
       var i = layer.load();
       this.$http({
         url: "/api/" + "transaction/deal",
@@ -380,6 +384,7 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
+          console.log('8888888888888888888888888888888888888888888888')
           layer.close(i);
           // console.log(res ,222)
           // layer.close(i);
@@ -387,6 +392,7 @@ export default {
             this.lastPrice = res.data.message.last_price;
             this.user_currency = res.data.message.user_currency;
             this.user_legal = res.data.message.user_legal;
+            console.log('console------'+this.user_currency,this.user_legal)
             // console.log(res.data)
             // this.buyPrice = 0;
             // this.buyNum = 0;

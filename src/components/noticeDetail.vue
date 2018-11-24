@@ -121,7 +121,7 @@ export default {
         // background: url(../assets/images/account_center_bg.jpg) no-repeat;
         // background-size: cover;
         .account {
-            width: 1500px;
+            width: 1200px;
             margin: 0 auto;
             padding-top: 30px;
             overflow: hidden;

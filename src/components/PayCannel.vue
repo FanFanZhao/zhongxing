@@ -170,7 +170,7 @@
 					_this.cannelOrder = false;
 					_this.comfirmOrder = false;
 					setTimeout(() => {
-						// location.reload();
+						location.reload();
 					}, 1000);
 				});
 			},
@@ -195,9 +195,10 @@
 					layer.msg(res.data.message);
 					if (res.data.type == 'ok') {
 						setInterval(function() {
-							_this.$router.push({
-								path: '/LegalRecord'
-							});
+							// _this.$router.push({
+							// 	path: '/LegalRecord'
+							// });
+							location.reload();
 						}, 500)
 					} else {
 						_this.cannelOrder = false;

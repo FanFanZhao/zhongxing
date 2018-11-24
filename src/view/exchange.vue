@@ -115,7 +115,7 @@ export default {
       console.log("socket");
       that.$socket.emit("login", this.$makeSocketId());
       that.$socket.on("transaction", msg => {
-        console.log(msg);
+        // console.log(msg);
         if (msg.type == "transaction") {
           //组件间传值
           var newPrice = {
