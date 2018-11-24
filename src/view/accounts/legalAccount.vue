@@ -15,18 +15,24 @@
               <p style="color:#2EDB99">{{legal_price}}</p>
           </div>
         </div>
-        <!-- <div class="trasfer bg-part" style="margin-top:20px;padding:20px 30px">
+        <div class="transfer bg-part" style="margin-top:20px;padding:20px 30px">
+            <div class="direction flex">
+                <div>{{transferPms.type == 1?'法币':'交易'}}</div>
+                <img src="../../assets/images/transfer.png" alt="" @click="transferPms.type == 1?transferPms.type =2:transferPms.type =1">
+                <div>{{transferPms.type == 1?'交易':'法币'}}</div>
+            </div>
             <div class="flex">
                 <span>选择币种：</span>
-                <select name="" id="" style="padding:3px 16px" v-model="selectedCoin">
+                <select name="" id="" style="padding:3px 16px" ref="select">
                     <option v-for="(item,index) in coins" :key="index" :value="item.currency">{{item.currency_name}}</option>
                 </select>
             </div>
             <div class="flex">
                 <span>划转数量：</span>
-                <input type="number" v-model="transferNum">
+                <input type="numer" v-model="transferPms.number">
             </div>
-        </div> -->
+            <button type="button" :disabled='transferPms.number == ""' @click="transfer">划转</button>
+        </div>
         <div class="rec_wrap">
            <p class="rec_title flex between bg-part" style="padding:20px 30px">
                <span>财务记录</span>
@@ -49,7 +55,7 @@
            <p class="ft12 light_blue no_rec bg-part" style="text-align:center;padding:20px 30px" v-show="recData.length != 0" @click="more">{{moreLog}}</p>
            </div>
         </div>
-        <router-link tag="p" class="huazhuan redBg" to='/transferLegal'>划转</router-link>
+        <!-- <router-link tag="p" class="huazhuan redBg" to='/transferLegal'>划转</router-link> -->
     </div>
 </template>
 <script>
@@ -64,8 +70,8 @@ export default {
       moreLog: "加载更多",
       page: 1,
       currencyId: "",
-      coins:[],
-      selectedCoin:{number:'',currency_id:'',type:2}
+      coins: [],
+      transferPms: { number: "", type: 2 }
     };
   },
   created() {
@@ -75,7 +81,7 @@ export default {
   mounted() {
     this.init();
     this.getLog();
-    this.getCoins()
+    this.getCoins();
   },
   methods: {
     getCoins() {
@@ -148,6 +154,35 @@ export default {
         }
       });
     },
+    transfer(){
+        
+        if(this.transferPms.number == ''){
+            layer.msg('请输入划转数量');return;
+        } else {
+            let data = {};
+            data.number = this.transferPms.number;
+            
+            data.currency_id = this.$refs.select.value;
+            data.type = this.transferPms.type;
+            // console.log(data);return;
+            var load = layer.load();
+            this.$http({
+                url:'/api/wallet/change',
+                method:'post',
+                data:data,
+                headers: { 'Authorization': this.token }
+            }).then(res => {
+                layer.close(load);
+                console.log(res);
+                this.transferPms.number = '';
+                layer.msg(res.data.message)
+                if(res.data.type == 'ok'){
+                    this.init();
+                    this.getLog();
+                }
+            })
+        }
+    },
     //加载更多
     more() {
       this.page++;
@@ -157,7 +192,7 @@ export default {
   }
 };
 </script>
-<style scoped>
+<style scoped lang='scss'>
 .legal_name {
   /* background: #1b1e2e; */
   padding: 5px 0;
@@ -167,7 +202,39 @@ export default {
 }
 .main {
 }
-
+.transfer .flex {
+  margin: 16px 0;
+  line-height: 40px;
+  span {
+    width: 100px;
+  }
+  select {
+    border-radius: 2px;
+  }
+  input {
+    padding: 0 14px;
+    border-radius: 2px;
+    line-height: 39px;
+    border: 1px solid #ccc;
+  }
+}
+.transfer button {
+  padding: 10px 60px;
+  background: #563bd1;
+  color: #fff;
+  border-radius: 2px;
+  margin-top: 20px;
+}
+.direction {
+  padding: 0 20px;
+  line-height: 44px;
+  background: #fff5dc;
+  margin-top: 10px !important;
+  img {
+    margin: 0 44px;
+    cursor: pointer;
+  }
+}
 .legalAccount_msg {
   /* background: #1b1e2e; */
   padding: 6px 0;
