@@ -1,9 +1,9 @@
 <template>
     <div id="user-setting" class="flex">
         <div class="setting-l">
-            <div class="setting-item">
+            <div class="setting-item blue_bg tc">
                 <!-- <div class="item-title">收款方式</div> -->
-                <router-link to="/userSetting">收款方式</router-link>
+                <router-link to="/userSetting">安全设置</router-link>
             </div>
         </div>
         <div class="setting-r">
@@ -29,7 +29,8 @@ export default {};
       line-height: 40px;
     width: 23%;
     .router-link-active{
-        color:#d45858;
+        color:#fff;
+        text-align: center;
     }
   }
   .setting-r {
