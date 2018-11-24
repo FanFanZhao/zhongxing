@@ -8,8 +8,8 @@
                     <p class="main_title">欢迎登录</p>
                     <div class="register-input">
                         <span class="register-item">账号</span>
-                         <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
-                        <option :value="item.area_code" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
+                         <select name="" v-if="isMb" class="chooseTel scroll" v-model="areaCode" ref="select">
+                        <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
                       </select>
                        <input type="text" class="input-main input-content phone" maxlength="20" v-model="account_number" id="account">
                     </div>
@@ -61,8 +61,8 @@ export default {
       account_number: "",
       password: "",
       code:'',
+      areaCode:0,
       country:country,
-      areaCode:'+86',
       isMb: true,                  //是否为手机注册
       account: "",                //用户名
     };
@@ -106,7 +106,7 @@ export default {
         method: "post",
         data: {
           user_string: account_number,
-          front:this.areaCode
+          front:country[this.areaCode]
         }
       }).then(res=>{
         console.log(res)

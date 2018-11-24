@@ -18,17 +18,22 @@ export default {};
 
 <style lang='scss'>
 #user-setting {
+    width:80%;
+    margin: 0 auto;
+    margin-top: 50px;
     min-height: 700px;
   > .setting-l {
+      background: #fff;
+      margin-right: 20px;
       padding: 20px;
       line-height: 40px;
     width: 23%;
-    border-right: 1px solid #ddd;
     .router-link-active{
         color:#d45858;
     }
   }
   .setting-r {
+       background: #fff;
       padding: 20px;
     width: 77%;
   }

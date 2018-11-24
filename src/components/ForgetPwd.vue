@@ -9,7 +9,7 @@
                     <div class="register-input">
                         <span class="register-item">账号</span>
                          <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
-                        <option :value="item.area_code" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
+                        <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
                       </select>
                         <input type="text" class="input-main input-content" maxlength="20" v-model="account_number" id="account">
                     </div>
@@ -62,7 +62,7 @@ export default {
       password: "",
       re_password: "",
       country:country,
-      areaCode:'+86',
+      areaCode:0,
       isMb: true,                  //是否为手机注册
       account: "",                //用户名
     };
@@ -76,7 +76,7 @@ export default {
         data: {
           user_string: this.account_number,
           type: "forget",
-          front:this.areaCode
+          front:country[this.areaCode]
         }
       }).then(res => {
         console.log(res);

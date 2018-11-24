@@ -21,7 +21,7 @@
                     <div class="tip" v-if="!isMb">请输入邮箱</div>
                     <div class="flex">
                       <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
-                        <option :value="item.area_code" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
+                        <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
                       </select>
                     <input type="text" v-if="isMb" v-model="account" class="phone">
                     <input type="text" v-if="!isMb" v-model="account" class="">
@@ -93,7 +93,7 @@ export default {
       timer: "",                  //倒计时timer
       showList: false,            //是否显示地址列表
       country:country,
-      areaCode:'+86'
+      areaCode:0
       //province: { id: "", name: "请选择省" },      //所选省份
       //provinces: [],                              //省份列表
 
@@ -222,7 +222,7 @@ export default {
       
       let data = { user_string: this.account };
       if(url == 'sms_send'){
-         data.front = this.areaCode
+         data.front = country[this.areaCode]
       }
       var loa = layer.load();
       this.$http({
