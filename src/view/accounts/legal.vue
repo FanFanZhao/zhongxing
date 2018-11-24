@@ -67,7 +67,7 @@ export default {
         },
         go_legalAccount(currency_id){
              this.$router.push({
-                path:'/legalAccount',
+                // path:'/legalAccount',
                 name:'legalAccount',
                 params:{
                   currency_id:currency_id

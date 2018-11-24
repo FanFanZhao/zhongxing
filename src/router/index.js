@@ -221,7 +221,7 @@ export default new Router({
 							component: legal
 						},
 						{
-							path: '/legalAccount',
+							path: '/legalAccount/:currency_id',
 							name: 'legalAccount',
 							component: legalAccount
 						},
