@@ -36,6 +36,7 @@
                         <input type="password" v-model="buyInfo.pwd" @keydown.69.prevent>
                     </div> -->
                     <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div>
+                    <el-slider v-model="value1" :min="0" :max="100" show-stops :show-tooltip="false" :step="25" :disabled="address?current == 0?buyPrice=='':false:true" @change="changeVal"></el-slider>
                     <div class="mt50 1 ft16">交易额 {{buyTotal}} {{legal_name}}</div>
                     <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">买{{currency_name}}</div>
                 </div>
@@ -66,6 +67,7 @@
                         <input type="password" v-model="sellInfo.pwd" @keydown.69.prevent>
                     </div> -->
                     <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div>
+                    <el-slider v-model="value2" :min="0" :max="100" :show-tooltip="false" show-stops :step="25"  :disabled="address?current == 0?sellPrice=='':false:true" @change="changeVal2"></el-slider>
                     <div class="mt50 1 ft16">交易额 {{sellTotal}} {{legal_name}}</div>
                     <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">卖{{currency_name}}</div>
                 </div>
@@ -128,6 +130,7 @@ export default {
   name: "trade",
   data() {
     return {
+      address:'',
       currency_name: "",
       legal_name: "",
       user_currency: "",
@@ -140,12 +143,16 @@ export default {
       lastPrice: "",
       pwd:'',
       buyPrice:'',
-      buyNum:'',
+      buyNum:0,
       sellNum:'',
       sellPrice:'',
       buyInfo: { buyPrice: 0, buyNum: 0,pwd:'', url: "transaction/in" },
       sellInfo: { sellPrice: 0, sellNum: 0,pwd:'', url: "transaction/out" },
-      tradetype: [{ typetext: "限价交易" }, { typetext: "市价交易" }]
+      tradetype: [{ typetext: "限价交易" }, { typetext: "市价交易" }],
+      value1:0,
+      value2:0,
+      disable:false,
+      disable02:false
     };
   },
   watch:{
@@ -172,7 +179,10 @@ export default {
   },
   created() {
     this.address = localStorage.getItem("token") || "";
-    // this.init();
+    if(this.address == ''){
+      this.disable = true;
+      this.disable02 = true;
+    }
   },
   mounted() {
     var that = this;
@@ -192,6 +202,11 @@ export default {
       that.currency_name = data.currency_name;
       that.legal_name = data.legal_name;
       that.buy_sell(that.legal_id, that.currency_id);
+      setInterval(() => {
+        that.currency_val(that.currency_id);
+      that.currency_val02(that.legal_id);
+      }, 3000);
+      
     });
     eventBus.$on("toTrade0", function(data0) {
       console.log(data0);
@@ -200,11 +215,19 @@ export default {
       that.currency_name = data0.currency_name;
       that.legal_name = data0.legal_name;
       that.buy_sell(that.legal_id, that.currency_id);
+      setInterval(() => {
+        that.currency_val(that.currency_id);
+      that.currency_val02(that.legal_id);
+      }, 3000);
     });
     eventBus.$on("tocel", function(datas) {
       // console.log(datas);
       if (datas) {
         that.buy_sell(that.legal_id, that.currency_id);
+        setInterval(() => {
+        that.currency_val(that.currency_id);
+      that.currency_val02(that.legal_id);
+      }, 3000);
       }
     });
     // 从exchange传过来的最新价
@@ -214,11 +237,61 @@ export default {
     });
   },
   methods: {
+    //获取可用余额
+    //币币余额
+    currency_val(currency_id){
+       this.$http({
+        url: '/api/' + "wallet/get_currency_balance",
+        method: "GET",
+        params: {
+          currency_id:currency_id
+        },
+         headers: { Authorization: this.address }
+      }).then(res => {
+        if(res.data.type == 'ok'){
+          this.user_currency = res.data.message;
+        }
+      });
+    },
+    //法币余额
+    currency_val02(legal_id){
+       this.$http({
+        url: '/api/' + "wallet/get_currency_balance",
+        method: "GET",
+        params: {
+          currency_id:legal_id
+        },
+         headers: { Authorization: this.address }
+      }).then(res => {
+        if(res.data.type == 'ok'){
+          this.user_legal = res.data.message;
+        }
+      });
+    },
+    changeVal(){
+     
+         if(this.current == 0){
+           this.buyNum = (this.user_legal/this.buyPrice*(this.value1/100)).toFixed(2);
+         } 
+         if(this.current == 1){
+           this.buyNum = (this.user_legal/this.lastPrice*(this.value1/100)).toFixed(2);
+         }   
+    },
+    changeVal2(){
+        if(this.current == 0){
+            this.sellNum = (this.user_currency/this.sellPrice*(this.value2/100)).toFixed(2);
+         }  
+         if(this.current == 1){
+           this.sellNum = (this.user_legal/this.lastPrice*(this.value2/100)).toFixed(2);
+         } 
+    },
     numFilter(ev) {
       //48-57 96-105 108
       // console.log(ev.keyCode)
     },
     changeType(index) {
+      this.value1 =0;
+      this.value2 = 0;
       this.current = index;
      
       if (index == 1) {
@@ -296,7 +369,11 @@ export default {
               this.buyNum = '';
               this.buyInfo.pwd='';
             }
-            that.buy_sell(that.legal_id,that.currency_id)
+            that.buy_sell(that.legal_id,that.currency_id);
+            // setInterval(function(){  //定时请求余额
+            //       that.currency_val(that.currency_id);
+            //       that.currency_val02(that.legal_id);
+            //   },3000)
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
             console.log(res.data.message);
@@ -346,8 +423,12 @@ export default {
           // layer.msg(res.data.message)
           if (res.data.type == "ok") {
             setTimeout(function(){
-              that.buy_sell(that.legal_id,that.currency_id)
-            },3000)
+              that.buy_sell(that.legal_id,that.currency_id);
+            },3000);
+            // setInterval(function(){  //定时请求余额
+            //       that.currency_val(that.currency_id);
+            //       that.currency_val02(that.legal_id);
+            //   },3000)
               
             eventBus.$emit('tradeOk',{status:'ok'});
             if(this.current == 0){
@@ -390,8 +471,8 @@ export default {
           // layer.close(i);
           if (res.data.type == "ok") {
             this.lastPrice = res.data.message.last_price;
-            this.user_currency = res.data.message.user_currency;
-            this.user_legal = res.data.message.user_legal;
+            // this.user_currency = res.data.message.user_currency;
+            // this.user_legal = res.data.message.user_legal;
             console.log('console------'+this.user_currency,this.user_legal)
             // console.log(res.data)
             // this.buyPrice = 0;

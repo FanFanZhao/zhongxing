@@ -12,6 +12,8 @@ import VueSocketio from 'vue-socket.io'
 import echarts from 'echarts'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import store from './store'
+import {Slider} from 'element-ui'
+Vue.use(Slider)
 Vue.use(VueAwesomeSwiper)
 Vue.prototype.$echarts = echarts
 Vue.prototype.url = 'http://47.75.200.255:8080/'
@@ -102,21 +104,11 @@ Vue.filter('numFilter', function (value) {
 })
 
 
-// router.beforeEach((to,from,next) => {
-// 	if(to.meta.requireLogin == 'no'){
-// 		next()
-// 	} else {
-// 		let token = window.localStorage.getItem('token') || '';
-// 		if(token == ''){
-// 			// next({path:'/components/login'})next()
-// 			next()
-// 		} else {
-// 			next()
-// 		}
-// 	}
+router.beforeEach((to,from,next) => {
+   window.scrollTo(0,0);
+   next();
 
-
-// })
+})
 //Vue.use(Ws, 'http://test.maxf.pub/users/chatRoom');
 /* eslint-disable no-new */
 new Vue({
