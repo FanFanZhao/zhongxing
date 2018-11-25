@@ -253,6 +253,9 @@ export default {
       }).then(res => {
         if(res.data.type == 'ok'){
           this.user_currency = res.data.message;
+        }else{
+          clearInterval(this.timer);
+          clearInterval(this.timer2);
         }
       });
     },
@@ -268,6 +271,9 @@ export default {
       }).then(res => {
         if(res.data.type == 'ok'){
           this.user_legal = res.data.message;
+        }else{
+           clearInterval(this.timer);
+          clearInterval(this.timer2);
         }
       });
     },
@@ -497,7 +503,7 @@ export default {
       return (this.sellPrice||this.lastPrice) * this.sellNum || 0;
     }
   },
-  beforeDestroy(){
+  destroyed(){
     clearInterval(this.timer);
     clearInterval(this.timer2);
     clearInterval(this.timer3);

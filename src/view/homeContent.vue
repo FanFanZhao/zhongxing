@@ -99,7 +99,7 @@
           </div>
           
           <ul class="list-con scroll" v-for="(item,index) in quotation" :key="index" v-if="nowCoin == item.name">
-            <li v-for="(li,inde) in item.quotation" :key="inde" :data-name='li.currency_name+"/"+li.legal_name'>
+            <li @click="go_trade" v-for="(li,inde) in item.quotation" :key="inde" :data-name='li.currency_name+"/"+li.legal_name'>
               <div class="two-coin">
                 <img :src="li.logo" alt="" style="width:30px;">
                 <span style="font-weight:bold"><span class="high_blue">{{li.currency_name}}</span><span class="low_blue">/{{li.legal_name}}</span></span>
@@ -347,6 +347,10 @@ export default {
    
   },
   methods: {
+    //行情跳转交易页
+    go_trade(){
+       this.$router.push('/dealCenter');
+    },
     
     setData(obj) {
       window.localStorage.setItem("tradeData", JSON.stringify(obj));
@@ -655,11 +659,15 @@ export default {
     border-top: none;
 
     li {
+      cursor: pointer;
       display: flex;
       // border-top: 1px solid #ddd;
       padding: 10px 30px;
       line-height: 30px;
       // color: #c7cce6;
+      &:hover{
+        background: #fff;
+      }
       .high_blue{
           color:#563BD1; 
         }

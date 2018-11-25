@@ -261,7 +261,7 @@ export default {
       this.ids = idx;
       this.legal_index='';
       this.currency_index='';
-      if (list.now_price == null||"0") {
+      if (list.now_price == null||list.now_price == "0") {
         list.now_price = "0.0";
       }
       console.log(list);
