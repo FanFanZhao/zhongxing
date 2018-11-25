@@ -130,6 +130,9 @@ export default {
   name: "trade",
   data() {
     return {
+      timer :'',
+      timer2:'',
+      timer3:'',
       address:'',
       currency_name: "",
       legal_name: "",
@@ -202,7 +205,7 @@ export default {
       that.currency_name = data.currency_name;
       that.legal_name = data.legal_name;
       that.buy_sell(that.legal_id, that.currency_id);
-      setInterval(() => {
+      that.timer = setInterval(() => {
         that.currency_val(that.currency_id);
       that.currency_val02(that.legal_id);
       }, 3000);
@@ -215,7 +218,7 @@ export default {
       that.currency_name = data0.currency_name;
       that.legal_name = data0.legal_name;
       that.buy_sell(that.legal_id, that.currency_id);
-      setInterval(() => {
+      that.timer2 = setInterval(() => {
         that.currency_val(that.currency_id);
       that.currency_val02(that.legal_id);
       }, 3000);
@@ -224,7 +227,7 @@ export default {
       // console.log(datas);
       if (datas) {
         that.buy_sell(that.legal_id, that.currency_id);
-        setInterval(() => {
+        that.timer3 = setInterval(() => {
         that.currency_val(that.currency_id);
       that.currency_val02(that.legal_id);
       }, 3000);
@@ -493,6 +496,11 @@ export default {
     sellTotal() {
       return (this.sellPrice||this.lastPrice) * this.sellNum || 0;
     }
+  },
+  beforeDestroy(){
+    clearInterval(this.timer);
+    clearInterval(this.timer2);
+    clearInterval(this.timer3);
   }
 };
 </script>
