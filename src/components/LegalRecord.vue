@@ -148,6 +148,7 @@ export default {
     }
     .select {
       color: #563bd1;
+      border-bottom: 2px solid #563bd1;
     }
   }
   > ul {

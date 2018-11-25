@@ -13,7 +13,7 @@
 					<li v-for="(coin,index) in legals" :key="index" :class="{'current':coin.id == id}" @click="changeClassify(coin.id,2,coin.name)">{{coin.name}}</li>
 				</ul>
 			</div>
-			<div class="record light_blue" @click="recordList()">订单记录</div>
+			<span class="record light_blue" @click="recordList()">订单记录</span>
 		</div>
 		<div class="list-box bg-part">
 			<div class="list-title flex ft14">
@@ -490,7 +490,7 @@
 							height: 36px;
 							border-radius: 50%;
 							margin-right: 10px;
-							background: #563BD1;
+							background: #5D8CC2;
 							color: #fff;
 							text-align: center;
 							font-size: 14px;

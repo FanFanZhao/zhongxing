@@ -95,7 +95,7 @@
                <span>最低价</span>
             <span>交易量({{nowCoin}})</span>
             
-            <!-- <span>操作</span> -->
+            <span>操作</span>
           </div>
           
           <ul class="list-con scroll" v-for="(item,index) in quotation" :key="index" v-if="nowCoin == item.name">
@@ -119,7 +119,7 @@
                 <span class="high_blue bold">{{li.low_price}}</span>
               </div>
               <div class="count high_blue bold">{{li.volume == null?'0':li.volume}}</div>
-              <div @click="setCurrent(index,inde)">去交易</div>
+              <div @click="setCurrent(index,inde)" style="color:#563BD1">去交易</div>
               <!-- <div>
                 <span @click="setData({currency_id:item.id,legal_id:li.currency_id,currency_name:item.name,leg_name:li.name,isShow:index})">交易 </span>
               </div> -->
@@ -415,6 +415,7 @@ export default {
         legal_name: quo.legal_name,
         isShow: 0
       };
+      window.localStorage.setItem("tradeData", JSON.stringify(tradeData));
       this.$router.push('/dealCenter');
     },
     getQuotation() {
@@ -665,18 +666,22 @@ export default {
     border-top: none;
 
     li {
+      cursor: pointer;
       display: flex;
       // border-top: 1px solid #ddd;
       padding: 10px 30px;
       line-height: 30px;
       // color: #c7cce6;
-      .high_blue {
-        color: #563bd1;
+      &:hover{
+        background: #fff;
       }
-      .low_blue {
-        color: #8d75f7;
-      }
-      img {
+      .high_blue{
+          color:#563BD1; 
+        }
+        .low_blue{
+          color: #8D75F7;
+        }
+      img{
         vertical-align: bottom;
       }
       > div {
