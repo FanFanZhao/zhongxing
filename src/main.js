@@ -82,6 +82,7 @@ Axios.interceptors.response.use(function (response) {
 		layer.msg('登录超时,请重新登录');
 		setTimeout(function(){
 			router.push('/components/login');	
+			
 		},2000)
 	}
 	return response;

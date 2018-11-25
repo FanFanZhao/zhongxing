@@ -17,7 +17,7 @@
                     <span>{{out.number}}</span>
                 </li>
                 <div class="line bdr-part"></div>
-                 <li class="curPer ceilColor bg-hov" v-for="(buy,inde) in inlist" :key="inde" @click="price(buy.price)">
+                 <li class="curPer ceilColor bg-hov" v-for="(buy,index) in inlist" :key="index" @click="price(buy.price)">
                     <span>买 {{index+1}}</span>
                     <span style="font-weight:600">{{buy.price}}</span>
                     <span>{{buy.number}}</span>

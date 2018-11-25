@@ -413,7 +413,7 @@ export default {
         legal_id: quo.legal_id,
         currency_name: quo.currency_name,
         legal_name: quo.legal_name,
-        isShow: 0
+        isShow: index
       };
       window.localStorage.setItem("tradeData", JSON.stringify(tradeData));
       this.$router.push('/dealCenter');
