@@ -47,12 +47,12 @@
                 <router-link class="fr red" to="/components/bindEmail" v-if="email == '未绑定'">去绑定</router-link>
                 <span class="fr" v-else>已绑定</span>
             </li>
-            <!-- <li class="bdr-part"><img  src="@/assets/images/success.png">
+            <li class="bdr-part"><img  src="@/assets/images/success.png">
                 <span  class="ml20">登录密码</span>
                 <p  class="fl">互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</p>
                 <span  class="fr red ml25 mouseDefault"></span>
                 <router-link to="/components/resetPwd" class="fr red">修改</router-link>
-            </li> -->
+            </li>
             <li class="bdr-part"><img  src="@/assets/images/success.png">
                 <span  class="ml20">法币资金密码</span>
                 <p  class="fl">互联网账号存在被盗风险，建议您定期更改密码以保护账户安全。</p>

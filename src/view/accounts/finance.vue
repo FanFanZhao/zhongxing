@@ -184,6 +184,20 @@ export default {
          }   
     },
     methods:{
+        //刷新页面
+        refresh(){
+                    this.$http({
+                        url: '/api/wallet/refresh',
+                        method:'get',
+                        data:{},
+                        headers:{'Authorization':this.token}
+                    }).then( res => {
+                        if(res.data.type == 'ok'){
+                            
+                        }
+                    })
+        },
+         
         goRecord(){
             this.$router.push({name:'coinRecord'})
         },
@@ -519,6 +533,7 @@ export default {
                 that.asset_list=res.data.message.change_wallet.balance;
                 that.total = res.data.message.change_wallet.total;
                 that.totalCNY = res.data.message.change_wallet.totalCNY;
+                that.refresh();
                 // this.asset_list.forEach((item,index) => {
                 //     this.$http({
                 //         url: '/api/wallet/legal_log',

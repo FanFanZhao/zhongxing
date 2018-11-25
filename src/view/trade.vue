@@ -204,6 +204,8 @@ export default {
       that.legal_id = data.legal_id;
       that.currency_name = data.currency_name;
       that.legal_name = data.legal_name;
+      that.buyPrice = '';
+      that.sellPrice = '';
       that.buy_sell(that.legal_id, that.currency_id);
       that.timer = setInterval(() => {
         that.currency_val(that.currency_id);
@@ -288,10 +290,10 @@ export default {
     },
     changeVal2(){
         if(this.current == 0){
-            this.sellNum = (this.user_currency/this.sellPrice*(this.value2/100)).toFixed(2);
+            this.sellNum = (this.user_currency*(this.value2/100)).toFixed(2);
          }  
          if(this.current == 1){
-           this.sellNum = (this.user_legal/this.lastPrice*(this.value2/100)).toFixed(2);
+           this.sellNum = (this.user_currency*(this.value2/100)).toFixed(2);
          } 
     },
     numFilter(ev) {
@@ -474,7 +476,7 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log('8888888888888888888888888888888888888888888888')
+         
           layer.close(i);
           // console.log(res ,222)
           // layer.close(i);
@@ -497,10 +499,10 @@ export default {
   },
   computed: {
     buyTotal() {
-      return (this.buyPrice||this.lastPrice) * this.buyNum || 0;
+      return ((this.buyPrice||this.lastPrice) * this.buyNum).toFixed(5) || 0;
     },
     sellTotal() {
-      return (this.sellPrice||this.lastPrice) * this.sellNum || 0;
+      return ((this.sellPrice||this.lastPrice) * this.sellNum).toFixed(5) || 0;
     }
   },
   destroyed(){

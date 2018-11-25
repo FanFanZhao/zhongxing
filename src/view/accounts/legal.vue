@@ -41,6 +41,19 @@ export default {
        this.legal();
     },
     methods:{
+        //刷新页面
+        refresh(){
+                    this.$http({
+                        url: '/api/wallet/refresh',
+                        method:'get',
+                        data:{},
+                        headers:{'Authorization':this.token}
+                    }).then( res => {
+                        if(res.data.type == 'ok'){
+                            
+                        }
+                    })
+        },
          //法币账户
          legal(){
              var load = layer.load();
@@ -58,6 +71,7 @@ export default {
                             that.list = res.data.message.legal_wallet.balance;
                             this.total = res.data.message.legal_wallet.total;
                             this.totalCNY = res.data.message.legal_wallet.totalCNY;
+                            this.refresh();
                         }else{
                             layer.msg(res.message);
                         }
