@@ -204,8 +204,8 @@ export default {
       that.legal_id = data.legal_id;
       that.currency_name = data.currency_name;
       that.legal_name = data.legal_name;
-      that.buyPrice = "";
-      that.sellPrice = "";
+      that.buyPrice = '';
+      that.sellPrice = '';
       that.buy_sell(that.legal_id, that.currency_id);
       if (that.address) {
         that.timer = setInterval(() => {
@@ -291,27 +291,22 @@ export default {
         }
       });
     },
-    changeVal() {
-      if (this.current == 0) {
-        this.buyNum = (
-          (this.user_legal / this.buyPrice) *
-          (this.value1 / 100)
-        ).toFixed(5);
-      }
-      if (this.current == 1) {
-        this.buyNum = (
-          (this.user_legal / this.lastPrice) *
-          (this.value1 / 100)
-        ).toFixed(5);
-      }
+    changeVal(){
+     
+         if(this.current == 0){
+           this.buyNum = (this.user_legal/this.buyPrice*(this.value1/100)).toFixed(5);
+         } 
+         if(this.current == 1){
+           this.buyNum = (this.user_legal/this.lastPrice*(this.value1/100)).toFixed(5);
+         }   
     },
-    changeVal2() {
-      if (this.current == 0) {
-        this.sellNum = (this.user_currency * (this.value2 / 100)).toFixed(5);
-      }
-      if (this.current == 1) {
-        this.sellNum = (this.user_currency * (this.value2 / 100)).toFixed(5);
-      }
+    changeVal2(){
+        if(this.current == 0){
+            this.sellNum = (this.user_currency*(this.value2/100)).toFixed(5);
+         }  
+         if(this.current == 1){
+           this.sellNum = (this.user_currency*(this.value2/100)).toFixed(5);
+         } 
     },
     numFilter(ev) {
       //48-57 96-105 108
@@ -496,6 +491,7 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
+         
           layer.close(i);
           // console.log(res ,222)
           // layer.close(i);
@@ -518,12 +514,10 @@ export default {
   },
   computed: {
     buyTotal() {
-      return ((this.buyPrice || this.lastPrice) * this.buyNum).toFixed(5) || 0;
+      return ((this.buyPrice||this.lastPrice) * this.buyNum).toFixed(5) || 0;
     },
     sellTotal() {
-      return (
-        ((this.sellPrice || this.lastPrice) * this.sellNum).toFixed(5) || 0
-      );
+      return ((this.sellPrice||this.lastPrice) * this.sellNum).toFixed(5) || 0;
     }
   },
   destroyed() {
