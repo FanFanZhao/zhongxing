@@ -26,6 +26,9 @@ export default {
 <style lang='scss'>
 .foot{
   padding: 50px 0;
+  img:last-child{
+      width: 100%;
+  }
 }
 .logos{
     margin-bottom: 30px;
