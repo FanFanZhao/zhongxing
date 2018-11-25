@@ -333,7 +333,7 @@ export default {
 }
 .content {
   padding: 0 40px 0 30px;
-  height: 300px;
+  height: 500px;
 }
 .list-title {
   line-height: 40px;
@@ -344,7 +344,7 @@ export default {
   padding: 50px 0;
 }
 .container {
-  height: 260px;
+  height: 90%;
   overflow: auto;
 }
 .list-item li {

@@ -282,18 +282,18 @@ export default {
     changeVal(){
      
          if(this.current == 0){
-           this.buyNum = (this.user_legal/this.buyPrice*(this.value1/100)).toFixed(2);
+           this.buyNum = (this.user_legal/this.buyPrice*(this.value1/100)).toFixed(5);
          } 
          if(this.current == 1){
-           this.buyNum = (this.user_legal/this.lastPrice*(this.value1/100)).toFixed(2);
+           this.buyNum = (this.user_legal/this.lastPrice*(this.value1/100)).toFixed(5);
          }   
     },
     changeVal2(){
         if(this.current == 0){
-            this.sellNum = (this.user_currency*(this.value2/100)).toFixed(2);
+            this.sellNum = (this.user_currency*(this.value2/100)).toFixed(5);
          }  
          if(this.current == 1){
-           this.sellNum = (this.user_currency*(this.value2/100)).toFixed(2);
+           this.sellNum = (this.user_currency*(this.value2/100)).toFixed(5);
          } 
     },
     numFilter(ev) {
