@@ -590,7 +590,7 @@ export default {
         
     }
     .right_text{
-        color: #d45858;
+        color: #563BD1;
     }
     .right_text span{
         cursor: pointer;
@@ -610,7 +610,8 @@ export default {
         border-bottom: 1px solid #ccc;
     }
     .operation,.copy,.ewm{
-        color: #d45858;
+        // color: #d45858;
+        color: #563BD1;
     }
     .copy{
         margin: 0 30px;

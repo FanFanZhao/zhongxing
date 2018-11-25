@@ -261,10 +261,12 @@ export default {
       this.ids = idx;
       this.legal_index='';
       this.currency_index='';
-      if (list.now_price == null) {
+      if (list.now_price == null||"0") {
         list.now_price = "0.0";
       }
+      console.log(list);
       let arr = (list.now_price+'').split(".")[1];
+      console.log(arr);
       this.$store.state.priceScale = Math.pow(10, arr.length); //根据最新价小数点后几位改变价格精度
       this.$store.state.symbol = currency_name + "/" + legal_name; //交易对
       var tradeDatas = {
