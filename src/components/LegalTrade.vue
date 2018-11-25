@@ -303,7 +303,8 @@
 						value: _this.nums
 					};
 					//获取实名认证状态
-					var review_status;
+					var review_status; //是否实名认证
+					var is_Billing; //是否设置收款方式 1 已设置 0 未设置
 					var load = layer.load();
 					this.$http({
 								url:'/api/user/info',
@@ -315,10 +316,19 @@
 								console.log(res)
 								if(res.data.type == 'ok'){
 									review_status = res.data.message.review_status;
+									is_Billing =  res.data.message.is_Billing;
 									if(review_status!=2){
 									layer.msg('请先进行实名认证再下单');
 									return false;
-								}else{
+								}else if(is_Billing == 0){
+									layer.msg('请先设置收款方式');
+									setTimeout(() => {
+										 this.$router.push('/userSetting');
+									}, 1000);
+								  
+								   return;
+								}
+								else{
 									_this.buyHttp('/api/do_legal_deal', datas, function(res) {
 									
 									if(res.data.type == 'ok'){
