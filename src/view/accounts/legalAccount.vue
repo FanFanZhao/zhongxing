@@ -23,7 +23,7 @@
             </div>
             <div class="flex">
                 <span>选择币种：</span>
-                <select name="" id="" style="padding:3px 16px" ref="select">
+                <select name="" id="" style="padding:3px 16px" ref="select" @change="selectChange">
                     <option v-for="(item,index) in coins" :key="index" :value="item.currency">{{item.currency_name}}</option>
                 </select>
             </div>
@@ -76,14 +76,24 @@ export default {
   },
   created() {
     this.token = localStorage.getItem("token") || "";
-    this.currencyId = this.$route.params.currency_id;
+    if(this.token){
+      this.currencyId = this.$route.params.currency_id;
+
+      this.init();
+      this.getLog();
+      this.getCoins();
+    }
   },
   mounted() {
-    this.init();
-    this.getLog();
-    this.getCoins();
+    
   },
   methods: {
+    selectChange(){
+      this.currencyId = this.$refs.select.value;
+      this.init();
+      this.page = 1;
+      this.getLog(true)
+    },
     getCoins() {
       var load = layer.load();
       this.token = window.localStorage.getItem("token") || "";
@@ -105,7 +115,7 @@ export default {
         url: "/api/" + "wallet/detail",
         method: "post",
         data: {
-          currency: this.$route.params.currency_id,
+          currency: this.currencyId,
           type: "legal"
         },
         headers: { Authorization: that.token }
@@ -128,14 +138,17 @@ export default {
         });
     },
     //获取记录
-    getLog() {
+    getLog(refresh) {
       var load = layer.load();
+      if(refresh){
+        this.page = 1;
+      }
       this.$http({
         url: "/api/wallet/legal_log",
         method: "post",
         data: {
           type: "1",
-          currency: this.$route.params.currency_id,
+          currency: this.currencyId,
           page: this.page
         },
         headers: { Authorization: this.token }
@@ -145,7 +158,12 @@ export default {
         console.log(res.data.message.list);
         if (res.data.type == "ok") {
           console.log(res);
-          this.recData = this.recData.concat(res.data.message.list);
+          if(refresh){
+            this.recData = res.data.message.list;
+          } else {
+
+            this.recData = this.recData.concat(res.data.message.list);
+          }
           if (res.data.message.list.length != 0) {
             this.moreLog = "加载更多";
           } else {

@@ -130,10 +130,10 @@ export default {
   name: "trade",
   data() {
     return {
-      timer :'',
-      timer2:'',
-      timer3:'',
-      address:'',
+      timer: "",
+      timer2: "",
+      timer3: "",
+      address: "",
       currency_name: "",
       legal_name: "",
       user_currency: "",
@@ -144,45 +144,45 @@ export default {
       allBalance: 0,
       disabled: false,
       lastPrice: "",
-      pwd:'',
-      buyPrice:'',
-      buyNum:0,
-      sellNum:'',
-      sellPrice:'',
-      buyInfo: { buyPrice: 0, buyNum: 0,pwd:'', url: "transaction/in" },
-      sellInfo: { sellPrice: 0, sellNum: 0,pwd:'', url: "transaction/out" },
+      pwd: "",
+      buyPrice: "",
+      buyNum: 0,
+      sellNum: "",
+      sellPrice: "",
+      buyInfo: { buyPrice: 0, buyNum: 0, pwd: "", url: "transaction/in" },
+      sellInfo: { sellPrice: 0, sellNum: 0, pwd: "", url: "transaction/out" },
       tradetype: [{ typetext: "限价交易" }, { typetext: "市价交易" }],
-      value1:0,
-      value2:0,
-      disable:false,
-      disable02:false
+      value1: 0,
+      value2: 0,
+      disable: false,
+      disable02: false
     };
   },
-  watch:{
-     'buyPrice':function(newVal){
-         if(newVal<0){
-           this.buyPrice = ''
-         }
-     },
-     'sellPrice':function(val){
-       if(val<0){
-           this.sellPrice = ''
-         }
-     },
-     'buyNum':function(val){
-       if(val<0){
-           this.buyNum = ''
-         }
-     },
-     'sellNum':function(val){
-       if(val<0){
-           this.sellNum = ''
-         }
-     }
+  watch: {
+    buyPrice: function(newVal) {
+      if (newVal < 0) {
+        this.buyPrice = "";
+      }
+    },
+    sellPrice: function(val) {
+      if (val < 0) {
+        this.sellPrice = "";
+      }
+    },
+    buyNum: function(val) {
+      if (val < 0) {
+        this.buyNum = "";
+      }
+    },
+    sellNum: function(val) {
+      if (val < 0) {
+        this.sellNum = "";
+      }
+    }
   },
   created() {
     this.address = localStorage.getItem("token") || "";
-    if(this.address == ''){
+    if (this.address == "") {
       this.disable = true;
       this.disable02 = true;
     }
@@ -191,7 +191,7 @@ export default {
     var that = this;
     that.address = localStorage.getItem("token") || "";
     eventBus.$on("toPrice", function(data) {
-      console.log('-------------------------------------')
+      console.log("-------------------------------------");
       console.log(data);
       // if (data) {
       //   that.buyPrice = data;
@@ -207,74 +207,86 @@ export default {
       that.buyPrice = '';
       that.sellPrice = '';
       that.buy_sell(that.legal_id, that.currency_id);
-      that.timer = setInterval(() => {
-        that.currency_val(that.currency_id);
-      that.currency_val02(that.legal_id);
-      }, 3000);
-      
+      if (that.address) {
+        that.timer = setInterval(() => {
+          that.currency_val(that.currency_id);
+          that.currency_val02(that.legal_id);
+        }, 3000);
+      }
     });
     eventBus.$on("toTrade0", function(data0) {
       console.log(data0);
-      that.currency_id = data0.currency_id,
-      that.legal_id = data0.legal_id;
+      (that.currency_id = data0.currency_id), (that.legal_id = data0.legal_id);
       that.currency_name = data0.currency_name;
       that.legal_name = data0.legal_name;
       that.buy_sell(that.legal_id, that.currency_id);
-      that.timer2 = setInterval(() => {
-        that.currency_val(that.currency_id);
-      that.currency_val02(that.legal_id);
-      }, 3000);
+      if(that.address){
+
+        that.timer2 = setInterval(() => {
+          that.currency_val(that.currency_id);
+          that.currency_val02(that.legal_id);
+        }, 3000);
+      }
     });
     eventBus.$on("tocel", function(datas) {
       // console.log(datas);
       if (datas) {
         that.buy_sell(that.legal_id, that.currency_id);
-        that.timer3 = setInterval(() => {
-        that.currency_val(that.currency_id);
-      that.currency_val02(that.legal_id);
-      }, 3000);
+        if(that.address){
+
+          that.timer3 = setInterval(() => {
+            that.currency_val(that.currency_id);
+            that.currency_val02(that.legal_id);
+          }, 3000);
+        }
       }
     });
     // 从exchange传过来的最新价
     eventBus.$on("priceToTrade", function(data) {
-      console.log(data)
+      // console.log(data);
       that.lastPrice = data;
     });
   },
   methods: {
     //获取可用余额
     //币币余额
-    currency_val(currency_id){
-       this.$http({
-        url: '/api/' + "wallet/get_currency_balance",
+    currency_val(currency_id) {
+      if(!this.address){
+        return;
+      }
+      this.$http({
+        url: "/api/" + "wallet/get_currency_balance",
         method: "GET",
         params: {
-          currency_id:currency_id
+          currency_id: currency_id
         },
-         headers: { Authorization: this.address }
+        headers: { Authorization: this.address }
       }).then(res => {
-        if(res.data.type == 'ok'){
+        if (res.data.type == "ok") {
           this.user_currency = res.data.message;
-        }else{
+        } else {
           clearInterval(this.timer);
           clearInterval(this.timer2);
         }
       });
     },
     //法币余额
-    currency_val02(legal_id){
-       this.$http({
-        url: '/api/' + "wallet/get_currency_balance",
+    currency_val02(legal_id) {
+      if(!this.address){
+        return;
+      }
+      this.$http({
+        url: "/api/" + "wallet/get_currency_balance",
         method: "GET",
         params: {
-          currency_id:legal_id
+          currency_id: legal_id
         },
-         headers: { Authorization: this.address }
+        headers: { Authorization: this.address }
       }).then(res => {
-        if(res.data.type == 'ok'){
+        if (res.data.type == "ok") {
           this.user_legal = res.data.message;
-        }else{
-           clearInterval(this.timer);
+        } else {
+          clearInterval(this.timer);
           clearInterval(this.timer2);
         }
       });
@@ -301,22 +313,22 @@ export default {
       // console.log(ev.keyCode)
     },
     changeType(index) {
-      this.value1 =0;
+      this.value1 = 0;
       this.value2 = 0;
       this.current = index;
-     
+
       if (index == 1) {
-         this.buyPrice = '';
-      this.sellPrice = '';
-         this.buyNum = '';
-      this.sellNum = '';
+        this.buyPrice = "";
+        this.sellPrice = "";
+        this.buyNum = "";
+        this.sellNum = "";
         this.disabled = true;
       } else {
         this.disabled = false;
-         this.buyPrice = '';
-      this.sellPrice = '';
-      this.buyNum = '';
-      this.sellNum = '';
+        this.buyPrice = "";
+        this.sellPrice = "";
+        this.buyNum = "";
+        this.sellNum = "";
       }
     },
     goNext(url) {
@@ -324,7 +336,7 @@ export default {
     },
     init() {
       this.$http({
-        url: '/api/' + "transaction/deal",
+        url: "/api/" + "transaction/deal",
         method: "post",
         data: {
           address: this.address
@@ -359,28 +371,28 @@ export default {
           legal_id: this.legal_id,
           currency_id: this.currency_id,
           price: this.disabled ? this.lastPrice : this.buyPrice,
-          num: this.buyNum,
+          num: this.buyNum
           // pay_password:this.buyInfo.pwd
         },
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res, '22222222222222222222222222222222222222222222222222222222222222222222222');
+          
           layer.close(i);
 
           if (res.data.type == "ok") {
-            eventBus.$emit('tradeOk',{status:'ok'});
+            eventBus.$emit("tradeOk", { status: "ok" });
             layer.msg(res.data.message);
-            console.log(this.current)
-            if(this.current == 0){
+            console.log(this.current);
+            if (this.current == 0) {
               // this.buyPrice = '';
-              this.buyNum = '';
-              this.buyInfo.pwd='';
-            }else{
-              this.buyNum = '';
-              this.buyInfo.pwd='';
+              this.buyNum = "";
+              this.buyInfo.pwd = "";
+            } else {
+              this.buyNum = "";
+              this.buyInfo.pwd = "";
             }
-            that.buy_sell(that.legal_id,that.currency_id);
+            that.buy_sell(that.legal_id, that.currency_id);
             // setInterval(function(){  //定时请求余额
             //       that.currency_val(that.currency_id);
             //       that.currency_val02(that.legal_id);
@@ -389,7 +401,7 @@ export default {
             eventBus.$emit("tocel", "updata");
             console.log(res.data.message);
           } else {
-            this.buyNum = '';
+            this.buyNum = "";
             layer.msg(res.data.message);
           }
         })
@@ -422,39 +434,42 @@ export default {
         data: {
           legal_id: this.legal_id,
           currency_id: this.currency_id,
-          price: this.disabled?this.lastPrice:this.sellPrice,
-          num: this.sellNum,
+          price: this.disabled ? this.lastPrice : this.sellPrice,
+          num: this.sellNum
           // pay_password:this.sellInfo.pwd
         },
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res,'99999999999999999999999999999999999999999999999999');
+          console.log(
+            res,
+            "99999999999999999999999999999999999999999999999999"
+          );
           layer.close(i);
           // layer.msg(res.data.message)
           if (res.data.type == "ok") {
-            setTimeout(function(){
-              that.buy_sell(that.legal_id,that.currency_id);
-            },3000);
+            setTimeout(function() {
+              that.buy_sell(that.legal_id, that.currency_id);
+            }, 3000);
             // setInterval(function(){  //定时请求余额
             //       that.currency_val(that.currency_id);
             //       that.currency_val02(that.legal_id);
             //   },3000)
-              
-            eventBus.$emit('tradeOk',{status:'ok'});
-            if(this.current == 0){
+
+            eventBus.$emit("tradeOk", { status: "ok" });
+            if (this.current == 0) {
               // this.sellPrice = '';
-              this.sellNum = '';
-              this.sellInfo.pwd = '';
-            }else{
-              this.sellNum = '';
-              this.sellInfo.pwd = '';
+              this.sellNum = "";
+              this.sellInfo.pwd = "";
+            } else {
+              this.sellNum = "";
+              this.sellInfo.pwd = "";
             }
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
             layer.msg(res.data.message);
           } else {
-            this.sellNum = '';
+            this.sellNum = "";
             layer.msg(res.data.message);
           }
         })
@@ -464,7 +479,7 @@ export default {
     },
     //买入、卖出记录
     buy_sell(legals_id, currencys_id) {
-      console.log('啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊')
+      console.log("啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊");
       var i = layer.load();
       this.$http({
         url: "/api/" + "transaction/deal",
@@ -484,7 +499,7 @@ export default {
             this.lastPrice = res.data.message.last_price;
             // this.user_currency = res.data.message.user_currency;
             // this.user_legal = res.data.message.user_legal;
-            console.log('console------'+this.user_currency,this.user_legal)
+            console.log("console------" + this.user_currency, this.user_legal);
             // console.log(res.data)
             // this.buyPrice = 0;
             // this.buyNum = 0;
@@ -505,7 +520,7 @@ export default {
       return ((this.sellPrice||this.lastPrice) * this.sellNum).toFixed(5) || 0;
     }
   },
-  destroyed(){
+  destroyed() {
     clearInterval(this.timer);
     clearInterval(this.timer2);
     clearInterval(this.timer3);
