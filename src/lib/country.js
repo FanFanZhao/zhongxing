@@ -6,6 +6,18 @@ export default [
     "name_en": "China"
   },
   {
+    "area_code": "+852",
+    "country_id": 71,
+    "name_cn": "中国香港---Z",
+    "name_en": "Hong Kong (China)"
+  },
+  {
+    "area_code": "+886",
+    "country_id": 169,
+    "name_cn": "中国台湾---Z",
+    "name_en": "Taiwan (China)"
+  },
+  {
     "area_code": "+355",
     "country_id": 3,
     "name_cn": "阿尔巴尼亚---A",
@@ -1144,18 +1156,6 @@ export default [
     "country_id": 62,
     "name_cn": "直布罗陀---Z",
     "name_en": "Gibraltar"
-  },
-  {
-    "area_code": "+852",
-    "country_id": 71,
-    "name_cn": "中国香港---Z",
-    "name_en": "Hong Kong (China)"
-  },
-  {
-    "area_code": "+886",
-    "country_id": 169,
-    "name_cn": "中国台湾---Z",
-    "name_en": "Taiwan (China)"
   },
   {
     "area_code": "+243",

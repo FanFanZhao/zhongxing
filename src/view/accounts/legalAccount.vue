@@ -118,7 +118,7 @@ export default {
             that.legal_name = msg.currency_name;
             that.legal_balance = msg.legal_balance;
             that.lock_legal_balance = msg.lock_legal_balance;
-            that.legal_price = msg.legal_price;
+            that.legal_price = msg.cny_price;
           } else {
             layer.msg(res.message);
           }
