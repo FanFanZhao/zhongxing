@@ -27,7 +27,7 @@ export default {
 .foot{
   padding: 50px 0;
   img:last-child{
-      width: 100%;
+      width: 1200px;
   }
 }
 .logos{
