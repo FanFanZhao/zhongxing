@@ -1,18 +1,22 @@
 <template>
     <div class="advice_wrap bg-part">
-       <div class="title ft16">投诉留言</div>
+       <div class="title ft16">留言记录</div>
        <ul>
            <li v-for="(item,index) in lists" :key="index">
-               <div>
-               <h2>{{item.content}}</h2>
+               <div class="list-item">
+               <div class="mb10 flex between">
+               <h2 class="creat">发布：{{item.content}}</h2>
                <span class="fr ft12">{{item.create_time}}</span>
                </div>
-                <div>
-               <p>{{item.reply_content||''}}</p>
+                <div class=" flex between">
+               <p class="ft14 reply">回复：{{item.reply_content||'暂无'}}</p>
                <span class="fr ft12">{{item.reply_time||''}}</span>
                </div>
+               </div>
            </li>
+           <li class="more tc ft14 mb10 gray" @click="getMore">{{more}}</li>
        </ul>
+       <div class="title ft16">发布留言</div>
        <textarea class="texta ft14" v-model="texta" placeholder="请填写留言内容"></textarea>
        <div class="tc submit_btn blue_bg ft16" @click="submit">提交</div>
     </div>
@@ -23,12 +27,14 @@ export default {
          return{
              texta:'',
              token:'',
-             lists:[]
+             lists:[],
+             more:'加载更多',
+             page:1
          }
      },
      created(){
          this.token = window.localStorage.getItem("token") || "";
-         this.getlist();
+         this.getlist(1);
      },
      methods:{
          submit(){
@@ -55,22 +61,33 @@ export default {
                 },
                 //留言列表
                
-             getlist(){
+             getlist(page){
                  var i = layer.load();
                  this.$http({
                 url:'/api/feedback/list',
                 method:'post',
-                data:{userId:localStorage.getItem('user_id')},
+                data:{userId:localStorage.getItem('user_id'),page:page},
                 headers:{Authorization:this.token}
             }).then(res => {
                 console.log(res)
                 layer.close(i);
                 if(res.data.type == 'ok'){
-                    console.log(res)
-                    this.lists = this.lists.concat(res.data.message.data);
+                    console.log(res);
+                    if(res.data.message.data.length>0){
+                      this.more = '加载更多'
+                        this.lists = this.lists.concat(res.data.message.data);
+                    }else{
+                      this.more = '没有更多了'
+                    }
                 }
                 
             })
+             },
+             //加载更多
+             getMore(){
+                 this.page++;
+                 this.more = '加载中...'
+                 this.getlist(this.page)
              } 
      }
 
@@ -98,6 +115,17 @@ export default {
         line-height: 50px;
         border-radius: 5px;
         margin: 20px auto;
+        cursor: pointer;
+    }
+    .list-item{
+        background: #eee;
+        padding: 30px 20px;
+        margin-bottom: 20px;
+    }
+    .creat,.reply{
+        width: 80%;
+    }
+    .more{
         cursor: pointer;
     }
 </style>
