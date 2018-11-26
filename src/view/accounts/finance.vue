@@ -396,7 +396,7 @@ export default {
                         console.log(res)
                         that.coinname=res.message.name;
                         that.balance=res.message.change_balance;
-                        that.min_number='最小提币数量'+res.message.min_number;
+                        that.min_number=res.message.min_number;
                         that.minnumber=res.message.min_number;
                         that.ratenum=res.message.rate+'-'+res.message.rate;
                         // that.reachnum=this.number - this.number*res.message.rate;

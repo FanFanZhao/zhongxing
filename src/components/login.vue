@@ -6,16 +6,22 @@
             <div class="account">
                 <div class="main">
                     <p class="main_title">欢迎登录</p>
+                    <div class="tab flex" @click="account_number=''">
+                      <span @click="isMb = true" :class="{now:isMb}">手机登录</span>
+                      <span @click="isMb = false" :class="{now:!isMb}">邮箱登录</span>
+                    </div>
                     <div class="register-input">
                         <span class="register-item">账号</span>
                          <select name="" v-if="isMb" class="chooseTel scroll" v-model="areaCode" ref="select">
                         <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
                       </select>
-                       <input type="text" class="input-main input-content phone" maxlength="20" v-model="account_number" id="account">
+                       <input type="text" class="input-main input-content phone" maxlength="20" v-model="account_number" id="account" :style='{width:isMb?"auto":"520px !important"}'>
                     </div>
-                     <div class="register-input">
+                     <div class="register-input pass-box">
                         <span class="register-item">密码</span>
-                        <input type="password" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
+                        <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                     </div>
                     <!--验证码-->
                    
@@ -65,7 +71,14 @@ export default {
       country:country,
       isMb: true,                  //是否为手机注册
       account: "",                //用户名
+      showpass:false
     };
+  },
+  beforeRouteEnter(to,from,next){
+    if(from.path == '/dealCenter'){
+      window.location.reload();
+    }
+    next()
   },
   created() {
     console.log(this.$utils);
@@ -185,6 +198,20 @@ export default {
 </script>
 
 <style scoped>
+.tab{
+  margin-top: 20px;
+  width: 230px;
+}
+.tab span{
+  padding-bottom: 5px;
+  margin-right: 40px;
+  cursor: pointer;
+}
+.tab .now{
+  color: #d45858;
+  font-weight: 600;
+  border-bottom: 2px solid #d45858;
+}
 .chooseTel{
     height: 46px;
     width: 160px;

@@ -29,13 +29,17 @@
                 </div>
                 <div class="main" v-if="showReset">
                     <div class="main_title">设置密码</div>
-                    <div class="register-input">
+                    <div class="register-input pass-box">
                         <span class="register-item">请输入密码</span>
-                        <input type="password" class="input-main input-content"  v-model="password" id="pwd">
+                        <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                     </div>
-                    <div class="register-input">
+                    <div class="register-input pass-box">
                         <span class="register-item">请再次输入密码</span>
-                        <input type="password" class="input-main input-content"  v-model="re_password" id="repwd">
+                        <input :type="showrepass?'text':'password'" class="input-main input-content" maxlength="16" v-model="password" id="repwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showerpass" @click="showrepass = true">
                     </div>
                     <button class="register-button curPer redBg" type="button" @click="resetPass" style="margin-top:20px">确认</button>
                 </div>
@@ -55,6 +59,8 @@ export default {
   components: { indexHeader, indexFooter },
   data() {
     return {
+      showpass:false,
+      showrepass:false,
       isMb: true,
       account_number: "",
       phoneCode: "",
