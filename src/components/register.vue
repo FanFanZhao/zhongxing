@@ -56,17 +56,21 @@
                 </div> -->
                 
                 <!-- <div class="title">设置密码</div> -->
-                <div class="pwd-box">
+                <div class="pwd-box pass-box">
                     <div class="tip">请输入登录密码</div>
-                    <input type="password" v-model="pwd" class="pwd-input" placeholder="密码在6-16位之间,由数字和字母组成">
+                    <input :type="showpass?'text':'password'" class="pwd-input" maxlength="16" v-model="pwd" id="pwd" placeholder="密码在6-16位之间,由数字和字母组成">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                 </div>
-                <div class="repwd-box">
+                <div class="repwd-box pass-box">
                     <div class="tip">请确认密码</div>
-                    <input type="password" v-model="repwd" class="repwd-input" placeholder="请确认密码">
+                    <input :type="showrepass?'text':'password'" class="repwd-input" maxlength="16" v-model="repwd" >
+                        <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showrepass" @click="showrepass = true">
                 </div>
                 <div class="invite-box">
                     <div class="tip">请输入邀请码</div>
-                    <input type="password" placeholder="选填" v-model="invite" class="invite-input">
+                    <input type="text" placeholder="选填" v-model="invite" class="invite-input">
                 </div>
                 <button type="button" @click="register" class="reg-btn confirm-btn redBg">确认</button>
             </div>
@@ -83,6 +87,8 @@ export default {
   },
   data() {
     return {
+      showpass:false,
+      showrepass:false,
       codeTrue: false,             //验证码是否正确
       isMb: true,                  //是否为手机注册
       account: "",                //用户名

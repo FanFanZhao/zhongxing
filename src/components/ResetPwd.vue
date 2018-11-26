@@ -5,17 +5,23 @@
             <div class="account">
                 <div class="main">
                     <p class="main_title">修改密码</p>
-                    <div class="register-input">
+                    <div class="register-input pass-box">
                         <span class="register-item">请输入原密码</span>
-                        <input type="password" class="input-main input-content" maxlength="20" v-model="oldPwd" id="account">
+                        <input :type="showold?'text':'password'" class="input-main input-content" maxlength="20" v-model="oldPwd" id="account">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showold" @click="showold = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showold" @click="showold = true">
                     </div>
-                     <div class="register-input">
+                     <div class="register-input pass-box">
                         <span class="register-item">请输入新密码</span>
-                        <input type="password" class="input-main input-content" maxlength="16" v-model="pwd" id="pwd">
+                        <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="pwd" id="pwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                     </div>
-                     <div class="register-input">
+                     <div class="register-input pass-box">
                         <span class="register-item">请再次输入新密码</span>
-                        <input type="password" class="input-main input-content" maxlength="16" v-model="rePwd">
+                        <input :type="showrepass?'text':'password'" class="input-main input-content" maxlength="16" v-model="rePwd" id="rePwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showrepass" @click="showrepass = true">
                     </div>
                      <!-- <div class="register-input">
                         <span class="register-item">请输入验证码</span>
@@ -47,7 +53,10 @@ export default {
       pwd: "",
       rePwd: "",
       code: "",
-      resetSeconds: "发送验证码"
+      resetSeconds: "发送验证码",
+      showpass:false,
+      showrepass:false,
+      showold:false
     };
   },
 

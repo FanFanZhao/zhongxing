@@ -340,3 +340,15 @@ body {
 
 	#app {}
 }
+.pass-box{
+    position: relative;
+    width: 521px;
+    img{
+        position: absolute;
+        width: 25px;
+        right: 10px;
+        top: 33px;
+        z-index: 999;
+        cursor: pointer;
+    }
+}

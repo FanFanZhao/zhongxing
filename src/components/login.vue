@@ -17,9 +17,11 @@
                       </select>
                        <input type="text" class="input-main input-content phone" maxlength="20" v-model="account_number" id="account" :style='{width:isMb?"auto":"520px !important"}'>
                     </div>
-                     <div class="register-input">
+                     <div class="register-input pass-box">
                         <span class="register-item">密码</span>
-                        <input type="password" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
+                        <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                     </div>
                     <!--验证码-->
                    
@@ -69,6 +71,7 @@ export default {
       country:country,
       isMb: true,                  //是否为手机注册
       account: "",                //用户名
+      showpass:false
     };
   },
   beforeRouteEnter(to,from,next){

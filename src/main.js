@@ -12,7 +12,8 @@ import VueSocketio from 'vue-socket.io'
 import echarts from 'echarts'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import store from './store'
-import {Slider} from 'element-ui'
+import {Slider,Input} from 'element-ui'
+Vue.use(Input)
 Vue.use(Slider)
 Vue.use(VueAwesomeSwiper)
 Vue.prototype.$echarts = echarts
