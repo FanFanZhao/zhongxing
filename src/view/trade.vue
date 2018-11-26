@@ -35,7 +35,7 @@
                         <label>资金密码</label>
                         <input type="password" v-model="buyInfo.pwd" @keydown.69.prevent>
                     </div> -->
-                    <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div>
+                    <!-- <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div> -->
                     <el-slider v-model="value1" :min="0" :max="100" show-stops :show-tooltip="false" :step="25" :disabled="address?current == 0?buyPrice=='':false:true" @change="changeVal"></el-slider>
                     <div class="mt50 1 ft16">交易额 {{buyTotal}} {{legal_name}}</div>
                     <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">买{{currency_name}}</div>
@@ -66,7 +66,7 @@
                         <label>资金密码</label>
                         <input type="password" v-model="sellInfo.pwd" @keydown.69.prevent>
                     </div> -->
-                    <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div>
+                    <!-- <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div> -->
                     <el-slider v-model="value2" :min="0" :max="100" :show-tooltip="false" show-stops :step="25"  :disabled="address?current == 0?sellPrice=='':false:true" @change="changeVal2"></el-slider>
                     <div class="mt50 1 ft16">交易额 {{sellTotal}} {{legal_name}}</div>
                     <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">卖{{currency_name}}</div>

@@ -48,7 +48,7 @@
      
         <div class="notice">
            <ul class="flex alcenter center notice_ul">
-               <li v-for="item in noticeList" :key="item.id" class="fl notice_li"><a class="notice_a ft14" :data-id='item.id'>{{item.name}}</a></li>
+               <li v-for="item in noticeList" :key="item.id" class="fl notice_li" @click="$router.push({path:'components/noticeDetail',query:{id:item.id}})"><a class="notice_a ft14" :data-id='item.id'>{{item.title}}</a></li>
            </ul>
         </div>
         <!-- <div class="active-data clearfix">
@@ -317,22 +317,24 @@ export default {
       observeParents: true //修改swiper的父元素时，自动初始化swiper
     });
     // this.setChart();
-    // this.$http({
-    //   url: '/api/' + "news/help",
-    //   method: "get",
-    //   data: {}
-    // })
-    //   .then(res => {
-    //     console.log(res);
-    //     if (res.status === 200) {
-    //       this.noticeList = res.data.message;
-    //     } else {
-    //       layer.msg(res.message);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    this.$http({
+      url: '/api/' + "news/list",
+      method: "post",
+      data: {}
+    })
+      .then(res => {
+        console.log(res);
+        if (res.data.type == 'ok') {
+          var list = res.data.message.list;
+          if(list.length>4){
+
+            this.noticeList = list.slice(0,4)
+          } else {
+            this.noticeList = list;
+          }
+        }
+      })
+     
     //  eventBus.$on('toNew', function (data) {
     //   console.log(data);
     //   if(data){

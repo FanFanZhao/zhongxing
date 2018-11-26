@@ -67,6 +67,12 @@ export default {
       account: "",                //用户名
     };
   },
+  beforeRouteEnter(to,from,next){
+    if(from.path == '/dealCenter'){
+      window.location.reload();
+    }
+    next()
+  },
   created() {
     console.log(this.$utils);
 

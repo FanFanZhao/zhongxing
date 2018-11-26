@@ -56,7 +56,7 @@
 			<div class="mask" @click="closeBtn()"></div>
 			<div class="content">
 				<div class="content-list layerBg">
-					<p class="close light_blue" @click="shows=false">X</p>
+					<p class="close light_blue" @click="close">X</p>
 					<p class="title">{{classify}}{{name}}</p>
 					<p class="price">单价{{prices}}</p>
 					<div class="trade">
@@ -122,7 +122,8 @@
 				name01:'CNY',
 				numbers:'',
 				allnum:'',
-				idx:1
+				idx:1,
+				timer:''
 			};
 		},
 
@@ -142,6 +143,11 @@
 			}
 		},
 		methods: {
+			//关闭弹框
+			close(){
+			   this.shows = false;
+			    clearInterval(this.timer); //弹框关闭清除定时器
+			},
 			getCoins() {
 				var i = layer.load();
 				this.$http({
@@ -234,13 +240,13 @@
 				_this.minNum = min;
 				_this.maxNum = max;
 				_this.allnum = allnum;
-			      var t1 = setInterval(function() {
+			      _this.timer = setInterval(function() {
 					_this.time--;
 					if (_this.time <= 0) {
 						_this.shows = false;
 						document.body.removeAttribute("class", "body");
 						//清除定时器
-						clearInterval(t1);
+						clearInterval(_this.timer);
 					}
 				}, 1000)
 			},
@@ -303,7 +309,8 @@
 						value: _this.nums
 					};
 					//获取实名认证状态
-					var review_status;
+					var review_status; //是否实名认证
+					var is_Billing; //是否设置收款方式 1 已设置 0 未设置
 					var load = layer.load();
 					this.$http({
 								url:'/api/user/info',
@@ -315,10 +322,19 @@
 								console.log(res)
 								if(res.data.type == 'ok'){
 									review_status = res.data.message.review_status;
+									is_Billing =  res.data.message.is_Billing;
 									if(review_status!=2){
 									layer.msg('请先进行实名认证再下单');
 									return false;
-								}else{
+								}else if(is_Billing == 0){
+									layer.msg('请先设置收款方式');
+									setTimeout(() => {
+										 this.$router.push('/userSetting');
+									}, 1000);
+								  
+								   return;
+								}
+								else{
 									_this.buyHttp('/api/do_legal_deal', datas, function(res) {
 									
 									if(res.data.type == 'ok'){

@@ -36,7 +36,7 @@
           <li v-for="(market,index) in marketList " :key="index" v-show="(index == isShow )" >
             <p v-for="(itm,idx) in market"  :key="itm.id" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market)">
               <span class="w36"><img :src="itm.logo" alt=""><i><em class="deep_blue bold">{{itm.currency_name}}</em><em class="light_blue bold">/{{itm.legal_name}}</em></i></span>
-              <span class="w30 tr deep_blue bold" :data-name='itm.currency_name+"/"+itm.legal_name'>${{itm.now_price || 0}}</span>
+              <span class="w30 tr deep_blue bold" :data-name='itm.currency_name+"/"+itm.legal_name'>{{itm.now_price || 0}}</span>
               <span :class="{'green':itm.change>=0}" class="bold">{{(itm.change>0?'+':'')+(itm.change-0).toFixed(2)}}%</span>
             </p>
           </li>
