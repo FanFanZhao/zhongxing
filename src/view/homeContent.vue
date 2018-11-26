@@ -185,7 +185,7 @@
             </div>
         </div>
         <!--图文内容-->
-        <div id="content01" class="content01 flex alcenter   center" style="background:#fff;">
+        <div id="content01" class="content01 flex alcenter   center" style="background:#f3f3f3;">
             <div class="text01 mr100 left01 animated">
               <h1 class="ft26 bold mb30">全球化的数字资产配置及交易服务</h1>
               <p class="ft16 bold mb10">遍布全球的项目拓展及运营管理体系</p>
@@ -204,7 +204,7 @@
             </div>
             
         </div>
-        <div class="content01 flex alcenter grayBg center" style="background:#fff;">
+        <div class="content01 flex alcenter grayBg center" style="background:#f3f3f3;">
             <div class="text01 mr100">
               <h1 class="ft26 bold mb30">依托4年的数字资产安全风控经验</h1>
               <p class="ft16 bold mb10">安全稳定运营数字资产交易所超过四年</p>
@@ -770,7 +770,7 @@ export default {
 }
 .content01 {
   padding: 40px 0;
-  background: #f3f3f3;
+  background: #fff;
   .imgs01 {
     width: 250px;
   }

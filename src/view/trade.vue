@@ -207,12 +207,7 @@ export default {
       that.buyPrice = '';
       that.sellPrice = '';
       that.buy_sell(that.legal_id, that.currency_id);
-      if (that.address) {
-        that.timer = setInterval(() => {
-          that.currency_val(that.legal_id,that.currency_id);
-          // that.currency_val02(that.legal_id);
-        }, 3000);
-      }
+      that.currency_val(that.legal_id, that.currency_id)
     });
     eventBus.$on("toTrade0", function(data0) {
       console.log(data0);
@@ -220,25 +215,13 @@ export default {
       that.currency_name = data0.currency_name;
       that.legal_name = data0.legal_name;
       that.buy_sell(that.legal_id, that.currency_id);
-      if(that.address){
-
-        that.timer2 = setInterval(() => {
-          that.currency_val(that.legal_id,that.currency_id);
-          // that.currency_val02(that.legal_id);
-        }, 3000);
-      }
+      that.currency_val(that.legal_id, that.currency_id)
     });
     eventBus.$on("tocel", function(datas) {
       // console.log(datas);
       if (datas) {
         that.buy_sell(that.legal_id, that.currency_id);
-        if(that.address){
-
-          that.timer3 = setInterval(() => {
-            that.currency_val(that.legal_id,that.currency_id);
-            // that.currency_val02(that.legal_id);
-          }, 3000);
-        }
+        that.currency_val(that.legal_id, that.currency_id)
       }
     });
     // 从exchange传过来的最新价
@@ -402,11 +385,9 @@ export default {
               this.buyNum = "";
               this.buyInfo.pwd = "";
             }
-            that.buy_sell(that.legal_id, that.currency_id);
-            // setInterval(function(){  //定时请求余额
-            //       that.currency_val(that.currency_id);
-            //       that.currency_val02(that.legal_id);
-            //   },3000)
+             that.currency_val(that.legal_id, that.currency_id)
+            // that.buy_sell(that.legal_id, that.currency_id);
+            that.get
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
             console.log(res.data.message);
@@ -468,10 +449,7 @@ export default {
             setTimeout(function() {
               that.buy_sell(that.legal_id, that.currency_id);
             }, 3000);
-            // setInterval(function(){  //定时请求余额
-            //       that.currency_val(that.currency_id);
-            //       that.currency_val02(that.legal_id);
-            //   },3000)
+             that.currency_val(that.legal_id, that.currency_id)
 
             eventBus.$emit("tradeOk", { status: "ok" });
             if (this.current == 0) {
