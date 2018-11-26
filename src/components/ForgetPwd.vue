@@ -76,7 +76,7 @@ export default {
         data: {
           user_string: this.account_number,
           type: "forget",
-          front:country[this.areaCode]
+          front:country[this.areaCode].area_code
         }
       }).then(res => {
         console.log(res);

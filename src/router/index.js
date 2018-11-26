@@ -39,6 +39,7 @@ import payOpts from '@/view/payOpts'
 import currencyList from '@/view/currency_list'
 import currencyEdit from '@/view/edit_currency'
 import advice from '@/view/advice'
+import aggrement from '@/view/aggrement' //隐私条款
 //收款方式
 
 import ForgetPwd from '@/components/ForgetPwd' //忘记密码
@@ -110,6 +111,11 @@ export default new Router({
 				{
 					path:'/shopLegalRecord',
 					component:() => import ('../components/shop_legal_record.vue')
+				},
+				{
+					path: '/aggrement',
+					name: 'aggrement',
+					component: aggrement
 				},
 				
 				

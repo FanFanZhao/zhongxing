@@ -14,12 +14,12 @@
             <div class="swiper-wrapper">
                <div class="swiper-slide sliders">
                    <a href="">
-                   <img src="../../static/imgs/banner01.png" />
+                   <img src="../../static/imgs/banners04.jpg" />
                    </a>
                </div>
                <div class="swiper-slide sliders">
                    <a href="">
-                   <img src="../../static/imgs/banner00.jpg" />
+                   <img src="../../static/imgs/banners05.jpg" />
                    </a>
                </div>
             </div>

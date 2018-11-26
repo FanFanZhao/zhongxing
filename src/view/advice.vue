@@ -1,6 +1,18 @@
 <template>
     <div class="advice_wrap bg-part">
        <div class="title ft16">投诉留言</div>
+       <ul>
+           <li v-for="(item,index) in lists" :key="index">
+               <div>
+               <h2>{{item.content}}</h2>
+               <span class="fr ft12">{{item.create_time}}</span>
+               </div>
+                <div>
+               <p>{{item.reply_content||''}}</p>
+               <span class="fr ft12">{{item.reply_time||''}}</span>
+               </div>
+           </li>
+       </ul>
        <textarea class="texta ft14" v-model="texta" placeholder="请填写留言内容"></textarea>
        <div class="tc submit_btn blue_bg ft16" @click="submit">提交</div>
     </div>
@@ -10,11 +22,13 @@ export default {
      data(){
          return{
              texta:'',
-             token:''
+             token:'',
+             lists:[]
          }
      },
      created(){
          this.token = window.localStorage.getItem("token") || "";
+         this.getlist();
      },
      methods:{
          submit(){
@@ -27,7 +41,10 @@ export default {
                 url:'/api/feedback/add',
                 method:'post',
                 data:{content:this.texta},
-                headers:{Authorization:this.token}
+                headers:{
+                    Authorization:this.token,
+                    'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+                    }
             }).then(res => {
                 layer.close(i);
                 console.log(res)
@@ -35,7 +52,26 @@ export default {
                 this.texta = '';
                 
             })
+                },
+                //留言列表
+               
+             getlist(){
+                 var i = layer.load();
+                 this.$http({
+                url:'/api/feedback/list',
+                method:'post',
+                data:{userId:localStorage.getItem('user_id')},
+                headers:{Authorization:this.token}
+            }).then(res => {
+                console.log(res)
+                layer.close(i);
+                if(res.data.type == 'ok'){
+                    console.log(res)
+                    this.lists = this.lists.concat(res.data.message.data);
                 }
+                
+            })
+             } 
      }
 
 }

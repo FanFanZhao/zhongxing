@@ -92,6 +92,7 @@ export default {
     },
     //发送验证码
     sendCode(e){
+      console.log(this.country[this.areaCode].area_code)
       var url;
       var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
       var i = layer.load();
@@ -106,7 +107,7 @@ export default {
         method: "post",
         data: {
           user_string: account_number,
-          front:country[this.areaCode]
+          front:country[this.areaCode].area_code
         }
       }).then(res=>{
         console.log(res)

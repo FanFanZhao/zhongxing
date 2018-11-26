@@ -30,7 +30,7 @@
                     <div class="tip" style="margin-bottom:10px">请输入验证码</div>
                 <div class="code-box bdr-part">
                     <input type="text" v-model="code" class="code">
-                    <button type='button' class="code-btn redBg " @click="sendCode">发送验证码</button>
+                    <button type='button' class="code-btn redBg " :disabled="isCheck?false:true" :class="[isCheck?'':'pointer']"  @click="sendCode">发送验证码</button>
                 </div>
                 <!-- <button class="confirm-btn redBg" @click="checkCode" type="button">确认</button> -->
             </div>
@@ -68,7 +68,10 @@
                     <div class="tip">请输入邀请码</div>
                     <input type="password" placeholder="选填" v-model="invite" class="invite-input">
                 </div>
-                <button type="button" @click="register" class="reg-btn confirm-btn redBg">确认</button>
+                <p class="flex alcenter ft14">
+                  <input id="agree" class="aggre" v-model="isCheck" @click="check" type="checkbox" /><label for="agree">同意 <router-link to="/aggrement" class="link_text">免责条款</router-link></label>
+                </p>
+                <button type="button" @click="register" :disabled="isCheck?false:true" :class="[isCheck?'':'pointer']" class="reg-btn confirm-btn redBg">确认</button>
             </div>
             </div>
     </div>
@@ -93,7 +96,9 @@ export default {
       timer: "",                  //倒计时timer
       showList: false,            //是否显示地址列表
       country:country,
-      areaCode:0
+      areaCode:0,
+      disable:true,
+      isCheck:false
       //province: { id: "", name: "请选择省" },      //所选省份
       //provinces: [],                              //省份列表
 
@@ -109,6 +114,14 @@ export default {
     console.log(this.country)
   },
   methods: {
+    check:function(val){
+        if(this.isCheck == false){
+          console.log('pppp')
+          this.disable = true;
+        }else{
+           this.disable = false;
+        }
+    },
     // 获取地区列表
     // getRegion(id, type, name) {
     //   if (type == "") {
@@ -222,7 +235,7 @@ export default {
       
       let data = { user_string: this.account };
       if(url == 'sms_send'){
-         data.front = country[this.areaCode]
+         data.front = country[this.areaCode].area_code
       }
       var loa = layer.load();
       this.$http({
@@ -353,6 +366,17 @@ export default {
 </script>
 
 <style lang='scss'>
+.aggre{
+  width: 16px!important;
+  margin-right: 5px;
+}
+.link_text{
+  color: #d45858;
+}
+.pointer{
+  cursor: not-allowed!important;
+  opacity: 0.6;
+}
 .chooseCountry{
       width: 520px;
     min-height: 46px;

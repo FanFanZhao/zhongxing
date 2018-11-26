@@ -12,6 +12,12 @@ export default [
     "name_en": "Hong Kong (China)"
   },
   {
+    "area_code": "+853",
+    "country_id": 500,
+    "name_cn": "中国澳门---Z",
+    "name_en": "Macao (China)"
+  },
+  {
     "area_code": "+886",
     "country_id": 169,
     "name_cn": "中国台湾---Z",

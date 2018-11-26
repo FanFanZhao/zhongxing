@@ -359,6 +359,13 @@ export default {
         layer.msg("请输入买入量");
         return;
       }
+      if(this.address == ''){
+        layer.msg('请登录');
+        setTimeout(function(){
+           that.$router.push('/components/login');
+        },1000);
+        return;
+      }
       // if(!this.buyInfo.pwd || this.buyInfo.pwd.length< 6){
       //   layer.msg("请输入资金密码");
       //   return;
@@ -421,6 +428,13 @@ export default {
       }
       if (!this.sellNum || this.sellNum <= 0) {
         layer.msg("请输入卖出量");
+        return;
+      }
+      if(this.address == ''){
+        layer.msg('请登录');
+        setTimeout(function(){
+           that.$router.push('/components/login')
+        },1000);
         return;
       }
       // if(!this.sellInfo.pwd || this.sellInfo.pwd.length< 6){

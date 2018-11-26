@@ -11,8 +11,8 @@
               <p style="color:#4A95F1">{{lock_legal_balance}}</p>
           </div>
           <div>
-              <p class="ft12 msg_title">折合（USDT）</p>
-              <p style="color:#2EDB99">{{legal_price}}</p>
+              <p class="ft12 msg_title">折合（CNY）</p>
+              <p style="color:#2EDB99">{{legal_cny_price}}</p>
           </div>
         </div>
         <div class="transfer bg-part" style="margin-top:20px;padding:20px 30px">
@@ -128,7 +128,7 @@ export default {
             that.legal_name = msg.currency_name;
             that.legal_balance = msg.legal_balance;
             that.lock_legal_balance = msg.lock_legal_balance;
-            that.legal_price = msg.cny_price;
+            that.legal_cny_price = msg.legal_cny_price;
           } else {
             layer.msg(res.message);
           }
