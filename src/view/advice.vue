@@ -120,7 +120,7 @@ export default {
     .list-item{
         background: #eee;
         padding: 30px 20px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
     .creat,.reply{
         width: 80%;
