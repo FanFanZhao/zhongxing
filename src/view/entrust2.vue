@@ -26,7 +26,7 @@
                         <span class="fl w12" :class="{'green': item.typeInfo == 'in'}">{{item.typeInfo=='in'?'买入':'卖出'}}</span>
                         <span class="fl w12">{{item.price}}</span>
                         <span class="fl w14">{{item.number}}</span>
-                        <span class="fl w20">{{item.price * item.number}}</span>
+                        <span class="fl w20">{{item.total_price}}</span>
                         <span class="fl w8 tr curPer ceilColor" @click="revoke(item.id)">撤销</span>
                     </li>
                 </ul>
