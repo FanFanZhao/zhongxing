@@ -5,50 +5,73 @@
       <span v-if="msg.is_sure == 1">已完成</span>
       <span v-if="msg.is_sure == 2">已取消</span>
       <span v-if="msg.is_sure == 3">已付款</span>
-       <div v-if="msg.is_sure == 0">请等待买家付款</div>
+       <div v-if="msg.is_sure == 0&&msg.type == 'sell'">请等待买家付款</div>
+        <div v-if="msg.is_sure == 0&&msg.type == 'buy'">请确认，向卖家付款</div>
       <div v-if="msg.is_sure == 1">订单已完成</div>
       <div v-if="msg.is_sure == 2">订单已取消</div>
-      <div v-if="msg.is_sure == 3">买家已付款，请核实后确认</div>
-     
+      <div v-if="msg.is_sure == 3&&msg.type == 'sell'">买家已付款，请核实后确认</div>
+       <div v-if="msg.is_sure == 3&&msg.type == 'buy'">请等待卖家确认</div>
+      <!-- <div class="mt10 ft14" v-if="msg.is_sure == 3&&msg.type == 'sell'">联系方式：{{msg.phone}}</div> -->
     </div>
     <div class="info bg-part ft14">
       <div>
         <span>交易总额：</span>
-        <span>{{msg.deal_money}}</span>
+        <span>￥{{msg.deal_money}}</span>
       </div>
       <div>
-        <span>卖家</span>
-        <span>{{msg.seller_name}}</span>
+        <span v-if="msg.type == 'buy'">卖家</span>
+        <span v-if="msg.type == 'sell'">买家</span>
+        <span>{{msg.user_cash_info.real_name}}</span>
+        <!-- <span v-if="msg.type == 'buy'">{{msg.hes_realname}}</span>
+        <span v-if="msg.type == 'sell'">{{msg.seller_name}}</span> -->
       </div>
       <div>
         <span>单价：</span>
-        <span>{{msg.price}}</span>
+        <span>{{msg.price}}CNY</span>
       </div>
       <div>
         <span>数量：</span>
-        <span>{{msg.number}}</span>
+        <span>{{msg.number}}{{msg.currency_name}}</span>
       </div>
       <div>
         <span>下单时间：</span>
-        <span>{{msg.format_create_time}}</span>
+        <span>{{msg.create_time}}</span>
+      </div>
+        <div  v-if="(msg.is_sure == 0||msg.is_sure == 3)&&msg.type == 'buy'">
+        <span>银行卡：</span>
+        <span>{{msg.user_cash_info.bank_name}}:{{msg.user_cash_info.bank_account}}</span>
+      </div>
+      <div  v-if="(msg.is_sure == 0||msg.is_sure == 3)&&msg.type == 'buy'">
+        <span>微信：</span>
+        <span>{{msg.user_cash_info.wechat_account}}</span>
+      </div>
+      <div  v-if="(msg.is_sure == 0||msg.is_sure == 3)&&msg.type == 'buy'">
+        <span>支付宝：</span>
+        <span>{{msg.user_cash_info.alipay_account}}</span>
+      </div>
+      <div>
+        <span>联系方式：</span>
+        <span v-if="msg.type == 'buy'">{{msg.user_cash_info.account_number ||"无"}}</span>
+        <span v-if="msg.type == 'sell'">{{msg.phone ||"无"}}</span>
       </div>
       <div>
         <span>参考号：</span>
         <span>{{msg.id}}</span>
       </div>
-      <div>
+      <!-- <div >
         <span>商家账户：</span>
         <router-link :to="{path:'/legalSeller',query:{sellerId:msg.seller_id}}" tag="span" class="light_blue seller">{{msg.seller_name}}</router-link>
-      </div>
+      </div> -->
       <div class="btns">
-        <div class="btn" @click="showCancel = true" v-if="msg.is_sure == 0 && msg.type =='buy'">取消订单</div>
+        <div class="btn" @click="showCancel = true" v-if="msg.is_sure == 0">取消订单</div>
+        <div class="btn" @click="hasPay = true" v-if="msg.is_sure == 0 && msg.type =='buy'">我已付款，点击确认</div>
         <div class="btn" @click="showConfirm = true" v-if="(msg.is_sure == 3) && (msg.type =='sell')">确认已收款</div>
       </div>
     </div>
     <div class="cancel-box" v-if="showCancel">
       <div class="content">
         <div>取消交易</div>
-        <div>如您已向卖家付款请千万不要取消交易</div>
+        <div>如果买家已向您付款请千万不要取消交易</div>
         <!-- <div>
           <input type="checkbox" v-model="hasPay" id="haspay">
           <label for="haspay">我还没有付款给对方</label>
@@ -59,14 +82,24 @@
         </div>
       </div>
     </div>
-    <div class="confirm-box" v-if="showConfirm">
+    <div class="confirm-box" v-if="hasPay">
       <div class="content">
         <div>付款确认</div>
         <div>请确认您已向卖家付款</div>
         <div>恶意点击将直接冻结账户</div>
         <div class="yes-no flex">
-          <div @click="showConfirm = false">取消</div>
+          <div @click="hasPay = false">取消</div>
           <div @click="confirm">确认</div>
+        </div>
+      </div>
+    </div>
+    <div class="confirm-box" v-if="showConfirm">
+      <div class="content">
+        <div>确认收款</div>
+        <div>请确认您已收到买家付款</div>
+        <div class="yes-no flex">
+          <div @click="showConfirm = false">取消</div>
+          <div @click="confirm_receive">确认</div>
         </div>
       </div>
     </div>
@@ -127,32 +160,60 @@ export default {
       });
     },
     cancel(){
+      var i = layer.load();
       this.$http({
-        url:'api/user_legal_pay_cancel',
+        url:'/api/user_legal_pay_cancel',
         method:'post',
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
+        layer.close(i);
         // console.log(res);
-        lay.msg(res.data.message);
-        
-      }).then(() => {
-        this.showCancel = false;
+        layer.msg(res.data.message);
+         this.showCancel = false;
+         setTimeout(() => {
+           location.reload()
+        }, 1000);
       })
     },
-    confirm(){
+    confirm_receive(){
+      var i = layer.load();
       this.$http({
-        url:'api/user_legal_pay',
+        url:'/api/legal_deal_user_sure',
         method:'post',
         data:{id:this.id},
         headers:{Authorization:this.token}
       }).then(res => {
+        layer.close(i);
         // console.log(res);
-        lay.msg(res.data.message);
+        layer.msg(res.data.message);
+        setTimeout(() => {
+           location.reload()
+        }, 1000);
         
       }).then(() => {
         this.showConfirm = false;
       })
+    },
+    confirm(){
+      var i = layer.load();
+      this.$http({
+        url: "/api/user_legal_pay",
+        method: "post",
+        data: { id: this.id },
+        headers: { Authorization: this.token }
+      })
+        .then(res => {
+          layer.close(i)
+          // console.log(res);
+          layer.msg(res.data.message);
+          if (res.data.type == "ok") {
+            setTimeout(() => {
+              location.reload();
+              // this.$router.push('/legalRecord')
+            }, 1000);
+          }
+        })
     }
   }
 };

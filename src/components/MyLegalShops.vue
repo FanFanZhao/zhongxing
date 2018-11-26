@@ -45,10 +45,12 @@ export default {
   },
   methods: {
     getList() {
+      var i = layer.load();
       this.$http({
         url: "/api/my_seller",
         headers: { Authorization: this.token }
       }).then(res => {
+        layer.close(i);
         console.log(res);
         if (res.data.type == "ok") {
           var list = res.data.message.data;

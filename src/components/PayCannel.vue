@@ -6,20 +6,20 @@
 				<p class="status-text">{{statusText}}</p>
 			</div>
 			<div class="content-header-right">
-				<p class="contact-text">联系方式: {{datas.phone}}</p>
+				<p class="contact-text">联系方式: {{datas.user_cash_info.account_number}}</p>
 			</div>
 		</div>
 		<div class="total">
-			<p class="total-text">交易总额：<span>￥{{datas.deal_money}}</span></p>
+			<p class="total-text">交易总额：<span>{{datas.deal_money}}CNY</span></p>
 		</div>
 		<ul class="list">
 			<li>
 				<p class="left">买家</p>
-				<p class="right">{{datas.seller_name}}</p>
+				<p class="right">{{datas.user_cash_info.real_name}}</p>
 			</li>
 			<li>
 				<p class="left">单价</p>
-				<p class="right">{{datas.price}}</p>
+				<p class="right">{{datas.price}}CNY</p>
 			</li>
 			<li>
 				<p class="left">数量</p>
@@ -27,25 +27,21 @@
 			</li>
 			<li>
 				<p class="left">下单时间</p>
-				<p class="right">{{datas.format_create_time}}</p>
+				<p class="right">{{datas.create_time}}</p>
 			</li>
 			<li>
 				<p class="left">参考号</p>
 				<p class="right">{{datas.id}}</p>
 			</li>
 			<li>
-				<button class="right" v-show="cannelBtn" type="button" @click="cannel()">取消交易</button>
+				<button class="right" v-show="datas.is_sure == 0" type="button" @click="cannel()">取消交易</button>
 				<button class="right" v-show="comfirmBtn" type="button" @click="comfirm();">确认已收款</button>
 			</li>
 		</ul>
 		<!-- 取消订单弹窗 -->
-		<div class="cannel-order" v-show="cannelOrder">
+		<div class="cannel-order" v-show="cannelBtn">
 			<div class="cannel-order-modal">
-				<div class="title">确认取消交易</div>
-				<div class="content">如果您已向卖家付款，请千万不要取消交易</div>
-				<div class="select">
-					<input type="checkbox" value=""><span>我还没有付款给对方</span>
-				</div>
+				<div class="title">确认取消交易？</div>
 				<div class="btns">
 					<button type="button" @click="cannelBtns()">取消</button>
 					<button class="comfirms" type="button" @click="cannelPay()">确认</button>
@@ -56,9 +52,9 @@
 		<div class="cannel-order" v-show="comfirmOrder">
 			<div class="cannel-order-modal">
 				<div class="title">付款确认</div>
-				<div class="content">请确认买家已向您付款</div>
+				<div class="content tc">请确认买家已向您付款</div>
 				<div class="btns">
-					<button type="button" @click="cannelBtns()">取消</button>
+					<button type="button"  @click="cannelBtns()">取消</button>
 					<button class="comfirms" type="button" @click="comfirmPay()">确认</button>
 				</div>
 			</div>
@@ -92,6 +88,7 @@
 		},
 		methods: {
 			getList(id) {
+				var i = layer.load();
 				let _this = this;
 				_this.$http({
 					url: "/api/legal_deal",
@@ -102,6 +99,7 @@
 						Authorization: _this.token
 					}
 				}).then(res => {
+					layer.close(i);
 					console.log(res);
 					if (res.data.type == 'ok') {
 						_this.datas = res.data.message;
@@ -119,12 +117,12 @@
 							_this.statusText = "买家已付款，请核实后确认";
 						}
 
-						if (_this.datas.is_sure == 0 && _this.datas.type == 'sell') {
-							_this.cannelBtn = true;
+						if (_this.datas.is_sure == 0) {
+							// _this.cannelBtn = true;
 						} else {
 							_this.cannelBtn = false;
 						}
-						if (_this.datas.is_sure == 3 && _this.datas.type == 'buy') {
+						if (_this.datas.is_sure == 3 && _this.datas.type == 'sell') {
 							_this.comfirmBtn = true;
 						} else {
 							_this.comfirmBtn = false;
@@ -133,6 +131,7 @@
 				});
 			},
 			cannel() {
+				this.cannelBtn = true;
 				document.getElementsByTagName("body")[0].className = "body";
 				this.cannelOrder = true;
 			},
@@ -142,12 +141,14 @@
 			},
 			// 取消按钮
 			cannelBtns() {
+				this.cannelBtn = false;
 				document.body.removeAttribute("class", "body");
 				this.cannelOrder = false;
 				this.comfirmOrder = false;
 			},
 			// 取消订单
 			cannelPay() {
+				var i = layer.load();
 				let _this = this;
 				let ids = this.$route.query.id;
 				let params = {
@@ -161,15 +162,21 @@
 						Authorization: localStorage.getItem("token")
 					}
 				}).then(res => {
+					this.cannelBtn = false;
+					layer.close(i);
 					console.log(res);
 					layer.msg(res.data.message);
 					_this.getList(ids);
 					_this.cannelOrder = false;
 					_this.comfirmOrder = false;
+					setTimeout(() => {
+						location.reload();
+					}, 1000);
 				});
 			},
 			// 确认订单
 			comfirmPay() {
+				var i = layer.load();
 				let _this = this;
 				let ids = this.$route.query.id;
 				let params = {
@@ -183,13 +190,15 @@
 						Authorization: localStorage.getItem("token")
 					}
 				}).then(res => {
+					layer.close(i);
 					console.log(res);
 					layer.msg(res.data.message);
 					if (res.data.type == 'ok') {
 						setInterval(function() {
-							_this.$router.push({
-								path: '/LegalRecord'
-							});
+							// _this.$router.push({
+							// 	path: '/LegalRecord'
+							// });
+							location.reload();
 						}, 500)
 					} else {
 						_this.cannelOrder = false;
@@ -205,7 +214,10 @@
 
 <style lang='scss'>
 	$purple:#563BD1;
-
+    .status{
+		background: none;
+		color: #333;
+	}
 	.body {
 		height: 100%;
 		overflow: hidden;
@@ -278,6 +290,7 @@
 					color: #fff;
 					border-radius: 6px;
 					padding: 10px;
+					cursor: pointer;
 				}
 
 			}
@@ -336,6 +349,7 @@
 						border: none;
 						outline: none;
 						background-color: rgba(0, 0, 0, 0);
+						cursor: pointer;
 					}
 
 					>button:last-child {

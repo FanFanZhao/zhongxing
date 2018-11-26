@@ -60,15 +60,16 @@ export default {
                         url: '/api/'+'transaction/deal',
                         method:'post',
                         data:{
-                            legal_id:currencys_id,
-                            currency_id:legals_id
+                            legal_id:legals_id,
+                            currency_id:currencys_id
                         },  
                         headers: {'Authorization':  localStorage.getItem('token')},    
                     }).then(res=>{
-                        // console.log(res ,222)
+                        console.log(res ,222)
                         // layer.close(i);
                         if(res.data.type == "ok"){
                            this.deList = res.data.message.complete;
+                           console.log(this.deList)
                            this.connect();
                         }else{
                             layer.msg(res.data.message)
@@ -81,41 +82,36 @@ export default {
             console.log('completesocket')
             var that = this;
             that.$socket.emit("login", this.$makeSocketId());
-            that.$socket.on('deal_list',function(msg){
-                if(msg.type == 'deal_list'){
+            that.$socket.on('transaction',function(msg){
+                console.log(msg);
+                if(msg.type == 'transaction'){
                     var complete = JSON.parse(msg.complete);
                     console.log(complete);
                     that.deList = complete;
+                    console.log(this.deList)
                 }
-                console.log(msg);
             })
         }
       },
     mounted(){
-         var that = this;
-          eventBus.$on('toTrade0', function (data0) {
-                that.currency_id=data0.currency_id
-                that.legal_id=data0.legal_id
-                that.complete(data0.legal_id,data0.currency_id)
-          });
-           eventBus.$on('toTrade', function (data0) {
-                that.currency_id=data0.currency_id
-                that.legal_id=data0.legal_id
-                that.complete(data0.legal_id,data0.currency_id)
-          })
-          eventBus.$on('tradeOk',function(data){
-              
-              if(data.status == 'ok'){
-                  that.complete(that.legal_id,that.currency_id)
-              }
-          })
-          eventBus.$on('buyTrade', function (data) {
-            //  that.connect();
+        var that = this;
+        eventBus.$on('toTrade0', function (data0) {
+            that.currency_id=data0.currency_id
+            that.legal_id=data0.legal_id
+            that.complete(data0.legal_id,data0.currency_id)
         });
-       
-    }
-
-    
+        eventBus.$on('toTrade', function (data0) {
+            that.currency_id=data0.currency_id
+            that.legal_id=data0.legal_id
+            that.complete(data0.legal_id,data0.currency_id)
+        })
+        eventBus.$on('tradeOk',function(data){
+            
+            if(data.status == 'ok'){
+                that.complete(that.legal_id,that.currency_id)
+            }
+        })
+    } 
 }
 </script>
 <style scoped>

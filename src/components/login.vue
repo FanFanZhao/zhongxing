@@ -6,14 +6,32 @@
             <div class="account">
                 <div class="main">
                     <p class="main_title">欢迎登录</p>
+                    <div class="tab flex" @click="account_number=''">
+                      <span @click="isMb = true" :class="{now:isMb}">手机登录</span>
+                      <span @click="isMb = false" :class="{now:!isMb}">邮箱登录</span>
+                    </div>
                     <div class="register-input">
                         <span class="register-item">账号</span>
-                        <input type="text" class="input-main input-content" maxlength="20" v-model="account_number" id="account">
+                         <select name="" v-if="isMb" class="chooseTel scroll" v-model="areaCode" ref="select">
+                        <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
+                      </select>
+                       <input type="text" class="input-main input-content phone" maxlength="20" v-model="account_number" id="account" :style='{width:isMb?"auto":"520px !important"}'>
                     </div>
-                     <div class="register-input">
+                     <div class="register-input pass-box">
                         <span class="register-item">密码</span>
-                        <input type="password" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
+                        <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                     </div>
+                    <!--验证码-->
+                   
+                    <div class="register-input bdr-part">
+                        <span class="register-item">验证码</span>
+                        <div class="flex">
+                    <input type="text" v-model="code" class="codes" id="code">
+                    <button type='button' class="code-btn redBg curPer" @click="sendCode">发送验证码</button>
+                    </div>
+                </div>
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
                         <button class="register-button curPer redBg " @click="login">登录</button>
@@ -40,14 +58,27 @@
 <script>
 import indexHeader from "@/view/indexHeader";
 import indexFooter from "@/view/indexFooter";
+import country from '../lib/country.js'
 export default {
   name: "login",
   components: { indexHeader, indexFooter },
   data() {
     return {
       account_number: "",
-      password: ""
+      password: "",
+      code:'',
+      areaCode:0,
+      country:country,
+      isMb: true,                  //是否为手机注册
+      account: "",                //用户名
+      showpass:false
     };
+  },
+  beforeRouteEnter(to,from,next){
+    if(from.path == '/dealCenter'){
+      window.location.reload();
+    }
+    next()
   },
   created() {
     console.log(this.$utils);
@@ -72,7 +103,49 @@ export default {
           
       })                       
     },
+    //发送验证码
+    sendCode(e){
+      console.log(this.country[this.areaCode].area_code)
+      var url;
+      var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      var i = layer.load();
+       let account_number = this.$utils.trim(this.account_number);
+      if(emreg.test(account_number)){
+          url = 'sms_mail'
+      }else{
+         url = 'sms_send'
+      }
+    this.$http({
+        url: '/api/' + url,
+        method: "post",
+        data: {
+          user_string: account_number,
+          front:country[this.areaCode].area_code
+        }
+      }).then(res=>{
+        console.log(res)
+        layer.close(i);
+         layer.msg(res.data.message);
+         if(res.data.type == 'ok'){
+           //验证码倒计时
+           var time = 60;
+      var timer = null;
+      timer = setInterval(function() {
+        e.target.innerHTML = time + "秒";
+        e.target.disabled = true;
+        if (time == 0) {
+          e.target.innerHTML = "验证码";
+          e.target.disabled = false;
+          clearInterval(timer);
+          return;
+        }
+        time--;
+      }, 1000);
+         }
+      })
+    },
     login() {
+      
       let account_number = this.$utils.trim(this.account_number);
       let password = this.$utils.trim(this.password);
       if (this.account_number.length == "") {
@@ -83,25 +156,35 @@ export default {
         layer.tips("密码不能小于六位!", "#pwd");
         return;
       }
+      if (this.code == '') {
+        layer.tips("验证码不能为空!", "#code");
+        return;
+      }
+      var i = layer.load();
       this.$http({
-        url: '/api/' + "user/login",
+        url: '/api/' + "user/pc_login",
         method: "post",
         data: {
           user_string: account_number,
           password: password,
+          code:this.code,
           type: 1
         }
       })
         .then(res => {
           console.log(res);
-
+           layer.close(i);
           res = res.data;
           if (res.type === "ok") {
+            layer.msg('登录成功');
             localStorage.setItem("token", res.message);
             localStorage.setItem("accountNum", account_number);
             this.$store.commit("setAccountNum");
             this.userInfo();
-            this.$router.push("/");
+            setTimeout(() => {
+               this.$router.push("/");
+            }, 1000);
+           
           } else {
             layer.msg(res.message);
           }
@@ -115,6 +198,44 @@ export default {
 </script>
 
 <style scoped>
+.tab{
+  margin-top: 20px;
+  width: 230px;
+}
+.tab span{
+  padding-bottom: 5px;
+  margin-right: 40px;
+  cursor: pointer;
+}
+.tab .now{
+  color: #d45858;
+  font-weight: 600;
+  border-bottom: 2px solid #d45858;
+}
+.chooseTel{
+    height: 46px;
+    width: 160px;
+    border-color: #ccc;
+    padding: 0 10px;
+    font-size: 14px;
+}
+.phone{
+  width: 360px!important;
+  border-left: none;
+}
+.code-btn{
+  cursor: pointer;
+}
+.codes{
+  width: 430px;
+  padding: 0 20px;
+  min-height: 46px;
+  border:1px solid #ccc;
+}
+.code-btn{
+  width: 90px;
+  min-height: 46px;
+}
 .login{
   min-height: 1050px;
 }

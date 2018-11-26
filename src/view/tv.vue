@@ -22,15 +22,17 @@
 				ws:null,
 				lists:[],
 				newData:'',
-				bg:'#181b2a',
+				bg:'#ffffff',
 				grid:'#f7f8fa',
 				theme:'',
 				csspath:'bundles/new.css'
-
 			}
 		},
 		created(){
-			
+			if(window.localStorage.getItem('tradeData')){
+				var localData=JSON.parse(window.localStorage.getItem('tradeData'))
+				this.$store.state.symbol = localData.currency_name + "/" + localData.legal_name;
+			}
 
 		},
 		sockets: {},
@@ -53,17 +55,15 @@
 		mounted() {
 			var that = this;
 			$('.chart-page').css('background','#131a21')
- 
-
 			var theme=window.localStorage.getItem('theme') || '';
 			if(theme=='dark'){
-				that.bg='#ffffff';
-				that.grid='#cccccc';
+				that.bg='#181b2a';
+				that.grid='#f7f8fa';
 				that.csspath='bundles/newdark.css';
 				that.createWidget();
 			}else{
-				that.bg='#181b2a';
-				that.grid='#1E2740';
+				that.bg='#ffffff';
+				that.grid='#f7f8fa';
 				that.csspath='bundles/new.css'
 				that.createWidget();
 				
@@ -74,14 +74,14 @@
 					return;
 				}
 				if(data=='dark'){
-					that.bg='#ffffff';
-					that.grid='#cccccc';
+					that.bg='#181b2a';
+					that.grid='#f7f8fa';
 					that.csspath='bundles/newdark.css'
 					that.createWidget();
 					
 				}else{
-					that.bg='#181b2a';
-					that.grid='#1E2740';
+					that.bg='#ffffff';
+					that.grid='#f7f8fa';
 					that.csspath='bundles/new.css'
 					that.createWidget();
 					

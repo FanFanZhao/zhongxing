@@ -8,6 +8,9 @@
                     <p class="main_title">忘记密码</p>
                     <div class="register-input">
                         <span class="register-item">账号</span>
+                         <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
+                        <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
+                      </select>
                         <input type="text" class="input-main input-content" maxlength="20" v-model="account_number" id="account">
                     </div>
                      <div class="register-input code-input" >
@@ -26,13 +29,17 @@
                 </div>
                 <div class="main" v-if="showReset">
                     <div class="main_title">设置密码</div>
-                    <div class="register-input">
+                    <div class="register-input pass-box">
                         <span class="register-item">请输入密码</span>
-                        <input type="password" class="input-main input-content"  v-model="password" id="pwd">
+                        <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                     </div>
-                    <div class="register-input">
+                    <div class="register-input pass-box">
                         <span class="register-item">请再次输入密码</span>
-                        <input type="password" class="input-main input-content"  v-model="re_password" id="repwd">
+                        <input :type="showrepass?'text':'password'" class="input-main input-content" maxlength="16" v-model="re_password" id="repwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showrepass" @click="showrepass = true">
                     </div>
                     <button class="register-button curPer redBg" type="button" @click="resetPass" style="margin-top:20px">确认</button>
                 </div>
@@ -47,29 +54,39 @@
 <script>
 import indexHeader from "@/view/indexHeader";
 import indexFooter from "@/view/indexFooter";
+import country from '../lib/country.js'
 export default {
   components: { indexHeader, indexFooter },
   data() {
     return {
+      showpass:false,
+      showrepass:false,
       isMb: true,
       account_number: "",
       phoneCode: "",
       showReset: false,
       password: "",
-      re_password: ""
+      re_password: "",
+      country:country,
+      areaCode:0,
+      isMb: true,                  //是否为手机注册
+      account: "",                //用户名
     };
   },
   created() {},
   methods: {
     sendCode(url) {
+    var i = layer.load();
       this.$http({
         url: "/api/" + url,
         method: "post",
         data: {
           user_string: this.account_number,
-          type: "forget"
+          type: "forget",
+          front:country[this.areaCode].area_code
         }
       }).then(res => {
+        layer.close(i);
         console.log(res);
         layer.msg(res.data.message);
       });
@@ -78,20 +95,23 @@ export default {
       if (e.target.disabled) {
         return;
       } else {
-        var reg = /^1[345678]\d{9}$/;
+        // var reg = /^1[345678]\d{9}$/;
         var url = "sms_send";
         var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if (this.account_number == "") {
           layer.tips("请输入账号", "#account");
           return;
-        } else if (reg.test(this.account_number)) {
-        } else if (emreg.test(this.account_number)) {
+        } 
+        // else if (reg.test(this.account_number)) {
+        // } 
+        else if (emreg.test(this.account_number)) {
           url = "sms_mail";
           this.isMb = false;
-        } else {
-          layer.tips("您输入的手机或邮箱账号不符合规则!", "#account");
-          return;
         }
+        //  else {
+        //   layer.tips("您输入的手机或邮箱账号不符合规则!", "#account");
+        //   return;
+        // }
 
         this.sendCode(url);
         var time = 60;
@@ -110,10 +130,10 @@ export default {
       }
     },
     check() {
-      var reg = /^1[345678]\d{9}$/;
+      // var reg = /^1[345678]\d{9}$/;
       var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
       let user_string = this.account_number;
-      var isMobile = reg.test(user_string);
+      // var isMobile = reg.test(user_string);
       var isEmail = emreg.test(user_string);
       var url = "user/check_mobile";
       var data = {};
@@ -131,20 +151,25 @@ export default {
       } else if (isEmail) {
         url = "user/check_email";
         data.email_code = this.phoneCode;
-      } else if (isMobile) {
-        url = "user/check_mobile";
+      }else{
         data.mobile_code = this.phoneCode;
-      } else {
-        layer.tips("您输入的邮箱或手机号不符合规则!", "#account");
-        return;
       }
+      
+      //  else if (isMobile) {
+      //   url = "user/check_mobile";
+      //   data.mobile_code = this.phoneCode;
+      // } else {
+      //   layer.tips("您输入的邮箱或手机号不符合规则!", "#account");
+      //   return;
+      // }
       console.log(data);
-
+       var i = layer.load();
       this.$http({
         url: "/api/" + url,
         method: "post",
         data: data
       }).then(res => {
+        layer.close(i);
         console.log(res);
         layer.msg(res.data.message);
         if (res.data.type == "ok") {
@@ -155,10 +180,18 @@ export default {
       });
     },
     resetPass() {
+      var regPsws = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/;
       if (this.password == "") {
         layer.msg("请输入密码");
         return;
-      } else if (this.re_password == "") {
+      }else if(this.password.length<6||this.password.length>16){
+        layer.msg('密码只能在6-16位之间');
+        return;
+      } else if(!regPsws.test(this.password)){
+        layer.msg('密码必须由数字和字母组成');
+        return;
+      }
+      else if (this.re_password == "") {
         layer.msg("请再次输入密码");
         return;
       } else if (this.password !== this.re_password) {
@@ -171,11 +204,13 @@ export default {
           repassword: this.re_password,
           code: this.phoneCode
         };
+        var i = layer.load();
         this.$http({
           url: "/api/user/forget",
           method: "post",
           data: data
         }).then(res => {
+          layer.close(i);
           //   console.log(res);
           layer.msg(res.data.message);
           if (res.data.type == "ok") {
@@ -189,6 +224,16 @@ export default {
 </script>
 
 <style scoped>
+#account{
+  width: 355px;
+}
+.chooseTel{
+    height: 45px;
+    width: 160px;
+    border-color: #ccc;
+    padding: 0 10px;
+    font-size: 14px;
+}
 .forget-box{
   min-height: 1050px;
 }
@@ -220,6 +265,7 @@ export default {
 .register-input {
   position: relative;
   margin-top: 20px;
+  width: 520px;
 }
 .input-box {
   position: relative;
@@ -298,5 +344,8 @@ export default {
   /* color: #7a98f7; */
   /* background: #1e2235; */
   width: 94px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
 }
 </style>

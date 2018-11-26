@@ -14,21 +14,14 @@
             <div class="swiper-wrapper">
                <div class="swiper-slide sliders">
                    <a href="">
-                   <img src="../../static/imgs/new_banner.png" />
+                   <img src="../../static/imgs/banners04.jpg" />
                    </a>
                </div>
                <div class="swiper-slide sliders">
                    <a href="">
-                   <img src="../../static/imgs/new_banner.png" />
+                   <img src="../../static/imgs/banners05.jpg" />
                    </a>
                </div>
-               <div class="swiper-slide sliders">
-                   <a href="">
-                   <img src="../../static/imgs/new_banner.png" />
-                   </a>
-               </div>
-                
-               
             </div>
              <div class="swiper-pagination swiper-pagination02"></div>
         </div>
@@ -55,7 +48,7 @@
      
         <div class="notice">
            <ul class="flex alcenter center notice_ul">
-               <li v-for="item in noticeList" :key="item.id" class="fl notice_li"><a class="notice_a ft14" :data-id='item.id'>{{item.name}}</a></li>
+               <li v-for="item in noticeList" :key="item.id" class="fl notice_li" @click="$router.push({path:'components/noticeDetail',query:{id:item.id}})"><a class="notice_a ft14" :data-id='item.id'>{{item.title}}</a></li>
            </ul>
         </div>
         <!-- <div class="active-data clearfix">
@@ -98,9 +91,11 @@
             <span>币种对{{nowCoin}}</span>
             <span>价格({{nowCoin}})</span>
              <span>涨跌</span>
+              <span>最高价</span>
+               <span>最低价</span>
             <span>交易量({{nowCoin}})</span>
             
-            <!-- <span>操作</span> -->
+            <span>操作</span>
           </div>
           
           <ul class="list-con scroll" v-for="(item,index) in quotation" :key="index" v-if="nowCoin == item.name">
@@ -117,8 +112,14 @@
                 <!-- <span :class="setColor(li.last_price,li.yesterday_last_price)">{{li.change == null?'+0.000':li.change}}%</span> -->
                 <span :class="setColor(li.change)" class="bold">{{(li.change>0?'+':'')+(li.change-0).toFixed(2)}}%</span>
               </div>
+              <div>
+                <span class="high_blue bold">{{li.high_price}}</span>
+              </div>
+              <div>
+                <span class="high_blue bold">{{li.low_price}}</span>
+              </div>
               <div class="count high_blue bold">{{li.volume == null?'0':li.volume}}</div>
-              
+              <div @click="setCurrent(index,inde)" style="color:#563BD1">去交易</div>
               <!-- <div>
                 <span @click="setData({currency_id:item.id,legal_id:li.currency_id,currency_name:item.name,leg_name:li.name,isShow:index})">交易 </span>
               </div> -->
@@ -184,7 +185,7 @@
             </div>
         </div>
         <!--图文内容-->
-        <div id="content01" class="content01 flex alcenter   center" style="background:#fff;">
+        <div id="content01" class="content01 flex alcenter   center" style="background:#f3f3f3;">
             <div class="text01 mr100 left01 animated">
               <h1 class="ft26 bold mb30">全球化的数字资产配置及交易服务</h1>
               <p class="ft16 bold mb10">遍布全球的项目拓展及运营管理体系</p>
@@ -203,7 +204,7 @@
             </div>
             
         </div>
-        <div class="content01 flex alcenter grayBg center" style="background:#fff;">
+        <div class="content01 flex alcenter grayBg center" style="background:#f3f3f3;">
             <div class="text01 mr100">
               <h1 class="ft26 bold mb30">依托4年的数字资产安全风控经验</h1>
               <p class="ft16 bold mb10">安全稳定运营数字资产交易所超过四年</p>
@@ -231,7 +232,7 @@
         <!--马上交易-->
         <div class="go_transfer">
            <h1 class="bold ft24 mb30 tc">马上交易</h1>
-           <p class="ft14 mb30 tc">欢迎加入我们的团队，共同提升，常悦更好的自己，创造更好的人生价值</p>
+           <p class="ft14 mb30 tc">注册一个一带一路交易中心账号，开启交易旅程</p>
            <div class="login_register flex alcenter center" v-if="!account_number.length">
              <div class="login_btn mr60 bdr-part" @click="go_login">登录</div>
              <div class="register_btn white" @click="go_register">注册</div>
@@ -273,7 +274,7 @@ export default {
       //       {href:'',img:'../assets/images/bg2.png'},
       //       {href:'',img:'../assets/images/bg2.png'}
       //   ],
-      noticeList:'',
+      noticeList: "",
       curSwiper: 0,
       curCoinTab: 0,
       coinTabList: [{ title: "USDT行情" }, { title: "BTC行情" }],
@@ -282,16 +283,16 @@ export default {
       swiperList: [],
       coinList: [],
       coin_list: [],
-      account_number:''
+      account_number: ""
     };
   },
   created() {
     // this.init(this.initKline);
     this.account_number = window.localStorage.getItem("accountNum") || "";
     this.getQuotation();
-    eventBus.$on('loginSuccess',function(){
-       location.reload();
-    })
+    eventBus.$on("loginSuccess", function() {
+      location.reload();
+    });
   },
   mounted() {
     var mySwiper = new Swiper(".swiper-container01", {
@@ -316,22 +317,24 @@ export default {
       observeParents: true //修改swiper的父元素时，自动初始化swiper
     });
     // this.setChart();
-    // this.$http({
-    //   url: '/api/' + "news/help",
-    //   method: "get",
-    //   data: {}
-    // })
-    //   .then(res => {
-    //     console.log(res);
-    //     if (res.status === 200) {
-    //       this.noticeList = res.data.message;
-    //     } else {
-    //       layer.msg(res.message);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.log(error);
-    //   });
+    this.$http({
+      url: '/api/' + "news/list",
+      method: "post",
+      data: {}
+    })
+      .then(res => {
+        console.log(res);
+        if (res.data.type == 'ok') {
+          var list = res.data.message.list;
+          if(list.length>4){
+
+            this.noticeList = list.slice(0,4)
+          } else {
+            this.noticeList = list;
+          }
+        }
+      })
+     
     //  eventBus.$on('toNew', function (data) {
     //   console.log(data);
     //   if(data){
@@ -343,21 +346,19 @@ export default {
     //     }
     // });
     this.connect();
-   
   },
   methods: {
-    
     setData(obj) {
       window.localStorage.setItem("tradeData", JSON.stringify(obj));
       this.$router.push("/dealCenter");
     },
     //登录
-    go_login(){
-       this.$router.push('/components/login')
+    go_login() {
+      this.$router.push("/components/login");
     },
     //注册
-    go_register(){
-       this.$router.push('/components/register')
+    go_register() {
+      this.$router.push("/components/register");
     },
     connect() {
       var that = this;
@@ -405,11 +406,27 @@ export default {
         return "";
       }
     },
+    setCurrent(index, inde) {
+      
+      let msg = this.quotation[index];
+      let quo = msg.quotation[inde];
+      var tradeData = {
+        currency_id: quo.currency_id,
+        legal_id: quo.legal_id,
+        currency_name: quo.currency_name,
+        legal_name: quo.legal_name,
+        isShow: index
+      };
+      window.localStorage.setItem("tradeData", JSON.stringify(tradeData));
+      this.$router.push('/dealCenter');
+    },
     getQuotation() {
+      var i = layer.load();
       this.$http({
         url: "/api/currency/quotation",
         method: "get"
       }).then(res => {
+        layer.close(i);
         console.log(res.data);
         if (res.data.type == "ok" && res.data.message.length != 0) {
           this.quotation = res.data.message;
@@ -417,13 +434,15 @@ export default {
           let msg = res.data.message[0];
           let quo = msg.quotation[0];
           var tradeData = {
-            currency_id: msg.id,
-            legal_id: quo.currency_id,
-            currency_name: msg.name,
-            leg_name: quo.name,
-            isShow:0
+            currency_id: quo.currency_id,
+            legal_id: quo.legal_id,
+            currency_name: quo.currency_name,
+            legal_name: quo.legal_name,
+            isShow: 0
           };
-          window.localStorage.setItem('tradeData',JSON.stringify(tradeData))
+          if (!window.localStorage.getItem("tradeData")) {
+            window.localStorage.setItem("tradeData", JSON.stringify(tradeData));
+          }
         }
       });
     },
@@ -434,7 +453,7 @@ export default {
       this.curSwiper = index;
     },
     init(callback) {
-      this.$http.post('/api/' + "quotation").then(res => {
+      this.$http.post("/api/" + "quotation").then(res => {
         if (res.data.type == "ok") {
           this.coinList = res.data.message.coin_list;
           this.swiperList = res.data.message.coin_list;
@@ -445,7 +464,7 @@ export default {
       });
     },
     initKline() {
-      this.$http.post('/api/' + "historical_data").then(res => {
+      this.$http.post("/api/" + "historical_data").then(res => {
         if (res.data.type == "ok") {
           if (res.data.message.day.length > 0) {
             this.coinKline = res.data.message.day[0].data;
@@ -578,7 +597,6 @@ export default {
 };
 </script>
 <style lang='scss' scoped>
-
 .swiper-container {
   // height: 310px;
 }
@@ -588,7 +606,7 @@ export default {
 }
 .swiper-container img {
   display: block;
-  margin-top: -50px;
+  // margin-top: -50px;
   // height: 310px;
 }
 .coin-tab {
@@ -596,7 +614,7 @@ export default {
   margin: 0 auto;
   line-height: 52px;
   height: 52px;
-  background: #563BD1;
+  background: #563bd1;
   // color: #c7cce6;
   display: flex;
   > ul {
@@ -626,7 +644,7 @@ export default {
   .list-title {
     display: flex;
     padding: 0 30px;
-    background: #563BD1;
+    background: #563bd1;
     > span {
       flex: 1;
 
@@ -643,18 +661,22 @@ export default {
     }
   }
   .list-con {
-    background: #F0F0F0;
+    background: #f0f0f0;
     max-height: 400px;
-    overflow: scroll;
-    border:1px solid #563BD1;
+    overflow-y: scroll;
+    border: 1px solid #563bd1;
     border-top: none;
 
     li {
+      cursor: pointer;
       display: flex;
       // border-top: 1px solid #ddd;
       padding: 10px 30px;
       line-height: 30px;
       // color: #c7cce6;
+      &:hover{
+        background: #fff;
+      }
       .high_blue{
           color:#563BD1; 
         }
@@ -667,7 +689,6 @@ export default {
       > div {
         flex: 1;
         text-align: center;
-        
       }
       > div:first-child {
         text-align: left;
@@ -676,7 +697,7 @@ export default {
         text-align: right;
       }
     }
-    li:last-child{
+    li:last-child {
       // border-bottom: 1px solid #ddd;
     }
   }
@@ -710,12 +731,12 @@ export default {
 }
 .notice_li {
   // flex: 1;
-  
+
   text-align: center;
 }
-.notice_li a{
-   padding: 0 25px;
-   letter-spacing: 5px;
+.notice_li a {
+  padding: 0 25px;
+  letter-spacing: 5px;
 }
 .notice_li::after {
   content: "/";
@@ -726,7 +747,7 @@ export default {
   color: #6b80ae;
 }
 .notice_a:hover {
-  color: #563BD1;
+  color: #563bd1;
   cursor: pointer;
 }
 .coins li {
@@ -747,53 +768,53 @@ export default {
   cursor: pointer;
   // background: #303e4c;
 }
-.content01{
+.content01 {
   padding: 40px 0;
-  background: #f3f3f3;
-  .imgs01{
-      width: 250px;
+  background: #fff;
+  .imgs01 {
+    width: 250px;
   }
-  .imgs02{
+  .imgs02 {
     width: 500px;
   }
-  .imgs03{
+  .imgs03 {
     width: 300px;
   }
-  .imgs04{
+  .imgs04 {
     width: 500px;
   }
-  .imgs05{
+  .imgs05 {
     width: 150px;
   }
 }
-.bg01{
-  background: url('../assets/images/content_bg01.png') center no-repeat;
+.bg01 {
+  background: url("../assets/images/content_bg01.png") center no-repeat;
   width: 100%;
   // height: 300px;
   background-size: cover;
   padding: 150px 0;
 }
-.bg02{
-  background: url('../assets/images/content_bg02.png') center no-repeat;
+.bg02 {
+  background: url("../assets/images/content_bg02.png") center no-repeat;
   width: 100%;
   background-size: cover;
 }
-.login_btn{
+.login_btn {
   padding: 15px 80px;
-  border:1px solid rgba(0,0,0,1);
-  border-radius:5px;
+  border: 1px solid rgba(0, 0, 0, 1);
+  border-radius: 5px;
   cursor: pointer;
 }
-.register_btn{
+.register_btn {
   padding: 15px 80px;
-  background:#563BD1;
-  border-radius:5px;
+  background: #563bd1;
+  border-radius: 5px;
   cursor: pointer;
 }
-.go_transfer{
+.go_transfer {
   padding: 50px 0;
 }
-.foot{
+.foot {
   padding: 50px 0;
 }
 </style>

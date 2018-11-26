@@ -46,18 +46,21 @@ export default {
   },
   methods: {
     getCoins() {
+        var load = layer.load();
       this.token = window.localStorage.getItem("token") || "";
       this.$http({
         url: "/api/wallet/list",
         method: "post",
         headers: { Authorization: this.token }
       }).then(res => {
+          layer.close(load);
         if (res.data.type == "ok") {
           this.coins = res.data.message.legal_wallet.balance;
         }
       });
     },
     transfer(){
+        
         if(this.number == ''){
             layer.msg('请输入划转数量');return;
         } else {
@@ -66,19 +69,20 @@ export default {
             data.type = this.types[0] == '交易账户'?2:1;
             data.currency_id = this.coins[this.coinIndex].currency;
             // console.log(data);return;
-            
+            var load = layer.load();
             this.$http({
                 url:'/api/wallet/change',
                 method:'post',
                 data:data,
                 headers: { 'Authorization': this.token }
             }).then(res => {
+                layer.close(load);
                 console.log(res);
                 if(res.data.type == 'ok'){
                         layer.msg(res.data.message)
 
                     setTimeout(() => {
-                        this.$router.push({path:'/legalAccount',name:'legalAccount',params:{currency_id:this.coins[this.coinIndex].currency}})
+                        // this.$router.push({path:'/legalAccount',name:'legalAccount',params:{currency_id:this.coins[this.coinIndex].currency}})
                     },2000)
             
                     

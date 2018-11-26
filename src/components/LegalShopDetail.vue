@@ -2,7 +2,7 @@
   <div id="legal-shop-detail">
     <div class="top flex bg-part clr-part ft14" v-if="info.name">
       <div class="top-t flex bdr-part">
-        <div class="logo">{{info.name.charAt(0)}}</div>
+        <div class="logo white">{{info.name.charAt(0)}}</div>
         <div>
           <div>{{info.name}}</div>
           <div>注册时间：{{info.create_time}}</div>
@@ -22,7 +22,7 @@
           <div>完成单</div>
         </div>
         <div>
-          <div>{{(info.done == 0 || info.total_number == 0)?0:(((info.done-0)/(info.total-0)-0)*100).toFixed(4)}}%</div>
+          <div>{{(info.done == 0 || info.total == 0)?0:(((info.done-0)/(info.total-0)-0)*100).toFixed(4)}}%</div>
           <div>完成率</div>
         </div>
       </div>
@@ -85,8 +85,8 @@
           <div class="w10">{{item.price}}</div>
           <div class="w10">{{item.way_name}}</div>
           <div>
-            <span @click="changeOrder('error_send',item.id)">异常</span>
-            <span @click="changeOrder('back_send',item.id)">撤回</span>
+            <span @click="changeOrder('error_send',item.id)" v-if="item.is_done!=1">异常</span>
+            <span @click="changeOrder('back_send',item.id)" v-if="item.is_done!=1">撤回</span>
             <router-link tag="span" :to="{path:'/shopLegalRecord',query:{id:item.id}}">查看订单</router-link>
           </div>
         </li>
@@ -158,6 +158,15 @@ export default {
       this.getList();
     }
   },
+  filters:{
+    getPercent(done,total){
+      if(done == 0 || total == 0){
+        return 0;
+      } else {
+
+      }
+    }
+  },
   methods: {
     getSellerInfo(more) {
       this.showWhich = "none";
@@ -205,7 +214,7 @@ export default {
           var msg = res.data.message;
           if (more) {
             if (msg.data.length) {
-              this.list = msg.data.concat(this.list);
+              this.list = this.list.concat(msg.data);
               this.filterPms.page += 1;
             } else {
               layer.msg("没有更多了");
@@ -330,6 +339,7 @@ export default {
       img {
         width: 16px;
         height: 16px;
+        vertical-align: middle;
       }
     }
   }

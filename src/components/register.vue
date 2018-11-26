@@ -8,20 +8,33 @@
                 <span :class="{active:!isMb}" @click="setIsMb(false)">邮箱注册</span>
             </div>
             <div class="step-one" v-show="!codeTrue">
-
+                 <!-- <div class="account-box">
+                    <div class="tip " v-if="isMb">请选择国籍</div>
+                    <select class="chooseCountry" v-if="isMb">
+                      <option value="">中国</option>
+                       <option value="">英国</option>
+                        <option value="">美国</option>
+                    </select>
+                </div> -->
                 <div class="account-box">
                     <div class="tip" v-if="isMb">请输入手机号</div>
                     <div class="tip" v-if="!isMb">请输入邮箱</div>
-                    <input type="text" v-model="account">
+                    <div class="flex">
+                      <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
+                        <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
+                      </select>
+                    <input type="text" v-if="isMb" v-model="account" class="phone">
+                    <input type="text" v-if="!isMb" v-model="account" class="">
+                    </div>
                 </div>
                     <div class="tip" style="margin-bottom:10px">请输入验证码</div>
                 <div class="code-box bdr-part">
                     <input type="text" v-model="code" class="code">
-                    <button type='button' class="code-btn redBg " @click="sendCode">发送验证码</button>
+                    <button type='button' class="code-btn redBg " :disabled="isCheck?false:true" :class="[isCheck?'':'pointer']"  @click="sendCode">发送验证码</button>
                 </div>
-                <button class="confirm-btn redBg" @click="checkCode" type="button">确认</button>
+                <!-- <button class="confirm-btn redBg" @click="checkCode" type="button">确认</button> -->
             </div>
-            <div class="setpass" v-show="codeTrue">
+            <div class="setpass">
                 <!-- <div class="title">设置地区</div> -->
                 <!-- <div class="area-box">
                   <div class="area">
@@ -42,26 +55,34 @@
                   </div>
                 </div> -->
                 
-                <div class="title">设置密码</div>
-                <div class="pwd-box">
-                    <div class="tip">请输入密码</div>
-                    <input type="password" v-model="pwd" class="pwd-input" placeholder="密码在6-16位之间">
+                <!-- <div class="title">设置密码</div> -->
+                <div class="pwd-box pass-box">
+                    <div class="tip">请输入登录密码</div>
+                    <input :type="showpass?'text':'password'" class="pwd-input" maxlength="16" v-model="pwd" id="pwd" placeholder="密码在6-16位之间,由数字和字母组成">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                 </div>
-                <div class="repwd-box">
-                    <div class="tip">请再次输入密码</div>
-                    <input type="password" v-model="repwd" class="repwd-input" placeholder="请再次输入密码">
+                <div class="repwd-box pass-box">
+                    <div class="tip">请确认密码</div>
+                    <input :type="showrepass?'text':'password'" class="repwd-input" maxlength="16" v-model="repwd" >
+                        <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showrepass" @click="showrepass = true">
                 </div>
                 <div class="invite-box">
                     <div class="tip">请输入邀请码</div>
-                    <input type="password" v-model="invite" class="invite-input">
+                    <input type="text" placeholder="选填" v-model="invite" class="invite-input">
                 </div>
-                <button type="button" @click="register" class="reg-btn confirm-btn redBg">确认</button>
+                <p class="flex alcenter ft14">
+                  <input id="agree" class="aggre" v-model="isCheck" @click="check" type="checkbox" /><label for="agree">同意 <router-link to="/aggrement" class="link_text">免责条款</router-link></label>
+                </p>
+                <button type="button" @click="register" :disabled="isCheck?false:true" :class="[isCheck?'':'pointer']" class="reg-btn confirm-btn redBg">确认</button>
             </div>
             </div>
     </div>
 </template>
 
 <script>
+import country from '../lib/country.js'
 import indexHeader from "@/view/indexHeader";
 export default {
   components: {
@@ -69,6 +90,8 @@ export default {
   },
   data() {
     return {
+      showpass:false,
+      showrepass:false,
       codeTrue: false,             //验证码是否正确
       isMb: true,                  //是否为手机注册
       account: "",                //用户名
@@ -78,6 +101,10 @@ export default {
       invite: "",                  //邀请码
       timer: "",                  //倒计时timer
       showList: false,            //是否显示地址列表
+      country:country,
+      areaCode:0,
+      disable:true,
+      isCheck:false
       //province: { id: "", name: "请选择省" },      //所选省份
       //provinces: [],                              //省份列表
 
@@ -90,9 +117,17 @@ export default {
   },
   created() {
     //获取所有省份
-    
+    console.log(this.country)
   },
   methods: {
+    check:function(val){
+        if(this.isCheck == false){
+          console.log('pppp')
+          this.disable = true;
+        }else{
+           this.disable = false;
+        }
+    },
     // 获取地区列表
     // getRegion(id, type, name) {
     //   if (type == "") {
@@ -175,11 +210,11 @@ export default {
       } else if (e.target.disabled) {
         return;
       } else if (isMb) {
-        var reg = /^1[345678]\d{9}$/;
-        if (!reg.test(this.account)) {
-          layer.msg("您输入的手机号不符合规则");
-          return;
-        }
+        // var reg = /^1[345678]\d{9}$/;
+        // if (!reg.test(this.account)) {
+        //   layer.msg("您输入的手机号不符合规则");
+        //   return;
+        // }
       } else if (!isMb) {
         var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if (!emreg.test(this.account)) {
@@ -191,19 +226,23 @@ export default {
       } else {
       }
       var time = 60;
-
-      this.timer = setInterval(function() {
+      var timer = null;
+      timer = setInterval(function() {
         e.target.innerHTML = time + "秒";
         e.target.disabled = true;
         if (time == 0) {
-          clearInterval(this.timer);
           e.target.innerHTML = "验证码";
           e.target.disabled = false;
+          clearInterval(timer);
           return;
         }
         time--;
       }, 1000);
+      
       let data = { user_string: this.account };
+      if(url == 'sms_send'){
+         data.front = country[this.areaCode].area_code
+      }
       var loa = layer.load();
       this.$http({
         url: "/api/" + url,
@@ -252,12 +291,39 @@ export default {
     },
     // 注册
     register() {
-      
+      console.log(this.code)
+      if(this.isMb){
+        if(this.account == ''){
+          layer.msg('请输入手机号');
+          return;
+        }else if(this.code == ''){
+           layer.msg('请输入验证码');
+           return;
+        }
+      }
+      if(!this.isMb){
+        if(this.account == ''){
+          layer.msg('请输入邮箱');
+          return;
+        }
+        var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+        if (!emreg.test(this.account)) {
+          layer.msg("您输入的邮箱不符合规则");
+          return;
+        }
+         if(this.code == ''){
+           layer.msg('请输入验证码');
+           return;
+        }
+      }
+      var regPsws = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/;
       if (this.pwd == "") {
         layer.msg("请输入密码");
         return;
       }else if(this.pwd.length <6 || this.pwd.length >16){
         layer.msg('密码只能在6-16位之间');return;
+      }else if(!regPsws.test(this.pwd)){
+         layer.msg('密码必须由数字和字母组成');return;
       }
        else if (this.repwd == "") {
         layer.msg("请再次输入密码");
@@ -278,12 +344,21 @@ export default {
       data.password = this.pwd;
       data.re_password = this.repwd;
       data.extension_code = this.invite;
+      
+      if(isMb){
+        var index = this.$refs.select.selectedIndex;
+        data.nationality = this.country[index].name_cn
+        console.log(this.country[index].name_cn)
+      }
       //console.log(data);return;
       var loa = layer.load();
       this.$http({
         url: "/api/" + "user/register",
         data: data,
-        method: "post"
+        method: "post",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
+        }    
       }).then(res => {
         layer.close(loa);
         layer.msg(res.data.message);
@@ -297,6 +372,38 @@ export default {
 </script>
 
 <style lang='scss'>
+.aggre{
+  width: 16px!important;
+  margin-right: 5px;
+}
+.link_text{
+  color: #d45858;
+}
+.pointer{
+  cursor: not-allowed!important;
+  opacity: 0.6;
+}
+.chooseCountry{
+      width: 520px;
+    min-height: 46px;
+    border-radius: 3px;
+    padding: 0 15px;
+    border-color: #ccc;
+}
+.chooseTel{
+    height: 46px;
+    width: 160px;
+    border-color: #ccc;
+    padding: 0 10px;
+    font-size: 14px;
+}
+.phone{
+  width: 360px!important;
+  border-left: none;
+}
+.code-btn{
+  cursor: pointer;
+}
 #register-box {
   min-height: 1050px;
   button{
@@ -367,6 +474,7 @@ export default {
     border: none;
     //background: #7a98f7;
     color: #fff;
+    cursor: pointer;
   }
   .area-box {
     position: relative;

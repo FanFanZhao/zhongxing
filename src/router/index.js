@@ -4,6 +4,7 @@ import home from '@/components/home'
 import homeContent from '@/view/homeContent'
 import dealCenter from '@/components/dealCenter'
 import userSetting from '@/components/userSetting'
+import HelpCenter from '@/components/HelpCenter'
 import c2c from '@/components/c2c'
 import login from '@/components/login'
 import UserCenter from '@/components/UserCenter'
@@ -37,10 +38,13 @@ import currencyApply from '@/view/currency_apply'
 import payOpts from '@/view/payOpts'
 import currencyList from '@/view/currency_list'
 import currencyEdit from '@/view/edit_currency'
+import advice from '@/view/advice'
+import aggrement from '@/view/aggrement' //隐私条款
 //收款方式
 
 import ForgetPwd from '@/components/ForgetPwd' //忘记密码
 import ResetPwd from '@/components/ResetPwd' //重置密码密码
+import bindPhone from '@/components/bindPhone'//绑定手机号
 import LegalRecord from '@/components/LegalRecord' //法币交易记录
 import LegalTradeSet from '@/components/LegalTradeSet' //法币交易设置
 import LegalSeller from '@/components/LegalSeller' //法币商家详情
@@ -108,12 +112,27 @@ export default new Router({
 					path:'/shopLegalRecord',
 					component:() => import ('../components/shop_legal_record.vue')
 				},
+				{
+					path: '/aggrement',
+					name: 'aggrement',
+					component: aggrement
+				},
 				
 				
 				{
 					path: '/dealCenter',
 					name: 'dealCenter',
 					component: dealCenter
+				},
+				{
+					path: '/HelpCenter',
+					name: 'HelpCenter',
+					component: HelpCenter,
+				},
+				{
+					path: '/advice',
+					name: 'advice',
+					component: advice,
 				},
 			
 				{
@@ -208,7 +227,7 @@ export default new Router({
 							component: legal
 						},
 						{
-							path: '/legalAccount',
+							path: '/legalAccount/:currency_id',
 							name: 'legalAccount',
 							component: legalAccount
 						},
@@ -230,7 +249,7 @@ export default new Router({
 		// 	name:'dealCenter',
 		// 	component:dealCenter
 		// },
-
+         
 		{
 			path: '/components/login',
 			name: 'login',
@@ -246,6 +265,11 @@ export default new Router({
 			path: '/forgetPwd',
 			name: 'forgetPwd',
 			component: ForgetPwd
+		},
+		{
+			path: '/components/bindPhone',
+			name: 'bindPhone',
+			component: bindPhone
 		},
 		
 		{

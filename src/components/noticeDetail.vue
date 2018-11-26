@@ -4,7 +4,7 @@
         <div class="account-wrap">
             <div class="account">
                 <div>
-                    <div class="back-nav  ft20"> 网站公告
+                    <div class="back-nav  ft20">
                         <span class="fr  curPer" @click="goBefore">&lt;&lt;返回</span>
                     </div>
                     <div class="nav-after"></div>
@@ -121,7 +121,7 @@ export default {
         // background: url(../assets/images/account_center_bg.jpg) no-repeat;
         // background-size: cover;
         .account {
-            width: 1500px;
+            width: 1200px;
             margin: 0 auto;
             padding-top: 30px;
             overflow: hidden;

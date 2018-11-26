@@ -7,10 +7,16 @@
       <span class="mr60">一带一路</span>
       <router-link to="/" exact>首页</router-link>
       <router-link to="/legalTrade" v-if="token">法币交易</router-link>
+      <div v-else @click="goLogin()">法币交易</div>
       <router-link to="/dealCenter">币币交易</router-link>
       <router-link to="/myLegalShops" v-if="isShow">我的商铺</router-link>
-      <router-link to="/finance">我的资产</router-link>
-      <!-- <router-link to="/userSetting">安全设置</router-link> -->
+      <router-link to="/finance" v-if="token">我的资产</router-link>
+      <div v-else @click="goLogin()">我的资产</div>
+      <router-link to="/userSetting" v-if="token">安全设置</router-link>
+      <div v-else @click="goLogin()">安全设置</div>
+      <router-link to="/helpcenter">帮助中心</router-link>
+      <router-link v-if="token" to="/advice">投诉留言</router-link>
+      <div v-else @click="goLogin()">投诉留言</div>
       <!-- <router-link to="/components/noticeList">公告</router-link>
       <div class="coin-box">
         <router-link to="/currencyApply">上币申请</router-link>
@@ -45,11 +51,11 @@
           </div>
         </div>
       </div>
-      <div class=" theme flex">
+      <!-- <div class=" theme flex">
           <img src="../assets/images/dark.png"  @click="$changeTheme('light')" alt="">
           <img src="../assets/images/light.png" @click="$changeTheme('dark')" alt="">
           
-        </div>
+        </div> -->
     </div>
   </div>
 </template>
@@ -61,7 +67,7 @@ export default {
       account_number: "",
       extension_code: "",
       token:'',
-      isShow:false
+      isShow:false,
     };
   },
   created() {
@@ -91,21 +97,26 @@ export default {
   methods: {
     signOut() {
       this.account_number = "";
-      window.localStorage.removeItem("token");
-      window.localStorage.removeItem("accountNum");
-      window.localStorage.removeItem("user_id");
-      window.localStorage.removeItem("extension_code");
+      // window.localStorage.removeItem("token");
+      // window.localStorage.removeItem("accountNum");
+      // window.localStorage.removeItem("user_id");
+      // window.localStorage.removeItem("extension_code");
+      window.localStorage.clear();
+      this.$router.push('/components/login');
+    },
+    goLogin(){
       this.$router.push('/components/login');
     },
     init(){
       this.$http({
-        url:'api/user/info',
+        url:'/api/user/info',
         method:'GET',
         data:{},
         headers:{Authorization:this.token}
       }).then(res => {
         console.log(res)
         if(res.data.type == 'ok'){
+          window.localStorage.setItem('status',res.data.message.review_status);
             if(res.data.message.is_seller == '1'){
                this.isShow = true;
             }
@@ -151,10 +162,14 @@ export default {
     > div {
       margin-right: 30px;
       height: 45px;
+      cursor: pointer;
 
       > a {
         display: block;
       }
+    }
+    >div:hover{
+      color: #d45858;
     }
     > .coin-box {
       position: relative;

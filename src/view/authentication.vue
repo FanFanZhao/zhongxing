@@ -12,7 +12,7 @@
                     </div>
                     <div class="flex alcenter center mt20">
                         <span>身份证：</span>
-                        <input type="text" placeholder="请输入身份证号" id="card" v-model="card_id">
+                        <input type="text" placeholder="请输入证件号" id="card" v-model="card_id">
                     </div>
                 </div>
                 <div class="mt40 fColor1 ft14 tc">请上传身份证正反面，第一张为正面，第二张为反面。</div>
@@ -117,7 +117,7 @@ export default {
                 return;
             }
             if(this.card_id.length == ''){
-                layer.tips('请输入身份证号!', '#card');
+                layer.tips('请输入证件号!', '#card');
                 return;
             }
             this.$http({

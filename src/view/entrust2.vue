@@ -26,7 +26,7 @@
                         <span class="fl w12" :class="{'green': item.typeInfo == 'in'}">{{item.typeInfo=='in'?'买入':'卖出'}}</span>
                         <span class="fl w12">{{item.price}}</span>
                         <span class="fl w14">{{item.number}}</span>
-                        <span class="fl w20">{{item.price * item.number}}</span>
+                        <span class="fl w20">{{item.total_price}}</span>
                         <span class="fl w8 tr curPer ceilColor" @click="revoke(item.id)">撤销</span>
                     </li>
                 </ul>
@@ -142,8 +142,8 @@ export default {
     getMore() {
       this.page = ++this.page;
       this.loading = true;
-      console.log(this.page);
-      console.log(this.types);
+      // console.log(this.page);
+      // console.log(this.types);
       this.getdata(this.urls, this.types);
     },
     getMore01() {
@@ -156,7 +156,7 @@ export default {
         return;
       }
       var that = this;
-      layer.confirm("确认要删除吗？", ["确定", "取消"], () => {
+      layer.confirm("确认要撤单吗？", ["确定", "取消"], () => {
         // var id = id;
         that
           .$http({
@@ -171,11 +171,10 @@ export default {
           })
           .then(res => {
             res = res.data;
-            console.log(res);
+            // console.log(res);
             if (res.type === "ok") {
               layer.msg(res.message);
               that.getdata(that.urls, that.types);
-              that.connect();
             } else {
               layer.msg(res.message);
             }
@@ -185,14 +184,9 @@ export default {
           });
       });
     },
-    connect() {
-      this.$socket.emit("login", localStorage.getItem("user_id"));
-      this.$socket.on("transaction", msg => {
-        console.log(msg);
-      });
-    },
+
     getdata(url, type) {
-      console.log(type);
+      // console.log(type);
       var page = this.page;
       if(!this.token){
         return;
@@ -206,7 +200,7 @@ export default {
         headers: { Authorization: this.token }
       })
         .then(res => {
-          console.log(res);
+          // console.log(res);
           res = res.data;
           this.loading = false;
           let mlist = [];
@@ -217,11 +211,11 @@ export default {
             //  page = 1;
             //  this.enList = []
             if (page == 1) {
-              console.log("-----------------");
+              // console.log("-----------------");
               this.enList = mlist;
             } else {
               var newEist = mlist;
-              console.log();
+              // console.log();
               if (newEist.length <= 0) {
                 this.more = "没有更多数据了...";
                 return;
@@ -233,7 +227,7 @@ export default {
             for (var i in this.enList) {
               this.enList[i].typeInfo = type;
             }
-            console.log(this.enList);
+            // console.log(this.enList);
           } else {
             //  page = 1;
             //  this.enList = [];
@@ -300,17 +294,20 @@ export default {
   },
   mounted() {
     var that = this;
+    // console.log('entrust2')
     if (this.token != "") {
       that.getdata(this.urls, this.types);
-      eventBus.$on("toTrade", function() {
-        that.isUrl = 0;
-        that.isChoosed = 0;
-        that.getdata(that.urls, that.types);
-      });
-      eventBus.$on("buyTrade", function() {
-        that.getdata(that.urls, that.types);
-      });
+      // eventBus.$on("toTrade", function() {
+      //   that.isUrl = 0;
+      //   that.isChoosed = 0;
+      //   that.getdata(that.urls, that.types);
+      // });
     }
+    eventBus.$on('tradeOk',function(data){  
+        if(data.status == 'ok'){
+            that.getdata(that.urls, that.types);
+        }
+    })
   }
 };
 </script>
@@ -336,7 +333,7 @@ export default {
 }
 .content {
   padding: 0 40px 0 30px;
-  height: 300px;
+  height: 500px;
 }
 .list-title {
   line-height: 40px;
@@ -347,7 +344,7 @@ export default {
   padding: 50px 0;
 }
 .container {
-  height: 260px;
+  height: 90%;
   overflow: auto;
 }
 .list-item li {

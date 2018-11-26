@@ -12,13 +12,16 @@ import VueSocketio from 'vue-socket.io'
 import echarts from 'echarts'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import store from './store'
+import {Slider,Input} from 'element-ui'
+Vue.use(Input)
+Vue.use(Slider)
 Vue.use(VueAwesomeSwiper)
 Vue.prototype.$echarts = echarts
 Vue.prototype.url = 'http://47.75.200.255:8080/'
 window.eventBus = new Vue()
 let bus = new Vue()
 Vue.prototype.bus = bus
-Vue.use(VueSocketio, 'http://47.75.200.255:2220');
+Vue.use(VueSocketio, 'https://www.beltandroad.io:2220/');
 Vue.prototype.$changeTheme = function (type) {
 	var head = document.querySelector('head');
 	var link = document.querySelector('link#darkTheme');
@@ -71,18 +74,22 @@ Axios.interceptors.request.use(function (config) {
 	// 对请求错误做些什么
 	return Promise.reject(error)
 })
-// Axios.interceptors.response.use(function (response) {
-// 	if(response.data.type == '999'){
-// 		window.localStorage.removeItem("token");
-// 		window.localStorage.removeItem("accountNum");
-// 		window.localStorage.removeItem("user_id");
-// 		window.localStorage.removeItem("extension_code");
-// 		router.push('/components/login');
-// 	}
-// 	return response;
-// }, function (error) {
-// 	return Promise.reject(error);
-// });
+Axios.interceptors.response.use(function (response) {
+	if(response.data.type == '999'){
+		window.localStorage.removeItem("token");
+		window.localStorage.removeItem("accountNum");
+		window.localStorage.removeItem("user_id");
+		window.localStorage.removeItem("extension_code");
+		layer.msg('登录超时,请重新登录');
+		setTimeout(function(){
+			router.push('/components/login');	
+			
+		},2000)
+	}
+	return response;
+}, function (error) {
+	return Promise.reject(error);
+});
 //Axios.defaults.baseURL = ''
 // Axios.defaults.headers = { 'Content-Type': 'application/json;charset=UTF-8' }application/x-www-form-urlencoded
 // Axios.defaults.withCredentials = true;
@@ -99,21 +106,11 @@ Vue.filter('numFilter', function (value) {
 })
 
 
-// router.beforeEach((to,from,next) => {
-// 	if(to.meta.requireLogin == 'no'){
-// 		next()
-// 	} else {
-// 		let token = window.localStorage.getItem('token') || '';
-// 		if(token == ''){
-// 			// next({path:'/components/login'})next()
-// 			next()
-// 		} else {
-// 			next()
-// 		}
-// 	}
+router.beforeEach((to,from,next) => {
+   window.scrollTo(0,0);
+   next();
 
-
-// })
+})
 //Vue.use(Ws, 'http://test.maxf.pub/users/chatRoom');
 /* eslint-disable no-new */
 new Vue({

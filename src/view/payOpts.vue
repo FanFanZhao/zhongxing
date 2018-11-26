@@ -1,5 +1,10 @@
 <template>
     <div id="pay-opts">
+      <p>信息认证</p>
+      <div class="tips">
+        <p>温馨提示：</p>
+        <p class="ft14 msg">为了确保您的交易正常进行，请填写您的真实信息</p>
+      </div>
         <div class="inp-item">
             <div>真实姓名</div>
             <input type="text" class="请输入真实姓名" v-model="name">
@@ -55,7 +60,8 @@ export default {
       this.$http({
         url: "/api/user/cash_info",
         method: "post",
-        headers: { 'Authorization': this.token }
+        headers: { 'Authorization': this.token},
+        
       }).then(res => {
         if ((res.data.type == "ok")) {
             if(res.data.message != null){
@@ -87,7 +93,7 @@ export default {
           wechat_nickname: this.weChatName,
           wechat_account: this.weChatAccount
         },
-        headers: { 'Authorization': this.token }
+        headers: { 'Authorization': this.token,'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8', }
       }).then(res => {
           layer.msg(res.data.message)
       })
@@ -97,6 +103,7 @@ export default {
 </script>
 
 <style lang='scss'>
+
 #pay-opts {
   width: 600px;
   margin: 0 auto;
@@ -129,9 +136,18 @@ export default {
     width: 200px;
     line-height: 40px;
     text-align: center;
-    background: #d45858;
+    background: #563BD1;
     color: #fff;
     cursor: pointer;
+  }
+  .tips{
+    padding: 18px 15px;
+    margin: 20px 0;
+    border: 1px solid #eee;
+    background: #F9FCFF;
+  }
+  .msg{
+    line-height: 45px;
   }
 }
 </style>

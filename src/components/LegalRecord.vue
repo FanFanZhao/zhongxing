@@ -40,10 +40,10 @@
             <div class="ft12">{{item.deal_money}}</div>
           </div>
           <div class="status">
-            <span  @click="gotoNext(item.id)" v-if="item.is_sure == 0">未完成 ></span>
-            <span  @click="gotoNext(item.id)" v-else-if="item.is_sure == 1">已完成 ></span>
-            <span  @click="gotoNext(item.id)" v-else-if="item.is_sure == 2">已取消 ></span>
-            <span  @click="gotoNext(item.id)"  v-else>已付款 ></span>
+            <span  @click="gotoNext(item.id,item.type)" v-if="item.is_sure == 0">未完成 ></span>
+            <span  @click="gotoNext(item.id,item.type)" v-else-if="item.is_sure == 1">已完成 ></span>
+            <span  @click="gotoNext(item.id,item.type)" v-else-if="item.is_sure == 2">已取消 ></span>
+            <span  @click="gotoNext(item.id,item.type)"  v-else>已付款 ></span>
           </div>
         </div>
       </li>
@@ -73,11 +73,11 @@ export default {
     }
   },
   methods: {
-    gotoNext(id){
+    gotoNext(id,_type){
       var type=this.filterPms.type;
       console.log(this.filterPms.type)
-      if(type=='sell'){
-        this.$router.push({path: '/legalPay2',query:{ id,type:this.filterPms.type}});
+      if(_type=='buy'){
+        this.$router.push({path: '/components/payCannel',query:{ id,type:this.filterPms.type}});
       }else{
         // 购买
         this.$router.push({path: '/legalPay',query:{ id,type:this.filterPms.type}});
@@ -148,6 +148,7 @@ export default {
     }
     .select {
       color: #563bd1;
+      border-bottom: 2px solid #563bd1;
     }
   }
   > ul {
@@ -183,7 +184,10 @@ export default {
   overflow: auto;
 }
 .status{
-      background: #272f5d;
+      background: #563BD1;
+      color: #fff;
+      font-size: 14px;
+      cursor: pointer;
     padding: 0 6px;
     border-radius: 3px;
 }

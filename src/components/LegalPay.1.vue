@@ -118,7 +118,7 @@ export default {
     },
     cancel(){
       this.$http({
-        url:'api/user_legal_pay_cancel',
+        url:'/api/user_legal_pay_cancel',
         method:'post',
         data:{id:this.id},
         headers:{Authorization:this.token}
@@ -140,7 +140,7 @@ export default {
     },
     confirm(){
       this.$http({
-        url:'api/user_legal_pay',
+        url:'/api/user_legal_pay',
         method:'post',
         data:{id:this.id},
         headers:{Authorization:this.token}
@@ -220,7 +220,7 @@ export default {
       margin: 200px auto 0;
       border-radius: 2px;
       width: 360px;
-      background: #2E1B85;
+     
       line-height: 40px;
       text-align: center;
       >div:first-child{

@@ -1,23 +1,23 @@
 <template>
-    <div class="exchange clr-part " style="margin-top:30px">
+    <div class="exchange clr-part ">
 		<!-- <div class="title fColor1">交易所</div> -->
         <div class="content">
             <div class="new_price bdr-part">
-                <span class="ft14">最新价 {{newData}}{{currency_name}}</span>
+                <span class="ft14">最新价 {{newData}}{{legal_name}}</span>
             </div>
             <div class="exchange_title ft14 clear tc">
                 <span>方向</span>
-                <span>价格({{currency_name}})</span>
-                <span>数量({{legal_name}})</span>
+                <span>价格({{legal_name}})</span>
+                <span>数量({{currency_name}})</span>
             </div>
             <ul class="list-item ft12 tc">
-                <li :class="['curPer','ceilColor','bg-hov',{'bg-evev':index%2 != 0}]" v-for="(out,index) in outlist" @click="price(out.price)" :key="index">
+                <li :class="['curPer','redColor','bg-hov',{'bg-evev':index%2 != 0}]" v-for="(out,index) in outlist" @click="price(out.price)" :key="index">
                     <span >卖 {{outlist.length-index}}</span>
                     <span style="font-weight:600">{{out.price}}</span>
                     <span>{{out.number}}</span>
                 </li>
                 <div class="line bdr-part"></div>
-                 <li class="curPer redColor bg-hov" v-for="(buy,index) in inlist" @click="price(buy.price)">
+                 <li class="curPer ceilColor bg-hov" v-for="(buy,index) in inlist" :key="index" @click="price(buy.price)">
                     <span>买 {{index+1}}</span>
                     <span style="font-weight:600">{{buy.price}}</span>
                     <span>{{buy.number}}</span>
@@ -43,96 +43,64 @@ export default {
       legal_id: ""
     };
   },
-  mounted: function() {
-    var that = this;
-  },
   created: function() {
-    var local_lid = window.localStorage.getItem("l_id"),
-      local_cid = window.localStorage.getItem("c_id");
-    var l_id, c_id;
+    // var local_lid = window.localStorage.getItem("l_id"),
+    //   local_cid = window.localStorage.getItem("c_id");
+    
+
+  },
+  mounted(){
     var that = this;
+    var localData=JSON.parse(window.localStorage.getItem('tradeData'))
+    that.currency_id = localData.currency_id;
+    that.legal_id = localData.legal_id;
+    that.connect();
     eventBus.$on("toExchange0", function(data0) {
-      console.log(data0);
-      (c_id = data0.currency_id), (l_id = data0.legal_id);
       that.currency_name = data0.currency_name;
-      that.legal_name = data0.leg_name;
-      console.log(local_lid, local_cid);
-      that.buy_sell(l_id, c_id);
-      that.connect(
-        l_id,
-        c_id
-      );
+      that.legal_name = data0.legal_name;
+      that.currency_id = data0.currency_id;
+      that.legal_id = data0.legal_id;
+      that.buy_sell(that.legal_id, that.currency_id);
     });
     eventBus.$on("toExchange", function(data) {
-      console.log(data);
-      (c_id = data.currency_id), (l_id = data.legal_id);
-      window.localStorage.setItem("c_id", data.currency_id);
-      window.localStorage.setItem("l_id", data.legal_id);
-
       that.currency_name = data.currency_name;
-      that.legal_name = data.leg_name;
-      that.buy_sell(l_id, c_id);
-      that.connect(
-        l_id,
-        c_id
-      );
+      that.legal_name = data.legal_name;
+      that.currency_id = data.currency_id;
+      that.legal_id = data.legal_id;
+      that.buy_sell(that.legal_id,that.currency_id);
     });
-    // 下单强制更新数据
-    // eventBus.$on('tocel', function (datas) {
-    //   if(datas){
-    //     that.buy_sell(that.legal_id,that.currency_id);
-    //   }
-    // })
   },
   sockets: {
-    // connect(legal_id,currency_id) {
-    //   this.$socket.emit("login", localStorage.getItem('user_id'));
-    //   this.$socket.on("transaction", msg => {
-    //     // console.log(msg);
-    //     if (msg.type == "transaction") {
-    //     this.newData = msg.last_price;
-    //     var inData = JSON.parse(msg.in);
-    //     var outData = JSON.parse(msg.out);
-    //     // if(msg.currency==currency_id&&msg.legal == legal_id){
-    //       if (inData.length >= 0) {
-    //         this.inlist = inData;
-    //       }
-    //       if (outData.length >= 0) {
-    //       this.outlist = outData;
-    //       }
-    //     // }
-    //   }
-    //   });
-    // },
+
   },
   methods: {
     price(price) {
       eventBus.$emit("toPrice", price);
     },
     // 第一次默认最新价数据
-    buy_sell(legals_id, currencys_id) {
-      // var index = layer.load();
+    buy_sell(legal_id, currency_id) {
+      var i = layer.load();
       this.$http({
         url: "/api/" + "transaction/deal",
         method: "post",
         data: {
-          legal_id: currencys_id,
-          currency_id: legals_id
+          legal_id: legal_id,
+          currency_id: currency_id
         },
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          // layer.close(i);
+          layer.close(i);
           if (res.data.type == "ok") {
             this.inlist = res.data.message.in;
-            this.outlist = res.data.message.out.reverse();
+            this.outlist = res.data.message.out;
             this.newData = res.data.message.last_price;
             this.buyInfo.buyPrice = 0;
             this.buyInfo.buyNum = 0;
-            this.connect(
-              legals_id,
-              currencys_id
-            );
+            // this.connect(
+            //   legals_id,
+            //   currencys_id
+            // );
           } else {
             layer.msg(res.data.message);
           }
@@ -141,13 +109,13 @@ export default {
           // console.log(error)
         });
     },
-    connect(legal_id, currency_id) {
-      console.log(legal_id, currency_id);
+    connect() {
+      // console.log(legal_id, currency_id);
       var that = this;
       console.log("socket");
       that.$socket.emit("login", this.$makeSocketId());
       that.$socket.on("transaction", msg => {
-        console.log(msg);
+        // console.log(msg);
         if (msg.type == "transaction") {
           //组件间传值
           var newPrice = {
@@ -161,19 +129,22 @@ export default {
             eventBus.$emit("toNew", newPrice);
           }, 1000);
           that.newData = msg.last_price;
-          eventBus.$emit('priceToTrade',function(data){
-            that.newData = data.lastPrice;
-          })
+          // eventBus.$emit('priceToTrade',function(data){
+          //   that.newData = data.lastPrice;
+          // })
+          eventBus.$emit("priceToTrade", msg.last_price);
           var inData = JSON.parse(msg.in);
           var outData = JSON.parse(msg.out);
-          if (msg.currency_id == legal_id && msg.legal_id == currency_id) {
+          if (msg.legal_id == that.legal_id && msg.currency_id == that.currency_id) {
             that.inlist = inData;
             that.outlist = outData;
           }
         }
       });
     }
-  }
+  },
+
+
 };
 </script>
 

@@ -4,26 +4,32 @@
         <div class="content-wrap">
             <div class="account">
                 <div class="main">
-                    <p class="main_title">重置密码</p>
-                    <div class="register-input">
+                    <p class="main_title">修改密码</p>
+                    <div class="register-input pass-box">
                         <span class="register-item">请输入原密码</span>
-                        <input type="password" class="input-main input-content" maxlength="20" v-model="oldPwd" id="account">
+                        <input :type="showold?'text':'password'" class="input-main input-content" maxlength="20" v-model="oldPwd" id="account">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showold" @click="showold = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showold" @click="showold = true">
                     </div>
-                     <div class="register-input">
+                     <div class="register-input pass-box">
                         <span class="register-item">请输入新密码</span>
-                        <input type="password" class="input-main input-content" maxlength="16" v-model="pwd" id="pwd">
+                        <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="pwd" id="pwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                     </div>
-                     <div class="register-input">
+                     <div class="register-input pass-box">
                         <span class="register-item">请再次输入新密码</span>
-                        <input type="password" class="input-main input-content" maxlength="16" v-model="rePwd">
+                        <input :type="showrepass?'text':'password'" class="input-main input-content" maxlength="16" v-model="rePwd" id="rePwd">
+                        <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showrepass" @click="showrepass = true">
                     </div>
-                     <div class="register-input">
+                     <!-- <div class="register-input">
                         <span class="register-item">请输入验证码</span>
                         <div class="code-box bdr-part">
                             <input type="text" class="input-main input-content" maxlength="16" v-model="code">
                             <button type="button" class="redBg" @click="sendCode">{{resetSeconds}}</button>
                         </div>
-                    </div>
+                    </div> -->
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
                         <button type="button" class="register-button curPer redBg" @click="reset" >重置密码</button>
@@ -47,75 +53,90 @@ export default {
       pwd: "",
       rePwd: "",
       code: "",
-      resetSeconds: "发送验证码"
+      resetSeconds: "发送验证码",
+      showpass:false,
+      showrepass:false,
+      showold:false
     };
   },
 
   methods: {
-    sendCode() {
-      if (this.resetSeconds != "发送验证码") {
-        return;
-      }
-      let msg = "";
-      let oldpassword = this.oldPwd;
+    // sendCode() {
+    //   if (this.resetSeconds != "发送验证码") {
+    //     return;
+    //   }
+    //   let msg = "";
+    //   let oldpassword = this.oldPwd;
 
-      let password = this.pwd;
-      let re_password = this.rePwd;
+    //   let password = this.pwd;
+    //   let re_password = this.rePwd;
 
-      if (oldpassword == "" || password == "" || re_password == "") {
-        return;
-      } else if (password != re_password) {
-        layer.msg("两次输入的密码不一致");
-        return;
-      }
-      this.$http({
-        url: "/api/password_send",
-        method: "post",
-        data: { type: 1 },
-        headers: { Authorization: localStorage.getItem("token") }
-      }).then(res => {
-        layer.msg(res.data.message);
-        if (res.data.type == "ok") {
-          let timer = null;
-          let time = 31;
-          var that = this;
-          timer = setInterval(function() {
-            time--;
-            that.resetSeconds = "剩余" + time + "秒";
-            if (time == 0) {
-              that.resetSeconds = "发送验证码";
-              clearInterval(timer);
-            }
-          }, 1000);
-        }
-      });
-    },
+    //   if (oldpassword == "" || password == "" || re_password == "") {
+    //     return;
+    //   } else if (password != re_password) {
+    //     layer.msg("两次输入的密码不一致");
+    //     return;
+    //   }
+    //   this.$http({
+    //     url: "/api/password_send",
+    //     method: "post",
+    //     data: { type: 1 },
+    //     headers: { Authorization: localStorage.getItem("token") }
+    //   }).then(res => {
+    //     layer.msg(res.data.message);
+    //     if (res.data.type == "ok") {
+    //       let timer = null;
+    //       let time = 31;
+    //       var that = this;
+    //       timer = setInterval(function() {
+    //         time--;
+    //         that.resetSeconds = "剩余" + time + "秒";
+    //         if (time == 0) {
+    //           that.resetSeconds = "发送验证码";
+    //           clearInterval(timer);
+    //         }
+    //       }, 1000);
+    //     }
+    //   });
+    // },
     reset() {
+       var regPsws = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/;
       let msg = "";
       let oldpassword = this.oldPwd;
 
       let password = this.pwd;
       let re_password = this.rePwd;
       let login_password_code = this.code;
-      if (
-        oldpassword == "" ||
-        password == "" ||
-        re_password == "" ||
-        login_password_code == ""
-      ) {
+      if (oldpassword == "") {
+        layer.msg('请输入原密码')
         return;
-      } else if (password != re_password) {
+      } else if(password == ''){
+        layer.msg('请输入新密码');
+        return;
+      } else if(password.length<6||password.length>16){
+        layer.msg('密码在6到16位之间');
+        return;
+      }
+      else if(!regPsws.test(password)){
+        layer.msg('密码必须由数字和字母组合');
+        return;
+      }
+      else if(re_password == ''){
+        layer.msg('请再次输入新密码');
+        return;
+      }
+      else if (password != re_password) {
         layer.msg("两次输入的密码不一致");
         return;
-      } else {
+      }
+       else {
         this.$http({
-          url: "/api/safe/alter_password",
+          url: "/api/user/update_password",
           method: "post",
           data: {
-            oldpassword: oldpassword,
+            old_password: oldpassword,
             password: password,
-            re_password: re_password,
-            login_password_code: login_password_code
+            repassword: re_password
           },
           headers: { Authorization: localStorage.getItem("token") }
         }).then(res => {

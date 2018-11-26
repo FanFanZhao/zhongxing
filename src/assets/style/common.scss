@@ -22,9 +22,16 @@ ins,a{text-decoration:none}
 .color{
     color: #333
 }
+.border_color{
+    border-color: #563bd1;
+}
 .purple_bg{
     background: #2E1B85;
     color: rgba(255,255,255,.8);
+}
+.blue_bg{
+    background: #563BD1;
+    color: #fff;
 }
 .deep_blue{
     color: #563BD1;
@@ -38,6 +45,7 @@ ins,a{text-decoration:none}
 html,body{
     width: 100%;
     min-height: 100%;
+    min-width: 1200px;
 }
 a{
 	color:inherit;
@@ -85,6 +93,11 @@ input::-webkit-outer-spin-button,input::-webkit-inner-spin-button {    -webkit-a
     -webkit-box-flex: 1;
         -ms-flex: 1;
             flex: 1;
+}
+.flex2{
+    -webkit-box-flex: 2;
+        -ms-flex: 2;
+            flex: 2;
 }
 .alcenter{
     -webkit-box-align: center;
@@ -268,26 +281,74 @@ button{border: none;outline: none;}
 .bb_shadow{
     // box-shadow: 0 5px 5px #1b1e2e;
 }
-.brcolor{border-right: 1px dashed #ccc}
+// .brcolor{border-right: 1px dashed #ccc}
 
-.bg-main{
-    background: #262a42 !important; 
+// .bg-main{
+//     background: #262a42 !important; 
+// }
+// .bg-part{
+//     background: #181b2a !important;
+// }
+// .clr-part{
+//     color: rgba(255,255,255,.8) !important;
+// }
+// .bdr-part{
+//     border-color: #2e355d !important;
+// }
+// .bg-even{
+//     background: #1a1f2f !important;
+// }
+// .bg-hov:hover,.bg-sel{
+//     background: #2d3346 !important;
+// }
+// .layerBg{
+//     background: #0f1019!important;
+// }
+
+
+
+body {
+
+	.bg-main {
+		background: #f2f3f8 !important;
+	}
+
+	.clr-part {
+		color: #333 !important;
+	}
+
+	.bg-part {
+		background: #fff !important;
+	}
+
+	.bdr-part {
+		border-color: #ccc !important;
+	}
+
+	.bg-even {
+		background: #f3f3f3 !important;
+	}
+
+	.bg-hov:hover,
+	.bg-sel {
+		background: #ddd !important;
+	}
+
+	.layerBg {
+		background: #fff !important;
+	}
+
+	#app {}
 }
-.bg-part{
-    background: #181b2a !important;
-}
-.clr-part{
-    color: rgba(255,255,255,.8) !important;
-}
-.bdr-part{
-    border-color: #2e355d !important;
-}
-.bg-even{
-    background: #1a1f2f !important;
-}
-.bg-hov:hover,.bg-sel{
-    background: #2d3346 !important;
-}
-.layerBg{
-    background: #0f1019!important;
+.pass-box{
+    position: relative;
+    width: 521px;
+    img{
+        position: absolute;
+        width: 25px;
+        right: 10px;
+        top: 33px;
+        z-index: 999;
+        cursor: pointer;
+    }
 }

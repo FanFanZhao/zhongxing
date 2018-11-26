@@ -17,27 +17,28 @@
                     开始交易
                     </div>
                     <div class="clear available bdr-part" v-else>
-                        <span class="fl 1">可用 {{user_legal}} {{currency_name}}</span>
+                        <span class="fl 1">可用 {{user_legal}} {{legal_name}}</span>
                         <!-- <span class="fr redColor curPer" @click="goNext('account')">充币</span> -->
                     </div>
                     <div class="mt40 input-item clear">
                         <label>买入价</label>
-                        <input class="clr-part bg-main bdr-part" type="number" v-model="buyInfo.buyPrice" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" v-model="buyPrice" min="0" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
                         <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
-                        <span>{{currency_name}}</span>
+                        <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
                         <label>买入量</label>
-                        <input class="clr-part bg-main bdr-part" type="number" v-model="buyInfo.buyNum" @keydown.69.prevent  @keyup="numFilter($event)">
-                        <span>{{legal_name}}</span>
+                        <input class="clr-part bg-main bdr-part" type="number" min="0" v-model="buyNum" @keydown.69.prevent  @keyup="numFilter($event)">
+                        <span>{{currency_name}}</span>
                     </div>
                     <!-- <div class="mt40 input-item clear">
                         <label>资金密码</label>
                         <input type="password" v-model="buyInfo.pwd" @keydown.69.prevent>
                     </div> -->
-                    <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div>
-                    <div class="mt50 1 ft16">交易额 {{buyTotal}} {{currency_name}}</div>
-                    <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">买{{legal_name}}</div>
+                    <!-- <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div> -->
+                    <el-slider v-model="value1" :min="0" :max="100" show-stops :show-tooltip="false" :step="25" :disabled="address?current == 0?buyPrice=='':false:true" @change="changeVal"></el-slider>
+                    <div class="mt50 1 ft16">交易额 {{buyTotal}} {{legal_name}}</div>
+                    <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">买{{currency_name}}</div>
                 </div>
             </div>
             <div class="w50 fl second">
@@ -47,27 +48,28 @@
                     开始交易
                     </div>
                     <div class="clear available bdr-part" v-else>
-                        <span class="fl 1">可用 {{user_currency}} {{legal_name}}</span>
+                        <span class="fl 1">可用 {{user_currency}} {{currency_name}}</span>
                         <!-- <span class="fr redColor curPer" @click="goNext('account')">充币</span> -->
                     </div>
                     <div class="mt40 input-item clear">
                         <label>卖出价</label>
-                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="sellInfo.sellPrice" v-if="!disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="sellPrice" v-if="!disabled" min="0">
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice" :disabled='disabled' v-if="disabled">
-                        <span>{{currency_name}}</span>
+                        <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
                         <label>卖出量</label>
-                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent  @keyup="numFilter($event)" v-model="sellInfo.sellNum">
-                        <span>{{legal_name}}</span>
+                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent  @keyup="numFilter($event)" v-model="sellNum" min="0">
+                        <span>{{currency_name}}</span>
                     </div>
                     <!-- <div class="mt40 input-item clear">
                         <label>资金密码</label>
                         <input type="password" v-model="sellInfo.pwd" @keydown.69.prevent>
                     </div> -->
-                    <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div>
-                    <div class="mt50 1 ft16">交易额 {{sellTotal}} {{currency_name}}</div>
-                    <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">卖{{legal_name}}</div>
+                    <!-- <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div> -->
+                    <el-slider v-model="value2" :min="0" :max="100" :show-tooltip="false" show-stops :step="25"  :disabled="address?current == 0?sellPrice=='':false:true" @change="changeVal2"></el-slider>
+                    <div class="mt50 1 ft16">交易额 {{sellTotal}} {{legal_name}}</div>
+                    <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">卖{{currency_name}}</div>
                 </div>
             </div>
         </div>
@@ -128,6 +130,10 @@ export default {
   name: "trade",
   data() {
     return {
+      timer: "",
+      timer2: "",
+      timer3: "",
+      address: "",
       currency_name: "",
       legal_name: "",
       user_currency: "",
@@ -137,65 +143,178 @@ export default {
       current: 0,
       allBalance: 0,
       disabled: false,
-      lastPrice: "111",
-      pwd:'',
-      buyInfo: { buyPrice: 0, buyNum: 0,pwd:'', url: "transaction/in" },
-      sellInfo: { sellPrice: 0, sellNum: 0,pwd:'', url: "transaction/out" },
-      tradetype: [{ typetext: "限价交易" }, { typetext: "市价交易" }]
+      lastPrice: "",
+      pwd: "",
+      buyPrice: "",
+      buyNum: 0,
+      sellNum: "",
+      sellPrice: "",
+      buyInfo: { buyPrice: 0, buyNum: 0, pwd: "", url: "transaction/in" },
+      sellInfo: { sellPrice: 0, sellNum: 0, pwd: "", url: "transaction/out" },
+      tradetype: [{ typetext: "限价交易" }, { typetext: "市价交易" }],
+      value1: 0,
+      value2: 0,
+      disable: false,
+      disable02: false
     };
+  },
+  watch: {
+    buyPrice: function(newVal) {
+      if (newVal < 0) {
+        this.buyPrice = "";
+      }
+    },
+    sellPrice: function(val) {
+      if (val < 0) {
+        this.sellPrice = "";
+      }
+    },
+    buyNum: function(val) {
+      if (val < 0) {
+        this.buyNum = "";
+      }
+    },
+    sellNum: function(val) {
+      if (val < 0) {
+        this.sellNum = "";
+      }
+    }
   },
   created() {
     this.address = localStorage.getItem("token") || "";
-    // this.init();
+    if (this.address == "") {
+      this.disable = true;
+      this.disable02 = true;
+    }
   },
   mounted() {
     var that = this;
     that.address = localStorage.getItem("token") || "";
     eventBus.$on("toPrice", function(data) {
+      console.log("-------------------------------------");
       console.log(data);
-      if (data) {
-        that.buyInfo.buyPrice = data;
-        that.sellInfo.sellPrice = data;
-      }
+      // if (data) {
+      //   that.buyPrice = data;
+      //   that.sellPrice = data;
+      // }
     });
     eventBus.$on("toTrade", function(data) {
-      // console.log(data);
-      (that.currency_id = data.currency_id), (that.legal_id = data.legal_id);
+      console.log(data);
+      that.currency_id = data.currency_id;
+      that.legal_id = data.legal_id;
       that.currency_name = data.currency_name;
-      that.legal_name = data.leg_name;
+      that.legal_name = data.legal_name;
+      that.buyPrice = '';
+      that.sellPrice = '';
       that.buy_sell(that.legal_id, that.currency_id);
+      that.currency_val(that.legal_id, that.currency_id)
     });
     eventBus.$on("toTrade0", function(data0) {
-      // console.log(data0);
+      console.log(data0);
       (that.currency_id = data0.currency_id), (that.legal_id = data0.legal_id);
       that.currency_name = data0.currency_name;
-      that.legal_name = data0.leg_name;
-      // console.log(that.currency_name);
-      // console.log(that.legal_name);
+      that.legal_name = data0.legal_name;
       that.buy_sell(that.legal_id, that.currency_id);
+      that.currency_val(that.legal_id, that.currency_id)
     });
     eventBus.$on("tocel", function(datas) {
       // console.log(datas);
       if (datas) {
         that.buy_sell(that.legal_id, that.currency_id);
+        that.currency_val(that.legal_id, that.currency_id)
       }
     });
     // 从exchange传过来的最新价
     eventBus.$on("priceToTrade", function(data) {
-      that.lastPrice = data.lastPrice;
+      // console.log(data);
+      that.lastPrice = data;
     });
   },
   methods: {
+    //获取可用余额
+    //币币余额
+    currency_val(legal_id,currency_id) {
+      if(!this.address){
+        return;
+      }
+      this.$http({
+        url: "/api/" + "wallet/get_currency_balance",
+        method: "GET",
+        params: {
+          legal_id:legal_id,
+          change_id: currency_id
+        },
+        headers: { Authorization: this.address }
+      }).then(res => {
+        console.log(res)
+        if (res.status == 200) {
+          this.user_currency = res.data.change_price;
+          this.user_legal = res.data.legal_price;
+        } else {
+          clearInterval(this.timer);
+          clearInterval(this.timer2);
+        }
+      });
+    },
+    //法币余额
+    // currency_val02(legal_id) {
+    //   if(!this.address){
+    //     return;
+    //   }
+    //   this.$http({
+    //     url: "/api/" + "wallet/get_currency_balance",
+    //     method: "GET",
+    //     params: {
+    //       currency_id: legal_id
+    //     },
+    //     headers: { Authorization: this.address }
+    //   }).then(res => {
+    //     if (res.data.type == "ok") {
+    //       this.user_legal = res.data.message;
+    //     } else {
+    //       clearInterval(this.timer);
+    //       clearInterval(this.timer2);
+    //     }
+    //   });
+    // },
+    changeVal(){
+     
+         if(this.current == 0){
+           this.buyNum = (this.user_legal/this.buyPrice*(this.value1/100)).toFixed(5);
+         } 
+         if(this.current == 1){
+           this.buyNum = (this.user_legal/this.lastPrice*(this.value1/100)).toFixed(5);
+         }   
+    },
+    changeVal2(){
+        if(this.current == 0){
+            this.sellNum = (this.user_currency*(this.value2/100)).toFixed(5);
+         }  
+         if(this.current == 1){
+           this.sellNum = (this.user_currency*(this.value2/100)).toFixed(5);
+         } 
+    },
     numFilter(ev) {
       //48-57 96-105 108
       // console.log(ev.keyCode)
     },
     changeType(index) {
+      this.value1 = 0;
+      this.value2 = 0;
       this.current = index;
+
       if (index == 1) {
+        this.buyPrice = "";
+        this.sellPrice = "";
+        this.buyNum = "";
+        this.sellNum = "";
         this.disabled = true;
       } else {
         this.disabled = false;
+        this.buyPrice = "";
+        this.sellPrice = "";
+        this.buyNum = "";
+        this.sellNum = "";
       }
     },
     goNext(url) {
@@ -203,7 +322,7 @@ export default {
     },
     init() {
       this.$http({
-        url: '/api/' + "transaction/deal",
+        url: "/api/" + "transaction/deal",
         method: "post",
         data: {
           address: this.address
@@ -215,15 +334,22 @@ export default {
       });
     },
     buyCoin() {
-      // var that = this;
+      var that = this;
       if (!this.disabled) {
-        if (!this.buyInfo.buyPrice || this.buyInfo.buyPrice <= 0) {
+        if (!this.buyPrice || this.buyPrice <= 0) {
           layer.msg("请输入买入价");
           return;
         }
       }
-      if (!this.buyInfo.buyNum || this.buyInfo.buyNum <= 0) {
+      if (!this.buyNum || this.buyNum <= 0) {
         layer.msg("请输入买入量");
+        return;
+      }
+      if(this.address == ''){
+        layer.msg('请登录');
+        setTimeout(function(){
+           that.$router.push('/components/login');
+        },1000);
         return;
       }
       // if(!this.buyInfo.pwd || this.buyInfo.pwd.length< 6){
@@ -235,29 +361,38 @@ export default {
         url: "/api/" + this.buyInfo.url,
         method: "post",
         data: {
-          legal_id: this.currency_id,
-          currency_id: this.legal_id,
-          price: this.disabled ? this.lastPrice : this.buyInfo.buyPrice,
-          num: this.buyInfo.buyNum,
+          legal_id: this.legal_id,
+          currency_id: this.currency_id,
+          price: this.disabled ? this.lastPrice : this.buyPrice,
+          num: this.buyNum
           // pay_password:this.buyInfo.pwd
         },
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res, 222);
+          
           layer.close(i);
 
           if (res.data.type == "ok") {
-            eventBus.$emit('tradeOk',{status:'ok'});
+            eventBus.$emit("tradeOk", { status: "ok" });
             layer.msg(res.data.message);
-            this.buyInfo.buyPrice = 0;
-            this.buyInfo.buyNum = 0;
-            this.buyInfo.pwd='';
-            // that.buy_sell(that.legal_id,that.currency_id)
+            console.log(this.current);
+            if (this.current == 0) {
+              // this.buyPrice = '';
+              this.buyNum = "";
+              this.buyInfo.pwd = "";
+            } else {
+              this.buyNum = "";
+              this.buyInfo.pwd = "";
+            }
+             that.currency_val(that.legal_id, that.currency_id)
+            // that.buy_sell(that.legal_id, that.currency_id);
+            that.get
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
             console.log(res.data.message);
           } else {
+            this.buyNum = "";
             layer.msg(res.data.message);
           }
         })
@@ -270,13 +405,20 @@ export default {
 
       var that = this;
       if (!this.disabled) {
-        if (!this.sellInfo.sellPrice || this.sellInfo.sellPrice <= 0) {
+        if (!this.sellPrice || this.sellPrice <= 0) {
           layer.msg("请输入卖出价");
           return;
         }
       }
-      if (!this.sellInfo.sellNum || this.sellInfo.sellNum <= 0) {
+      if (!this.sellNum || this.sellNum <= 0) {
         layer.msg("请输入卖出量");
+        return;
+      }
+      if(this.address == ''){
+        layer.msg('请登录');
+        setTimeout(function(){
+           that.$router.push('/components/login')
+        },1000);
         return;
       }
       // if(!this.sellInfo.pwd || this.sellInfo.pwd.length< 6){
@@ -288,28 +430,41 @@ export default {
         url: "/api/" + this.sellInfo.url,
         method: "post",
         data: {
-          legal_id: this.currency_id,
-          currency_id: this.legal_id,
-          price: this.disabled?this.lastPrice:this.sellInfo.sellPrice,
-          num: this.sellInfo.sellNum,
+          legal_id: this.legal_id,
+          currency_id: this.currency_id,
+          price: this.disabled ? this.lastPrice : this.sellPrice,
+          num: this.sellNum
           // pay_password:this.sellInfo.pwd
         },
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
-          console.log(res);
+          console.log(
+            res,
+            "99999999999999999999999999999999999999999999999999"
+          );
           layer.close(i);
           // layer.msg(res.data.message)
           if (res.data.type == "ok") {
-            eventBus.$emit('tradeOk',{status:'ok'});
-            this.sellInfo.sellPrice = 0;
-            this.sellInfo.sellNum = 0;
-            this.sellInfo.pwd = '';
+            setTimeout(function() {
+              that.buy_sell(that.legal_id, that.currency_id);
+            }, 3000);
+             that.currency_val(that.legal_id, that.currency_id)
+
+            eventBus.$emit("tradeOk", { status: "ok" });
+            if (this.current == 0) {
+              // this.sellPrice = '';
+              this.sellNum = "";
+              this.sellInfo.pwd = "";
+            } else {
+              this.sellNum = "";
+              this.sellInfo.pwd = "";
+            }
             eventBus.$emit("buyTrade", "tradebuy");
             eventBus.$emit("tocel", "updata");
-            // that.buy_sell(that.legal_id,that.currency_id)
             layer.msg(res.data.message);
           } else {
+            this.sellNum = "";
             layer.msg(res.data.message);
           }
         })
@@ -319,25 +474,30 @@ export default {
     },
     //买入、卖出记录
     buy_sell(legals_id, currencys_id) {
+      console.log("啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊");
+      var i = layer.load();
       this.$http({
         url: "/api/" + "transaction/deal",
         method: "post",
         data: {
-          legal_id: currencys_id,
-          currency_id: legals_id
+          legal_id: legals_id,
+          currency_id: currencys_id
         },
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
+         
+          layer.close(i);
           // console.log(res ,222)
           // layer.close(i);
           if (res.data.type == "ok") {
             this.lastPrice = res.data.message.last_price;
-            this.user_currency = res.data.message.user_currency;
-            this.user_legal = res.data.message.user_legal;
+            // this.user_currency = res.data.message.user_currency;
+            // this.user_legal = res.data.message.user_legal;
+            console.log("console------" + this.user_currency, this.user_legal);
             // console.log(res.data)
-            this.buyInfo.buyPrice = 0;
-            this.buyInfo.buyNum = 0;
+            // this.buyPrice = 0;
+            // this.buyNum = 0;
           } else {
             layer.msg(res.data.message);
           }
@@ -349,11 +509,16 @@ export default {
   },
   computed: {
     buyTotal() {
-      return this.buyInfo.buyPrice * this.buyInfo.buyNum || 0;
+      return ((this.buyPrice||this.lastPrice) * this.buyNum).toFixed(5) || 0;
     },
     sellTotal() {
-      return this.sellInfo.sellPrice * this.sellInfo.sellNum || 0;
+      return ((this.sellPrice||this.lastPrice) * this.sellNum).toFixed(5) || 0;
     }
+  },
+  destroyed() {
+    clearInterval(this.timer);
+    clearInterval(this.timer2);
+    clearInterval(this.timer3);
   }
 };
 </script>

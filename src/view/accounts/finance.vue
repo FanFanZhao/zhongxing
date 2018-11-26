@@ -1,7 +1,7 @@
 <template>
-    <div class="bgf8 bg-part clr-part main-wrap">
+    <div class="bgf8 bg-part clr-part main-wrap scroll">
         <div class="header bgf8 bg-part">
-            <p class="fl">总资产折合：<span class="asset_num">0.0000000</span><span class="asset_name"> BTC</span><span class="ft12 "> ≈ <span>0.00</span>CNY</span>
+            <p class="fl">总资产折合：<span class="asset_num">{{total}}</span><span class="asset_name"> USDT</span><span class="ft12 "> ≈ <span>{{totalCNY}}</span>CNY</span>
             <!-- <label class="min_lab ft14"><input type="checkbox" />隐藏小额资产</label><i></i><label class="inp_lab"><input  type="text"/><i></i></label> -->
             </p>
             <p class="fr right_text">
@@ -14,6 +14,7 @@
                <p class="flex1 tc">币种<i></i></p>
                <p class="flex1 tc">可用</p>
                <p class="flex1 tc">冻结</p>
+               <p class="flex1 tc">折合(CNY)</p>
                <!-- <p class="flex1 tc">BTC估值<i></i></p> -->
                <!-- <p class="flex1 tc">锁仓</p> -->
                <p class="flex1 tc">操作</p>
@@ -24,11 +25,11 @@
                    <p class="flex1 tc">{{item.currency_name}}</p>
                    <p class="flex1 tc">{{item.change_balance}}</p>
                    <p class="flex1 tc">{{item.lock_change_balance}}</p>
-                   <!-- <p class="flex1 tc">{{item.valuation}}</p> -->
+                   <p class="flex1 tc">{{item.cny_price}}</p>
                    <!-- <p class="flex1 tc">{{item.lock_position}}</p> -->
                    <p class="flex1 tc operation">
                        <span @click="excharge(index,item.currency)" >充币</span>
-                       <span @click="withdraw(index,item.currency)">提币</span>
+                       <span @click="withdraw(index,item.currency,item.currency_name)">提币</span>
                        <!-- <span @click="exchange">兑换</span> -->
                        <span @click="rec(index,item.currency)">记录</span>
                    </p>
@@ -44,20 +45,32 @@
                        </span></p>
                        <!-- <p class="ft12 fColor2 mb50">查看<span class="excharge_record">充币记录</span>跟踪状态</p> -->
                        <p class="ft12 fColor2 mb15 mt80">温馨提示</p>
-                       <ul class="tips_ul ft12 fColor2" style="list-style:disc inside">
-                           <li class="tips_li" style="list-style:disc inside" v-for="item in tip_list">{{item}}</li>
+                       <ul class="tips_ul ft12 fColor2">
+                           <!-- <li class="tips_li" style="list-style:disc inside" v-for="item in tip_list">{{item}}</li> -->
+                           <li>
+                                • 请勿向上述地址充值任何非{{item.currency_name}}资产，否则资产将不可找回。<br>
+                                •  {{item.currency_name}}充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。<br>
+                                • 您充值至上述地址后，需要整个网络节点的确认，1次网络确认后到账，6次网络确认后可提币。<br>
+                                • 最小充值金额：{{rate}} {{item.currency_name}} ，小于最小金额的充值将不会上账且无法退回。<br>
+                                • 您的充值地址不会经常改变，可以重复充值；如有更改，我们会尽量通过网站公告或邮件通知您。<br>
+                                • 请务必确认电脑及浏览器安全，防止信息被篡改或泄露。
+                           </li>
                        </ul>
                    </div>
                    <!--提币区-->
                    <div class="hide_div bdr-part" v-if="index == active01">
                        <p class="fColor2 ft12 mb15">提币地址</p>
-                       <input class="address_inp clr-part  mb30" type="text" v-model="address" />
+                       <!-- <input class="address_inp clr-part  mb30" type="text" v-model="address" /> -->
+                       <select class="address_inp clr-part  mb30" v-model="address">
+                           <option value="">选择提币地址</option>
+                           <option value="item.address" v-for="(item,index) in addressList" :key="index">{{item.address}}</option>
+                       </select>
                        <p class="fColor2 ft12 mb15 flex between alcenter"><span>数量</span><span>可用：<span class="use_num">{{balance}} {{coinname}}</span><span></span></span></p>
                        <label class="num_lab flex between mb30">
                             <input class="clr-part" type="text" :placeholder="min_number" v-model="number" />
                             <span>{{coinname}}</span>
                         </label>
-                       <div class="flex mb50">
+                       <div class="flex mb30">
                            <div class="left_inp_wrap flex1">
                                <p class="fColor2 ft12 mb15">
                                    <span>手续费</span>
@@ -72,11 +85,19 @@
                                <label class="get_lab flex alcenter between"><input class="clr-part" disabled v-model="reachnum" type="number" /><span>{{coinname}}</span></label>
                            </div>
                        </div>
+                        <p class="fColor2 ft12 mb15">提币密码</p>
+                       <input class="address_inp clr-part  mb30" type="text" v-model="password" />
                        <div class="flex">
                         <div class="flex2">
-                       <p class="ft12 fColor2 mb15">温馨提示</p>
+                       <!-- <p class="ft12 fColor2 mb15">温馨提示</p> -->
                        <ul class="tips_ul ft12 fColor2" style="list-style:disc inside">
-                           <li class="tips_li" style="list-style:disc inside" v-for="item in tip_list01">{{item}}</li>
+                           <li>最小提币数量为：{{min_number}}{{item.currency_name}}。</li>
+                           <li>
+                                为保障资金安全，当您账户安全策略变更、密码修改、我们会对提币进行人工审核，请耐心等待工作人员电话或邮件联系。
+                           </li>
+                           <li>
+                                请务必确认电脑及浏览器安全，防止信息被篡改或泄露
+                           </li>
                        </ul>
                        </div>
                        <div class="flex1 tc"><button class="withdraw_btn" @click="mention">提币</button></div>
@@ -145,7 +166,12 @@ export default {
                 '请勿向上述地址充值任何非USDT资产，否则资产将不可找回。','USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。','请勿向上述地址充值任何非USDT资产，否则资产将不可找回。','USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。'
             ],
             page:1,
-            moreLog:'加载更多'
+            moreLog:'加载更多',
+            rete:'',
+            total:'',
+            totalCNY:'',
+            addressList:[],
+            password:''
         }
     },
     components:{
@@ -154,10 +180,24 @@ export default {
     },
     computed:{
          reachnum(){
-             return this.number - this.number*this.rate/100;
+             return this.number - this.number*this.rate;
          }   
     },
     methods:{
+        //刷新页面
+        refresh(){
+                    this.$http({
+                        url: '/api/wallet/refresh',
+                        method:'get',
+                        data:{},
+                        headers:{'Authorization':this.token}
+                    }).then( res => {
+                        if(res.data.type == 'ok'){
+                            
+                        }
+                    })
+        },
+         
         goRecord(){
             this.$router.push({name:'coinRecord'})
         },
@@ -170,6 +210,34 @@ export default {
                 alert('复制失败')
             });
         },
+        getRate(currency){
+           this.$http({
+                        url: '/api/wallet/get_info',
+                        method:'post',
+                        data:{currency:currency},
+                        headers:{'Authorization':this.token}
+                    }).then( res => {
+                        if(res.data.type == 'ok'){
+                            this.rate = res.data.message.rate
+                        }
+                    }) 
+        },
+        //获得币种地址
+        getAddress(currency){
+                  var i = layer.load();
+                  this.addressList = [];
+                   this.$http({
+                        url: '/api/wallet/get_address',
+                        method:'post',
+                        data:{currency:currency},
+                        headers:{'Authorization':this.token}
+                    }).then( res => {
+                        layer.close(i);
+                        if(res.data.type == 'ok'){
+                             this.addressList = res.data.message;
+                        }
+                    })
+        },
         //充币
         excharge(index,currency){
             console.log(currency);
@@ -180,15 +248,18 @@ export default {
                 this.active01 = 'a';
                  this.active02 = 'a';
             }else{
+                var i = layer.load();
                 this.flag = true;
                 this.active = index;
                 this.active01 = 'a';
                  this.active02 = 'a';
             }
-            this.sendData(currency)
+            this.sendData(currency,i);
+            this.getRate(currency);
         },
-        sendData(currency){
+        sendData(currency,i){   
             var that = this;
+            that.excharge_address = ''
             // $.ajax({
             //     type: "POST",
             //     url: '/api/' + 'wallet/get_in_address',
@@ -221,6 +292,7 @@ export default {
                 data:{currency:currency},
                 headers: {'Authorization':  that.token},
                 }).then(res=>{
+                    layer.close(i);
                     console.log(res)
                     if (res.data.type=="ok"){
                         that.excharge_address=res.data.message;
@@ -238,7 +310,7 @@ export default {
             })
         },
         //提币
-        withdraw(index,currency){
+        withdraw(index,currency,currency_name){
             this.currency=currency;
              if(this.flag){
                 this.flag = false;
@@ -250,8 +322,10 @@ export default {
                  this.active01 = index;
                  this.active = 'a';
                  this.active02 = 'a';
+                 this.getAddress(currency)
             }
             this.getNum(currency);
+             this.getRate(currency);
         },
         //记录
         rec(index,currency){
@@ -322,7 +396,7 @@ export default {
                         console.log(res)
                         that.coinname=res.message.name;
                         that.balance=res.message.change_balance;
-                        that.min_number='最小提币数量'+res.message.min_number;
+                        that.min_number=res.message.min_number;
                         that.minnumber=res.message.min_number;
                         that.ratenum=res.message.rate+'-'+res.message.rate;
                         // that.reachnum=this.number - this.number*res.message.rate;
@@ -343,13 +417,17 @@ export default {
             var rate = this.rate;
             var min_number = this.minnumber;
             if(!address){
-                layer.alert('请输入提币地址');
+                layer.alert('请选择提币地址');
                 return;
             } 
             if(!number){
                 layer.alert('请输入提币数量');
                 return;
             } 
+            if(!this.password){
+                 layer.alert('请输入提币密码');
+                return;
+            }
             if((number-0)<min_number){
                 console.log(number,min_number)
                 return layer.alert('输入的提币数量小于最小值');
@@ -358,6 +436,7 @@ export default {
             //     layer.alert('请输入0-1之间的提币手续费');
             //     return;
             // }
+            var i = layer.load();
             $.ajax({
                 type: "POST",
                 url: '/api/' + 'wallet/out',
@@ -365,7 +444,8 @@ export default {
                     currency:currency,
                     number:number,
                     rate:rate,
-                    address:address
+                    address:address,
+                    password:this.password
                 },
                 dataType: "json",
                 async: true,
@@ -373,6 +453,7 @@ export default {
                     request.setRequestHeader("Authorization", that.token);
                 },
                 success: function(res){
+                    layer.close(i);
                     console.log(res)
                     if (res.type=="ok"){
                         layer.msg(res.message)
@@ -421,6 +502,7 @@ export default {
             }
         },
         getdata(){
+            var load = layer.load();
             var that = this;
             console.log(that.token)
             // $.ajax({
@@ -446,8 +528,12 @@ export default {
             data:{},
             headers: {'Authorization':  that.token},
             }).then(res=>{
+                layer.close(load)
                 console.log(res.data)
                 that.asset_list=res.data.message.change_wallet.balance;
+                that.total = res.data.message.change_wallet.total;
+                that.totalCNY = res.data.message.change_wallet.totalCNY;
+                that.refresh();
                 // this.asset_list.forEach((item,index) => {
                 //     this.$http({
                 //         url: '/api/wallet/legal_log',
@@ -519,7 +605,7 @@ export default {
         
     }
     .right_text{
-        color: #d45858;
+        color: #563BD1;
     }
     .right_text span{
         cursor: pointer;
@@ -539,7 +625,8 @@ export default {
         border-bottom: 1px solid #ccc;
     }
     .operation,.copy,.ewm{
-        color: #d45858;
+        // color: #d45858;
+        color: #563BD1;
     }
     .copy{
         margin: 0 30px;

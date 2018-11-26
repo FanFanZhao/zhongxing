@@ -1,10 +1,10 @@
 <template>
-    <div class="notice clr-part bdr-part">
+    <div class="notice clr-part" style="overflow:hidden">
         <!-- <indexHeader></indexHeader> -->
-        <div class="account-wrap">
+        <div class="account-wrap" style="width:1200px">
             <div class="account" style="width:auto">
                 <div>
-                    <div class="back-nav  ft20 clear" style="padding:0 20px;"> 公告
+                    <div class="back-nav  ft20 clear" style="padding:0 20px;"> {{title}}
                         
                     </div>
                     
@@ -47,6 +47,14 @@ export default {
       more: "点击加载更多...",
       newList: []
     };
+  },
+  props:{
+    // header 标题
+    title:{
+      type:String,
+      default:'公告',
+    },
+     
   },
   created() {
     // this.$http({
@@ -100,6 +108,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .notice {
+  overflow: hidden;
   .account-wrap {
     // background: url(../assets/images/account_center_bg.jpg) no-repeat;
     // background-size: cover;
