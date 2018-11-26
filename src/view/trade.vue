@@ -209,8 +209,8 @@ export default {
       that.buy_sell(that.legal_id, that.currency_id);
       if (that.address) {
         that.timer = setInterval(() => {
-          that.currency_val(that.currency_id);
-          that.currency_val02(that.legal_id);
+          that.currency_val(that.legal_id,that.currency_id);
+          // that.currency_val02(that.legal_id);
         }, 3000);
       }
     });
@@ -223,8 +223,8 @@ export default {
       if(that.address){
 
         that.timer2 = setInterval(() => {
-          that.currency_val(that.currency_id);
-          that.currency_val02(that.legal_id);
+          that.currency_val(that.legal_id,that.currency_id);
+          // that.currency_val02(that.legal_id);
         }, 3000);
       }
     });
@@ -235,8 +235,8 @@ export default {
         if(that.address){
 
           that.timer3 = setInterval(() => {
-            that.currency_val(that.currency_id);
-            that.currency_val02(that.legal_id);
+            that.currency_val(that.legal_id,that.currency_id);
+            // that.currency_val02(that.legal_id);
           }, 3000);
         }
       }
@@ -250,7 +250,7 @@ export default {
   methods: {
     //获取可用余额
     //币币余额
-    currency_val(currency_id) {
+    currency_val(legal_id,currency_id) {
       if(!this.address){
         return;
       }
@@ -258,12 +258,15 @@ export default {
         url: "/api/" + "wallet/get_currency_balance",
         method: "GET",
         params: {
-          currency_id: currency_id
+          legal_id:legal_id,
+          change_id: currency_id
         },
         headers: { Authorization: this.address }
       }).then(res => {
-        if (res.data.type == "ok") {
-          this.user_currency = res.data.message;
+        console.log(res)
+        if (res.status == 200) {
+          this.user_currency = res.data.change_price;
+          this.user_legal = res.data.legal_price;
         } else {
           clearInterval(this.timer);
           clearInterval(this.timer2);
@@ -271,26 +274,26 @@ export default {
       });
     },
     //法币余额
-    currency_val02(legal_id) {
-      if(!this.address){
-        return;
-      }
-      this.$http({
-        url: "/api/" + "wallet/get_currency_balance",
-        method: "GET",
-        params: {
-          currency_id: legal_id
-        },
-        headers: { Authorization: this.address }
-      }).then(res => {
-        if (res.data.type == "ok") {
-          this.user_legal = res.data.message;
-        } else {
-          clearInterval(this.timer);
-          clearInterval(this.timer2);
-        }
-      });
-    },
+    // currency_val02(legal_id) {
+    //   if(!this.address){
+    //     return;
+    //   }
+    //   this.$http({
+    //     url: "/api/" + "wallet/get_currency_balance",
+    //     method: "GET",
+    //     params: {
+    //       currency_id: legal_id
+    //     },
+    //     headers: { Authorization: this.address }
+    //   }).then(res => {
+    //     if (res.data.type == "ok") {
+    //       this.user_legal = res.data.message;
+    //     } else {
+    //       clearInterval(this.timer);
+    //       clearInterval(this.timer2);
+    //     }
+    //   });
+    // },
     changeVal(){
      
          if(this.current == 0){
