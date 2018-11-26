@@ -103,7 +103,7 @@
 				console.log('socket')
 				that.$socket.emit("login", this.$makeSocketId());
 				that.$socket.on("kline", msg => {
-                    // console.log(msg)
+                    console.log(msg)
 					let obj={}
 
 					if(that.$store.state.symbol==msg.symbol){
