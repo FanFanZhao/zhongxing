@@ -37,9 +37,9 @@
                     </div>
                     <div class="register-input pass-box">
                         <span class="register-item">请再次输入密码</span>
-                        <input :type="showrepass?'text':'password'" class="input-main input-content" maxlength="16" v-model="password" id="repwd">
+                        <input :type="showrepass?'text':'password'" class="input-main input-content" maxlength="16" v-model="re_password" id="repwd">
                         <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
-                        <img src="../assets/images/hidepass.png" alt="" v-if="!showerpass" @click="showrepass = true">
+                        <img src="../assets/images/hidepass.png" alt="" v-if="!showrepass" @click="showrepass = true">
                     </div>
                     <button class="register-button curPer redBg" type="button" @click="resetPass" style="margin-top:20px">确认</button>
                 </div>
@@ -76,6 +76,7 @@ export default {
   created() {},
   methods: {
     sendCode(url) {
+    var i = layer.load();
       this.$http({
         url: "/api/" + url,
         method: "post",
@@ -85,6 +86,7 @@ export default {
           front:country[this.areaCode].area_code
         }
       }).then(res => {
+        layer.close(i);
         console.log(res);
         layer.msg(res.data.message);
       });

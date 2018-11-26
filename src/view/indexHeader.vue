@@ -16,7 +16,7 @@
       <div v-else @click="goLogin()">安全设置</div>
       <router-link to="/helpcenter">帮助中心</router-link>
       <router-link v-if="token" to="/advice">投诉留言</router-link>
-      <div v-else @click="goLogin()">安全设置</div>
+      <div v-else @click="goLogin()">投诉留言</div>
       <!-- <router-link to="/components/noticeList">公告</router-link>
       <div class="coin-box">
         <router-link to="/currencyApply">上币申请</router-link>
