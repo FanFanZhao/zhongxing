@@ -23,7 +23,7 @@
                     <div class="mt40 input-item clear">
                         <label>买入价</label>
                         <input class="clr-part bg-main bdr-part" type="number" v-model="buyPrice" min="0" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
-                        <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice01" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
                         <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
@@ -54,7 +54,7 @@
                     <div class="mt40 input-item clear">
                         <label>卖出价</label>
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="sellPrice" v-if="!disabled" min="0">
-                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice" :disabled='disabled' v-if="disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice02" :disabled='disabled' v-if="disabled">
                         <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
@@ -144,9 +144,11 @@ export default {
       allBalance: 0,
       disabled: false,
       lastPrice: "",
+      lastPrice01:'',
+      lastPrice02:'',
       pwd: "",
       buyPrice: "",
-      buyNum: 0,
+      buyNum: "",
       sellNum: "",
       sellPrice: "",
       buyInfo: { buyPrice: 0, buyNum: 0, pwd: "", url: "transaction/in" },
@@ -224,10 +226,19 @@ export default {
         that.currency_val(that.legal_id, that.currency_id)
       }
     });
+    // 从exchange传过来的买一卖一价
+    eventBus.$on("totradePrice", function(data) {
+      console.log(data);
+      that.lastPrice01 = data.buyPrice;
+      that.lastPrice02 = data.sellPrice;
+      // that.lastPrice = data;
+    })
     // 从exchange传过来的最新价
     eventBus.$on("priceToTrade", function(data) {
-      // console.log(data);
-      that.lastPrice = data;
+      console.log(data);
+      that.lastPrice01 = data.buyPrice;
+      that.lastPrice02 = data.sellPrice;
+      // that.lastPrice = data;
     });
   },
   methods: {
@@ -283,7 +294,7 @@ export default {
            this.buyNum = (this.user_legal/this.buyPrice*(this.value1/100)).toFixed(5);
          } 
          if(this.current == 1){
-           this.buyNum = (this.user_legal/this.lastPrice*(this.value1/100)).toFixed(5);
+           this.buyNum = (this.user_legal/this.lastPrice01*(this.value1/100)).toFixed(5);
          }   
     },
     changeVal2(){

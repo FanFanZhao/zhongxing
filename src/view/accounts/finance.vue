@@ -470,6 +470,8 @@ export default {
                         setTimeout(() => {
                             that.$router.push('/components/resetLegalPwd')
                         }, 1000);
+                    }else{
+                        layer.msg(res.message);
                     }
                 }
             })

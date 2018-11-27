@@ -52,7 +52,8 @@ export default {
         url: "/api/sms_mail",
         method: "post",
         data: {
-          user_string: this.account_number
+          user_string: this.account_number,
+          type :'binding'
         }
       }).then(res => {
         console.log(res);
@@ -109,6 +110,7 @@ export default {
       console.log(data);
       data.code = this.phoneCode;
       data.email = user_string;
+      
       this.$http({
         url: "/api/safe/email",
         method: "post",

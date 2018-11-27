@@ -17,8 +17,8 @@
                     <span>{{out.number}}</span>
                 </li>
                 <div class="line bdr-part"></div>
-                 <li class="curPer ceilColor bg-hov" v-for="(buy,index) in inlist" :key="index" @click="price(buy.price)">
-                    <span>买 {{index+1}}</span>
+                 <li class="curPer ceilColor bg-hov" v-for="(buy,inde) in inlist" :key="inde" @click="price(buy.price)">
+                    <span>买 {{inde+1}}</span>
                     <span style="font-weight:600">{{buy.price}}</span>
                     <span>{{buy.number}}</span>
                 </li>
@@ -51,6 +51,8 @@ export default {
   },
   mounted(){
     var that = this;
+    var Data = JSON.parse(window.localStorage.getItem("tradeData"));
+       that.newData = Data.now_price;
     var localData=JSON.parse(window.localStorage.getItem('tradeData'))
     that.currency_id = localData.currency_id;
     that.legal_id = localData.legal_id;
@@ -60,6 +62,7 @@ export default {
       that.legal_name = data0.legal_name;
       that.currency_id = data0.currency_id;
       that.legal_id = data0.legal_id;
+      that.newData =  Data.now_price || data0.now_price; //初始最新价赋值
       that.buy_sell(that.legal_id, that.currency_id);
     });
     eventBus.$on("toExchange", function(data) {
@@ -69,6 +72,15 @@ export default {
       that.legal_id = data.legal_id;
       that.buy_sell(that.legal_id,that.currency_id);
     });
+  //接收market组件传来的最新价
+  
+    eventBus.$on("toexchangeNowprice", function(data) {
+      console.log('88888888888888888888888888')
+      console.log(data)
+        that.newData = data || Data.now_price;
+    });
+    
+    
   },
   sockets: {
 
@@ -90,17 +102,23 @@ export default {
         headers: { Authorization: localStorage.getItem("token") }
       })
         .then(res => {
+             console.log(res)
           layer.close(i);
           if (res.data.type == "ok") {
             this.inlist = res.data.message.in;
             this.outlist = res.data.message.out;
-            this.newData = res.data.message.last_price;
-            this.buyInfo.buyPrice = 0;
-            this.buyInfo.buyNum = 0;
-            // this.connect(
-            //   legals_id,
-            //   currencys_id
-            // );
+            // this.newData = res.data.message.last_price;
+
+            console.log(this.outlist)
+            var len = this.outlist.length;
+            var totradePrice = {
+              buyPrice:this.inlist[0].price,
+              sellPrice: this.outlist[len-1].price
+            }
+            console.log(totradePrice)
+            setTimeout(() => {
+              eventBus.$emit('totradePrice',totradePrice)
+            }, 1000);
           } else {
             layer.msg(res.data.message);
           }
@@ -128,14 +146,25 @@ export default {
           setTimeout(() => {
             eventBus.$emit("toNew", newPrice);
           }, 1000);
-          that.newData = msg.last_price;
+          
           // eventBus.$emit('priceToTrade',function(data){
           //   that.newData = data.lastPrice;
           // })
-          eventBus.$emit("priceToTrade", msg.last_price);
+         
           var inData = JSON.parse(msg.in);
           var outData = JSON.parse(msg.out);
+          var len01 = inData.length;
+          var len02 = outData.length;
+          //  eventBus.$emit("priceToTrade", msg.last_price);
+          
           if (msg.legal_id == that.legal_id && msg.currency_id == that.currency_id) {
+            console.log(msg.last_price)
+            that.newData = msg.last_price;
+            var priceData = {
+            buyPrice:inData[0].price,
+            sellPrice:outData[len02-1].price
+          }
+           eventBus.$emit("priceToTrade", priceData);
             that.inlist = inData;
             that.outlist = outData;
           }
