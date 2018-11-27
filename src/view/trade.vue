@@ -23,7 +23,7 @@
                     <div class="mt40 input-item clear">
                         <label>买入价</label>
                         <input class="clr-part bg-main bdr-part" type="number" v-model="buyPrice" min="0" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
-                        <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice01" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice02" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
                         <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
@@ -54,7 +54,7 @@
                     <div class="mt40 input-item clear">
                         <label>卖出价</label>
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="sellPrice" v-if="!disabled" min="0">
-                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice02" :disabled='disabled' v-if="disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice01" :disabled='disabled' v-if="disabled">
                         <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
@@ -294,7 +294,7 @@ export default {
            this.buyNum = (this.user_legal/this.buyPrice*(this.value1/100)).toFixed(5);
          } 
          if(this.current == 1){
-           this.buyNum = (this.user_legal/this.lastPrice01*(this.value1/100)).toFixed(5);
+           this.buyNum = (this.user_legal/this.lastPrice02*(this.value1/100)).toFixed(5);
          }   
     },
     changeVal2(){

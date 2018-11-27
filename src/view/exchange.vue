@@ -161,8 +161,8 @@ export default {
             console.log(msg.last_price)
             that.newData = msg.last_price;
             var priceData = {
-            buyPrice:inData[0].price,
-            sellPrice:outData[len02-1].price
+            buyPrice:inData[0].price || '',
+            sellPrice:outData[len02-1].price || ''
           }
            eventBus.$emit("priceToTrade", priceData);
             that.inlist = inData;
