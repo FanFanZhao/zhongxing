@@ -28,8 +28,10 @@
                    <p class="flex1 tc">{{item.cny_price}}</p>
                    <!-- <p class="flex1 tc">{{item.lock_position}}</p> -->
                    <p class="flex1 tc operation">
-                       <span @click="excharge(index,item.currency)" >充币</span>
-                       <span @click="withdraw(index,item.currency,item.currency_name)">提币</span>
+                       <span v-if="item.currency_name == 'BRCS'" @click="noopen">充币</span>
+                       <span v-if="item.currency_name != 'BRCS'" @click="excharge(index,item.currency)">充币</span>
+                       <span v-if="item.currency_name == 'BRCS'" @click="noopen">提币</span>
+                       <span @click="withdraw(index,item.currency,item.currency_name)" v-if="item.currency_name != 'BRCS'">提币</span>
                        <!-- <span @click="exchange">兑换</span> -->
                        <span @click="rec(index,item.currency)">记录</span>
                    </p>
@@ -408,12 +410,13 @@ export default {
                 }
             })
         },
+        noopen(){
+           layer.msg('暂未开放')
+        },
         // 提币按钮
         mention() {
             var that =this;
-            var currency = this.currency;
-            console.log(this.addressList)
-            console.log(this.address)
+            var currency = this. currency;
             var address = this.address;
             var number = this.number;
             var rate = this.rate;
@@ -462,9 +465,10 @@ export default {
                         setTimeout(() => {
                           window.location.reload();
                     }, 1500);
-                    }else if(res.type == '998'){
+                    }else if(res.type=='998'){
+                        layer.msg(res.message);
                         setTimeout(() => {
-                             that.$router.push('/components/resetLegalPwd')
+                            that.$router.push('/components/resetLegalPwd')
                         }, 1000);
                     }
                 }
