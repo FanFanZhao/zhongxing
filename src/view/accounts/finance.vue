@@ -63,7 +63,7 @@
                        <!-- <input class="address_inp clr-part  mb30" type="text" v-model="address" /> -->
                        <select class="address_inp clr-part  mb30" v-model="address">
                            <option value="">选择提币地址</option>
-                           <option value="item.address" v-for="(item,index) in addressList" :key="index">{{item.address}}</option>
+                           <option :value="item.address" v-for="(item,index) in addressList" :key="index">{{item.address}}</option>
                        </select>
                        <p class="fColor2 ft12 mb15 flex between alcenter"><span>数量</span><span>可用：<span class="use_num">{{balance}} {{coinname}}</span><span></span></span></p>
                        <label class="num_lab flex between mb30">
@@ -411,7 +411,9 @@ export default {
         // 提币按钮
         mention() {
             var that =this;
-            var currency = this. currency;
+            var currency = this.currency;
+            console.log(this.addressList)
+            console.log(this.address)
             var address = this.address;
             var number = this.number;
             var rate = this.rate;
@@ -460,8 +462,10 @@ export default {
                         setTimeout(() => {
                           window.location.reload();
                     }, 1500);
-                    }else{
-                        layer.msg(res.message)
+                    }else if(res.type == '998'){
+                        setTimeout(() => {
+                             that.$router.push('/components/resetLegalPwd')
+                        }, 1000);
                     }
                 }
             })

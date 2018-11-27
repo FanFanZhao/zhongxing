@@ -27,7 +27,7 @@
                     <input type="text" v-if="!isMb" v-model="account" class="">
                     </div>
                 </div>
-                    <div class="tip" style="margin-bottom:10px">请输入验证码</div>
+                    <div class="tip" style="margin-bottom:10px;">请输入验证码 <span class="red" style="margin-left:10px;">(请先查看免责条款，并勾选选项框，才可点击发送验证码)</span></div>
                 <div class="code-box bdr-part">
                     <input type="text" v-model="code" class="code">
                     <button type='button' class="code-btn redBg " :disabled="isCheck?false:true" :class="[isCheck?'':'pointer']"  @click="sendCode">发送验证码</button>

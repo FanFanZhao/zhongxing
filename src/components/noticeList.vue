@@ -19,7 +19,7 @@
                             <li class="clear curPer bdr-part" v-for="item in newList" :key="item.id">
                                 <div class=""  @click="goDetail(item.id)">
                                         <div class="">{{item.title}}</div>
-                                        <span class="fr">{{item.update_time}}</span>
+                                        <span class="fr">{{item.time}}</span>
                                     
                                 </div>
                             </li>
@@ -81,9 +81,12 @@ export default {
         url:  '/api/news/list',
         method:'post',
       }).then(res => {
+        var that = this;
         // console.log(res);
         this.newList=res.data.message.list
-        
+        $.each(this.newList,function(k,v){
+          v.time = that.timestampToTime(v.time);
+        })
       })
     },
     goBefore() {
@@ -98,7 +101,24 @@ export default {
         name: "noticeDetail",
         query: { id: id }
       });
-    }
+    },
+    timestampToTime(timestamp) {
+            var date = new Date(timestamp); //时间戳为10位需*1000，时间戳为13位的话不需乘1000
+            var Y = date.getFullYear() + '-';
+            var M = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + '-';
+            var D = this.change(date.getDate()) + ' ';
+            var h = this.change(date.getHours()) + ':';
+            var m = this.change(date.getMinutes()) + ':';
+            var s = this.change(date.getSeconds());
+            return Y + M + D + h + m + s;
+        },
+        change(t) {
+            if (t < 10) {
+                return "0" + t;
+            } else {
+                return t;
+            }
+        }
   },
   mounted(){
       var that = this;
