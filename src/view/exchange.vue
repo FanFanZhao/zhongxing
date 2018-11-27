@@ -91,6 +91,7 @@ export default {
     },
     // 第一次默认最新价数据
     buy_sell(legal_id, currency_id) {
+      console.log('555555555555555555555555555555')
       var i = layer.load();
       this.$http({
         url: "/api/" + "transaction/deal",
@@ -104,18 +105,33 @@ export default {
         .then(res => {
              console.log(res)
           layer.close(i);
+          //  var len = this.outlist.length;
           if (res.data.type == "ok") {
             this.inlist = res.data.message.in;
             this.outlist = res.data.message.out;
             // this.newData = res.data.message.last_price;
+            console.log("-------1-------")
+             console.log(this.inlist[0])
+             var buy_price = 0
+             if(this.inlist[0] != undefined){
+                buy_price = this.inlist[0].price
+             }
+             var sell_price = 0
+             if(this.outlist.length > 0){
+                var len = this.outlist.length;
+                if(this.outlist[len-1] != undefined){
+                    sell_price = this.outlist[len-1].price
+                }
+             }
 
-            console.log(this.outlist)
-            var len = this.outlist.length;
+           
             var totradePrice = {
-              buyPrice:this.inlist[0].price,
-              sellPrice: this.outlist[len-1].price
+              buyPrice:buy_price,
+              sellPrice: sell_price
             }
+            
             console.log(totradePrice)
+            console.log("-------2-------")
             setTimeout(() => {
               eventBus.$emit('totradePrice',totradePrice)
             }, 1000);
@@ -160,9 +176,16 @@ export default {
           if (msg.legal_id == that.legal_id && msg.currency_id == that.currency_id) {
             console.log(msg.last_price)
             that.newData = msg.last_price;
+            
             var priceData = {
-            buyPrice:inData[0].price || '',
-            sellPrice:outData[len02-1].price || ''
+            buyPrice:inData[0].price,
+            sellPrice:outData[len02-1].price
+          }
+          if(len01 == 0){
+            priceData.buyPrice = ''
+          }
+          if(len02 == 0){
+            priceData.sellPrice = ''
           }
            eventBus.$emit("priceToTrade", priceData);
             that.inlist = inData;

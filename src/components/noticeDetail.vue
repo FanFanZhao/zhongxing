@@ -19,7 +19,7 @@
                         </div> 
                         <div class=" mt40">
                             <p class="tr">{{abstract}}</p>
-                            <p class="tr mt5">{{update_time }}</p>
+                            <p class="tr mt5">{{create_time }}</p>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@ export default {
             title:'',
             content:'',
             abstract:'',
-            update_time:''
+            create_time:''
 
         }
     },
@@ -56,9 +56,9 @@ export default {
                 this.title=res.message.title;
                 this.content=res.message.content;
                 this.abstract=res.message.abstract;
-                var time=res.message.update_time;
+                var time=res.message.create_time;
                 console.log(res.message.update_time,time)
-                this.update_time= this.timestampToTime(time);
+                this.create_time= this.timestampToTime(time);
                 
                 // this.setProperty(this.timestampToTime(res.message.update_time));
                 console.log('ppp')
