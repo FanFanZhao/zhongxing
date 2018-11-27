@@ -167,7 +167,7 @@ export default {
               .css("color", "#459e80");
           }
           $("span[data-name='" + cname + "']")
-            .html("$" + newprice)
+            .html(newprice)
             .next()
             .html(newup);
         }
