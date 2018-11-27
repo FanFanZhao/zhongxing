@@ -239,7 +239,7 @@ export default {
         time--;
       }, 1000);
       
-      let data = { user_string: this.account };
+      let data = { user_string: this.account,type:'regist' };
       if(url == 'sms_send'){
          data.front = country[this.areaCode].area_code
       }
