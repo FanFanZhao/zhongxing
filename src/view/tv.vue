@@ -103,10 +103,10 @@
 				console.log('socket')
 				that.$socket.emit("login", this.$makeSocketId());
 				that.$socket.on("kline", msg => {
-                    // console.log(msg)
+                    console.log(msg)
 					let obj={}
 
-					if(that.$store.state.symbol==msg.symbol){
+					if(that.$store.state.symbol==msg.sybmol){
 						obj.open=Number(msg.open)
 						obj.low=Number(msg.low)
 						obj.high=Number(msg.high)
