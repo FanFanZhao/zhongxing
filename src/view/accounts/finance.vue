@@ -28,8 +28,10 @@
                    <p class="flex1 tc">{{item.cny_price}}</p>
                    <!-- <p class="flex1 tc">{{item.lock_position}}</p> -->
                    <p class="flex1 tc operation">
-                       <span @click="excharge(index,item.currency)" >充币</span>
-                       <span @click="withdraw(index,item.currency,item.currency_name)">提币</span>
+                       <span v-if="item.currency_name == 'BRCS'">充币</span>
+                       <span v-if="item.currency_name != 'BRCS'" @click="excharge(index,item.currency)">充币</span>
+                       <span v-if="item.currency_name == 'BRCS'">提币</span>
+                       <span @click="withdraw(index,item.currency,item.currency_name)" v-if="item.currency_name != 'BRCS'">提币</span>
                        <!-- <span @click="exchange">兑换</span> -->
                        <span @click="rec(index,item.currency)">记录</span>
                    </p>
