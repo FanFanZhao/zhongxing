@@ -36,7 +36,7 @@
           <li v-for="(market,index) in marketList " :key="index" v-show="(index == isShow )" >
             <p v-for="(itm,idx) in market"  :key="itm.id" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market)">
               <span class="w36"><img :src="itm.logo" alt=""><i><em class="deep_blue bold">{{itm.currency_name}}</em><em class="light_blue bold">/{{itm.legal_name}}</em></i></span>
-              <span class="w30 tr deep_blue bold" :data-name='itm.currency_name+"/"+itm.legal_name'>{{itm.now_price || 0}}</span>
+              <span class="w30 tr deep_blue bold" :data-name='itm.currency_id+"/"+itm.legal_id'>{{itm.now_price || 0}}</span>
               <span :class="{'green':itm.change>=0}" class="bold">{{(itm.change>0?'+':'')+(itm.change-0).toFixed(2)}}%</span>
             </p>
           </li>
@@ -54,12 +54,12 @@ export default {
       tabList: [],
       marketList: [],
       newData: ["HQ", "$0.076128", "-1.11%"],
-      legal_index: '',
-      currency_index: '',
+      legal_index: "",
+      currency_index: "",
       tradeDatas: "",
       exName: "",
       currency_name: "",
-      legal_name:""
+      legal_name: ""
     };
   },
   created: function() {
@@ -75,14 +75,14 @@ export default {
       layer.close(load);
       // console.log(res);
       if (res.data.type == "ok") {
-        this.tabList = res.data.message; 
+        this.tabList = res.data.message;
         var msg = res.data.message;
         var arr_quota = [];
         for (var i = 0; i < msg.length; i++) {
           arr_quota[i] = msg[i].quotation;
         }
         this.marketList = arr_quota;
-        console.log(this.marketList)
+        console.log(this.marketList);
         // this.$store.state.priceScale = Math.pow(
         //   10,
         //   this.marketList[0][0].now_price
@@ -94,10 +94,11 @@ export default {
         }
         this.currency_name = msg[0].name;
         this.$store.state.priceScale = 100000;
-        
+
         //默认法币id和name和行情交易对
-        if(!window.localStorage.getItem('tradeData')){
-          this.$store.state.symbol = arr_quota[0][0].currency_name + "/" + arr_quota[0][0].legal_name;
+        if (!window.localStorage.getItem("tradeData")) {
+          this.$store.state.symbol =
+            arr_quota[0][0].currency_name + "/" + arr_quota[0][0].legal_name;
           var legal_id = arr_quota[0][0].legal_id;
           var currency_id = arr_quota[0][0].currency_id;
           var legal_name = arr_quota[0][0].legal_name;
@@ -108,19 +109,20 @@ export default {
             currency_name: currency_name,
             legal_name: legal_name
           };
-        }else{
-          var localData=JSON.parse(window.localStorage.getItem('tradeData'))
-          this.$store.state.symbol = localData.currency_name + "/" + localData.legal_name;
+        } else {
+          var localData = JSON.parse(window.localStorage.getItem("tradeData"));
+          this.$store.state.symbol =
+            localData.currency_name + "/" + localData.legal_name;
           var tradeDatas = {
             currency_id: localData.currency_id,
             legal_id: localData.legal_id,
             currency_name: localData.currency_name,
             legal_name: localData.legal_name
           };
-          this.ids='a';
-          this.isShow=localData.isShow;
-          this.legal_index=localData.legal_name;
-          this.currency_index= localData.currency_name;
+          this.ids = "a";
+          this.isShow = localData.isShow;
+          this.legal_index = localData.legal_name;
+          this.currency_index = localData.currency_name;
         }
 
         //组件间传值
@@ -147,9 +149,11 @@ export default {
       that.$socket.on("daymarket", msg => {
         // console.log(msg);
         if (msg.type == "daymarket") {
-          var cname = msg.currency_name + "/" + msg.legal_name;
+          console.log(msg);
+          
+          var cname = msg.currency_id + "/" + msg.legal_id;
           var newprice = msg.now_price;
-          var newup = msg.change;
+          var newup = (msg.change-0).toFixed(2);
           // console.log(cname)
           if (newup < 0) {
             newup = newup + "%";
@@ -230,7 +234,7 @@ export default {
           if (res.data.type == "ok") {
             this.getSymbols(() => {
               this.marketList = res.data.message.coin_list;
-              console.log(this.marketList)
+              console.log(this.marketList);
               for (var i in this.dataList) {
                 for (var j in this.marketList) {
                   // console.log(this.dataList[i].name,this.marketList[j].symbol,this.dataList[i].name==this.marketList[j].symbol)
@@ -255,32 +259,41 @@ export default {
     },
     //币种切换
 
-    quota_shift(idx,currency_id,legal_id,currency_name,legal_name,list,index,market) {
+    quota_shift(
+      idx,
+      currency_id,
+      legal_id,
+      currency_name,
+      legal_name,
+      list,
+      index,
+      market
+    ) {
       // idx,currency_id,legal_id,currency_name,legal_name,list,index,market
-      console.log(market)
+      console.log(market);
       this.ids = idx;
-      this.legal_index='';
-      this.currency_index='';
-      if (list.now_price == null||list.now_price == "0") {
+      this.legal_index = "";
+      this.currency_index = "";
+      if (list.now_price == null || list.now_price == "0") {
         list.now_price = "0.0";
       }
       console.log(list);
-      let arr = (list.now_price+'').split(".")[1];
+      let arr = (list.now_price + "").split(".")[1];
       console.log(arr);
       this.$store.state.priceScale = Math.pow(10, arr.length); //根据最新价小数点后几位改变价格精度
       this.$store.state.symbol = currency_name + "/" + legal_name; //交易对
       var tradeDatas = {
         currency_id: currency_id,
         legal_id: legal_id,
-        currency_name:currency_name,
+        currency_name: currency_name,
         legal_name: legal_name,
-        isShow:this.isShow,
+        isShow: this.isShow
       };
       //向兄弟组件传数据
       eventBus.$emit("toTrade", tradeDatas);
       eventBus.$emit("toExchange", tradeDatas);
       // 存本地
-      window.localStorage.setItem('tradeData',JSON.stringify(tradeDatas))
+      window.localStorage.setItem("tradeData", JSON.stringify(tradeDatas));
     }
   }
 };
