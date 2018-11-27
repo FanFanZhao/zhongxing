@@ -159,12 +159,12 @@ export default {
             newup = newup + "%";
             $("span[data-name='" + cname + "']")
               .next()
-              .css("color", "#cc4951");
+              .css("color", "#ff6e42");
           } else {
-            newup = newup + "%";
+            newup = '+'+newup + "%";
             $("span[data-name='" + cname + "']")
               .next()
-              .css("color", "#55a067");
+              .css("color", "#459e80");
           }
           $("span[data-name='" + cname + "']")
             .html("$" + newprice)
