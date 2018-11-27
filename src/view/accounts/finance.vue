@@ -88,7 +88,7 @@
                            </div>
                        </div>
                         <p class="fColor2 ft12 mb15">提币密码</p>
-                       <input class="address_inp clr-part  mb30" type="text" v-model="password" />
+                       <input class="address_inp clr-part  mb30" type="password" v-model="password" />
                        <div class="flex">
                         <div class="flex2">
                        <!-- <p class="ft12 fColor2 mb15">温馨提示</p> -->
