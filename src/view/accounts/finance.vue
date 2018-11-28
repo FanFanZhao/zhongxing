@@ -31,7 +31,7 @@
                        <span v-if="item.currency_name == 'BRCS'||item.currency_name == 'UMP'" @click="noopen">充币</span>
                        <span v-if="item.currency_name != 'BRCS'&&item.currency_name != 'UMP'" @click="excharge(index,item.currency)">充币</span>
                        <span v-if="item.currency_name == 'BRCS'||item.currency_name == 'UMP'" @click="noopen">提币</span>
-                       <span @click="withdraw(index,item.currency,item.currency_name)" v-if="item.currency_name != 'BRCS'">提币</span>
+                       <span @click="withdraw(index,item.currency,item.currency_name)" v-if="item.currency_name != 'BRCS'&&item.currency_name != 'UMP'">提币</span>
                        <!-- <span @click="exchange">兑换</span> -->
                        <span @click="rec(index,item.currency)">记录</span>
                    </p>
