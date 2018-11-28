@@ -34,9 +34,9 @@
         <!-- <div class="line"></div> -->
         <ul class="coin-wrap scroll">
           <li v-for="(market,index) in marketList " :key="index" v-show="(index == isShow )" >
-            <p v-for="(itm,idx) in market"  :key="itm.id" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market,itm.now_price)">
+            <p v-for="(itm,idx) in market"  :key="itm.id" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market,itm.now_price,$event)">
               <span class="w36"><img :src="itm.logo" alt=""><i><em class="deep_blue bold">{{itm.currency_name}}</em><em class="light_blue bold">/{{itm.legal_name}}</em></i></span>
-              <span class="w30 tr deep_blue bold" :data-name='itm.currency_id+"/"+itm.legal_id'>{{itm.now_price || 0}}</span>
+              <span class="w30 tr deep_blue bold nowPrice" :data-name='itm.currency_id+"/"+itm.legal_id'>{{itm.now_price || 0}}</span>
               <span :class="{'green':itm.change>=0}" class="bold">{{(itm.change>0?'+':'')+(itm.change-0).toFixed(2)}}%</span>
             </p>
           </li>
@@ -271,7 +271,8 @@ export default {
       list,
       index,
       market,
-      now_price
+      now_price,
+      event
     ) {
       // idx,currency_id,legal_id,currency_name,legal_name,list,index,market
       console.log(market);
@@ -295,9 +296,12 @@ export default {
         now_price:now_price
       };
       console.log('33333333333333333333');
-      console.log(now_price)
+      console.log(now_price);
+      console.log('ppppppppppppppppppppppppppppp');
+      console.log($('.coin-wrap').children().eq(index).children().eq(idx).children().eq(1).text());
+      var sco_price = $('.coin-wrap').children().eq(index).children().eq(idx).children().eq(1).text()
       //向exchange组件传最新价
-      eventBus.$emit("toexchangeNowprice",now_price)
+      eventBus.$emit("toexchangeNowprice",sco_price);
       //向兄弟组件传数据
       eventBus.$emit("toTrade", tradeDatas);
       eventBus.$emit("toExchange", tradeDatas);

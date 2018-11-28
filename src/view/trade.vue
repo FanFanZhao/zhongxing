@@ -36,7 +36,7 @@
                         <input type="password" v-model="buyInfo.pwd" @keydown.69.prevent>
                     </div> -->
                     <!-- <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div> -->
-                    <el-slider v-model="value1" :min="0" :max="100" show-stops :show-tooltip="false" :step="25" :disabled="address?current == 0?buyPrice=='':false:true" @change="changeVal"></el-slider>
+                    <el-slider v-model="value1" :min="0" :max="100" show-stops :show-tooltip="false" :step="25" :disabled="address?current == 0?buyPrice=='':lastPrice02==0?true:false:true" @change="changeVal"></el-slider>
                     <div class="mt50 1 ft16">交易额 {{buyTotal}} {{legal_name}}</div>
                     <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">买{{currency_name}}</div>
                 </div>
@@ -67,7 +67,7 @@
                         <input type="password" v-model="sellInfo.pwd" @keydown.69.prevent>
                     </div> -->
                     <!-- <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div> -->
-                    <el-slider v-model="value2" :min="0" :max="100" :show-tooltip="false" show-stops :step="25"  :disabled="address?current == 0?sellPrice=='':false:true" @change="changeVal2"></el-slider>
+                    <el-slider v-model="value2" :min="0" :max="100" :show-tooltip="false" show-stops :step="25"  :disabled="address?current == 0?sellPrice=='':lastPrice01==0?true:false:true" @change="changeVal2"></el-slider>
                     <div class="mt50 1 ft16">交易额 {{sellTotal}} {{legal_name}}</div>
                     <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">卖{{currency_name}}</div>
                 </div>
@@ -208,7 +208,7 @@ export default {
       that.legal_name = data.legal_name;
       that.buyPrice = '';
       that.sellPrice = '';
-      that.buy_sell(that.legal_id, that.currency_id);
+      // that.buy_sell(that.legal_id, that.currency_id);
       that.currency_val(that.legal_id, that.currency_id)
     });
     eventBus.$on("toTrade0", function(data0) {
@@ -216,13 +216,13 @@ export default {
       (that.currency_id = data0.currency_id), (that.legal_id = data0.legal_id);
       that.currency_name = data0.currency_name;
       that.legal_name = data0.legal_name;
-      that.buy_sell(that.legal_id, that.currency_id);
+      // that.buy_sell(that.legal_id, that.currency_id);
       that.currency_val(that.legal_id, that.currency_id)
     });
     eventBus.$on("tocel", function(datas) {
       // console.log(datas);
       if (datas) {
-        that.buy_sell(that.legal_id, that.currency_id);
+        // that.buy_sell(that.legal_id, that.currency_id);
         that.currency_val(that.legal_id, that.currency_id)
       }
     });
@@ -351,7 +351,14 @@ export default {
           layer.msg("请输入买入价");
           return;
         }
+        
+      }else{
+          if(this.lastPrice02<=0){
+            layer.msg("买入价不能为0");
+            return;
+          }
       }
+      
       if (!this.buyNum || this.buyNum <= 0) {
         layer.msg("请输入买入量");
         return;
@@ -418,6 +425,11 @@ export default {
       if (!this.disabled) {
         if (!this.sellPrice || this.sellPrice <= 0) {
           layer.msg("请输入卖出价");
+          return;
+        }
+      }else{
+        if(this.lastPrice01<=0){
+          layer.msg("卖出价不能为0");
           return;
         }
       }

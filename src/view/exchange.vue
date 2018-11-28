@@ -1,7 +1,7 @@
 <template>
-    <div class="exchange clr-part ">
+    <div class="exchange clr-part flex column">
 		<!-- <div class="title fColor1">交易所</div> -->
-        <div class="content">
+        <div class="content bg-part mb10 flex1">
             <div class="new_price bdr-part">
                 <span class="ft14">最新价 {{newData}}{{legal_name}}</span>
             </div>
@@ -25,6 +25,34 @@
             </ul>
             
         </div>
+        <!--全站交易-->
+        <div class="detail clr-part bg-part flex1">
+        <div class="title  topshadow">
+            <div class="inblock">
+                <span>全站交易</span>
+            </div>
+        </div>
+        <div class="content" style="overflow:hidden">
+            <ul class="list-title fColor2 ft14 clear bdr-part">
+                <li class="fl w12">时间</li>
+                <li class="fl w12">价格</li>
+                <li class="fl w12">交易量</li>
+            </ul>
+            <div class="containers scroll" v-if="deList.length>0">
+                <ul v-for="itm in deList" class="list-item color ft12">
+                    <li class="clear flex clr-part bg-hov">
+                        <span class=" ">{{itm.time}}</span>
+                        <span class="green">{{itm.price}}</span>
+                        <span class="">{{itm.number}}</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="no_data tc" v-if="deList.length<=0">
+                <img src="../assets/images/nodata.png" alt="">
+                <p class="fColor2 ft18">暂无数据</p>   
+            </div>
+        </div>
+    </div>
 	</div>
 </template>
 
@@ -35,6 +63,7 @@ export default {
     return {
       outlist: [],
       inlist: [],
+      deList:[], //全站交易
       load: 1,
       newData: 0,
       currency_name: "",
@@ -109,6 +138,7 @@ export default {
           if (res.data.type == "ok") {
             this.inlist = res.data.message.in;
             this.outlist = res.data.message.out;
+            this.deList = res.data.message.complete
             // this.newData = res.data.message.last_price;
             console.log("-------1-------")
              console.log(this.inlist[0])
@@ -169,6 +199,7 @@ export default {
          
           var inData = JSON.parse(msg.in);
           var outData = JSON.parse(msg.out);
+          var complete = JSON.parse(msg.complete);
           var len01 = inData.length;
           var len02 = outData.length;
           //  eventBus.$emit("priceToTrade", msg.last_price);
@@ -190,6 +221,7 @@ export default {
            eventBus.$emit("priceToTrade", priceData);
             that.inlist = inData;
             that.outlist = outData;
+            that.deList = complete;
           }
         }
       });
@@ -201,6 +233,9 @@ export default {
 </script>
 
 <style scoped>
+.exchange{
+  height: 100%;
+}
 .title {
   height: 48px;
   line-height: 48px;
@@ -241,5 +276,27 @@ export default {
 .line {
   height: 5px;
   border-bottom: 1px solid #ccc;
+}
+/********全站交易*******/
+.title{height: 48px;line-height: 40px;padding: 0 10px;}
+.tab_title{display: inline-block;line-height: 30px;height: 30px;}
+.tab_title span{cursor: pointer;}
+.tab_title span:not(:last-child) {margin-right: 40px;}
+.content{padding: 0 10px;height: 330px;}
+.list-title{line-height: 40px; border-bottom: 1px solid #ccc;height: 40px;}
+.list-title li{
+    width: 33%;
+    text-align: center;
+}
+.no_data{padding: 50px 0;}
+.containers{height: 260px;overflow: auto;}
+.list-item li{line-height: 30px; display: flex;}
+.list-item li span{display: inline-block; float: left; width: 33.3%;text-align: center;}
+
+/* .list-item li:hover{background-color: #eee; color: #de5959;} */
+.list-item li span.green{color: #36a792}
+.containers ul li{
+    display: flex;
+    justify-content: space-around;
 }
 </style>
