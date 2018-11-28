@@ -269,6 +269,8 @@ export default {
       index,
       market
     ) {
+      console.log($('.coin-wrap').children().eq(index).children().eq(idx).children().eq(1).text());
+      $('.coin-wrap').children().eq(index).children().eq(idx).children().eq(1).text();
       // idx,currency_id,legal_id,currency_name,legal_name,list,index,market
       console.log(market);
       this.ids = idx;
