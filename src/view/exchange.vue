@@ -134,7 +134,7 @@ export default {
             console.log("-------2-------")
             setTimeout(() => {
               eventBus.$emit('totradePrice',totradePrice)
-            }, 1000);
+            }, 100);
           } else {
             layer.msg(res.data.message);
           }
@@ -178,8 +178,8 @@ export default {
             that.newData = msg.last_price;
             
             var priceData = {
-            buyPrice:inData[0].price,
-            sellPrice:outData[len02-1].price
+             buyPrice:inData[0].price,
+             sellPrice:outData[len02-1].price
           }
           if(len01 == 0){
             priceData.buyPrice = ''

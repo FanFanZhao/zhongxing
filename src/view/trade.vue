@@ -374,7 +374,7 @@ export default {
         data: {
           legal_id: this.legal_id,
           currency_id: this.currency_id,
-          price: this.disabled ? this.lastPrice : this.buyPrice,
+          price: this.disabled ? this.lastPrice02 : this.buyPrice,
           num: this.buyNum
           // pay_password:this.buyInfo.pwd
         },
@@ -443,7 +443,7 @@ export default {
         data: {
           legal_id: this.legal_id,
           currency_id: this.currency_id,
-          price: this.disabled ? this.lastPrice : this.sellPrice,
+          price: this.disabled ? this.lastPrice01 : this.sellPrice,
           num: this.sellNum
           // pay_password:this.sellInfo.pwd
         },
@@ -520,10 +520,10 @@ export default {
   },
   computed: {
     buyTotal() {
-      return ((this.buyPrice||this.lastPrice) * this.buyNum).toFixed(5) || 0;
+      return ((this.buyPrice||this.lastPrice02) * this.buyNum).toFixed(5) || 0;
     },
     sellTotal() {
-      return ((this.sellPrice||this.lastPrice) * this.sellNum).toFixed(5) || 0;
+      return ((this.sellPrice||this.lastPrice01) * this.sellNum).toFixed(5) || 0;
     }
   },
   destroyed() {
