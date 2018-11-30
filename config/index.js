@@ -12,15 +12,15 @@ module.exports = {
     assetsPublicPath: '/',
     // proxyTable: {},
     proxyTable: {
+
       '/api': {
-          target: 'https://47.52.238.201:8080/api',//后端接口地址
+          target: 'http://47.75.200.255:8080/api',//后端接口地址
           changeOrigin: true,//是否允许跨越
           pathRewrite: {
               '^/api': '/',//重写,
           }
       }
   },
-
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 8011, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined

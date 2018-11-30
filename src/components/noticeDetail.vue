@@ -12,14 +12,14 @@
                 <div class="account-content">
                     <div class="detailBig">
                         <div class="mb30 clear">
-                            <span class=" w90 fl tc">{{title}}</span>
+                            <span class=" w90 fl tc title">{{title}}</span>
                         </div>
                         <div class="detailContent ">
                             <p v-html="content" ref="con"></p>
                         </div> 
                         <div class=" mt40">
                             <p class="tr">{{abstract}}</p>
-                            <p class="tr mt5">{{update_time }}</p>
+                            <p class="tr mt5">{{create_time }}</p>
                         </div>
                     </div>
                 </div>
@@ -37,7 +37,7 @@ export default {
             title:'',
             content:'',
             abstract:'',
-            update_time:''
+            create_time:''
 
         }
     },
@@ -56,9 +56,9 @@ export default {
                 this.title=res.message.title;
                 this.content=res.message.content;
                 this.abstract=res.message.abstract;
-                var time=res.message.update_time;
+                var time=res.message.create_time;
                 console.log(res.message.update_time,time)
-                this.update_time= this.timestampToTime(time);
+                this.create_time= this.timestampToTime(time);
                 
                 // this.setProperty(this.timestampToTime(res.message.update_time));
                 console.log('ppp')
@@ -116,6 +116,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.title{
+    font-size: 20px;
+    font-weight: bold;
+}
 .noticeDetail{
     .account-wrap{
         // background: url(../assets/images/account_center_bg.jpg) no-repeat;
@@ -136,7 +140,7 @@ export default {
                 min-height: 750px;
                 // background-color: #181b2a;
                 .detailBig{
-                    padding: 48px 46px 20px;
+                    padding: 0px 46px 20px;
                     .mb30{
                         margin-bottom: 30px;
                     }

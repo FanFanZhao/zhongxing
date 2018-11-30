@@ -120,7 +120,8 @@ export default {
         method: "post",
         data: {
           user_string: account_number,
-          front:country[this.areaCode].area_code
+          front:country[this.areaCode].area_code,
+          type:'login'
         }
       }).then(res=>{
         console.log(res)

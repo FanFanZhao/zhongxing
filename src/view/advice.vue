@@ -56,6 +56,9 @@ export default {
                 console.log(res)
                 layer.msg(res.data.message);
                 this.texta = '';
+                setTimeout(() => {
+                    location.reload();
+                }, 1000);
                 
             })
                 },

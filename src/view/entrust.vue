@@ -8,30 +8,30 @@
                 <span v-for="(way,index) in wayList" :class="{'active': index == isChoosed}" @click="wayChoose(index,way.url)">{{way.title}}</span>
             </div>
         </div>
-        <div class="content" style="border:1px solid #ccc;overflow:hidden">
+        <div class="content">
             <ul class="list-title color ft12 clear">
                 <li class="fl w20">时间</li>
                 <li class="fl w10">交易对</li>
-                <li class="fl w8">方向</li>
-                <li class="fl w8">数量</li>
-                <li class="fl w8">价格</li>
-                <li class="fl w8">已成交</li>
-                <li class="fl w8">未成交</li>
-                <li class="fl w10">委托总额</li>
-                <li class="fl w8 tr">操作</li>
+                <li class="fl w10">方向</li>
+                <li class="fl w10">数量</li>
+                <li class="fl w20">价格</li>
+                <!-- <li class="fl w8">已成交</li>
+                <li class="fl w8">未成交</li> -->
+                <li class="fl w20">委托总额</li>
+                <li class="fl w10 tr">操作</li>
             </ul>
             <div class="containers scroll" v-if="inList.length>0">
                 <ul class="list-item color ft12">
                     <li v-for="(item,index) in inList" class="clear">
                         <span class="fl w20">{{item.create_time}}</span>
                         <span class="fl w10">{{item.currency_name}}/{{item.legal_name}}</span>
-                        <span class="fl w8">{{type=='in'?'买入':'卖出'}}</span>
-                        <span class="fl w8">{{item.total_number}}</span>
-                        <span class="fl w8">{{item.price}}</span>
-                        <span class="fl w8">{{item.complete_number}}</span>
-                        <span class="fl w8">{{item.number}}</span>
-                        <span class="fl w10">{{item.total_money}}</span>
-                        <span class="fl w8 tr curPer ceilColor" @click="revoke(index,item.id)">撤销</span>
+                        <span class="fl w10">{{type=='in'?'买入':'卖出'}}</span>
+                        <span class="fl w10">{{item.number}}</span>
+                        <span class="fl w20">{{item.price}}</span>
+                        <!-- <span class="fl w8">{{item.complete_number}}</span>
+                        <span class="fl w8">{{item.number}}</span> -->
+                        <span class="fl w20">{{item.total_price}}</span>
+                        <span class="fl w10 tr curPer ceilColor remove" @click="revoke(index,item.id)">撤销</span>
                     </li>
                 </ul>
                 <div class="getmore tc gray9 ft14 mt10 curPer pdb20" @click="getMore" v-if="!loading && inList.length>8">{{more}}</div>
@@ -194,14 +194,22 @@ export default {
 }
 </script>
 <style scoped>
+.entrust{
+    width: 80%;
+    margin: 50px auto;
+    background: #fff;
+}
+.remove{
+    color: #d45858!important;
+}
 .title{height: 48px;line-height: 46px;padding: 0 40px 0 30px;}
 .tab_title{display: inline-block;line-height: 46px;height: 46px;}
 .tab_title span{cursor: pointer;}
 .tab_title span:not(:last-child) {margin-right: 40px;}
-.content{padding: 0 40px 20px 30px;height: 300px;}
+.content{padding: 0 40px 20px 30px;min-height: 600px;}
 .list-title{line-height: 40px; border-bottom: 1px solid #ccc;height: 40px;}
 .no_data{padding: 50px 0;}
-.containers{height: 260px;overflow: auto;}
+/* .containers{height: 260px;overflow: auto;} */
 .list-item li{line-height: 30px;}
 .list-item li span{display: inline-block;float: left;color: #333;}
 .list-item li span:nth-child(3){color:#cc4951;}

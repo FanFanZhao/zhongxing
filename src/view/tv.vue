@@ -106,7 +106,7 @@
                     console.log(msg)
 					let obj={}
 
-					if(that.$store.state.symbol==msg.symbol){
+					if(that.$store.state.symbol==msg.sybmol){
 						obj.open=Number(msg.open)
 						obj.low=Number(msg.low)
 						obj.high=Number(msg.high)
@@ -141,7 +141,7 @@
 						// height: 516,
 						drawings_access: { type: 'black', tools: [ { name: "Regression Trend" } ] },
 						disabled_features: [  //  禁用的功能
-							'left_toolbar', 'header_saveload', 'compare_symbol', 'display_market_status',
+							 'header_saveload', 'compare_symbol', 'display_market_status',
 							'go_to_date', 'header_chart_type', 'header_compare', 'header_interval_dialog_button',
 							'header_resolutions', 'header_screenshot', 'header_symbol_search', 'header_undo_redo',
 							'legend_context_menu', 'show_hide_button_in_legend', 'show_interval_dialog_on_key_press',
