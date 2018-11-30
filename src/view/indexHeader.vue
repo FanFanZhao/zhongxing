@@ -45,7 +45,7 @@
           </div>
         </div> -->
         <div class="order">
-          <sapn>订单</sapn>
+          <span>订单</span>
           <ul class="order_list">
             <li class="now" @click="now">当前委托</li>
             <li class="history" @click="history">历史委托</li>

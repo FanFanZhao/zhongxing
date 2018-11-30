@@ -14,7 +14,7 @@ module.exports = {
     proxyTable: {
 
       '/api': {
-          target: 'http://47.75.200.255:8080/api',//后端接口地址
+          target: 'http://47.52.238.201:8080/api',//后端接口地址
           changeOrigin: true,//是否允许跨越
           pathRewrite: {
               '^/api': '/',//重写,
