@@ -93,7 +93,7 @@
              <span>涨跌</span>
               <span>最高价</span>
                <span>最低价</span>
-            <span>交易量({{nowCoin}})</span>
+            <span>交易量</span>
             
             <span>操作</span>
           </div>

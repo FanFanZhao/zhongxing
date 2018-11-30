@@ -12,7 +12,7 @@
                     </div>
                      <div class="register-input code-input" >
                         <span class="register-item">验证码</span>
-                        <div class="code-box">
+                        <div class="code-box flex">
                             <input type="text" class="input-main input-content" maxlength="16" v-model="phoneCode" id="pwd" >
                         <button type="button" @click="setTime" class="redBg">获取验证码</button>
                         </div>
@@ -223,6 +223,6 @@ export default {
   border: none;
   line-height: 47px;
   
-  width: 94px;
+  width: 101px;
 }
 </style>

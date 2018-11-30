@@ -28,9 +28,9 @@
                    <p class="flex1 tc">{{item.cny_price}}</p>
                    <!-- <p class="flex1 tc">{{item.lock_position}}</p> -->
                    <p class="flex1 tc operation">
-                       <span v-if="item.currency_name == 'BRCS'||item.currency_name == 'UMP'" @click="noopen">充币</span>
+                       <span v-if="item.currency_name == 'BRCS'||item.currency_name == 'UMP'" @click="noopen" class="no_open">充币</span>
                        <span v-if="item.currency_name != 'BRCS'&&item.currency_name != 'UMP'" @click="excharge(index,item.currency)">充币</span>
-                       <span v-if="item.currency_name == 'BRCS'||item.currency_name == 'UMP'" @click="noopen">提币</span>
+                       <span v-if="item.currency_name == 'BRCS'||item.currency_name == 'UMP'" @click="noopen" class="no_open">提币</span>
                        <span @click="withdraw(index,item.currency,item.currency_name)" v-if="item.currency_name != 'BRCS'&&item.currency_name != 'UMP'">提币</span>
                        <!-- <span @click="exchange">兑换</span> -->
                        <span @click="rec(index,item.currency)">记录</span>
@@ -592,7 +592,10 @@ export default {
 };
 </script>
 <style scoped lang="scss"> 
-    
+    .no_open{
+        color: #aaa;
+        cursor: not-allowed!important;
+    }
     .header{
         padding: 15px 30px;
         overflow: hidden;

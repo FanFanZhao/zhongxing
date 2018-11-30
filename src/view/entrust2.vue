@@ -18,9 +18,9 @@
                 <li class="fl w20">委托总额</li>
                 <li class="fl w8 tr">操作</li>
             </ul>
-            <div class="container scroll" v-if="enList.length>0">
-                <ul class="list-item ft12">
-                    <li v-for="item in enList" class="clear">
+            <div class="container scroll" >
+                <ul class="list-item ft12" v-if="flags01&&enList01.length>0">
+                    <li v-for="item in enList01" class="clear">
                         <span class="fl w20">{{item.create_time}}</span>
                         <span class="fl w12">{{item.currency_name}}/{{item.legal_name}}</span>
                         <span class="fl w12" :class="{'green': item.typeInfo == 'in'}">{{item.typeInfo=='in'?'买入':'卖出'}}</span>
@@ -30,16 +30,36 @@
                         <span class="fl w8 tr curPer ceilColor" @click="revoke(item.id)">撤销</span>
                     </li>
                 </ul>
-                <div class="getmore tc fColor1 ft14 mt10 curPer" @click="getMore" v-if="!loading && enList.length>9">{{more}}</div>
+                <ul class="list-item ft12" v-if="flags02&&enList02.length>0">
+                    <li v-for="item in enList02" class="clear">
+                        <span class="fl w20">{{item.create_time}}</span>
+                        <span class="fl w12">{{item.currency_name}}/{{item.legal_name}}</span>
+                        <span class="fl w12" :class="{'green': item.typeInfo == 'in'}">{{item.typeInfo=='in'?'买入':'卖出'}}</span>
+                        <span class="fl w12">{{item.price}}</span>
+                        <span class="fl w14">{{item.number}}</span>
+                        <span class="fl w20">{{item.total_price}}</span>
+                        <span class="fl w8 tr curPer ceilColor" @click="revoke(item.id)">撤销</span>
+                    </li>
+                </ul>
+                <div class="getmore tc fColor1 ft14 mt10 curPer" @click="getMore" v-if="!loading && enList01.length>9||enList02.length>9">{{more}}</div>
                 <div class="tc" v-if="loading">
                     <img src="@/assets/images/loading.gif" alt=""  class="lodw20">
                     <p class="ft12 baseColor">加载中...</p>
                 </div>
-            </div>
-            <div class="no_data tc" v-if="enList.length<=0">
+                <div class="no_data tc" v-if="flags01==true && enList01.length<=0">
                 <img src="@/assets/images/nodata.png" alt="">
                 <p class="fColor2 ft18">暂无数据</p> 
             </div>
+            <div class="no_data tc" v-if="flags02==true && enList02.length<=0">
+                <img src="@/assets/images/nodata.png" alt="">
+                <p class="fColor2 ft18">暂无数据</p> 
+            </div>
+            <div class="no_data tc" v-if="enList01.length<=0 && enList02.length<=0 && flags01==true&&flags02 == true">
+                <img src="@/assets/images/nodata.png" alt="">
+                <p class="fColor2 ft18">暂无数据</p> 
+            </div>
+            </div>
+            
         </div>
         <div class="content" v-show="isUrl==1">
             <ul class="list-title fColor2 ft12 clear bdr-part">
@@ -99,11 +119,15 @@ export default {
         { title: "当前委托", url: "transaction_in" },
         { title: "历史委托", url: "transaction_complete" }
       ],
-      wayList: [{ title: "买入", type: "in" }, { title: "卖出", type: "out" }],
+      wayList: [{ title: "买入", type: "in" }, { title: "卖出", type: "out" }, { title: "全部", type: "all" }],
       enList: [],
+      enList01: [],
+      enList02: [],
       hisList: [],
       urls: "transaction_in",
-      types: "in"
+      types: "in",
+      flags01:true,
+      flags02:false
     };
   },
   created() {
@@ -130,13 +154,22 @@ export default {
       this.more = "加载更多";
       this.isChoosed = index;
       if (index == 1) {
+        this.flags02 = true;
+        this.flags01 = false;
         this.urls = "transaction_out";
         this.types = "out";
         this.getdata(this.urls, this.types);
       } else if (index == 0) {
+        this.flags02 = false;
+        this.flags01 = true;
         this.urls = "transaction_in";
         this.types = "in";
         this.getdata(this.urls, this.types);
+      }else if(index == 2){
+        this.flags02 = true;
+        this.flags01 = true;
+         this.getdata("transaction_in", "in");
+         this.getdata("transaction_out", "out");
       }
     },
     getMore() {
@@ -144,7 +177,9 @@ export default {
       this.loading = true;
       // console.log(this.page);
       // console.log(this.types);
-      this.getdata(this.urls, this.types);
+      // this.getdata(this.urls, this.types);
+        this.getdata("transaction_in", "in");
+         this.getdata("transaction_out", "out");
     },
     getMore01() {
       this.page01 = ++this.page01;
@@ -212,40 +247,44 @@ export default {
             //  this.enList = []
             if (page == 1) {
               // console.log("-----------------");
-              this.enList = mlist;
+              this.enList01 = mlist;
             } else {
               var newEist = mlist;
-              // console.log();
+              console.log(newEist.length);
               if (newEist.length <= 0) {
                 this.more = "没有更多数据了...";
                 return;
               } else {
-                this.enList = this.enList.concat(newEist);
+                this.enList01 = this.enList01.concat(newEist);
               }
               // conaole.log(this.enList)
             }
-            for (var i in this.enList) {
-              this.enList[i].typeInfo = type;
+            for (var i in this.enList01) {
+              this.enList01[i].typeInfo = type;
             }
             // console.log(this.enList);
-          } else {
+          } else if(url == "transaction_out"){
+            var newEist = mlist;
             //  page = 1;
             //  this.enList = [];
             //    console.log(res.message.data.data);
             if (page == 1) {
-              this.enList = mlist;
+              this.enList02 = mlist;
             } else {
+              console.log('kkkkkkkk')
+              console.log(newEist)
+              console.log(newEist.length)
               var newEist = mlist;
               if (newEist.length <= 0) {
                 this.more = "没有更多数据了...";
                 return;
               } else {
-                this.enList = this.enList.concat(newEist);
+                this.enList02 = this.enList02.concat(newEist);
               }
               //   console.log(this.hisList)
             }
             for (var i in this.newEist) {
-              this.enList[i].typeInfo = type;
+              this.enList02[i].typeInfo = type;
             }
           }
         })
