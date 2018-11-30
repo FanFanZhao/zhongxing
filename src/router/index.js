@@ -147,7 +147,33 @@ export default new Router({
 				{
 					path: '/c2c',
 					name: 'c2c',
-					component: c2c
+					component: () => import('../view/c2c/c2c.vue'),
+					children:[
+						{
+							path:'',
+							component:() => import('../view/c2c/C2cList.vue')
+						},
+						{
+							path:'publishC2c',
+							component:() => import('../view/c2c/PublishC2c.vue')
+						},
+						{
+							path:'myPublishedC2c',
+							component:() => import('../view/c2c/MyPublishedC2c.vue')
+						},
+						{
+							path:'myTransaction',
+							component:() => import('../view/c2c/MyTransaction.vue')
+						},
+					]
+				},
+				{
+					path:'/orderDetail',
+					component:() => import('../view/c2c/OrderDetail.vue')
+				},
+				{
+					path:'/c2cDetail',
+					component:() => import('../view/c2c/C2cDetail.vue')
 				},
 				{
 					path: '/currencyApply',
