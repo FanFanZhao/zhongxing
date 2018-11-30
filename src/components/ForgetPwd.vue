@@ -83,7 +83,8 @@ export default {
         data: {
           user_string: this.account_number,
           type: "forget",
-          front:country[this.areaCode].area_code
+          front:country[this.areaCode].area_code,
+          type:'forget'
         }
       }).then(res => {
         layer.close(i);

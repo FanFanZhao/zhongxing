@@ -28,10 +28,10 @@
                    <p class="flex1 tc">{{item.cny_price}}</p>
                    <!-- <p class="flex1 tc">{{item.lock_position}}</p> -->
                    <p class="flex1 tc operation">
-                       <span v-if="item.currency_name == 'BRCS'">充币</span>
-                       <span v-if="item.currency_name != 'BRCS'" @click="excharge(index,item.currency)">充币</span>
-                       <span v-if="item.currency_name == 'BRCS'">提币</span>
-                       <span @click="withdraw(index,item.currency,item.currency_name)" v-if="item.currency_name != 'BRCS'">提币</span>
+                       <span v-if="item.currency_name == 'BRCS'||item.currency_name == 'UMP'" @click="noopen">充币</span>
+                       <span v-if="item.currency_name != 'BRCS'&&item.currency_name != 'UMP'" @click="excharge(index,item.currency)">充币</span>
+                       <span v-if="item.currency_name == 'BRCS'||item.currency_name == 'UMP'" @click="noopen">提币</span>
+                       <span @click="withdraw(index,item.currency,item.currency_name)" v-if="item.currency_name != 'BRCS'&&item.currency_name != 'UMP'">提币</span>
                        <!-- <span @click="exchange">兑换</span> -->
                        <span @click="rec(index,item.currency)">记录</span>
                    </p>
@@ -65,7 +65,7 @@
                        <!-- <input class="address_inp clr-part  mb30" type="text" v-model="address" /> -->
                        <select class="address_inp clr-part  mb30" v-model="address">
                            <option value="">选择提币地址</option>
-                           <option value="item.address" v-for="(item,index) in addressList" :key="index">{{item.address}}</option>
+                           <option :value="item.address" v-for="(item,index) in addressList" :key="index">{{item.address}}</option>
                        </select>
                        <p class="fColor2 ft12 mb15 flex between alcenter"><span>数量</span><span>可用：<span class="use_num">{{balance}} {{coinname}}</span><span></span></span></p>
                        <label class="num_lab flex between mb30">
@@ -88,7 +88,7 @@
                            </div>
                        </div>
                         <p class="fColor2 ft12 mb15">提币密码</p>
-                       <input class="address_inp clr-part  mb30" type="text" v-model="password" />
+                       <input class="address_inp clr-part  mb30" type="password" v-model="password" />
                        <div class="flex">
                         <div class="flex2">
                        <!-- <p class="ft12 fColor2 mb15">温馨提示</p> -->
@@ -410,6 +410,9 @@ export default {
                 }
             })
         },
+        noopen(){
+           layer.msg('暂未开放')
+        },
         // 提币按钮
         mention() {
             var that =this;
@@ -462,8 +465,13 @@ export default {
                         setTimeout(() => {
                           window.location.reload();
                     }, 1500);
+                    }else if(res.type=='998'){
+                        layer.msg(res.message);
+                        setTimeout(() => {
+                            that.$router.push('/components/resetLegalPwd')
+                        }, 1000);
                     }else{
-                        layer.msg(res.message)
+                        layer.msg(res.message);
                     }
                 }
             })

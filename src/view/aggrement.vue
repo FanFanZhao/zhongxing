@@ -11,7 +11,7 @@
                 <div class="account-content">
                     <div class="detailBig">
                         <div class="mb30 clear">
-                            <span class=" w90 fl tc">{{title}}</span>
+                            <span class=" w90 fl tc title">{{title}}</span>
                         </div>
                         <div class="detailContent ">
                             <p v-html="content" ref="con"></p>
@@ -115,6 +115,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.title{
+    font-size: 20px;
+    font-weight: bold;
+}
 .noticeDetail{
     .account-wrap{
         // background: url(../assets/images/account_center_bg.jpg) no-repeat;
@@ -135,7 +139,7 @@ export default {
                 min-height: 750px;
                 // background-color: #181b2a;
                 .detailBig{
-                    padding: 48px 46px 20px;
+                    padding: 0px 46px 20px;
                     .mb30{
                         margin-bottom: 30px;
                     }

@@ -23,7 +23,7 @@
                     <div class="mt40 input-item clear">
                         <label>买入价</label>
                         <input class="clr-part bg-main bdr-part" type="number" v-model="buyPrice" min="0" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
-                        <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice02" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
                         <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
@@ -36,7 +36,7 @@
                         <input type="password" v-model="buyInfo.pwd" @keydown.69.prevent>
                     </div> -->
                     <!-- <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div> -->
-                    <el-slider v-model="value1" :min="0" :max="100" show-stops :show-tooltip="false" :step="25" :disabled="address?current == 0?buyPrice=='':false:true" @change="changeVal"></el-slider>
+                    <el-slider v-model="value1" :min="0" :max="100" show-stops :show-tooltip="false" :step="25" :disabled="address?current == 0?buyPrice=='':lastPrice02==0?true:false:true" @change="changeVal"></el-slider>
                     <div class="mt50 1 ft16">交易额 {{buyTotal}} {{legal_name}}</div>
                     <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">买{{currency_name}}</div>
                 </div>
@@ -54,7 +54,7 @@
                     <div class="mt40 input-item clear">
                         <label>卖出价</label>
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="sellPrice" v-if="!disabled" min="0">
-                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice" :disabled='disabled' v-if="disabled">
+                        <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice01" :disabled='disabled' v-if="disabled">
                         <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
@@ -67,7 +67,7 @@
                         <input type="password" v-model="sellInfo.pwd" @keydown.69.prevent>
                     </div> -->
                     <!-- <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div> -->
-                    <el-slider v-model="value2" :min="0" :max="100" :show-tooltip="false" show-stops :step="25"  :disabled="address?current == 0?sellPrice=='':false:true" @change="changeVal2"></el-slider>
+                    <el-slider v-model="value2" :min="0" :max="100" :show-tooltip="false" show-stops :step="25"  :disabled="address?current == 0?sellPrice=='':lastPrice01==0?true:false:true" @change="changeVal2"></el-slider>
                     <div class="mt50 1 ft16">交易额 {{sellTotal}} {{legal_name}}</div>
                     <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">卖{{currency_name}}</div>
                 </div>
@@ -144,9 +144,11 @@ export default {
       allBalance: 0,
       disabled: false,
       lastPrice: "",
+      lastPrice01:'',
+      lastPrice02:'',
       pwd: "",
       buyPrice: "",
-      buyNum: 0,
+      buyNum: "",
       sellNum: "",
       sellPrice: "",
       buyInfo: { buyPrice: 0, buyNum: 0, pwd: "", url: "transaction/in" },
@@ -206,7 +208,7 @@ export default {
       that.legal_name = data.legal_name;
       that.buyPrice = '';
       that.sellPrice = '';
-      that.buy_sell(that.legal_id, that.currency_id);
+      // that.buy_sell(that.legal_id, that.currency_id);
       that.currency_val(that.legal_id, that.currency_id)
     });
     eventBus.$on("toTrade0", function(data0) {
@@ -214,20 +216,29 @@ export default {
       (that.currency_id = data0.currency_id), (that.legal_id = data0.legal_id);
       that.currency_name = data0.currency_name;
       that.legal_name = data0.legal_name;
-      that.buy_sell(that.legal_id, that.currency_id);
+      // that.buy_sell(that.legal_id, that.currency_id);
       that.currency_val(that.legal_id, that.currency_id)
     });
     eventBus.$on("tocel", function(datas) {
       // console.log(datas);
       if (datas) {
-        that.buy_sell(that.legal_id, that.currency_id);
+        // that.buy_sell(that.legal_id, that.currency_id);
         that.currency_val(that.legal_id, that.currency_id)
       }
     });
+    // 从exchange传过来的买一卖一价
+    eventBus.$on("totradePrice", function(data) {
+      console.log(data);
+      that.lastPrice01 = data.buyPrice;
+      that.lastPrice02 = data.sellPrice;
+      // that.lastPrice = data;
+    })
     // 从exchange传过来的最新价
     eventBus.$on("priceToTrade", function(data) {
-      // console.log(data);
-      that.lastPrice = data;
+      console.log(data);
+      that.lastPrice01 = data.buyPrice;
+      that.lastPrice02 = data.sellPrice;
+      // that.lastPrice = data;
     });
   },
   methods: {
@@ -283,7 +294,7 @@ export default {
            this.buyNum = (this.user_legal/this.buyPrice*(this.value1/100)).toFixed(5);
          } 
          if(this.current == 1){
-           this.buyNum = (this.user_legal/this.lastPrice*(this.value1/100)).toFixed(5);
+           this.buyNum = (this.user_legal/this.lastPrice02*(this.value1/100)).toFixed(5);
          }   
     },
     changeVal2(){
@@ -340,7 +351,14 @@ export default {
           layer.msg("请输入买入价");
           return;
         }
+        
+      }else{
+          if(this.lastPrice02<=0){
+            layer.msg("买入价不能为0");
+            return;
+          }
       }
+      
       if (!this.buyNum || this.buyNum <= 0) {
         layer.msg("请输入买入量");
         return;
@@ -363,7 +381,7 @@ export default {
         data: {
           legal_id: this.legal_id,
           currency_id: this.currency_id,
-          price: this.disabled ? this.lastPrice : this.buyPrice,
+          price: this.disabled ? this.lastPrice02 : this.buyPrice,
           num: this.buyNum
           // pay_password:this.buyInfo.pwd
         },
@@ -409,6 +427,11 @@ export default {
           layer.msg("请输入卖出价");
           return;
         }
+      }else{
+        if(this.lastPrice01<=0){
+          layer.msg("卖出价不能为0");
+          return;
+        }
       }
       if (!this.sellNum || this.sellNum <= 0) {
         layer.msg("请输入卖出量");
@@ -432,7 +455,7 @@ export default {
         data: {
           legal_id: this.legal_id,
           currency_id: this.currency_id,
-          price: this.disabled ? this.lastPrice : this.sellPrice,
+          price: this.disabled ? this.lastPrice01 : this.sellPrice,
           num: this.sellNum
           // pay_password:this.sellInfo.pwd
         },
@@ -509,10 +532,10 @@ export default {
   },
   computed: {
     buyTotal() {
-      return ((this.buyPrice||this.lastPrice) * this.buyNum).toFixed(5) || 0;
+      return ((this.buyPrice||this.lastPrice02) * this.buyNum).toFixed(5) || 0;
     },
     sellTotal() {
-      return ((this.sellPrice||this.lastPrice) * this.sellNum).toFixed(5) || 0;
+      return ((this.sellPrice||this.lastPrice01) * this.sellNum).toFixed(5) || 0;
     }
   },
   destroyed() {

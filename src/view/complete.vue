@@ -83,12 +83,16 @@ export default {
             var that = this;
             that.$socket.emit("login", this.$makeSocketId());
             that.$socket.on('transaction',function(msg){
-                console.log(msg);
+                // console.log(msg);
                 if(msg.type == 'transaction'){
                     var complete = JSON.parse(msg.complete);
-                    console.log(complete);
-                    that.deList = complete;
-                    console.log(this.deList)
+                        if(msg.legal_id == that.legal_id && msg.currency_id == that.currency_id){
+                             console.log(complete);
+                                that.deList = complete;
+                                console.log(this.deList)
+                        }
+                    
+                    
                 }
             })
         }

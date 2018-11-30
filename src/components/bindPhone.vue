@@ -52,7 +52,8 @@ export default {
         url: "/api/sms_send",
         method: "post",
         data: {
-          user_string: this.account_number
+          user_string: this.account_number,
+          type :'binding'
         }
       }).then(res => {
         console.log(res);

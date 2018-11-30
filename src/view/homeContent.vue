@@ -223,11 +223,11 @@
             
         </div>
         <div class="content01 flex alcenter grayBg center bg02">
-            <div class="text01 mr100">
+            <!-- <div class="text01 mr100">
               <h1 class="ft26 bold mb30">多平台终端接入</h1>
               <p class="ft16 bold mb10">覆盖IOS、Android、Windows多个平台，支持全业务功能</p>
-            </div>
-            <img class="imgs05" src="../assets/images/imgs05.png" />
+            </div> -->
+            <img class="imgs05" src="../assets/images/content.jpg" />
         </div>
         <!--马上交易-->
         <div class="go_transfer">
@@ -784,7 +784,7 @@ export default {
     width: 500px;
   }
   .imgs05 {
-    width: 150px;
+    width: 100%;
   }
 }
 .bg01 {
@@ -798,6 +798,7 @@ export default {
   background: url("../assets/images/content_bg02.png") center no-repeat;
   width: 100%;
   background-size: cover;
+  padding: 0!important;
 }
 .login_btn {
   padding: 15px 80px;
