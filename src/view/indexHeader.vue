@@ -1,7 +1,7 @@
 <template>
   <div id="index-head" class="flex">
     <div class="header-l flex">
-      <div class="logo flex alcenter mr20">
+      <div class="logo flex alcenter mr20" @click="goHome">
         <img src="../assets/images/new_logo01.png" alt="">        
       </div>
       <span class="mr60 titles" @click="goHome">一带一路</span>
