@@ -91,7 +91,10 @@ export default {
       that.legal_name = data0.legal_name;
       that.currency_id = data0.currency_id;
       that.legal_id = data0.legal_id;
-      that.newData =  Data.now_price || data0.now_price; //初始最新价赋值
+      console.log(Data.now_price)
+      console.log(data0)
+      console.log(data0.now_price)
+      that.newData =  Data.now_price != undefined ? Data.now_price : data0.now_price; //初始最新价赋值
       that.buy_sell(that.legal_id, that.currency_id);
     });
     eventBus.$on("toExchange", function(data) {

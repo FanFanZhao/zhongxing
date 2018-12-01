@@ -54,7 +54,7 @@
                 <img src="@/assets/images/nodata.png" alt="">
                 <p class="fColor2 ft18">暂无数据</p> 
             </div>
-            <div class="no_data tc" v-if="enList01.length<=0 && enList02.length<=0 && flags01==true&&flags02 == true">
+            <div class="no_data tc" v-if="enList01.length<=0 && enList02.length<=0 && flags01==false&&flags02 == false">
                 <img src="@/assets/images/nodata.png" alt="">
                 <p class="fColor2 ft18">暂无数据</p> 
             </div>
@@ -166,8 +166,16 @@ export default {
         this.types = "in";
         this.getdata(this.urls, this.types);
       }else if(index == 2){
-        this.flags02 = true;
-        this.flags01 = true;
+        if(this.enList02>0){
+          this.flags02 = true;
+        }else{
+           this.flags02 = false;
+        }
+        if(this.enList01>0){
+          this.flags01 = true;
+        }else{
+           this.flags01 = false;
+        }
          this.getdata("transaction_in", "in");
          this.getdata("transaction_out", "out");
       }
