@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import i18n from './lang/lang'
 import Axios from "axios"
 import Util from './lib/utils'
 import VueAxios from 'vue-axios'
@@ -35,6 +36,7 @@ window.eventBus = new Vue()
 let bus = new Vue()
 Vue.prototype.bus = bus
 Vue.use(VueSocketio, 'http://47.75.200.255:2220/');
+// Vue.use(VueSocketio, 'https://www.beltandroad.io:2220/');
 Vue.prototype.$changeTheme = function (type) {
 	var head = document.querySelector('head');
 	var link = document.querySelector('link#darkTheme');
@@ -128,6 +130,7 @@ router.beforeEach((to,from,next) => {
 /* eslint-disable no-new */
 new Vue({
 	el: '#app',
+	i18n,
 	router,
 	store,
 	components: {

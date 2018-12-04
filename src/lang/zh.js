@@ -1,0 +1,47 @@
+export default {
+  none:'',
+  code:"验证码",
+  send:"发送验证码",
+  pwd:'密码',
+  account:'账号',
+
+  header:{
+    home:'首页',
+    c2c:'C2C交易',
+    currency:'币币交易',
+    assets:'我的资产',
+    setting:'安全设置',
+    help:'帮助',
+    complaint:'投诉留言',
+    in:"登录",
+    up:'注册',
+    current:"当前委托",
+    his:"历史委托",
+    code:"邀请码",
+    shop:"我的商铺",
+    out:'退出登录',
+    orders:"订单",
+    center:'个人中心'
+  },
+  home:{
+    with:'对',
+    markets:"交易区",
+    pair:'币种对',
+    market:"",
+    price:'价格',
+    change:'涨跌',
+    high:"最高价",
+    min:'最低价',
+    volume:'交易量',
+    trade:'操作'
+  },
+  login:{
+    email:"邮箱登录",
+    phone:'手机登录',
+    welcome:'欢迎登录',
+    
+    forget:"忘记密码",
+    dont:'还不是一带一路的用户',
+    invite:"立即注册，在全球领先的数字资产交易平台开始交易"
+  }
+}

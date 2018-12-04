@@ -5,20 +5,20 @@
         <img src="../assets/images/new_logo01.png" alt="">        
       </div>
       <span class="mr60 titles" @click="goHome">一带一路</span>
-      <router-link to="/" exact>首页</router-link>
-      <router-link to="/legalTrade" v-if="token">法币交易</router-link>
-      <div v-else @click="goLogin()">法币交易</div>
-      <router-link to="/c2c">C2C交易</router-link>
+      <router-link to="/" exact>{{$t('header.home')}}</router-link>
+      <router-link to="/legalTrade" v-if="token">{{$t('header.c2c')}}</router-link>
+      <div v-else @click="goLogin()">{{$t('header.c2c')}}</div>
+      <!-- <router-link v-if="token" to="/c2c">C2C交易</router-link> -->
       <!-- <div v-else @click="goLogin()">C2C交易</div> -->
-      <router-link to="/dealCenter">币币交易</router-link>
-      <router-link to="/myLegalShops" v-if="isShow">我的商铺</router-link>
-      <router-link to="/finance" v-if="token">我的资产</router-link>
-      <div v-else @click="goLogin()">我的资产</div>
-      <router-link to="/userSetting" v-if="token">安全设置</router-link>
-      <div v-else @click="goLogin()">安全设置</div>
-      <router-link to="/helpcenter">帮助中心</router-link>
-      <router-link v-if="token" to="/advice">投诉留言</router-link>
-      <div v-else @click="goLogin()">投诉留言</div>
+      <router-link to="/dealCenter">{{$t('header.currency')}}</router-link>
+      <router-link to="/myLegalShops" v-if="isShow">{{$t('header.shop')}}</router-link>
+      <router-link to="/finance" v-if="token">{{$t('header.assets')}}</router-link>
+      <div v-else @click="goLogin()">{{$t('header.assets')}}</div>
+      <router-link to="/userSetting" v-if="token">{{$t('header.setting')}}</router-link>
+      <div v-else @click="goLogin()">{{$t('header.setting')}}</div>
+      <router-link to="/helpcenter">{{$t('header.help')}}</router-link>
+      <router-link v-if="token" to="/advice">{{$t('header.complaint')}}</router-link>
+      <div v-else @click="goLogin()">{{$t('header.complaint')}}</div>
       <!-- <router-link to="/components/noticeList">公告</router-link>
       <div class="coin-box">
         <router-link to="/currencyApply">上币申请</router-link>
@@ -35,8 +35,8 @@
       
       <div v-if="!account_number.length" class="flex">
         
-        <router-link to='/components/login'>登录</router-link>
-        <router-link to='/components/register'>注册</router-link>
+        <router-link to='/components/login'>{{$t('header.in')}}</router-link>
+        <router-link to='/components/register'>{{$t('header.up')}}</router-link>
       </div>
       <div v-if="account_number.length" class="flex">
         <!-- <div class="assets">
@@ -47,17 +47,17 @@
           </div>
         </div> -->
         <div class="order">
-          <span>订单</span>
+          <span>{{$t('header.orders')}}</span>
           <ul class="order_list">
-            <li class="now" @click="now">当前委托</li>
-            <li class="history" @click="history">历史委托</li>
+            <li class="now" @click="now">{{$t('header.current')}}</li>
+            <li class="history" @click="history">{{$t('header.his')}}</li>
           </ul>
           </div>
         <div class="links-box">
-          <div class="account_number">{{account_number}} (邀请码 {{extension_code}})</div>
+          <div class="account_number">{{account_number}} ({{$t('header.code')}} {{extension_code}})</div>
           <div class="links">
-            <router-link to="/userCenter">个人中心</router-link>
-            <div @click="signOut">退出登录</div>
+            <router-link to="/userCenter">{{$t('header.center')}}</router-link>
+            <div @click="signOut">{{$t('header.complaint')}}</div>
           </div>
         </div>
       </div>
@@ -153,9 +153,14 @@ export default {
 }
 .order{
   margin-right: 15px;
+  position: relative;
   cursor: pointer;
+  padding-right: 20px;
+  background: url("../assets/images/arrow0.png") no-repeat right center;
 }
 .order_list{
+  min-width: 80px;
+  left: -10px;
   position: absolute;
   background: #2E1B85;
   color: #fff;
