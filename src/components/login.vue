@@ -5,20 +5,20 @@
         <div class="content-wrap">
             <div class="account">
                 <div class="main">
-                    <p class="main_title">欢迎登录</p>
+                    <p class="main_title">{{$t('login.welcome')}}</p>
                     <div class="tab flex" @click="account_number=''">
-                      <span @click="isMb = true" :class="{now:isMb}">手机登录</span>
-                      <span @click="isMb = false" :class="{now:!isMb}">邮箱登录</span>
+                      <span @click="isMb = true" :class="{now:isMb}">{{$t('login.pone')}}</span>
+                      <span @click="isMb = false" :class="{now:!isMb}">{{$t('login.email')}}</span>
                     </div>
                     <div class="register-input">
-                        <span class="register-item">账号</span>
+                        <span class="register-item">{{$t('account')}}</span>
                          <select name="" v-if="isMb" class="chooseTel scroll" v-model="areaCode" ref="select">
                         <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
                       </select>
                        <input type="text" class="input-main input-content phone" maxlength="20" v-model="account_number" id="account" :style='{width:isMb?"auto":"520px !important"}'>
                     </div>
                      <div class="register-input pass-box">
-                        <span class="register-item">密码</span>
+                        <span class="register-item">{{$t('pwd')}}</span>
                         <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
                         <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
@@ -26,24 +26,24 @@
                     <!--验证码-->
                    
                     <div class="register-input bdr-part">
-                        <span class="register-item">验证码</span>
+                        <span class="register-item">{{$t('code')}}</span>
                         <div class="flex">
                     <input type="text" v-model="code" class="codes" id="code">
-                    <button type='button' class="code-btn redBg curPer" @click="sendCode">发送验证码</button>
+                    <button type='button' class="code-btn redBg curPer" @click="sendCode">{{$t('code')}}</button>
                     </div>
                 </div>
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
-                        <button class="register-button curPer redBg " @click="login">登录</button>
+                        <button class="register-button curPer redBg " @click="login">{{$t('header.in')}}</button>
                         <div class="have-account">
-                            <router-link tag="span" class="redColor" to="/forgetPwd" style="cursor:pointer">忘记密码</router-link>
+                            <router-link tag="span" class="redColor" to="/forgetPwd" style="cursor:pointer">{{$t('login.forget')}}</router-link>
                         </div>
                     </div>
                     <div class="right-tip ">
-                        <p>还不是一带一路的用户？</p>
-                        <p>立即注册，在全球领先的数字资产交易平台开始交易。</p>
+                        <p>{{$t('login.dont')}}</p>
+                        <p>{{$t('login.invite')}}</p>
                         <router-link :to="{ name: 'register'}">
-                            <p class="redColor mt20">免费注册</p>
+                            <p class="redColor mt20">{{$t('header.up')}}</p>
                         </router-link>
                     </div>
                 </div>

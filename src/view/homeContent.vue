@@ -83,19 +83,19 @@
         </div> -->
           <div class="coin-tab">
             <ul class="coins">
-              <li v-for="(coin,index) in quotation" :key="index" @click="nowCoin = coin.name" :class="{activeCoin:nowCoin == coin.name}">对{{coin.name}}交易区<span class='' v-if="nowCoin == coin.name"></span></li>
+              <li v-for="(coin,index) in quotation" :key="index" @click="nowCoin = coin.name" :class="{activeCoin:nowCoin == coin.name}">{{$t('home.with')}}{{coin.name}}{{$t('home.markets')}}<span class='' v-if="nowCoin == coin.name"></span></li>
             </ul>
           </div>
         <div class="coins-list">
           <div class="list-title">
-            <span>币种对{{nowCoin}}</span>
-            <span>价格({{nowCoin}})</span>
-             <span>涨跌</span>
-              <span>最高价</span>
-               <span>最低价</span>
-            <span>交易量</span>
+            <span>{{$t('home.pair')}}</span>
+            <span>{{$t('home.price')}}({{nowCoin}})</span>
+             <span>{{$t('home.change')}}</span>
+              <span>{{$t('home.high')}}</span>
+               <span>{{$t('home.min')}}</span>
+            <span>{{$t('home.volume')}}</span>
             
-            <span>操作</span>
+            <span>{{$t('home.trade')}}</span>
           </div>
           
           <ul class="list-con scroll" v-for="(item,index) in quotation" :key="index" v-if="nowCoin == item.name">
@@ -119,7 +119,7 @@
                 <span class="high_blue bold low_price">{{li.low_price}}</span>
               </div>
               <div class="count high_blue bold volume">{{li.volume == null?'0':li.volume}}</div>
-              <div @click="setCurrent(index,inde)" style="color:#563BD1">去交易</div>
+              <div @click="setCurrent(index,inde)" style="color:#563BD1">{{$t('home.trade')}}</div>
               <!-- <div>
                 <span @click="setData({currency_id:item.id,legal_id:li.currency_id,currency_name:item.name,leg_name:li.name,isShow:index})">交易 </span>
               </div> -->
