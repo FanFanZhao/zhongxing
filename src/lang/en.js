@@ -116,5 +116,16 @@ export default {
     truename:'Please enter your real name',
     truenum:'Please input ID card number',
     up:'submit'
+  },
+  legal:{
+    buy:'Purchase',
+    sell:'Sell',
+    shoper:'business',
+    number:'number',
+    limit:'quota',
+    price:'Unit price',
+    pay:'Payment method',
+    do:'operation',
+    record:'Order record'
   }
 }

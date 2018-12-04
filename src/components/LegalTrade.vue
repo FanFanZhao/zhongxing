@@ -2,27 +2,27 @@
 	<div id="legaltrade-box" class="clr-part">
 		<div class="buy-sell flex bg-part">
 			<div class="buy-box bdr-part">
-				<div class="title">购买</div>
+				<div class="title">{{$t('legal.buy')}}</div>
 				<ul :class="['flex',{'now':type == 'sell'}]">
 					<li v-for="(coin,index) in legals" :key="index" :class="{'current':coin.id == id}" @click="changeClassify(coin.id,1,coin.name)">{{coin.name}}</li>
 				</ul>
 			</div>
 			<div class="sell-box">
-				<div class="title">出售</div>
+				<div class="title">{{$t('legal.sell')}}</div>
 				<ul :class="['flex',{'now':type=='buy'}]">
 					<li v-for="(coin,index) in legals" :key="index" :class="{'current':coin.id == id}" @click="changeClassify(coin.id,2,coin.name)">{{coin.name}}</li>
 				</ul>
 			</div>
-			<span class="record light_blue" @click="recordList()">订单记录</span>
+			<span class="record light_blue" @click="recordList()">{{$t('legal.record')}}</span>
 		</div>
 		<div class="list-box bg-part">
 			<div class="list-title flex ft14">
-				<div>商家</div>
-				<div>数量</div>
-				<div>限额</div>
-				<div>单价</div>
-				<div>支付方式</div>
-				<div>操作</div>
+				<div>{{$t('legal.shoper')}}</div>
+				<div>{{$t('legal.number')}}</div>
+				<div>{{$t('legal.limit')}}</div>
+				<div>{{$t('legal.price')}}</div>
+				<div>{{$t('legal.pay')}}</div>
+				<div>{{$t('legal.do')}}</div>
 			</div>
 			<ul class="list ft12">
 				<li v-for="(item,index) in list" :key="index" class="flex">

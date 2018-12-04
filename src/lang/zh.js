@@ -113,6 +113,17 @@ export default {
     truename:'请输入真实姓名',
     truenum:'请输入证件号',
     up:'提交'
+  },
+  legal:{
+    buy:'购买',
+    sell:'出售',
+    shoper:'商家',
+    number:'数量',
+    limit:'限额',
+    price:'单价',
+    pay:'支付方式',
+    do:'操作',
+    record:'订单记录'
   }
 
 }
