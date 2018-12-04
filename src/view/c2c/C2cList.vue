@@ -44,21 +44,34 @@
           </div>
         </el-col>
         <el-col :span="4">
-          <el-button size="mini" v-if="filterPms.type=='sell'" @click="setPms(index)">购买</el-button>
-          <el-button size="mini" v-else @click="setPms(index)">出售</el-button>
+          <el-button
+            size="mini"
+            v-if="filterPms.type=='sell'"
+            @click="setPms(index)"
+            :disabled="item.number == 0"
+          >购买</el-button>
+          <el-button size="mini" v-else @click="setPms(index)" :disabled="item.number == 0">出售</el-button>
           <!-- <el-button size="mini" @click="getDetail(item.id)">详情</el-button> -->
         </el-col>
       </el-row>
     </div>
-    <div class="mask" v-if="orderPms.total != ''">
+    <div class="mask" v-if="orderPms.max != ''">
       <div class="content">
+        <el-tabs v-model="orderPms.type">
+          <el-tab-pane label="数量" name="number"></el-tab-pane>
+          <el-tab-pane label="金额" name="money"></el-tab-pane>
+        </el-tabs>
         <div class="flex">
-          <span>请输入数量</span>
-          <el-input type="number" v-model="orderPms.number" size="small"></el-input>
+          <span>请输入{{orderPms.type == 'number'?'数量':'金额'}}</span>
+          <el-input type="number" v-model="orderPms.number" size="small" :min="orderPms.type == 'number'?orderPms.min:orderPms.pMin" :max="orderPms.type == 'number'?orderPms.max:orderPms.pMax"></el-input>
         </div>
-        <div class="tip-num">数量不能大于{{orderPms.total}}</div>
+        <div
+          class="tip-num"
+          v-if="orderPms.type=='number'"
+        >数量在 {{orderPms.min}} - {{orderPms.max}} 之间</div>
+        <div class="tip-num" v-else>金额在 {{orderPms.pMin}} - {{orderPms.pMax}} 之间</div>
         <div class="btns flex">
-          <el-button size="medium" @click="orderPms = {id:'',number:'',total:''}">取消</el-button>
+          <el-button size="medium" @click="orderPms.max ='';orderPms.type ='number'">取消</el-button>
           <el-button
             v-if="filterPms.type=='sell'"
             type="success"
@@ -79,10 +92,16 @@ export default {
       filterPms: { currency_id: "", type: "sell" },
       coins: [],
       list: [],
-      detail:{},
+      detail: {},
       showDialog: false,
       selectedIndex: "none",
-      orderPms: { id: "", number: "", total: "" }
+      orderPms: {
+        id: "",
+        number: "",
+        max: "",
+        min: "",
+        type: "number"
+      }
     };
   },
   created() {
@@ -146,23 +165,48 @@ export default {
     },
     setPms(index) {
       this.orderPms.id = this.list[index]["id"];
-      this.orderPms.total = this.list[index]["number"];
+      this.orderPms.max = this.list[index]["number"] - 0;
+      this.orderPms.min = this.list[index]["min_number"] - 0;
+      // this.orderPms.price = this.list[index]["price"]-0;
+      this.orderPms.pMin = (this.list[index]["price"] - 0) * this.orderPms.min;
+      this.orderPms.pMax = (this.list[index]["price"] - 0) * this.orderPms.max;
     },
     buySell() {
       if (this.token) {
-        if (this.orderPms.number - 0 - this.orderPms.total > 0) {
-          layer.msg("数量不能超出" + this.orderPms.total);
-          return;
+        if (this.orderPms.type == "number") {
+          if (this.orderPms.number - 0 - this.orderPms.max > 0) {
+            layer.msg("数量不能超出" + this.orderPms.max);
+            return;
+          } else if (this.orderPms.number - this.orderPms.min < 0) {
+            layer.msg("数量不能少于" + this.orderPms.min);
+            return;
+          }
+        } else {
+          
+          if (this.orderPms.number - 0 - this.orderPms.pMax > 0) {
+            layer.msg("金额不能超出" + this.orderPms.pMax);
+            return;
+          } else if (this.orderPms.number - this.orderPms.pMin < 0) {
+            layer.msg("金额不能少于" + this.orderPms.pMin);
+            return;
+          }
         }
         var i = layer.load();
         this.$http({
           url: "/api/ctoc/order",
           method: "post",
-          data: { id: this.orderPms.id, number: this.orderPms.number },
+          data: {
+            id: this.orderPms.id,
+            number: this.orderPms.number,
+            type: this.orderPms.type
+          },
           headers: { Authorization: this.token }
         }).then(res => {
           layer.close(i);
-          this.orderPms = { id: "", number: "", total: "" };
+          this.orderPms.max = "";
+          this.orderPms.number = "";
+          this.orderPms.type = "number";
+          // this.orderPms = { id: "", number: "", max: "",min:'' };
           layer.msg(res.data.message);
           this.getList();
         });

@@ -4,10 +4,19 @@
       <div class="flex">
         <span>类型：</span>
         <ul class="types flex">
-          <li @click="filterPms.type='sell';getList()" :class="{selected:filterPms.type=='sell'}">购买</li>
-          <li @click="filterPms.type='buy';getList()" :class="{selected:filterPms.type=='buy'}">出售</li>
+          <li @click="filterPms.type='buy';getList()" :class="{selected:filterPms.type=='buy'}">购买</li>
+          <li @click="filterPms.type='sell';getList()" :class="{selected:filterPms.type=='sell'}">出售</li>
         </ul>
       </div>
+      <!-- <div class="flex">
+        <span>状态：</span>
+        <ul class="types flex">
+          <li @click="status!=3?status=3:status='none';getList()" :class="{selected:status==3}">已完成</li>
+          <li @click="status!=3?status=3:status='none';getList()" :class="{selected:status==3}">已完成</li>
+          <li @click="status!=4?status=4:status='none';getList()" :class="{selected:status==4}">已取消</li>
+         
+        </ul>
+      </div> -->
       <div class="flex">
         <span>币种：</span>
         <ul class="coins flex">
@@ -23,21 +32,21 @@
     <div class="list-box">
       <div class="list-title">
         <el-row :gutter="10">
-          <el-col :span="3">交易人</el-col>
+          <!-- <el-col :span="3">交易人</el-col> -->
           <el-col :span="4">单价</el-col>
-          <el-col :span="4">数量</el-col>
-          <el-col :span="4">发布时间</el-col>
-          <el-col :span="3">支付方式</el-col>
+          <el-col :span="5">数量</el-col>
+          <el-col :span="5">发布时间</el-col>
+          <el-col :span="4">支付方式</el-col>
           <el-col :span="6">操作 | 状态</el-col>
         </el-row>
       </div>
       <el-row :gutter="10" v-for="(item,index) in list" :key="index">
-        <el-col :span="3">{{item.cny_uci.pay_account}}</el-col>
+        <!-- <el-col :span="3">{{item.cny_uci.pay_account}}</el-col> -->
 
         <el-col :span="4">{{item.price}}</el-col>
-        <el-col :span="4">{{item.number}}</el-col>
-        <el-col :span="4">{{item.create_time}}</el-col>
-        <el-col :span="3">
+        <el-col :span="5">{{item.number}}</el-col>
+        <el-col :span="5">{{item.create_time}}</el-col>
+        <el-col :span="4">
           <div class="pay">
             <img v-if="item.way=='ali_pay'" src="../../assets/images/zfb_icon.png" alt>
             <img v-else-if="item.way=='we_chat'" src="../../assets/images/wx_icon.png" alt>
@@ -45,9 +54,11 @@
           </div>
         </el-col>
         <el-col :span="6">
-          <el-button v-if="item.status == 1" size="mini" @click="getDetail(item.id)" type="danger">确认付款</el-button>
-          <el-button v-if="item.status == 1" size="mini" @click="getDetail(item.id)" type="danger">确认付款</el-button>
-          <el-button size="mini" v-if="item.status == 2" @click="getDetail(item.id)" type="danger" >确认收款</el-button>
+          <el-button  v-if="item.status == 1 || item.status == 2" size="mini" @click="cancel(item.id)" type="danger">取消订单</el-button>
+          <el-button v-if="item.status == 1&&filterPms.type == 'buy'" size="mini" @click="confirmPay(item.id)" type="danger">确认付款</el-button>
+          <el-button v-if="item.status == 2&&filterPms.type == 'sell'" size="mini" @click="confirm(item.id)" type="danger">确认收款</el-button>
+         
+          <el-button v-if="item.status == 2&&filterPms.type=='buy'" type="success" size="mini" disabled>已付款</el-button>
           <el-button v-if="item.status == 3" type="success" size="mini" disabled>已完成</el-button>
           <el-button v-if="item.status == 4" type="info" size="mini" disabled>已取消</el-button>
           <el-button size="mini" @click="getDetail(item.id)">详情</el-button>
@@ -59,6 +70,10 @@
       <div class="mask" v-if="selId != ''">
         <div class="content">
           <i class="el-icon-close" @click="selId = ''"></i>
+          <div class="flex">
+            <span>币种 ：</span>
+            <div>{{detail.currency_name}}</div>
+          </div>
           <div class="flex">
             <span>时间：</span>
             <div>{{detail.create_time}}</div>
@@ -72,23 +87,23 @@
             <div>{{detail.number}}</div>
           </div>
           <div class="flex">
-            <span>账户：</span>
-            <div>{{detail.cny_uci.pay_account}}</div>
+            <span>支付账户：</span>
+            <div>{{filterPms.type == 'sell'?detail.cny_uci.pay_account:detail.currency_uci.pay_account}}</div>
           </div>
           <div class="flex">
-            <span>支付名称：</span>
-            <div>{{detail.cny_uci.pay_account_name}}</div>
+            <span>支付方式：</span>
+            <div>{{filterPms.type == 'sell'?detail.cny_uci.pay_name:detail.currency_uci.pay_name}}</div>
           </div>
-          <div class="flex">
+          <!-- <div class="flex">
             <span>名称：</span>
             <div>{{detail.cny_uci.pay_name}}</div>
-          </div>
-          <div class="flex" v-if="detail.status != 1">
+          </div> -->
+          <!-- <div class="flex" v-if="detail.status != 1">
             <span>状态：</span>
             <div v-if="detail.status == 2">已付款</div>
             <div v-if="detail.status == 3">已完成</div>
             <div v-if="detail.status == 4">已取消</div>
-          </div>
+          </div> -->
           <!-- <div class="flex btns" v-if="detail.status == 1">
             <el-button @click="cancel" size="medium" >取消交易</el-button>
             <el-button type="danger" @click="confirm" size="medium">确认付款</el-button>
@@ -103,7 +118,8 @@
 export default {
   data() {
     return {
-      filterPms: { currency_id: "", type: "sell" },
+      status:'none',
+      filterPms: { currency_id: "", type: "buy" },
       coins: [],
       list: [],
       selId: "",
@@ -166,53 +182,58 @@ export default {
           console.log(res);
           if (res.data.type == "ok") {
             this.detail = res.data.message;
+            
           }
         });
       }
     },
-    cancel() {
+    cancel(id) {
       if (this.token) {
         var i = layer.load();
         this.$http({
           url: "/api/ctoc/cancel",
           method:'post',
-          data: { id: this.selId },
+          data: { id: id },
           headers: { Authorization: this.token }
         }).then(res => {
           layer.close(i);
           layer.msg(res.data.message);
-          this.selId = '';
+          if(res.data.type == 'ok'){
+            this.getList()
+          }
           console.log(res);
         });
       }
     },
-    confirmPay() {
+    confirmPay(id) {
       var i = layer.load();
       this.$http({
         url: "/api/ctoc/pay",
         method: "post",
-        data: { id: this.selId },
+        data: { id: id },
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
         this.selId = '';
         layer.msg(res.data.message);
         if (res.data.type == "ok") {
+          this.getList()
         }
       });
     },
-    confirm() {
-      var i = layer.close();
+    confirm(id) {
+      var i = layer.load();
       this.$http({
         url: "/api/ctoc/confirm",
         method: "post",
-        data: { id: this.selId },
+        data: { id: id },
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
         this.selId = '';
         layer.msg(res.data.message);
         if (res.data.type == "ok") {
+          this.getList()
         }
       });
     }

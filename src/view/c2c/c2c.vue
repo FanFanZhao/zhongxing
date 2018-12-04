@@ -1,10 +1,10 @@
 <template>
   <div id="c2cpage" class="flex">
     <div class="c2c-l">
-      <router-link to="/c2c" exact="">c2c</router-link>
-      <router-link to="/c2c/myTransaction" exact="">我交易的c2c</router-link>
-      <router-link to="/c2c/publishC2c" exact="">发布c2c</router-link>
-      <router-link to="/c2c/myPublishedC2c" exact="">我发布的c2c</router-link>
+      <router-link to="/c2c" exact="">C2C</router-link>
+      <router-link to="/c2c/myTransaction" exact="">我交易的C2C</router-link>
+      <router-link to="/c2c/publishC2c" exact="">发布C2C</router-link>
+      <router-link to="/c2c/myPublishedC2c" exact="">我发布的C2C</router-link>
     </div>
     <div class="c2c-r">
       <router-view></router-view>

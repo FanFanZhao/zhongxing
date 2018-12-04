@@ -31,8 +31,7 @@
           <el-col :span="4">操作</el-col>
         </el-row>
       </div>
-      <el-row :gutter="10"  v-for="(item,index) in list" :key="index" >
-        
+      <el-row :gutter="10" v-for="(item,index) in list" :key="index">
         <el-col :span="4">{{item.price}}</el-col>
         <el-col :span="4">{{item.number}}</el-col>
         <el-col :span="4">{{item.min_number}}</el-col>
@@ -45,12 +44,56 @@
           </div>
         </el-col>
         <el-col :span="4">
-          <router-link :to="{path:'/c2cDetail',query:{id:item.id}}">
+          <el-button size="mini" @click="getDetail(item.id)">详情</el-button>
+          <!-- <router-link :to="{path:'/c2cDetail',query:{id:item.id}}">
             <el-button  size="mini">查看详情</el-button>
-          </router-link>
+          </router-link>-->
         </el-col>
       </el-row>
       <div v-if="!list.length" class="tip tc" style="padding:20px">暂无更多</div>
+    </div>
+    <div class="mask" v-if="selId != ''">
+      <div class="content">
+        <i class="el-icon-close" @click="selId = ''"></i>
+        <div class="flex">
+          <span>币种 ：</span>
+          <div>{{detail.currency_name}}</div>
+        </div>
+        <div class="flex">
+          <span>时间：</span>
+          <div>{{detail.create_time}}</div>
+        </div>
+        <div class="flex">
+          <span>单价：</span>
+          <div>{{detail.price}}</div>
+        </div>
+        <div class="flex">
+          <span>数量：</span>
+          <div>{{detail.number}}</div>
+        </div>
+        <!-- <div class="flex">
+            <span>账户：</span>
+            <div>{{detail.cny_uci.pay_account}}</div>
+          </div>
+          <div class="flex">
+            <span>支付名称：</span>
+            <div>{{detail.cny_uci.pay_account_name}}</div>
+          </div>
+          <div class="flex">
+            <span>名称：</span>
+            <div>{{detail.cny_uci.pay_name}}</div>
+        </div>-->
+        <!-- <div class="flex" v-if="detail.status != 1">
+            <span>状态：</span>
+            <div v-if="detail.status == 2">已付款</div>
+            <div v-if="detail.status == 3">已完成</div>
+            <div v-if="detail.status == 4">已取消</div>
+        </div>-->
+        <div class="flex btns">
+            <el-button @click="selId = ''"  >取消</el-button>
+            <el-button type="danger" @click="revoke" >取消发布</el-button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -61,7 +104,9 @@ export default {
     return {
       filterPms: { currency_id: "", type: "buy" },
       coins: [],
-      list: []
+      list: [],
+      detail:{},
+      selId:''
     };
   },
   created() {
@@ -107,6 +152,43 @@ export default {
         });
       }
     },
+    getDetail(id) {
+      if (this.token) {
+        var i = layer.load();
+        this.$http({
+          url: "/api/ctoc/detail",
+          method: "post",
+          data: { id: id },
+          headers: { Authorization: this.token }
+        }).then(res => {
+          this.selId = id;
+          layer.close(i);
+          console.log(res);
+          if (res.data.type == "ok") {
+            this.detail = res.data.message;
+          }
+        });
+      }
+    },
+    revoke() {
+      if (this.token) {
+        var i = layer.load();
+        this.$http({
+          url: "/api/ctoc/revoke",
+          method: "post",
+          data: { id: this.selId },
+          headers: { Authorization: this.token }
+        }).then(res => {
+          layer.close(i);
+          console.log(res);
+          layer.msg(res.data.message);
+          if (res.data.type == "ok") {
+            this.selId = '';
+            this.getList()
+          }
+        });
+      }
+    },
     cancel(id){
       if(this.token){
         var i = layer.load();
@@ -148,7 +230,6 @@ export default {
   }
   .pay {
     img {
-      
       width: 20px;
       height: 20px;
       vertical-align: middle;
@@ -157,14 +238,14 @@ export default {
   .list-box {
     font-size: 14px;
     line-height: 40px;
-    >.list-title{
-      font-weight:600;
+    > .list-title {
+      font-weight: 600;
       padding: 5px 0;
     }
-    .el-row{
-      padding: 5px ;
+    .el-row {
+      padding: 5px;
       border-top: 1px solid #f3f3f3;
-      .el-button{
+      .el-button {
         margin-top: 6px;
         width: 80px;
       }
@@ -183,6 +264,45 @@ export default {
       }
       > div {
         line-height: 20px;
+      }
+    }
+  }
+  .mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    .content {
+      position: relative;
+      margin: 100px auto;
+      border-radius: 4px;
+      padding: 20px 30px;
+      max-width: 300px;
+      background: #fff;
+      line-height: 36px;
+      font-size: 14px;
+      > .el-icon-close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 12px;
+        font-weight: bold;
+        cursor: pointer;
+      }
+      .flex {
+        color: blueviolet;
+        > span {
+          color: #333;
+          width: 80px;
+        }
+      }
+      .btns {
+        justify-content: space-between;
+        .el-button {
+          margin: 10px 0;
+        }
       }
     }
   }
