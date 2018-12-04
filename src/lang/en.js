@@ -81,5 +81,27 @@ export default {
     agree:'agree',
     pwd:'The password is between 6 and 16 bits and consists of numbers and letters',
     mian:'Exemption clause'
+  },
+  security:{
+    lever:'Your Account Security Level：',
+    wan:'Improve more information to ensure account security',
+    invite:'My invitation code',
+    copy:'Copy invitation code',
+    phone:'Bind cell phone',
+    email:'Bind mailbox',
+    logpwd:'Login password',
+    zipwd:'Fund password',
+    idcard:'identity authentication',
+    suggest:'It is recommended that you change your password regularly to protect account security.',
+    notbaind:'Unbound',
+    havebind:'Bound',
+    gobind:'De binding',
+    set:'modify',
+    haveau:'Certified',
+    reau:'Be refused(Re certification)',
+    goau:'De certification',
+    auing:'In audit',
+    goset:'Set up',
+    accountset:'Accounts'
   }
 }

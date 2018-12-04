@@ -78,6 +78,28 @@ export default {
     agree:'同意',
     pwd:'密码在6-16位之间,由数字和字母组成',
     mian:'免责条款'
+  },
+  security:{
+    lever:'您的账号安全等级 : ',
+    wan:'完善更多资料，保证账号安全',
+    invite:'我的邀请码',
+    copy:'复制邀请码',
+    phone:'绑定手机',
+    email:'绑定邮箱',
+    logpwd:'登录密码',
+    zipwd:'资金密码',
+    idcard:'身份认证',
+    suggest:'建议您定期更改密码以保护账户安全。',
+    notbaind:'未绑定',
+    havebind:'已绑定',
+    gobind:'去绑定',
+    set:'修改',
+    haveau:'已认证',
+    reau:'已拒绝(请重新认证)',
+    goau:'去认证',
+    auing:'审核中',
+    goset:'去设置',
+    accountset:'账户设置'
   }
 
 }
