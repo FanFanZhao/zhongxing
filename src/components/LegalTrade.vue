@@ -2,27 +2,27 @@
 	<div id="legaltrade-box" class="clr-part">
 		<div class="buy-sell flex bg-part">
 			<div class="buy-box bdr-part">
-				<div class="title">购买</div>
+				<div class="title">{{$t('legal.buy')}}</div>
 				<ul :class="['flex',{'now':type == 'sell'}]">
 					<li v-for="(coin,index) in legals" :key="index" :class="{'current':coin.id == id}" @click="changeClassify(coin.id,1,coin.name)">{{coin.name}}</li>
 				</ul>
 			</div>
 			<div class="sell-box">
-				<div class="title">出售</div>
+				<div class="title">{{$t('legal.sell')}}</div>
 				<ul :class="['flex',{'now':type=='buy'}]">
 					<li v-for="(coin,index) in legals" :key="index" :class="{'current':coin.id == id}" @click="changeClassify(coin.id,2,coin.name)">{{coin.name}}</li>
 				</ul>
 			</div>
-			<span class="record light_blue" @click="recordList()">订单记录</span>
+			<span class="record light_blue" @click="recordList()">{{$t('legal.record')}}</span>
 		</div>
 		<div class="list-box bg-part">
 			<div class="list-title flex ft14">
-				<div>商家</div>
-				<div>数量</div>
-				<div>限额</div>
-				<div>单价</div>
-				<div>支付方式</div>
-				<div>操作</div>
+				<div>{{$t('legal.shoper')}}</div>
+				<div>{{$t('legal.number')}}</div>
+				<div>{{$t('legal.limit')}}</div>
+				<div>{{$t('legal.price')}}</div>
+				<div>{{$t('legal.pay')}}</div>
+				<div>{{$t('legal.do')}}</div>
 			</div>
 			<ul class="list ft12">
 				<li v-for="(item,index) in list" :key="index" class="flex">
@@ -43,7 +43,9 @@
 						<img v-if="item.way_name == '银行'" src="../assets/images/bank_icon.png" />
 					</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type,item.surplus_number)">
-						<button class="btn">{{classify}}</button>
+						<!-- <button class="btn">{{classify}}</button> -->
+						<button class="btn" v-if="classify=='购买'">{{$t('legal.buy')}}</button>
+						<button class="btn" v-else>{{$t('legal.sell')}}</button>
 					</div>
 				</li>
 			</ul>
@@ -58,10 +60,10 @@
 				<div class="content-list layerBg">
 					<p class="close light_blue" @click="close">X</p>
 					<p class="title">{{classify}}{{name}}</p>
-					<p class="price">单价{{prices}}</p>
+					<p class="price">{{$t('legal.price')}}{{prices}}</p>
 					<div class="trade">
 						<p class="cur" :class="['trade-name',{'active':types == 'trade'}]" @click="tabClassify(1)">{{name}}交易</p>
-						<p class="cur" :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}数量</p>
+						<p class="cur" :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}{{$t('legal.number')}}</p>
 					</div>
 					<div class="totals-num bdr-part">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
@@ -70,7 +72,7 @@
 						<button class="all clr-part" type="button" v-else @click="allMoney();">全部买入</button>
 						<span class="name">{{name01}}</span>
 					</div>
-					<div class="maxnum">限额{{(minNum-0).toFixed(2)}}-{{(maxNum-0).toFixed(2)}}</div>
+					<div class="maxnum">{{$t('legal.limit')}}{{(minNum-0).toFixed(2)}}-{{(maxNum-0).toFixed(2)}}</div>
 					<div class="trade-totals">
 						<p class="total-price">交易总额</p>
 						<p class="prices" v-if=" types == 'trade' ">￥{{nums | toFixeds}}</p>

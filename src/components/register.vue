@@ -2,10 +2,10 @@
     <div id="register-box" class="bg-main clr-part">
         <indexHeader></indexHeader>
         <div class="reg-content">
-            <div class="title">注册</div>
+            <div class="title">{{$t('regidters')}}</div>
             <div class="tab">
-                <span :class='{active:isMb}' @click="setIsMb(true)">手机号注册</span>
-                <span :class="{active:!isMb}" @click="setIsMb(false)">邮箱注册</span>
+                <span :class='{active:isMb}' @click="setIsMb(true)">{{$t('register.phone')}}</span>
+                <span :class="{active:!isMb}" @click="setIsMb(false)">{{$t('register.email')}}</span>
             </div>
             <div class="step-one" v-show="!codeTrue">
                  <!-- <div class="account-box">
@@ -17,8 +17,8 @@
                     </select>
                 </div> -->
                 <div class="account-box">
-                    <div class="tip" v-if="isMb">请输入手机号</div>
-                    <div class="tip" v-if="!isMb">请输入邮箱</div>
+                    <div class="tip" v-if="isMb">{{$t('register.phonenum')}}</div>
+                    <div class="tip" v-if="!isMb">{{$t('register.emailnum')}}</div>
                     <div class="flex">
                       <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
                         <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
@@ -27,55 +27,34 @@
                     <input type="text" v-if="!isMb" v-model="account" class="">
                     </div>
                 </div>
-                    <div class="tip" style="margin-bottom:10px;">请输入验证码 <span class="red" style="margin-left:10px;">(请先查看免责条款，并勾选选项框，才可点击发送验证码)</span></div>
+                    <div class="tip" style="margin-bottom:10px;">{{$t('register.codenum')}} <span class="red" style="margin-left:10px;">({{$t('register.notice')}})</span></div>
                 <div class="code-box bdr-part">
                     <input type="text" v-model="code" class="code">
-                    <button type='button' class="code-btn redBg " :disabled="isCheck?false:true"  :class="[isCheck?'':'pointer']"  @click="sendCode">发送验证码</button>
+                    <button type='button' class="code-btn redBg " :disabled="isCheck?false:true"  :class="[isCheck?'':'pointer']"  @click="sendCode">{{$t('register.sendcode')}}</button>
                 </div>
                 <!-- <button class="confirm-btn redBg" @click="checkCode" type="button">确认</button> -->
             </div>
             <div class="setpass">
-                <!-- <div class="title">设置地区</div> -->
-                <!-- <div class="area-box">
-                  <div class="area">
-                    <div :class="['province',{light:showList == 'provinces'}]" @click="showList = showList?false:'provinces'">{{province.name}}</div>
-                    <div :class="['city',{light:showList =='cities'}]" @click="showList = showList?false:'cities'">{{city.name}}</div>
-                    <div :class="['districts',{light:showList == 'districts'}]" @click="showList = showList?false:'districts'">{{district.name}}</div>
-                  </div>
-                  <div class="area-list" v-if="showList">
-                    <ul class="provinces" v-if="showList == 'provinces'">
-                      <li v-for="(item,index) in provinces" :key="index" @click="getRegion(item.id,'cities',item.region_name)">{{item.region_name}}</li>
-                    </ul>
-                    <ul class="cities" v-if="showList == 'cities'">
-                      <li v-for="(item,index) in cities" :key="index" @click="getRegion(item.id,'districts',item.region_name)">{{item.region_name}}</li>
-                    </ul>
-                    <ul class="districts" v-if="showList == 'districts'">
-                      <li v-for="(item,index) in districts" :key="index" @click="getRegion(item.id,'',item.region_name)">{{item.region_name}}</li>
-                    </ul>
-                  </div>
-                </div> -->
-                
-                <!-- <div class="title">设置密码</div> -->
                 <div class="pwd-box pass-box">
-                    <div class="tip">请输入登录密码</div>
-                    <input :type="showpass?'text':'password'" class="pwd-input" maxlength="16" v-model="pwd" id="pwd" placeholder="密码在6-16位之间,由数字和字母组成">
+                    <div class="tip">{{$t('register.logpwd')}}</div>
+                    <input :type="showpass?'text':'password'" class="pwd-input" maxlength="16" v-model="pwd" id="pwd" :placeholder="$t('register.pwd')">
                         <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                 </div>
                 <div class="repwd-box pass-box">
-                    <div class="tip">请确认密码</div>
+                    <div class="tip">{{$t('register.repwd')}}</div>
                     <input :type="showrepass?'text':'password'" class="repwd-input" maxlength="16" v-model="repwd" >
                         <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showrepass" @click="showrepass = true">
                 </div>
                 <div class="invite-box">
-                    <div class="tip">请输入邀请码</div>
-                    <input type="text" placeholder="选填" v-model="invite" class="invite-input">
+                    <div class="tip">{{$t('register.invitecode')}}</div>
+                    <input type="text" :placeholder="$t('register.xuan')" v-model="invite" class="invite-input">
                 </div>
                 <p class="flex alcenter ft14">
-                  <input id="agree" class="aggre" v-model="isCheck" @click="check" type="checkbox" /><label for="agree">同意 <router-link to="/aggrement" class="link_text">免责条款</router-link></label>
+                  <input id="agree" class="aggre" v-model="isCheck" @click="check" type="checkbox" /><label for="agree">{{$t('register.agree')}} <router-link to="/aggrement" class="link_text">{{$t('register.mian')}}</router-link></label>
                 </p>
-                <button type="button" @click="register" :disabled="isCheck?false:true" :class="[isCheck?'':'pointer']" class="reg-btn confirm-btn redBg">确认</button>
+                <button type="button" @click="register" :disabled="isCheck?false:true" :class="[isCheck?'':'pointer']" class="reg-btn confirm-btn redBg">{{$t('confirm')}}</button>
             </div>
             </div>
     </div>
@@ -520,3 +499,6 @@ export default {
   }
 }
 </style>
+
+
+
