@@ -320,7 +320,9 @@ export default {
     this.$http({
       url: '/api/' + "news/list",
       method: "post",
-      data: {}
+      data: {
+        language:this.$i18n.locale == 'zh'?1:2
+      }
     })
       .then(res => {
         console.log(res);

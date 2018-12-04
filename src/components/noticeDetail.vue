@@ -43,6 +43,7 @@ export default {
     },
     created(){
         this.id = this.$route.query.id;
+        var locale = window.localStorage.getItem('locale');
         var id = this.id;
         this.$http({
             url:  '/api/news/detail?'+'id='+id,

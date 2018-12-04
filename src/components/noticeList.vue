@@ -74,12 +74,14 @@ export default {
     //   .catch(error => {
     //     console.log(error);
     //   });
+    
   },
   methods: {
     getNotice(){
       this.$http({
         url:  '/api/news/list',
         method:'post',
+        data:{language:this.$i18n.locale == 'zh'?1:2}
       }).then(res => {
         var that = this;
         // console.log(res);
