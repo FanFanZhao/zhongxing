@@ -13,12 +13,13 @@ import VueSocketio from 'vue-socket.io'
 import echarts from 'echarts'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import store from './store'
-import {Slider,Input,Row,Col,Button,Form,FormItem,Radio,RadioGroup,Select,Option,Tabs,TabPane,Dialog,Card} from 'element-ui'
+import {Slider,Input,Row,Col,Button,Form,FormItem,Radio,RadioGroup,Select,Option,Tabs,TabPane,Dialog,Card,Icon} from 'element-ui'
 Vue.use(Form)
 Vue.use(FormItem)
 Vue.use(Input)
 Vue.use(RadioGroup)
 Vue.use(Radio)
+Vue.use(Icon)
 Vue.use(Slider)
 Vue.use(Row)
 Vue.use(Col)

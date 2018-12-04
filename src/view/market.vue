@@ -14,20 +14,38 @@
                 <!-- <span class="active">USDT</span>
                 <span>JNB</span>
                 <span>JNB</span> -->
-                <span v-for="(tab,index) in tabList" :class="['bdr-part',{'active': (index == isShow)}]" @click="changeType(index,tab.name,tab.id)">{{tab.name}}</span>
+                <span v-for="(tab,index) in tabList" :key="index" :class="['bdr-part',{'active': (index == isShow)}]" @click="changeType(index,tab.name,tab.id)">{{tab.name}}</span>
             </div>
         </div>
         <div class="coin-title clear clr-part">
             <div>
-                <span>币种</span>
+                <div class="flex tc" @click="arrSort('at')">
+                  <span>币种</span>
+                  <div class="down-up">
+                    <div   :class="['el-icon-caret-top',{bold:sortKey == 'at'&&directions == 'up'}]" @click="directions = 'up';arrSort('at','up')"></div>
+                     <div  :class="['el-icon-caret-bottom',{bold:sortKey == 'at'&&directions == 'down'}]" @click="directions = 'down';arrSort('at','down')"></div>
+                  </div>
+                </div>
                 <!-- <img src="../assets/images/select0.png" alt=""> -->
             </div>
             <div>
-                <span>最新价</span>
+                <div class="flex tc" @click="arrSort('now_price')">
+                  <span>最新价</span>
+                  <div class="down-up">
+                    <div   :class="['el-icon-caret-top',{bold:sortKey == 'now_price'&&directions == 'up'}]" @click="directions = 'up';arrSort('now_price','up')"></div>
+                     <div  :class="['el-icon-caret-bottom',{bold:sortKey == 'now_price'&&directions == 'down'}]" @click="directions = 'down';arrSort('now_price','down')"></div>
+                  </div>
+                </div>
                 <!-- <img src="../assets/images/select0.png" alt=""> -->
             </div>
             <div>
-                 <span>涨幅</span>
+                 <div class="flex tc" @click="arrSort('change')">
+                   <span>涨幅</span>
+                   <div class="down-up">
+                     <div   :class="['el-icon-caret-top',{bold:sortKey == 'change'&&directions == 'up'}]" @click="directions = 'up';arrSort('change')"></div>
+                     <div  :class="['el-icon-caret-bottom',{bold:sortKey == 'change'&&directions == 'down'}]" @click="directions = 'down';arrSort('change')"></div>
+                   </div>
+                 </div>
                 <!-- <img src="../assets/images/select0.png" alt=""> -->
             </div>
         </div>
@@ -59,7 +77,9 @@ export default {
       tradeDatas: "",
       exName: "",
       currency_name: "",
-      legal_name: ""
+      legal_name: "",
+      directions:'',
+      sortKey:'none'
     };
   },
   created: function() {
@@ -144,6 +164,33 @@ export default {
     var that = this;
   },
   methods: {
+    arrSort(k,d){
+      console.log(d);
+      d = this.directions;
+      
+      this.sortKey = k;
+      this.marketList[this.isShow].sort(function(a,b){
+        if(k == 'at'){
+          if(d == 'up'){
+
+            return a.currency_name.charCodeAt() - b.currency_name.charCodeAt()
+          } else {
+            return b.currency_name.charCodeAt() - a.currency_name.charCodeAt()
+
+          }
+          
+        } else {
+          if(d == 'up'){
+
+            return a[k] - b[k];
+          } else {
+            return b[k] - a[k];
+          }
+          
+        }
+      })
+      
+    },
     // socket封装
     connect() {
       var that = this;
@@ -194,6 +241,8 @@ export default {
       //	this.$store.state.symbol=list.name+'/'+this.exName
     },
     changeType(index, legal_name, currency_id) {
+      this.directions = '';
+      this.sortKey = '';
       this.isShow = index;
       // this.legal_index='';
       this.ids = "a";
@@ -358,7 +407,10 @@ export default {
   border: 1px solid #ccc;
   border-bottom: none;
 }
-.coin-title div {
+.coin-title .flex{
+  justify-content: center;
+}
+.coin-title>div {
   width: 33.3%;
   height: 36px;
   line-height: 36px;
@@ -366,9 +418,17 @@ export default {
   float: left;
   font-size: 12px;
 }
-.coin-title img {
-  vertical-align: middle;
-  margin-top: -3px;
+.down-up{
+  padding-top: 4px;
+  font-size: 14px;
+}
+.down-up div{
+  color: #ccc;
+  display: block;
+}
+.down-up .bold{
+  font-weight: bold;
+  color: #000;
 }
 .line {
   width: 90%;
