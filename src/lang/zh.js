@@ -100,6 +100,19 @@ export default {
     auing:'审核中',
     goset:'去设置',
     accountset:'账户设置'
+  },
+  auth:{
+    auth:'身份认证',
+    back:'返回',
+    refause:'拒绝理由',
+    name:'姓名',
+    idnum:'证件号',
+    img:'请上传证件的正反面及手持证件的正面照。',
+    ising:'审核中...',
+    ised:'已认证!',
+    truename:'请输入真实姓名',
+    truenum:'请输入证件号',
+    up:'提交'
   }
 
 }

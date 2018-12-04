@@ -103,5 +103,18 @@ export default {
     auing:'In audit',
     goset:'Set up',
     accountset:'Accounts'
+  },
+  auth:{
+    auth:'identity authentication',
+    back:'Return',
+    refause:'Reasons for refusal',
+    name:'name',
+    idnum:'CAAC Certificate No',
+    img:'Please upload the positive and negative sides of the certificate and the front photos of the hand-held certificate.',
+    ising:'In audit',
+    ised:'Certified!',
+    truename:'Please enter your real name',
+    truenum:'Please input ID card number',
+    up:'submit'
   }
 }
