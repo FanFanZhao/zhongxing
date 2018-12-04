@@ -93,13 +93,13 @@
              <span>涨跌</span>
               <span>最高价</span>
                <span>最低价</span>
-            <span>交易量({{nowCoin}})</span>
+            <span>交易量</span>
             
             <span>操作</span>
           </div>
           
           <ul class="list-con scroll" v-for="(item,index) in quotation" :key="index" v-if="nowCoin == item.name">
-            <li v-for="(li,inde) in item.quotation" :key="inde" :data-name='li.currency_name+"/"+li.legal_name'>
+            <li v-for="(li,inde) in item.quotation" :key="inde" :data-name='li.currency_id+"/"+li.legal_id'>
               <div class="two-coin">
                 <img :src="li.logo" alt="" style="width:30px;">
                 <span style="font-weight:bold"><span class="high_blue">{{li.currency_name}}</span><span class="low_blue">/{{li.legal_name}}</span></span>
@@ -110,15 +110,15 @@
               </div>
               <div class="yes-toa">
                 <!-- <span :class="setColor(li.last_price,li.yesterday_last_price)">{{li.change == null?'+0.000':li.change}}%</span> -->
-                <span :class="setColor(li.change)" class="bold">{{(li.change>0?'+':'')+(li.change-0).toFixed(2)}}%</span>
+                <span :class="setColor(li.change)" class="bold change">{{(li.change>0?'+':'')+(li.change-0).toFixed(2)}}%</span>
               </div>
               <div>
-                <span class="high_blue bold">{{li.high_price}}</span>
+                <span class="high_blue bold high_price">{{li.high_price}}</span>
               </div>
               <div>
-                <span class="high_blue bold">{{li.low_price}}</span>
+                <span class="high_blue bold low_price">{{li.low_price}}</span>
               </div>
-              <div class="count high_blue bold">{{li.volume == null?'0':li.volume}}</div>
+              <div class="count high_blue bold volume">{{li.volume == null?'0':li.volume}}</div>
               <div @click="setCurrent(index,inde)" style="color:#563BD1">去交易</div>
               <!-- <div>
                 <span @click="setData({currency_id:item.id,legal_id:li.currency_id,currency_name:item.name,leg_name:li.name,isShow:index})">交易 </span>
@@ -364,37 +364,55 @@ export default {
       var that = this;
       console.log("socket");
       that.$socket.emit("login", this.$makeSocketId());
-      that.$socket.on("transaction", msg => {
+      that.$socket.on("daymarket", msg => {
         console.log(msg);
-        var cname = msg.token;
-        var yesprice = msg.yesterday;
-        var toprice = msg.today;
-        console.log(cname);
-        var zf = 0;
-        if (toprice - yesprice == 0) {
-          zf = "0%";
-        } else if (toprice == 0) {
-          zf = "-100";
-        } else if (yesprice) {
-          zf = "+100%";
-        } else {
-          zf = ((toprice - yesprice) / yesprice / 100).toFixed(2);
-          if (zf > 0) {
-            zf = "+" + zf + "%";
-          } else {
-            zf = zf + "%";
-          }
+        var cname = msg.currency_id+'/'+msg.legal_id;
+        var now_price = msg.now_price;
+        var change = (msg.change-0).toFixed(2);
+        if(change<0){
+          $("li[data-name='" + cname + "']")
+          .find(".yes-toa span")
+          .css("color", "#ff6e42")
+          .html(change+'%');
+        }else{
+          $("li[data-name='" + cname + "']")
+          .find(".yes-toa span")
+          .css("color", "#459e80")
+          .html('+'+change+'%');
         }
-        var zf = toprice - yesprice;
+        console.log(cname);
+        // var zf = 0;
+        // if (toprice - yesprice == 0) {
+        //   zf = "0%";
+        // } else if (toprice == 0) {
+        //   zf = "-100";
+        // } else if (yesprice) {
+        //   zf = "+100%";
+        // } else {
+        //   zf = ((toprice - yesprice) / yesprice / 100).toFixed(2);
+        //   if (zf > 0) {
+        //     zf = "+" + zf + "%";
+        //   } else {
+        //     zf = zf + "%";
+        //   }
+        // }
+        // var zf = toprice - yesprice;
         $("li[data-name='" + cname + "']")
           .find(".yester span")
-          .html(yesprice);
-        $("li[data-name='" + cname + "']")
-          .find(".today span")
-          .html(toprice);
-        $("li[data-name='" + cname + "']")
-          .find(".yes-toa span")
-          .html(zf);
+          .html((now_price-0).toFixed(8));
+        // $("li[data-name='" + cname + "']")
+        //   .find(".today span")
+        //   .html(toprice);
+        
+          $("li[data-name='" + cname + "']")
+          .find(".high_price")
+          .html((msg.high_price-0).toFixed(8));
+          $("li[data-name='" + cname + "']")
+          .find(".low_price")
+          .html((msg.low_price-0).toFixed(8));
+           $("li[data-name='" + cname + "']")
+          .find(".volume")
+          .html((msg.volume-0).toFixed(5));
       });
     },
     setColor(c) {

@@ -40,6 +40,8 @@ import currencyList from '@/view/currency_list'
 import currencyEdit from '@/view/edit_currency'
 import advice from '@/view/advice'
 import aggrement from '@/view/aggrement' //隐私条款
+import entrust from '@/view/entrust'
+import hisentrust from '@/view/hisentrust'
 //收款方式
 
 import ForgetPwd from '@/components/ForgetPwd' //忘记密码
@@ -118,6 +120,16 @@ export default new Router({
 					component: aggrement
 				},
 				
+				{
+					path: '/entrust',
+					name: 'entrust',
+					component: entrust
+				},
+				{
+					path: '/hisentrust',
+					name: 'hisentrust',
+					component: hisentrust
+				},
 				
 				{
 					path: '/dealCenter',

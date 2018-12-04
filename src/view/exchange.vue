@@ -91,7 +91,10 @@ export default {
       that.legal_name = data0.legal_name;
       that.currency_id = data0.currency_id;
       that.legal_id = data0.legal_id;
-      that.newData =  Data.now_price || data0.now_price; //初始最新价赋值
+      console.log(Data.now_price)
+      console.log(data0)
+      console.log(data0.now_price)
+      that.newData =  Data.now_price != undefined ? Data.now_price : data0.now_price; //初始最新价赋值
       that.buy_sell(that.legal_id, that.currency_id);
     });
     eventBus.$on("toExchange", function(data) {
@@ -147,6 +150,7 @@ export default {
                 buy_price = this.inlist[0].price
              }
              var sell_price = 0
+             console.log(this.outlist.length)
              if(this.outlist.length > 0){
                 var len = this.outlist.length;
                 if(this.outlist[len-1] != undefined){
@@ -179,7 +183,7 @@ export default {
       console.log("socket");
       that.$socket.emit("login", this.$makeSocketId());
       that.$socket.on("transaction", msg => {
-        // console.log(msg);
+        console.log(msg);
         if (msg.type == "transaction") {
           //组件间传值
           var newPrice = {
@@ -197,19 +201,20 @@ export default {
          
           var inData = JSON.parse(msg.in);
           var outData = JSON.parse(msg.out);
+          console.log(inData);
+          console.log(outData)
           if(msg.complete){
                var complete = JSON.parse(msg.complete);
-          }        
+          }     
           var len01 = inData.length;
           var len02 = outData.length;
           
           if (msg.legal_id == that.legal_id && msg.currency_id == that.currency_id) {
             console.log(msg.last_price)
             that.newData = msg.last_price;
-            
             var priceData = {
-             buyPrice:inData[0].price,
-             sellPrice:outData[len02-1].price
+             buyPrice:inData.length !=0?inData[0].price:'',
+             sellPrice:outData.length !=0?outData[len02-1].price:''
           }
           if(len01 == 0){
             priceData.buyPrice = ''
@@ -281,14 +286,14 @@ export default {
 .tab_title{display: inline-block;line-height: 30px;height: 30px;}
 .tab_title span{cursor: pointer;}
 .tab_title span:not(:last-child) {margin-right: 40px;}
-.content{padding: 0 10px;height: 330px;}
+.content{padding: 0 10px;height: 370px;}
 .list-title{line-height: 40px; border-bottom: 1px solid #ccc;height: 40px;}
 .list-title li{
     width: 33%;
     text-align: center;
 }
 .no_data{padding: 50px 0;}
-.containers{height: 260px;overflow: auto;}
+.containers{height: 330px;overflow: auto;}
 .list-item li{line-height: 30px; display: flex;}
 .list-item li span{display: inline-block; float: left; width: 33.3%;text-align: center;}
 

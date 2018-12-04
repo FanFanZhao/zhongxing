@@ -20,15 +20,15 @@
         <div class="coin-title clear clr-part">
             <div>
                 <span>币种</span>
-                <img src="../assets/images/select0.png" alt="">
+                <!-- <img src="../assets/images/select0.png" alt=""> -->
             </div>
             <div>
                 <span>最新价</span>
-                <img src="../assets/images/select0.png" alt="">
+                <!-- <img src="../assets/images/select0.png" alt=""> -->
             </div>
             <div>
                  <span>涨幅</span>
-                <img src="../assets/images/select0.png" alt="">
+                <!-- <img src="../assets/images/select0.png" alt=""> -->
             </div>
         </div>
         <!-- <div class="line"></div> -->
@@ -120,7 +120,7 @@ export default {
             legal_id: localData.legal_id,
             currency_name: localData.currency_name,
             legal_name: localData.legal_name,
-             now_price:now_price
+             now_price:arr_quota[0][0].now_price
           };
           this.ids = "a";
           this.isShow = localData.isShow;

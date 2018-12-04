@@ -1,10 +1,10 @@
 <template>
   <div id="index-head" class="flex">
     <div class="header-l flex">
-      <div class="logo flex alcenter mr20">
+      <div class="logo flex alcenter mr20" @click="goHome">
         <img src="../assets/images/new_logo01.png" alt="">        
       </div>
-      <span class="mr60">一带一路</span>
+      <span class="mr60 titles" @click="goHome">一带一路</span>
       <router-link to="/" exact>首页</router-link>
       <router-link to="/legalTrade" v-if="token">法币交易</router-link>
       <div v-else @click="goLogin()">法币交易</div>
@@ -32,8 +32,9 @@
       </div> -->
     </div>
     <div class="header-r flex">
+      
       <div v-if="!account_number.length" class="flex">
-
+        
         <router-link to='/components/login'>登录</router-link>
         <router-link to='/components/register'>注册</router-link>
       </div>
@@ -45,6 +46,13 @@
            
           </div>
         </div> -->
+        <div class="order">
+          <span>订单</span>
+          <ul class="order_list">
+            <li class="now" @click="now">当前委托</li>
+            <li class="history" @click="history">历史委托</li>
+          </ul>
+          </div>
         <div class="links-box">
           <div class="account_number">{{account_number}} (邀请码 {{extension_code}})</div>
           <div class="links">
@@ -97,6 +105,15 @@ export default {
     });
   },
   methods: {
+    goHome(){
+       this.$router.push('/')
+    },
+    now(){
+       this.$router.push('/entrust')
+    },
+    history(){
+       this.$router.push('/hisentrust')
+    },
     signOut() {
       this.account_number = "";
       // window.localStorage.removeItem("token");
@@ -131,6 +148,32 @@ export default {
 </script>
 
 <style lang='scss'>
+.titles{
+  cursor: pointer;
+}
+.order{
+  margin-right: 15px;
+  cursor: pointer;
+}
+.order_list{
+  position: absolute;
+  background: #2E1B85;
+  color: #fff;
+  padding: 0 10px;
+  z-index: 999999;
+}
+.order_list{
+    display: none;
+}
+.order:hover ul{
+    display: block;
+}
+.order_list li{
+  line-height: 30px;
+}
+.order_list li:hover{
+  color: #d45858;
+}
 #index-head {
   justify-content: space-between;
   padding: 0 20px;
