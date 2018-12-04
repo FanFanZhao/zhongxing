@@ -8,8 +8,8 @@
       <router-link to="/" exact>首页</router-link>
       <router-link to="/legalTrade" v-if="token">法币交易</router-link>
       <div v-else @click="goLogin()">法币交易</div>
-      <router-link to="/c2c">C2C交易</router-link>
-      <!-- <div v-else @click="goLogin()">C2C交易</div> -->
+      <router-link v-if="token" to="/c2c">C2C交易</router-link>
+      <div v-else @click="goLogin()">C2C交易</div>
       <router-link to="/dealCenter">币币交易</router-link>
       <router-link to="/myLegalShops" v-if="isShow">我的商铺</router-link>
       <router-link to="/finance" v-if="token">我的资产</router-link>
@@ -153,9 +153,14 @@ export default {
 }
 .order{
   margin-right: 15px;
+  position: relative;
   cursor: pointer;
+  padding-right: 20px;
+  background: url("../assets/images/arrow0.png") no-repeat right center;
 }
 .order_list{
+  min-width: 80px;
+  left: -10px;
   position: absolute;
   background: #2E1B85;
   color: #fff;

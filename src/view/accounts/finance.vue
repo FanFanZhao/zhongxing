@@ -28,10 +28,10 @@
                    <p class="flex1 tc">{{item.cny_price}}</p>
                    <!-- <p class="flex1 tc">{{item.lock_position}}</p> -->
                    <p class="flex1 tc operation">
-                       <span v-if="item.is_lever==0" @click="noopen" class="no_open">充币</span>
-                       <span v-if="item.is_lever==1" @click="excharge(index,item.currency)">充币</span>
-                       <span v-if="item.is_lever==0" @click="noopen" class="no_open">提币</span>
-                       <span v-if="item.is_lever==1" @click="withdraw(index,item.currency,item.currency_name)">提币</span>
+                       <span v-if="item.is_recharge==0" @click="noopen" class="no_open">充币</span>
+                       <span v-if="item.is_recharge==1" @click="excharge(index,item.currency)">充币</span>
+                       <span v-if="item.is_pick_up==0" @click="noopen" class="no_open">提币</span>
+                       <span v-if="item.is_pick_up==1" @click="withdraw(index,item.currency,item.currency_name)">提币</span>
                        <span @click="rec(index,item.currency)">记录</span>
                    </p>
                    </div>

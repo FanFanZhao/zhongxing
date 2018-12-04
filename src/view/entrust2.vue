@@ -166,12 +166,12 @@ export default {
         this.types = "in";
         this.getdata(this.urls, this.types);
       }else if(index == 2){
-        if(this.enList02>0){
+        if(this.enList02.length>0){
           this.flags02 = true;
         }else{
            this.flags02 = false;
         }
-        if(this.enList01>0){
+        if(this.enList01.length>0){
           this.flags01 = true;
         }else{
            this.flags01 = false;
