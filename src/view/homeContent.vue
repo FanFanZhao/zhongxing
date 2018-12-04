@@ -83,7 +83,7 @@
         </div> -->
           <div class="coin-tab">
             <ul class="coins">
-              <li v-for="(coin,index) in quotation" :key="index" @click="nowCoin = coin.name" :class="{activeCoin:nowCoin == coin.name}">{{$t('home.with')}}{{coin.name}}{{$t('home.markets')}}<span class='' v-if="nowCoin == coin.name"></span></li>
+              <li v-for="(coin,index) in quotation" :key="index" @click="nowCoin = coin.name" :class="{activeCoin:nowCoin == coin.name}">{{$t('home.with')}}{{coin.name}}  {{$t('home.markets')}}<span class='' v-if="nowCoin == coin.name"></span></li>
             </ul>
           </div>
         <div class="coins-list">

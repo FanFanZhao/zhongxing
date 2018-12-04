@@ -2,7 +2,7 @@
   <div id="index-head" class="flex">
     <div class="header-l flex">
       <div class="logo flex alcenter mr20" @click="goHome">
-        <img src="../assets/images/new_logo01.png" alt="">        
+        <img src="../assets/images/new_logo01.png" alt>
       </div>
       <span class="mr60 titles" @click="goHome">一带一路</span>
       <router-link to="/" exact>{{$t('header.home')}}</router-link>
@@ -23,20 +23,19 @@
       <div class="coin-box">
         <router-link to="/currencyApply">上币申请</router-link>
         <router-link to="/currencyList" >币种列表</router-link>
-      </div> -->
+      </div>-->
       <!-- <div>
         <div class="download">
           <div>app下载</div>
           <img src="../assets/images/ewm.png" alt="">
         </div>
-      </div> -->
+      </div>-->
     </div>
     <div class="header-r flex">
       
       <div v-if="!account_number.length" class="flex">
-        
-        <router-link to='/components/login'>{{$t('header.in')}}</router-link>
-        <router-link to='/components/register'>{{$t('header.up')}}</router-link>
+        <router-link to="/components/login">{{$t('header.in')}}</router-link>
+        <router-link to="/components/register">{{$t('header.up')}}</router-link>
       </div>
       <div v-if="account_number.length" class="flex">
         <!-- <div class="assets">
@@ -45,14 +44,14 @@
             <router-link to='/finance'>交易</router-link>
            
           </div>
-        </div> -->
+        </div>-->
         <div class="order">
           <span>{{$t('header.orders')}}</span>
           <ul class="order_list">
             <li class="now" @click="now">{{$t('header.current')}}</li>
             <li class="history" @click="history">{{$t('header.his')}}</li>
           </ul>
-          </div>
+        </div>
         <div class="links-box">
           <div class="account_number">{{account_number}} ({{$t('header.code')}} {{extension_code}})</div>
           <div class="links">
@@ -60,12 +59,17 @@
             <div @click="signOut">{{$t('header.complaint')}}</div>
           </div>
         </div>
+        
       </div>
+      <div class="flex lang-box">
+          <span @click="setLang('zh')">中</span>
+          <span @click="setLang('en')">英</span>
+        </div>
       <!-- <div class=" theme flex">
           <img src="../assets/images/dark.png"  @click="$changeTheme('light')" alt="">
           <img src="../assets/images/light.png" @click="$changeTheme('dark')" alt="">
           
-        </div> -->
+      </div>-->
     </div>
   </div>
 </template>
@@ -76,8 +80,8 @@ export default {
     return {
       account_number: "",
       extension_code: "",
-      token:'',
-      isShow:false,
+      token: "",
+      isShow: false
     };
   },
   created() {
@@ -85,19 +89,19 @@ export default {
     this.account_number = window.localStorage.getItem("accountNum") || "";
     this.extension_code = window.localStorage.getItem("extension_code") || "";
     eventBus.$on("toHeader", msg => {
-      if(msg.account){
+      if (msg.account) {
         this.account_number = msg.account;
         this.extension_code = msg.extension_code;
       }
     });
-    if(this.token){
+    if (this.token) {
       this.init();
     }
   },
   mounted() {
     eventBus.$on("toHeader", msg => {
       console.log(msg);
-      if(msg.account){
+      if (msg.account) {
         this.extension_code = msg.extension_code;
 
         this.account_number = msg.account;
@@ -105,14 +109,24 @@ export default {
     });
   },
   methods: {
-    goHome(){
-       this.$router.push('/')
+    setLang(lang) {
+      var l = window.localStorage.getItem("locale") || "zh";
+      if (l == lang) {
+        return;
+      } else {
+        window.localStorage.setItem('locale',lang);
+        this.$i18n.locale = lang;
+        // window.location.reload();
+      }
     },
-    now(){
-       this.$router.push('/entrust')
+    goHome() {
+      this.$router.push("/");
     },
-    history(){
-       this.$router.push('/hisentrust')
+    now() {
+      this.$router.push("/entrust");
+    },
+    history() {
+      this.$router.push("/hisentrust");
     },
     signOut() {
       this.account_number = "";
@@ -121,62 +135,68 @@ export default {
       // window.localStorage.removeItem("user_id");
       // window.localStorage.removeItem("extension_code");
       window.localStorage.clear();
-      this.$router.push('/components/login');
+      this.$router.push("/components/login");
     },
-    goLogin(){
-      this.$router.push('/components/login');
+    goLogin() {
+      this.$router.push("/components/login");
     },
-    init(){
+    init() {
       this.$http({
-        url:'/api/user/info',
-        method:'GET',
-        data:{},
-        headers:{Authorization:this.token}
+        url: "/api/user/info",
+        method: "GET",
+        data: {},
+        headers: { Authorization: this.token }
       }).then(res => {
-        console.log(res)
-        if(res.data.type == 'ok'){
-          window.localStorage.setItem('status',res.data.message.review_status);
-            if(res.data.message.is_seller == '1'){
-               this.isShow = true;
-            }
+        console.log(res);
+        if (res.data.type == "ok") {
+          window.localStorage.setItem("status", res.data.message.review_status);
+          if (res.data.message.is_seller == "1") {
+            this.isShow = true;
+          }
         }
-        
-      })
+      });
     }
   }
 };
 </script>
 
-<style lang='scss'>
-.titles{
+<style lang='scss' scoped>
+.lang-box{
+  margin-left: 20px;
+  span{
+    margin-left: 20px;
+    cursor: pointer;
+  }
+}
+.titles {
   cursor: pointer;
 }
-.order{
+.order {
   margin-right: 15px;
   position: relative;
   cursor: pointer;
   padding-right: 20px;
   background: url("../assets/images/arrow0.png") no-repeat right center;
 }
-.order_list{
+.order_list {
   min-width: 80px;
   left: -10px;
   position: absolute;
-  background: #2E1B85;
+  background: #2e1b85;
   color: #fff;
   padding: 0 10px;
   z-index: 999999;
 }
-.order_list{
-    display: none;
+.order_list {
+  display: none;
 }
-.order:hover ul{
-    display: block;
+.order:hover ul {
+  display: block;
 }
-.order_list li{
+.order_list li {
   line-height: 30px;
 }
-.order_list li:hover{
+.order_list li:hover {
   color: #d45858;
 }
 #index-head {
@@ -186,7 +206,7 @@ export default {
   height: 45px;
   line-height: 45px;
   font-size: 14px;
-  background: #2E1B85;
+  background: #2e1b85;
   color: #ccc;
 
   a:hover,
@@ -218,7 +238,7 @@ export default {
         display: block;
       }
     }
-    >div:hover{
+    > div:hover {
       color: #d45858;
     }
     > .coin-box {
@@ -238,18 +258,18 @@ export default {
         }
       }
     }
-    .download{
+    .download {
       position: relative;
-      img{
+      img {
         position: absolute;
         display: none;
-          width: 100px;
-          height: 100px;
+        width: 100px;
+        height: 100px;
         z-index: 999;
         left: -20px;
       }
-      &:hover{
-        img{
+      &:hover {
+        img {
           display: block;
         }
       }
@@ -311,7 +331,7 @@ export default {
         z-index: 999;
         background: #181b2a;
         display: none;
-        a{
+        a {
           border-bottom: 1px solid #383d54;
         }
         a,
@@ -326,7 +346,7 @@ export default {
         }
       }
     }
-    .theme>img{
+    .theme > img {
       cursor: pointer;
       margin-left: 15px;
       margin-top: 12.5px;
