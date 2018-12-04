@@ -187,38 +187,38 @@
         <!--图文内容-->
         <div id="content01" class="content01 flex alcenter   center" style="background:#f3f3f3;">
             <div class="text01 mr100 left01 animated">
-              <h1 class="ft26 bold mb30">全球化的数字资产配置及交易服务</h1>
-              <p class="ft16 bold mb10">遍布全球的项目拓展及运营管理体系</p>
-               <p class="ft16 bold mb10">在多个国家设有本地交易服务中心</p>
-                <p class="ft16 bold mb10">服务超过130个国家的数百万用户</p>
+              <h1 class="ft26 bold mb30">{{$t('home.c1')}}</h1>
+              <p class="ft16 bold mb10">{{$t('home.c2')}}</p>
+               <p class="ft16 bold mb10">{{$t('home.c3')}}</p>
+                <p class="ft16 bold mb10">{{$t('home.c4')}}</p>
             </div>
             <img class="imgs01" src="../assets/images/imgs01.png" />
         </div>
         <div class="content01 flex alcenter center ">
           <img class="imgs02" src="../assets/images/imgs02.png" />
             <div class="text01 ml100">
-              <h1 class="ft26 bold mb30">SMART-Chain资产评估模型</h1>
-              <p class="ft16 bold mb10">独立专业的区块链资产研究评估体系</p>
-               <p class="ft16 bold mb10">长期跟踪产业链并提供最权威中立的资产分析</p>
-                <p class="ft16 bold mb10">一站式的项目进度跟踪及信息披露系统</p>
+              <h1 class="ft26 bold mb30">{{$t('home.c5')}}</h1>
+              <p class="ft16 bold mb10">{{$t('home.c6')}}</p>
+               <p class="ft16 bold mb10">{{$t('home.c7')}}</p>
+                <p class="ft16 bold mb10">{{$t('home.c8')}}</p>
             </div>
             
         </div>
         <div class="content01 flex alcenter grayBg center" style="background:#f3f3f3;">
             <div class="text01 mr100">
-              <h1 class="ft26 bold mb30">依托4年的数字资产安全风控经验</h1>
-              <p class="ft16 bold mb10">安全稳定运营数字资产交易所超过四年</p>
-               <p class="ft16 bold mb10">管理资产规模超过10亿美金，服务数百万用户</p>
-                <p class="ft16 bold mb10">专业分布式架构和防DDOS攻击系统</p>
-                 <p class="ft16 bold mb10">98%数字资产存储多重签名冷钱包</p>
+              <h1 class="ft26 bold mb30">{{$t('home.c9')}}</h1>
+              <p class="ft16 bold mb10">{{$t('home.c10')}}</p>
+               <p class="ft16 bold mb10">{{$t('home.c11')}}</p>
+                <p class="ft16 bold mb10">{{$t('home.c12')}}</p>
+                 <p class="ft16 bold mb10">{{$t('home.c13')}}</p>
             </div>
             <img class="imgs03" src="../assets/images/imgs03.png" />
         </div>
         <div class="content01 flex alcenter center bg01   ">
           <img class="imgs04" src="../assets/images/imgs04.png" />
             <div class="text01 ml100">
-              <h1 class="ft26 bold gray9 mb30">香港  首尔  新加坡  东京</h1>
-              <p class="ft16 bold mb10 tr">遍布世界各地的服务中心</p>
+              <h1 class="ft26 bold gray9 mb30">{{$t('home.c14')}}</h1>
+              <p class="ft16 bold mb10 tr">{{$t('home.c15')}}</p>
             </div>
             
         </div>
@@ -231,11 +231,11 @@
         </div>
         <!--马上交易-->
         <div class="go_transfer">
-           <h1 class="bold ft24 mb30 tc">马上交易</h1>
-           <p class="ft14 mb30 tc">注册一个一带一路交易中心账号，开启交易旅程</p>
+           <h1 class="bold ft24 mb30 tc">{{$t('home.c16')}}</h1>
+           <p class="ft14 mb30 tc">{{$t('home.c17')}}</p>
            <div class="login_register flex alcenter center" v-if="!account_number.length">
-             <div class="login_btn mr60 bdr-part" @click="go_login">登录</div>
-             <div class="register_btn white" @click="go_register">注册</div>
+             <div class="login_btn mr60 bdr-part" @click="go_login">{{$t('logins')}}</div>
+             <div class="register_btn white" @click="go_register">{{$t('registers')}}</div>
            </div>
         </div>
         <!--底部-->

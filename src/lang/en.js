@@ -4,6 +4,9 @@ export default {
   send:"Send the verification code",
   pwd:"password",
   account:'account',
+  registers:'Sign Up',
+  confirm:'Confirm',
+  logins:'Login',
   header:{
     home:'Home',
     c2c:'C2C Transaction',
@@ -32,7 +35,27 @@ export default {
     high:"Highest Price",
     min:'Minimum Price',
     volume:'Volume',
-    trade:'Trade'
+    trade:'Trade',
+    c1:'Global Digital Asset Allocation and Transaction Services',
+    c2:'Global Project Development and Operational Management System',
+    c3:'There are local trading service centers in many countries',
+    c4:'Millions of users serving more than 130 countries',
+    c5:'SMART-Chain asset appraisal model',
+    c6:'Independent Professional Asset Research and Assessment System of Block Chain',
+    c7:'Long-term tracking of industrial chains and providing the most authoritative and neutral asset analysis',
+    c8:'One-stop Project Progress Tracking and Information Disclosure System',
+    c9:"Relying on 4 years'experience in digital asset safety and wind control",
+    c10:'Safe and stable operation of digital asset exchanges for more than four years',
+    c11:'Management assets exceed $1 billion, serving millions of users',
+    c12:'Professional Distributed Architecture and Anti-DDOS Attack System',
+    c13:'98% Digital Asset Storage Multiple Signature Cold Wallet',
+    c14:'Seoul, Hong Kong, Singapore, Tokyo',
+    c15:'Service Centers Around the World',
+    c16:'Instant Trading',
+    c17:'Registering an account with one trading center and opening the trading journey',
+
+
+
   },
   login:{
     email:"Email",
@@ -42,5 +65,21 @@ export default {
     forget:"Forget password",
     dont:"Don't have an account yet?",
     invite:"Sign up now and start trading on the world's leading digital asset trading platform"
+  },
+  register:{
+    phone:"Mobile number registration",
+    email:"Register with mailbox",
+    phonenum:'Please enter cell phone number',
+    emailnum:'Please input the mailbox',
+    codenum:'Please input verification code',
+    notice:'Please check the exemption clause and check the box before you click Send Verification Code.',
+    sendcode:'Send verification code',
+    logpwd:'Please enter your login password',
+    repwd:'Please confirm the password',
+    invitecode:'Please input invitation code',
+    xuan:'Selective filling',
+    agree:'agree',
+    pwd:'The password is between 6 and 16 bits and consists of numbers and letters',
+    mian:'Exemption clause'
   }
 }
