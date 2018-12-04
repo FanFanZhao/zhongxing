@@ -43,7 +43,9 @@
 						<img v-if="item.way_name == '银行'" src="../assets/images/bank_icon.png" />
 					</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type,item.surplus_number)">
-						<button class="btn">{{classify}}</button>
+						<!-- <button class="btn">{{classify}}</button> -->
+						<button class="btn" v-if="classify=='购买'">{{$t('legal.buy')}}</button>
+						<button class="btn" v-else>{{$t('legal.sell')}}</button>
 					</div>
 				</li>
 			</ul>
@@ -58,10 +60,10 @@
 				<div class="content-list layerBg">
 					<p class="close light_blue" @click="close">X</p>
 					<p class="title">{{classify}}{{name}}</p>
-					<p class="price">单价{{prices}}</p>
+					<p class="price">{{$t('legal.price')}}{{prices}}</p>
 					<div class="trade">
 						<p class="cur" :class="['trade-name',{'active':types == 'trade'}]" @click="tabClassify(1)">{{name}}交易</p>
-						<p class="cur" :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}数量</p>
+						<p class="cur" :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}{{$t('legal.number')}}</p>
 					</div>
 					<div class="totals-num bdr-part">
 						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
@@ -70,7 +72,7 @@
 						<button class="all clr-part" type="button" v-else @click="allMoney();">全部买入</button>
 						<span class="name">{{name01}}</span>
 					</div>
-					<div class="maxnum">限额{{(minNum-0).toFixed(2)}}-{{(maxNum-0).toFixed(2)}}</div>
+					<div class="maxnum">{{$t('legal.limit')}}{{(minNum-0).toFixed(2)}}-{{(maxNum-0).toFixed(2)}}</div>
 					<div class="trade-totals">
 						<p class="total-price">交易总额</p>
 						<p class="prices" v-if=" types == 'trade' ">￥{{nums | toFixeds}}</p>
