@@ -153,26 +153,32 @@ export default {
         // console.log(msg);
         if (msg.type == "daymarket") {
           console.log(msg);
-          
-          var cname = msg.currency_id + "/" + msg.legal_id;
-          var newprice = msg.now_price;
-          var newup = (msg.change-0).toFixed(2);
-          // console.log(cname)
-          if (newup < 0) {
-            newup = newup + "%";
-            $("span[data-name='" + cname + "']")
-              .next()
-              .css("color", "#ff6e42");
-          } else {
-            newup = '+'+newup + "%";
-            $("span[data-name='" + cname + "']")
-              .next()
-              .css("color", "#459e80");
+          let lists = that.marketList;
+          for (let i in lists) {
+            if (lists[i].currency_id == msg.currency_id&&lists[i].legal_id == msg.legal_id) {
+              that.marketList[i].now_price = msg.now_price;
+              that.marketList[i].change = (msg.change-0).toFixed(2);;
+            }
           }
-          $("span[data-name='" + cname + "']")
-            .html(newprice)
-            .next()
-            .html(newup);
+          // var cname = msg.currency_id + "/" + msg.legal_id;
+          // var newprice = msg.now_price;
+          // var newup = (msg.change-0).toFixed(2);
+          // // console.log(cname)
+          // if (newup < 0) {
+          //   newup = newup + "%";
+          //   $("span[data-name='" + cname + "']")
+          //     .next()
+          //     .css("color", "#ff6e42");
+          // } else {
+          //   newup = '+'+newup + "%";
+          //   $("span[data-name='" + cname + "']")
+          //     .next()
+          //     .css("color", "#459e80");
+          // }
+          // $("span[data-name='" + cname + "']")
+          //   .html(newprice)
+          //   .next()
+          //   .html(newup);
         }
       });
     },
