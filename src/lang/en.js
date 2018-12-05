@@ -19,6 +19,7 @@ export default {
   loading:'Loading',
   status:'status',
   rate:'Service Charge',
+  back:'Return',
   header:{
     home:'Home',
     c2c:'C2C Transaction',

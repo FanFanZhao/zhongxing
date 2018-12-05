@@ -6,7 +6,7 @@
                 <div >
                     <div class="back-nav fColor1 ft20">
                         设置提币密码
-                        <span class="fr fColor2 mouseDefault" @click="goBack">&lt;&lt;返回</span>
+                        <span class="fr fColor2 mouseDefault" @click="goBack">&lt;&lt;{{$t('back')}}</span>
                     </div>
                     <div class="nav-after"></div>
                 </div>

@@ -19,6 +19,7 @@ export default {
   loading:'加载中',
   status:'状态',
   rate:'手续费',
+  back:'返回',
 
   header:{
     home:'首页',
