@@ -20,7 +20,7 @@
           <div>{{item.create_time}}</div>
           <div>{{item.seller_balance}}</div>
           <div>
-            <router-link :to="{path:'/legalShopDetail',query:{id:item.id}}">进入店铺</router-link>
+            <router-link :to="{path:'/legalShopDetail',query:{id:item.id,min:item.min_ctoc,max:item.max_ctoc}}">进入店铺</router-link>
           </div>
         </li>
       </ul>
