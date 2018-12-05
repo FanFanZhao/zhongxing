@@ -3,7 +3,7 @@
         <div class="setting-l">
             <div class="setting-item blue_bg tc">
                 <!-- <div class="item-title">收款方式</div> -->
-                <router-link to="/userSetting">安全设置</router-link>
+                <router-link to="/userSetting">{{$t('set.secset')}}</router-link>
             </div>
         </div>
         <div class="setting-r">

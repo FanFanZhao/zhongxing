@@ -7,11 +7,11 @@
                 <div class="main">
                     <p class="main_title">{{$t('login.welcome')}}</p>
                     <div class="tab flex" @click="account_number=''">
-                      <span @click="isMb = true" :class="{now:isMb}">{{$t('login.pone')}}</span>
+                      <span @click="isMb = true" :class="{now:isMb}">{{$t('login.phone')}}</span>
                       <span @click="isMb = false" :class="{now:!isMb}">{{$t('login.email')}}</span>
                     </div>
                     <div class="register-input">
-                        <span class="register-item">{{$t('account')}}</span>
+                        <span class="register-item">{{$t('accounts')}}</span>
                          <select name="" v-if="isMb" class="chooseTel scroll" v-model="areaCode" ref="select">
                         <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
                       </select>

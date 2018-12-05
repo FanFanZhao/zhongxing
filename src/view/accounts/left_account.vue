@@ -18,7 +18,7 @@
 					{
 						src1: require("@/assets/images/icon_mine.png"),
 						src2: require("@/assets/images/icon_mine_s.png"),
-						text: '交易账户',
+						text: this.$t('account.taccount'),
 						page:'finance',
 						children:['finance']
 					},
@@ -33,7 +33,7 @@
 					{
 						src1: require("@/assets/images/icon_delegate.png"),
 						src2: require("@/assets/images/icon_delegate_s.png"),
-						text: '法币账户',
+						text: this.$t('account.laccount'),
 						page:'legal',
 						children:['legal']
 					}

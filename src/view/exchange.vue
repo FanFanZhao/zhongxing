@@ -3,22 +3,22 @@
 		<!-- <div class="title fColor1">交易所</div> -->
         <div class="content bg-part mb10 flex1">
             <div class="new_price bdr-part">
-                <span class="ft14">最新价 {{newData}}{{legal_name}}</span>
+                <span class="ft14">{{$t('center.newprice')}} {{newData}}{{legal_name}}</span>
             </div>
             <div class="exchange_title ft14 clear tc">
-                <span>方向</span>
-                <span>价格({{legal_name}})</span>
-                <span>数量({{currency_name}})</span>
+                <span>{{$t('center.direction')}}</span>
+                <span>{{$t('price')}}({{legal_name}})</span>
+                <span>{{$t('number')}}({{currency_name}})</span>
             </div>
             <ul class="list-item ft12 tc">
                 <li :class="['curPer','redColor','bg-hov',{'bg-evev':index%2 != 0}]" v-for="(out,index) in outlist" @click="price(out.price)">
-                    <span >卖 {{outlist.length-index}}</span>
+                    <span >{{$t('center.sellout')}} {{outlist.length-index}}</span>
                     <span style="font-weight:600">{{out.price}}</span>
                     <span>{{out.number}}</span>
                 </li>
                 <div class="line bdr-part"></div>
                  <li class="curPer ceilColor bg-hov" v-for="(buy,inde) in inlist"  @click="price(buy.price)">
-                    <span>买 {{inde+1}}</span>
+                    <span>{{$t('center.buyin')}} {{inde+1}}</span>
                     <span style="font-weight:600">{{buy.price}}</span>
                     <span>{{buy.number}}</span>
                 </li>
@@ -29,14 +29,14 @@
         <div class="detail clr-part bg-part flex1">
         <div class="title  topshadow">
             <div class="inblock">
-                <span>全站交易</span>
+                <span>{{$t('center.alltrade')}}</span>
             </div>
         </div>
         <div class="content" style="overflow:hidden">
             <ul class="list-title fColor2 ft14 clear bdr-part">
-                <li class="fl w12">时间</li>
-                <li class="fl w12">价格</li>
-                <li class="fl w12">交易量</li>
+                <li class="fl w12">{{$t('time')}}</li>
+                <li class="fl w12">{{$t('price')}}</li>
+                <li class="fl w12">{{$t('volume')}}</li>
             </ul>
             <div class="containers scroll" v-if="deList.length>0">
                 <ul v-for="itm in deList" class="list-item color ft12">
@@ -49,7 +49,7 @@
             </div>
             <div class="no_data tc" v-if="deList.length<=0">
                 <img src="../assets/images/nodata.png" alt="">
-                <p class="fColor2 ft18">暂无数据</p>   
+                <p class="fColor2 ft18">{{$t('nodata')}}</p>   
             </div>
         </div>
     </div>

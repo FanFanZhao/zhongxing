@@ -3,32 +3,32 @@
         <!-- <p class="legal_name">{{legal_name}}</p> -->
         <div class="legalAccount_msg flex between bg-part" style="padding:20px 30px">
           <div>
-              <p class="ft12 msg_title">可用（{{legal_name}}）</p>
+              <p class="ft12 msg_title">{{$t('center.available')}}（{{legal_name}}）</p>
               <p style="color:#EF5E41">{{legal_balance}}</p>
           </div>
           <div>
-              <p class="ft12 msg_title">冻结（{{legal_name}}）</p>
+              <p class="ft12 msg_title">{{$t('account.freezes')}}（{{legal_name}}）</p>
               <p style="color:#4A95F1">{{lock_legal_balance}}</p>
           </div>
           <div>
-              <p class="ft12 msg_title">折合（CNY）</p>
+              <p class="ft12 msg_title">{{$t('account.conversion')}}（CNY）</p>
               <p style="color:#2EDB99">{{legal_cny_price}}</p>
           </div>
         </div>
         <div class="transfer bg-part" style="margin-top:20px;padding:20px 30px">
             <div class="direction flex">
-                <div>{{transferPms.type == 1?'法币':'交易'}}</div>
+                <div>{{transferPms.type == 1?$t('account.legal'):$t('account.trade')}}</div>
                 <img src="../../assets/images/transfer.png" alt="" @click="transferPms.type == 1?transferPms.type =2:transferPms.type =1">
-                <div>{{transferPms.type == 1?'交易':'法币'}}</div>
+                <div>{{transferPms.type == 1?$t('account.trade'):$t('account.legal')}}</div>
             </div>
             <div class="flex">
-                <span>选择币种：</span>
+                <span>{{$t('account.choosecoin')}}：</span>
                 <select name="" id="" style="padding:3px 16px" ref="select" @change="selectChange">
                     <option v-for="(item,index) in coins" :key="index" :value="item.currency">{{item.currency_name}}</option>
                 </select>
             </div>
             <div class="flex">
-                <span>划转数量：</span>
+                <span>{{$t('account.huanum')}}：</span>
                 <input type="numer" v-model="transferPms.number">
             </div>
             <button type="button" :disabled='transferPms.number == ""' @click="transfer">划转</button>
@@ -39,9 +39,9 @@
                <!-- <span class="all">全部</span> -->
            </p>
            <p class="list_title flex around " style="padding:15px 30px;background:rgba(252,252,252,1);">
-               <span class="ft14 flex1">数量</span>
-               <span class="ft14 flex1 tc">记录</span>
-               <span class="ft14 flex1 tr">时间</span>
+               <span class="ft14 flex1">{{$t('number')}}</span>
+               <span class="ft14 flex1 tc">{{$t('account.record')}}</span>
+               <span class="ft14 flex1 tr">{{$t('time')}}</span>
            </p>
            <div class="log_wrap">
            <ul class="bg-part" style="padding:20px 30px">
@@ -51,7 +51,7 @@
                   <span class="flex1 ft12 ptb tr">{{item.create_time}}</span>
               </li>
            </ul>
-           <p class="ft12 light_blue no_rec bg-part" style="text-align:center;padding:20px 30px" v-show="recData.length == 0" >暂无记录</p>
+           <p class="ft12 light_blue no_rec bg-part" style="text-align:center;padding:20px 30px" v-show="recData.length == 0" >{{$t('nodata')}}</p>
            <p class="ft12 light_blue no_rec bg-part" style="text-align:center;padding:20px 30px" v-show="recData.length != 0" @click="more">{{moreLog}}</p>
            </div>
         </div>
@@ -67,7 +67,7 @@ export default {
       lock_legal_balance: "",
       legal_price: "",
       recData: [],
-      moreLog: "加载更多",
+      moreLog: this.$t('more'),
       page: 1,
       currencyId: "",
       coins: [],
@@ -165,9 +165,9 @@ export default {
             this.recData = this.recData.concat(res.data.message.list);
           }
           if (res.data.message.list.length != 0) {
-            this.moreLog = "加载更多";
+            this.moreLog = this.$t('more');
           } else {
-            this.moreLog = "没有更多记录了";
+            this.moreLog = this.$t('nomore')
           }
         }
       });
@@ -204,7 +204,7 @@ export default {
     //加载更多
     more() {
       this.page++;
-      this.moreLog = "加载中...";
+      this.moreLog = this.$t('loading');
       this.getLog();
     }
   }
@@ -224,7 +224,7 @@ export default {
   margin: 16px 0;
   line-height: 40px;
   span {
-    width: 100px;
+    // width: 100px;
   }
   select {
     border-radius: 2px;

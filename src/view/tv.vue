@@ -175,43 +175,43 @@
 							{
 								value: "1min",
 								period: "1",
-								text: "分时",
+								text: _this.$t('center.realtime'),
 								chartType: 3
 							},
 							{
 								value: "1",
 								period: "1m",
-								text: "1分钟",
+								text: "1min",
 								chartType:1
 							},
 							{
 								value: "5",
 								period: "5m",
-								text: "5分钟",
+								text: "5min",
 								chartType: 1
 							},
 							{
 								value: "15",
 								period: "15m",
-								text: "15分钟",
+								text: "15min",
 								chartType: 1
 							},
 							{
 								value: "30",
 								period: "30m",
-								text: "30分钟",
+								text: "30min",
 								chartType:1
 							},
 							{
 								value: "60",
-								period: "60分钟",
-								text: "1小时",
+								period: "60min",
+								text: "1hour",
 								chartType: 1
 							},
 							{
 								value: "1D",
 								period: "1D",
-								text: "1天",
+								text: "1day",
 								chartType: 1
 							}
 							// {

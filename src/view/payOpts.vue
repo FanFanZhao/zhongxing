@@ -1,36 +1,36 @@
 <template>
     <div id="pay-opts">
-      <p>信息认证</p>
+      <p>{{$t('set.msgcer')}}</p>
       <div class="tips">
-        <p>温馨提示：</p>
-        <p class="ft14 msg">为了确保您的交易正常进行，请填写您的真实信息</p>
+        <p>{{$t('account.notice')}}：</p>
+        <p class="ft14 msg">{{$t('set.turemsg')}}</p>
       </div>
         <div class="inp-item">
-            <div>真实姓名</div>
+            <div>{{$t('set.tname')}}</div>
             <input type="text" class="请输入真实姓名" v-model="name">
         </div>
         <div class="inp-item">
-            <div>开户行名称</div>
+            <div>{{$t('set.kanme')}}</div>
             <input type="text" class="请输入开户行名称" v-model="bankName">
         </div>
         <div class="inp-item">
-            <div>银行卡号</div>
+            <div>{{$t('set.cnum')}}</div>
             <input type="number" class="请输入银行卡号" v-model="bankNum">
         </div>
         <div class="inp-item">
-            <div>支付宝账号</div>
+            <div>{{$t('set.alipay')}}</div>
             <input type="text" class="请输入支付宝账号" v-model="ali">
         </div>
         <div class="inp-item">
-            <div>微信昵称</div>
+            <div>{{$t('set.wename')}}</div>
             <input type="text" class="请输入微信昵称" v-model="weChatName">
         </div>
         <div class="inp-item">
-            <div>微信账号</div>
+            <div>{{$t('set.wenum')}}</div>
             <input type="text" class="微信账号" v-model="weChatAccount">
         </div>
         <div class="btn bgRed" @click="add">
-            确认
+            {{$t('confirm')}}
         </div>
     </div>
 </template>
@@ -105,7 +105,7 @@ export default {
 <style lang='scss'>
 
 #pay-opts {
-  width: 600px;
+  width: 620px;
   margin: 0 auto;
   > .inp-item {
     position: relative;

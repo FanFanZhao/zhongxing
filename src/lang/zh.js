@@ -3,7 +3,7 @@ export default {
   code:"验证码",
   send:"发送验证码",
   pwd:'密码',
-  account:'账号',
+  accounts:'账号',
   registers:'注册',
   confirm:'确认',
   logins:'登录',
@@ -15,6 +15,11 @@ export default {
   number:'数量',
   do:'操作',
   revoke:'撤销',
+  nodata:'暂无数据',
+  loading:'加载中',
+  status:'状态',
+  rate:'手续费',
+
   header:{
     home:'首页',
     c2c:'C2C交易',
@@ -87,6 +92,14 @@ export default {
     agree:'同意',
     pwd:'密码在6-16位之间,由数字和字母组成',
     mian:'免责条款'
+  },
+  forget:{
+    fpwd:'忘记密码',
+    getcode:'获取验证码',
+    setpwd:'设置密码',
+    inpwd:'请输入密码',
+    repwd:'请再次输入密码',
+
   },
   security:{
     lever:'您的账号安全等级 : ',
@@ -204,12 +217,72 @@ export default {
     cdel:'当前委托',
     hdeal:'历史委托',
     pairs:'交易对',
-    
-
-
-  
-
+    direction:'方向',
+    dealtotal:'委托总额',
+    tprice:'成交均价',
+    nothing:'无',
+    contran:'已成交',
+    newprice:'最新价',
+    alltrade:'全站交易',
+    volume:'交易量',
+    realtime:'分时',
+  },
+  account:{
+    taccount:'交易账户',
+    laccount:'法币账户',
+    totalassets:'总资产折合',
+    upaddress:'提币地址管理',
+    freezes:'冻结',
+    conversion:'折合',
+    charging:'充币',
+    withdraw:'提币',
+    record:'记录',
+    copy:'复制',
+    code:'二维码',
+    cgaddress:'充币地址',
+    whaddress:'提币地址',
+    notice:'温馨提示',
+    chaddress:'选择充币地址',
+    range:'范围',
+    havenum:'到账数目',
+    minnum:'最小提币数量为',
+    uppwd:'提币mima',
+    call:'为保障资金安全，当您账户安全策略变更、密码修改、我们会对提币进行人工审核，请耐心等待工作人员电话或邮件联系。',
+    a1:'请勿向上述地址充值任何非',
+    a2:'资产，否则资产将不可找回。',
+    a3:'充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。',
+    a4:'您充值至上述地址后，需要整个网络节点的确认，1次网络确认后到账，6次网络确认后可提币。',
+    a5:'最小充值金额：',
+    a6:'小于最小金额的充值将不会上账且无法退回。',
+    a7:'您的充值地址不会经常改变，可以重复充值；如有更改，我们会尽量通过网站公告或邮件通知您。',
+    a8:'请务必确认电脑及浏览器安全，防止信息被篡改或泄露。',
+    legal:'法币',
+    trade:'交易',
+    choosecoin:'选择币种',
+    huanum:'划转数量',
+    mrecord:'财务记录',
+  },
+  set:{
+    secset:'安全设置',
+    msgcer:'信息认证',
+    turemsg:'为了确保您的交易正常进行，请填写您的真实信息',
+    tname:'真实姓名',
+    kname:'开户行名称',
+    cnum:'银行卡号',
+    ailipay:'支付宝账号',
+    wename:'微信昵称',
+    wenum:'微信账号'
+  },
+  ad:{
+    adrecord:'留言记录',
+    release:'发布',
+    reply:'回复',
+    none:'暂无',
+    releaseit:'发布留言',
+    con:'请填写留言内容',
+    up:'提交',
 
   }
+
 
 }
