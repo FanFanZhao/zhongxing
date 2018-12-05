@@ -173,9 +173,9 @@ export default {
       });
     },
     transfer(){
-        
+        console.log(this.transferPms.number)
         if(this.transferPms.number == ''){
-            layer.msg('请输入划转数量');return;
+            layer.msg(this.$t('lay.huanum'));return;
         } else {
             let data = {};
             data.number = this.transferPms.number;

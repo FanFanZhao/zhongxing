@@ -160,6 +160,7 @@ export default {
     // },
     // 切换注册方式
     setIsMb(boo) {
+      var that = this;
       this.account = "";
       this.pwd = "";
       this.repwd = "";
@@ -176,15 +177,16 @@ export default {
       clearInterval(this.timer);
       var codeBtn = document.querySelector(".code-btn");
       codeBtn.disabled = false;
-      codeBtn.innerHTML = "验证码";
+      codeBtn.innerHTML = that.$t('code');
       //console.log(codeBtn);
     },
     // 发送验证码
     sendCode(e) {
+      var that = this;
       let isMb = this.isMb;
       let url = "sms_send";
       if (this.account == "") {
-        layer.msg("请输入账号");
+        layer.msg(that.$t('lay.paccount'));
         return;
       } else if (e.target.disabled) {
         return;
@@ -197,7 +199,7 @@ export default {
       } else if (!isMb) {
         var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if (!emreg.test(this.account)) {
-          layer.msg("您输入的邮箱不符合规则");
+          layer.msg(that.$t('lay.noemial'));
           return;
         } else {
           url = "sms_mail";
@@ -207,10 +209,10 @@ export default {
       var time = 60;
       var timer = null;
       timer = setInterval(function() {
-        e.target.innerHTML = time + "秒";
+        e.target.innerHTML = time + "s";
         e.target.disabled = true;
         if (time == 0) {
-          e.target.innerHTML = "验证码";
+          e.target.innerHTML = that.$t('code');
           e.target.disabled = false;
           clearInterval(timer);
           return;
@@ -237,10 +239,10 @@ export default {
     checkCode() {
       let code = this.code;
       if(this.account == ''){
-        layer.msg('请输入账号');return;
+        layer.msg(this.$t('lay.paccount'));return;
       }
       else if (this.code == "") {
-        layer.msg("请输入验证码");
+        layer.msg(this.$t('lay.notcode'));
         return;
       } else {
         let data = {};
@@ -271,44 +273,45 @@ export default {
     // 注册
     register() {
       console.log(this.code)
+      var that = this;
       if(this.isMb){
         if(this.account == ''){
-          layer.msg('请输入手机号');
+          layer.msg(that.$t('lay.nophone'));
           return;
         }else if(this.code == ''){
-           layer.msg('请输入验证码');
+           layer.msg(this.$t('lay.notcode'));
            return;
         }
       }
       if(!this.isMb){
         if(this.account == ''){
-          layer.msg('请输入邮箱');
+          layer.msg(that.$t('lay.nemail'));
           return;
         }
         var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if (!emreg.test(this.account)) {
-          layer.msg("您输入的邮箱不符合规则");
+          layer.msg(that.$t('lay.noemail'));
           return;
         }
          if(this.code == ''){
-           layer.msg('请输入验证码');
+           layer.msg(this.$t('lay.notcode'));
            return;
         }
       }
       var regPsws = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/;
       if (this.pwd == "") {
-        layer.msg("请输入密码");
+        layer.msg(that.$t('lay.inpwd'));
         return;
       }else if(this.pwd.length <6 || this.pwd.length >16){
-        layer.msg('密码只能在6-16位之间');return;
+        layer.msg(that.$t('lay.pwdlength'));return;
       }else if(!regPsws.test(this.pwd)){
-         layer.msg('密码必须由数字和字母组成');return;
+         layer.msg(that.$t('lay.pwdcom'));return;
       }
        else if (this.repwd == "") {
-        layer.msg("请再次输入密码");
+        layer.msg(that.$t('lay.repwd'));
         return;
       } else if (this.pwd !== this.repwd) {
-        layer.msg("两次输入的密码不一致");
+        layer.msg(that.$t('lay.twopwd'));
         return;
       } else {
       }

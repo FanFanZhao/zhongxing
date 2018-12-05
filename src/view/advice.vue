@@ -39,7 +39,7 @@ export default {
      methods:{
          submit(){
              if(this.texta == ''){
-                 layer.msg('请填写留言内容');
+                 layer.msg(this.$t('lay.pliu'));
                  return;
              }
              var i = layer.load();

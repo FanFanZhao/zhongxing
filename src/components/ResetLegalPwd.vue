@@ -4,21 +4,21 @@
         <div class="content-wrap">
             <div class="account">
                 <div class="main">
-                    <p class="main_title">{{paypassword==0?'设置法币资金密码':'重置法币资金密码'}} </p>
+                    <p class="main_title">{{paypassword==0?$t('lpwd.setpwd'):$t('lpwd.resetpwd')}} </p>
                     <div class="register-input pass-box" v-if="paypassword==1">
-                        <span class="register-item">请输入原密码</span>
+                        <span class="register-item">{{$t('lpwd.oldpwd')}}</span>
                         <input :type="showold?'text':'password'" class="input-main input-content" maxlength="20" v-model="oldPwd" id="account">
                         <img src="../assets/images/showpass.png" alt="" v-if="showold" @click="showold = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showold" @click="showold = true">
                     </div>
                      <div class="register-input pass-box">
-                        <span class="register-item">请输入密码</span>
+                        <span class="register-item">{{$t('lpwd.oldpwd')}}</span>
                         <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="pwd" id="pwd">
                         <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                     </div>
                      <div class="register-input pass-box">
-                        <span class="register-item">请再次输入密码</span>
+                        <span class="register-item">{{$t('lpwd.repwd')}}</span>
                         <input :type="showrepass?'text':'password'" class="input-main input-content" maxlength="16" v-model="rePwd">
                         <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showrepass" @click="showrepass = true">
@@ -26,7 +26,7 @@
                      
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
-                        <button type="button" class="register-button curPer redBg" @click="reset" >{{paypassword==0?'设置密码':'重置密码'}}</button>
+                        <button type="button" class="register-button curPer redBg" @click="reset" >{{paypassword==0?$t('lpwd.spwd'):$t('lpwd.rpwd')}}</button>
                         
                     </div>
                     

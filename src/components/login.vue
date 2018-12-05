@@ -105,6 +105,7 @@ export default {
     },
     //发送验证码
     sendCode(e){
+      var that = this;
       console.log(this.country[this.areaCode].area_code)
       var url;
       var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
@@ -132,10 +133,10 @@ export default {
            var time = 60;
       var timer = null;
       timer = setInterval(function() {
-        e.target.innerHTML = time + "秒";
+        e.target.innerHTML = time + "s";
         e.target.disabled = true;
         if (time == 0) {
-          e.target.innerHTML = "验证码";
+          e.target.innerHTML = that.$t('code');
           e.target.disabled = false;
           clearInterval(timer);
           return;
@@ -150,15 +151,15 @@ export default {
       let account_number = this.$utils.trim(this.account_number);
       let password = this.$utils.trim(this.password);
       if (this.account_number.length == "") {
-        layer.tips("请输入账号!", "#account");
+        layer.tips(this.$t('lay.paccount'), "#account");
         return;
       }
       if (this.password.length < 6) {
-        layer.tips("密码不能小于六位!", "#pwd");
+        layer.tips(this.$t('lay.pwdliu'), "#pwd");
         return;
       }
       if (this.code == '') {
-        layer.tips("验证码不能为空!", "#code");
+        layer.tips(this.$t('lay.notcode'), "#code");
         return;
       }
       var i = layer.load();
@@ -177,7 +178,7 @@ export default {
            layer.close(i);
           res = res.data;
           if (res.type === "ok") {
-            layer.msg('登录成功');
+            layer.msg(this.$t('lay.slogin'));
             localStorage.setItem("token", res.message);
             localStorage.setItem("accountNum", account_number);
             this.$store.commit("setAccountNum");

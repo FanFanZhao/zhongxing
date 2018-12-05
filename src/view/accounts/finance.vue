@@ -187,28 +187,29 @@ export default {
     methods:{
         //刷新页面
         refresh(){
-                    this.$http({
-                        url: '/api/wallet/refresh',
-                        method:'get',
-                        data:{},
-                        headers:{'Authorization':this.token}
-                    }).then( res => {
-                        if(res.data.type == 'ok'){
-                            
-                        }
-                    })
+            this.$http({
+                url: '/api/wallet/refresh',
+                method:'get',
+                data:{},
+                headers:{'Authorization':this.token}
+            }).then( res => {
+                if(res.data.type == 'ok'){
+                    
+                }
+            })
         },
          
         goRecord(){
             this.$router.push({name:'coinRecord'})
         },
         init(){
-             var clipboard = new Clipboard('.copy')
+            var that = this;
+            var clipboard = new Clipboard('.copy')
             clipboard.on('success', function (e) {
-               layer.alert('复制成功')
+               layer.alert(that.$t('lay.copys'))
             });
             clipboard.on('error', function (e) {
-                alert('复制失败')
+                alert(that.$t('lay.fcopy'))
             });
         },
         getRate(currency){
@@ -410,7 +411,7 @@ export default {
             })
         },
         noopen(){
-           layer.msg('暂未开放')
+           layer.msg(this.$t('lay.notopen'))
         },
         // 提币按钮
         mention() {
@@ -421,20 +422,20 @@ export default {
             var rate = this.rate;
             var min_number = this.minnumber;
             if(!address){
-                layer.alert('请选择提币地址');
+                layer.alert(that.$t('lay.caddress'));
                 return;
             } 
             if(!number){
-                layer.alert('请输入提币数量');
+                layer.alert(that.$t('lay.cnumber'));
                 return;
             } 
             if(!this.password){
-                 layer.alert('请输入提币密码');
+                 layer.alert(that.$t('lay.cpwd'));
                 return;
             }
             if((number-0)<min_number){
                 console.log(number,min_number)
-                return layer.alert('输入的提币数量小于最小值');
+                return layer.alert(that.$t('lay.minnum'));
             }
             // if(rate=='' || rate>=1){
             //     layer.alert('请输入0-1之间的提币手续费');
@@ -489,12 +490,12 @@ export default {
                 });
           clipboard.on("success", function (e) {
                         that.flags = true;
-                        layer.msg('复制成功');
+                        layer.msg(that.$t('lay.copys'));
                         
                     });
                     clipboard.on("error", function (e) {
                         that.flags = false;
-                         layer.msg('请重新复制')
+                         layer.msg(that.$t('lay.fcopy'))
                     });
         },
         record(){

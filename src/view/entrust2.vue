@@ -199,7 +199,7 @@ export default {
         return;
       }
       var that = this;
-      layer.confirm("确认要撤单吗？", ["确定", "取消"], () => {
+      layer.confirm(that.revoke, [that.sure, that.ceil], () => {
         // var id = id;
         that
           .$http({
@@ -230,6 +230,7 @@ export default {
 
     getdata(url, type) {
       // console.log(type);
+      var that = this;
       var page = this.page;
       if(!this.token){
         return;
@@ -260,7 +261,7 @@ export default {
               var newEist = mlist;
               console.log(newEist.length);
               if (newEist.length <= 0) {
-                this.more = "没有更多数据了...";
+                this.more = that.$t('nomore');
                 return;
               } else {
                 this.enList01 = this.enList01.concat(newEist);
@@ -284,7 +285,7 @@ export default {
               console.log(newEist.length)
               var newEist = mlist;
               if (newEist.length <= 0) {
-                this.more = "没有更多数据了...";
+                this.more = that.$t('nomore');
                 return;
               } else {
                 this.enList02 = this.enList02.concat(newEist);
@@ -326,7 +327,7 @@ export default {
           } else {
             var newhist = mlist;
             if (newhist.length <= 0) {
-              this.more = "没有更多数据了...";
+              this.more = that.$t('nomore');
               return;
             } else {
               this.hisList = this.hisList.concat(newhist);

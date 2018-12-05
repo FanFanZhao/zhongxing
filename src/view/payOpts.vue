@@ -80,7 +80,7 @@ export default {
     },
     add() {
         if(this.name == ''){
-            layer.mag('真实姓名必须填写');return;
+            layer.mag(this.$t('lay.truename'));return;
         }
       this.$http({
         url: "/api/user/cash_save",

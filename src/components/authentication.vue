@@ -164,11 +164,11 @@ export default {
             let card_id = this.$utils.trim(that.card_id);
             // var reg = /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
             if(this.name.length == ''){
-                layer.tips('请输入姓名!', '#name');
+                layer.tips(that.$t('lay.nameplease'), '#name');
                 return;
             }
             if(this.card_id.length == ''){
-                layer.tips('请输入证件号!', '#card');
+                layer.tips(that.$t('lay.idplease'), '#card');
                 return;
             }
             // if(!reg.test(card_id)){
@@ -176,7 +176,7 @@ export default {
             //     return;
             // }
             if((that.src1==''||that.src2=='')||(that.src3=='')){
-                layer.msg('请上传完整的证件!')
+                layer.msg(that.$t('lay.comid'))
                 return;
             }
             var i= layer.load();

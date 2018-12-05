@@ -12,9 +12,9 @@
             <div class="w50 fl first brcolor bdr-part">
                
                 <div class="ft14">
-                    <div class="available clear 1 " v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
-                    或 <span class="redColor curPer" @click="goNext('register')">注册</span>
-                    开始交易
+                    <div class="available clear 1 " v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">{{$t('logins')}}</span>
+                    {{$t('center.or')}} <span class="redColor curPer" @click="goNext('register')">{{$t('registers')}}</span>
+                    {{$t('center.start')}}
                     </div>
                     <div class="clear available bdr-part" v-else>
                         <span class="fl 1">{{$t('center.available')}} {{user_legal}} {{legal_name}}</span>
@@ -43,9 +43,9 @@
             </div>
             <div class="w50 fl second">
                 <div class="ft14">
-                    <div class="available clear 1 bdr-part" v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
-                    或 <span class="redColor curPer" @click="goNext('register')">注册</span>
-                    开始交易
+                    <div class="available clear 1 bdr-part" v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">{{$t('logins')}}</span>
+                    {{$t('center.or')}} <span class="redColor curPer" @click="goNext('register')">{{$t('registers')}}</span>
+                    {{$t('center.start')}}
                     </div>
                     <div class="clear available bdr-part" v-else>
                         <span class="fl 1">{{$t('center.available')}} {{user_currency}} {{currency_name}}</span>
@@ -306,23 +306,23 @@ export default {
       var that = this;
       if (!this.disabled) {
         if (!this.buyPrice || this.buyPrice <= 0) {
-          layer.msg("请输入买入价");
+          layer.msg(that.$t('lay.inprice'));
           return;
         }
         
       }else{
           if(this.lastPrice02<=0){
-            layer.msg("买入价不能为0");
+            layer.msg(that.$t('lay.noinprice'));
             return;
           }
       }
       
       if (!this.buyNum || this.buyNum <= 0) {
-        layer.msg("请输入买入量");
+        layer.msg(that.$t('lay.innumber'));
         return;
       }
       if(this.address == ''){
-        layer.msg('请登录');
+        layer.msg(that.$t('lay.plogin'));
         setTimeout(function(){
            that.$router.push('/components/login');
         },1000);
@@ -382,21 +382,21 @@ export default {
       var that = this;
       if (!this.disabled) {
         if (!this.sellPrice || this.sellPrice <= 0) {
-          layer.msg("请输入卖出价");
+          layer.msg(that.$t('lay.outprice'));
           return;
         }
       }else{
         if(this.lastPrice01<=0){
-          layer.msg("卖出价不能为0");
+          layer.msg(that.$t('lay.outinprice'));
           return;
         }
       }
       if (!this.sellNum || this.sellNum <= 0) {
-        layer.msg("请输入卖出量");
+        layer.msg(that.$t('lay.outnumber'));
         return;
       }
       if(this.address == ''){
-        layer.msg('请登录');
+        layer.msg(that.$t('lay.plogin'));
         setTimeout(function(){
            that.$router.push('/components/login')
         },1000);
@@ -455,7 +455,7 @@ export default {
     },
     //买入、卖出记录
     buy_sell(legals_id, currencys_id) {
-      console.log("啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊");
+      // console.log("啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊");
       var i = layer.load();
       this.$http({
         url: "/api/" + "transaction/deal",

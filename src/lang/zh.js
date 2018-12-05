@@ -21,6 +21,7 @@ export default {
   rate:'手续费',
   back:'返回',
 
+
   header:{
     home:'首页',
     c2c:'C2C交易',
@@ -100,6 +101,15 @@ export default {
     setpwd:'设置密码',
     inpwd:'请输入密码',
     repwd:'请再次输入密码',
+
+  },
+  lpwd:{
+    setpwd:'设置法币资金密码',
+    resetpwd:'重置法币资金密码',
+    oldpwd:'请输入原密码',
+    repwd:'请再次输入密码',
+    spwd:'设置密码',
+    rpwd:'重置密码',
 
   },
   security:{
@@ -227,6 +237,8 @@ export default {
     alltrade:'全站交易',
     volume:'交易量',
     realtime:'分时',
+    or:'或',
+    start:'开始交易'
   },
   account:{
     taccount:'交易账户',
@@ -272,7 +284,8 @@ export default {
     cnum:'银行卡号',
     ailipay:'支付宝账号',
     wename:'微信昵称',
-    wenum:'微信账号'
+    wenum:'微信账号',
+
   },
   ad:{
     adrecord:'留言记录',
@@ -282,6 +295,50 @@ export default {
     releaseit:'发布留言',
     con:'请填写留言内容',
     up:'提交',
+  },
+  lay:{
+    paccount:'请输入账号!',
+    notcode:'验证码不能为空!',
+    pwdliu:'密码不能小于六位!',
+    slogin:'登录成功',
+    noemail:'您的邮箱不符合规则',
+    nophone:'请输入手机号',
+    nemail:'请输入邮箱',
+    inpwd:'请输入密码',
+    pwdlength:'密码只能在6-16位之间',
+    pwdcom:'密码必须由数字和字母组成',
+    repwd:'请再次输入密码',
+    twopwd:'两次输入的密码不一致',
+    inprice:'请输入买入价',
+    noinprice:'买入价不能为0',
+    innumber:'请输入买入量',
+    outprice:'请输入卖出价',
+    outinprice:'卖出价不能为0',
+    outnumber:'请输入卖出量',
+    plogin:'请登录',
+    revoke:'确认要撤单么？',
+    sure:'确定',
+    ceil:'取消',
+    notopen:'暂未开放',
+    caddress:'请选择提币地址',
+    cnumber:'请输入提币数量',
+    cpwd:'请输入提币密码',
+    minnum:'输入的提币数量小于最小值',
+    copys:'复制成功',
+    fcopy:'复制失败',
+    recopy:'请重新复制',
+    huanum:'请输入划转数量',
+    truename:'真实姓名必须填写',
+    pliu:'请填写留言内容',
+    nameplease:'请输入姓名!',
+    idplease:'请输入证件号!',
+    comid:'请上传完整的证件!',
+    
+
+
+
+
+    
 
   }
 
