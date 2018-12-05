@@ -43,9 +43,7 @@
 						<img v-if="item.way_name == '银行'" src="../assets/images/bank_icon.png" />
 					</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type,item.surplus_number)">
-						<!-- <button class="btn">{{classify}}</button> -->
-						<button class="btn" v-if="classify=='购买'">{{$t('legal.buy')}}</button>
-						<button class="btn" v-else>{{$t('legal.sell')}}</button>
+						<button class="btn">{{classify}}</button>
 					</div>
 				</li>
 			</ul>
@@ -62,26 +60,26 @@
 					<p class="title">{{classify}}{{name}}</p>
 					<p class="price">{{$t('legal.price')}}{{prices}}</p>
 					<div class="trade">
-						<p class="cur" :class="['trade-name',{'active':types == 'trade'}]" @click="tabClassify(1)">{{name}}交易</p>
+						<p class="cur" :class="['trade-name',{'active':types == 'trade'}]" @click="tabClassify(1)">{{name}}{{$t('legal.transaction')}}</p>
 						<p class="cur" :class="['trade-num',{'active':types == 'num'}]" @click="tabClassify(2)">{{classify}}{{$t('legal.number')}}</p>
 					</div>
 					<div class="totals-num bdr-part">
-						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='"请输入欲"+money_type+"总额"' v-model="nums">
-						<input v-else class="number" type="number" :placeholder='"请输入要"+money_type+"数量"' v-model="nums">
-						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">全部卖出</button>
-						<button class="all clr-part" type="button" v-else @click="allMoney();">全部买入</button>
+						<input v-if=" types == 'trade' " class="number" type="number" :placeholder='$t("legal.inwant")+money_type+$t("legal.total")' v-model="nums">
+						<input v-else class="number" type="number" :placeholder='$t("legal.inwant")+money_type+$t("legal.number")' v-model="nums">
+						<button class="all clr-part" type="button" v-if=" type== 'buy' " @click="allMoney();">{{$t('legal.sellall')}}</button>
+						<button class="all clr-part" type="button" v-else @click="allMoney();">{{$t('legal.buyall')}}</button>
 						<span class="name">{{name01}}</span>
 					</div>
 					<div class="maxnum">{{$t('legal.limit')}}{{(minNum-0).toFixed(2)}}-{{(maxNum-0).toFixed(2)}}</div>
 					<div class="trade-totals">
-						<p class="total-price">交易总额</p>
+						<p class="total-price">{{$t('legal.totalmoney')}}</p>
 						<p class="prices" v-if=" types == 'trade' ">￥{{nums | toFixeds}}</p>
 						<p class="prices" v-else>￥{{nums * prices | toFixeds}}</p>
 					</div>
-					<p class="tip">请在24小时内联系商家付款，超出24小时将自动取消</p>
+					<p class="tip">{{$t('legal.conactceil')}}</p>
 					<div class="btns">
-						<p class="cannel">{{time}}s自动取消</p>
-						<button class="comfirm" type="button" @click="buyOrder()">下单</button>
+						<p class="cannel">{{time}}s{{$t('legal.autoceil')}}</p>
+						<button class="comfirm" type="button" @click="buyOrder()">{{$t('legal.placeorder')}}</button>
 					</div>
 				</div>
 			</div>
@@ -106,7 +104,7 @@
 				type: 'sell',
 				id: 0,
 				page: 1,
-				classify: '购买',
+				classify: this.$t('legal.buy'),
 				name: 'CNY',
 				pages: 0,
 				prices: 0,
@@ -206,10 +204,10 @@
 				_this.id = ids;
 				if (type == 1) {
 					_this.type = 'sell';
-					_this.classify = '购买'
+					_this.classify = _this.$t('legal.buy')
 				} else {
 					_this.type = 'buy';
-					_this.classify = '出售'
+					_this.classify = _this.$t('legal.sell')
 				}
 				_this.name = names;
 				_this.getList(_this.type, ids, 1)
@@ -229,9 +227,11 @@
 				// this.numbers = '';
 				console.log(type)
 				if(type == 'sell'){
-					this.money_type = '购买'
+					// this.money_type = '购买'
+					this.money_type=this.$t('legal.buy');
 				}else if(type == 'buy'){
-					this.money_type = '出售'
+					// this.money_type = '出售'
+					this.money_type=this.$t('legal.sell');
 				}
 				let _this = this;
 				_this.shows = true;

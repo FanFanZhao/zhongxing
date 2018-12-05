@@ -4,9 +4,7 @@
         <div class="account-wrap" style="width:1200px">
             <div class="account" style="width:auto">
                 <div>
-                    <div class="back-nav  ft20 clear" style="padding:0 20px;"> {{title}}
-                        
-                    </div>
+                    <div class="back-nav  ft20 clear" style="padding:0 20px;">{{$t('notice')}}</div>
                     
                 </div>
                 <div class="account-content">

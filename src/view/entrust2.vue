@@ -112,14 +112,14 @@ export default {
       page01: 1,
       url: "entrust",
       type: "in",
-      more: "加载更多",
-      more01: "加载更多",
+      more: this.$t('more'),
+      more01: this.$t('more'),
       loading: false,
       urlList: [
-        { title: "当前委托", url: "transaction_in" },
-        { title: "历史委托", url: "transaction_complete" }
+        { title: this.$t('center.cdel'), url: "transaction_in" },
+        { title: this.$t('center.hdeal'), url: "transaction_complete" }
       ],
-      wayList: [{ title: "买入", type: "in" }, { title: "卖出", type: "out" }, { title: "全部", type: "all" }],
+      wayList: [{ title: this.$t('center.inbuy'), type: "in" }, { title: this.$t('center.outsell'), type: "out" }, { title: this.$t('center.all'), type: "all" }],
       enList: [],
       enList01: [],
       enList02: [],
@@ -140,7 +140,7 @@ export default {
       this.isUrl = index;
       this.url = url;
       this.page = 1;
-      this.more = "加载更多";
+      this.more = this.$t('more');
       if (index == 0) {
         this.getdata(this.urls, this.types);
       } else if (index == 1) {
@@ -151,7 +151,7 @@ export default {
       var that = this;
       this.page = 1;
       // this.type = type;
-      this.more = "加载更多";
+      this.more = this.$t('more');
       this.isChoosed = index;
       if (index == 1) {
         this.flags02 = true;
