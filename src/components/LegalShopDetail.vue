@@ -33,23 +33,23 @@
     <div class="md flex clr-part bg-part ft14">
       <div>
         <span>邮箱认证</span>
-        <img v-if="info.prove_email == 1" src="../assets/images/success.png" alt="">
-        <img v-else src="../assets/images/icon_error.png" alt="">
+        <img v-if="info.prove_email == 1" src="../assets/images/success.png" alt>
+        <img v-else src="../assets/images/icon_error.png" alt>
       </div>
       <div>
         <span>手机</span>
-        <img v-if="info.prove_mobile == 1" src="../assets/images/success.png" alt="">
-        <img v-else src="../assets/images/icon_error.png" alt="">
+        <img v-if="info.prove_mobile == 1" src="../assets/images/success.png" alt>
+        <img v-else src="../assets/images/icon_error.png" alt>
       </div>
       <div>
         <span>实名认证</span>
-        <img v-if="info.prove_real == 1" src="../assets/images/success.png" alt="">
-        <img v-else src="../assets/images/icon_error.png" alt="">
+        <img v-if="info.prove_real == 1" src="../assets/images/success.png" alt>
+        <img v-else src="../assets/images/icon_error.png" alt>
       </div>
       <div>
         <span>高级认证</span>
-        <img v-if="info.prove_level == 1" src="../assets/images/success.png" alt="">
-        <img v-else src="../assets/images/icon_error.png" alt="">
+        <img v-if="info.prove_level == 1" src="../assets/images/success.png" alt>
+        <img v-else src="../assets/images/icon_error.png" alt>
       </div>
     </div>
     <div class="list bg-part clr-part ft14">
@@ -57,15 +57,27 @@
         <div class="flex">
           <div>类型：</div>
           <div>
-            <span  :class="{'now':filterPms.type == 'sell'}" @click="filterPms.type = 'sell';getList()">我的出售</span>
-          <span :class="{'now':filterPms.type == 'buy'}" @click="filterPms.type = 'buy';getList()">我的求购</span>
+            <span
+              :class="{'now':filterPms.type == 'sell'}"
+              @click="filterPms.type = 'sell';getList()"
+            >我的出售</span>
+            <span
+              :class="{'now':filterPms.type == 'buy'}"
+              @click="filterPms.type = 'buy';getList()"
+            >我的求购</span>
           </div>
         </div>
         <div class="flex">
           <div>状态：</div>
           <div>
-            <span  :class="{'now':filterPms.wasDone == false}" @click="filterPms.wasDone = false;getList()">未完成</span>
-          <span :class="{'now':filterPms.wasDone == true}" @click="filterPms.wasDone = true;getList()">已完成</span>
+            <span
+              :class="{'now':filterPms.wasDone == false}"
+              @click="filterPms.wasDone = false;getList()"
+            >未完成</span>
+            <span
+              :class="{'now':filterPms.wasDone == true}"
+              @click="filterPms.wasDone = true;getList()"
+            >已完成</span>
           </div>
         </div>
       </div>
@@ -77,11 +89,18 @@
         <div class="w10">支付方式</div>
         <div>操作</div>
       </div>
-      <ul :class="[showWhich+'-box']" >
-        <li v-for="(item,index) in list" :key="index" :class="[item.type == 'buy'?'buy-item':'sell-item']" class="bdr-part">
+      <ul :class="[showWhich+'-box']">
+        <li
+          v-for="(item,index) in list"
+          :key="index"
+          :class="[item.type == 'buy'?'buy-item':'sell-item']"
+          class="bdr-part"
+        >
           <div class="w10">{{item.currency_name}}</div>
           <div class="w15">{{item.surplus_number}}</div>
-          <div class="w25">{{(item.limitation.min-0).toFixed(4)}}-{{(item.limitation.max-0).toFixed(4)}}</div>
+          <div
+            class="w25"
+          >{{(item.limitation.min-0).toFixed(4)}}-{{(item.limitation.max-0).toFixed(4)}}</div>
           <div class="w10">{{item.price}}</div>
           <div class="w10">{{item.way_name}}</div>
           <div>
@@ -96,19 +115,26 @@
     </div>
     <div class="submit-box" v-if="showSubmit">
       <div class="content">
-        <div class="close" @click="showSubmit = false;submitPms = {type:'sell',way:'-1',price:'',min_number:'',total_number:''}">X</div>
+        <div
+          class="close"
+          @click="showSubmit = false;submitPms = {type:'sell',way:'-1',price:'',min_number:'',total_number:''}"
+        >X</div>
         <div class="tab">
           <div>请选择类型：</div>
-         <div :class="{'now':submitPms.type == 'sell'}" @click="submitPms.type = 'sell'">出售</div>
-         <div :class="{'now':submitPms.type == 'buy'}" @click="submitPms.type = 'buy'">求购</div>
+          <div :class="{'now':submitPms.type == 'sell'}" @click="submitPms.type = 'sell'">出售</div>
+          <div :class="{'now':submitPms.type == 'buy'}" @click="submitPms.type = 'buy'">求购</div>
         </div>
         <div class="flex">
           <span>币种：</span>
           <span>{{info.currency_name}}</span>
         </div>
         <div class="flex">
+          <span>限额：</span>
+          <span>{{min}} - {{max}}</span>
+        </div>
+        <div class="flex">
           <span>支付方式：</span>
-          <select name="" id="" v-model="submitPms.way">
+          <select name id v-model="submitPms.way">
             <option value="-1">请选择</option>
             <option value="ali_pay">支付宝</option>
             <option value="we_chat">微信</option>
@@ -139,7 +165,9 @@ export default {
     return {
       token: "",
       sellerId: "",
-      currencyId:'',
+      min: "",
+      max: "",
+      currencyId: "",
       info: { lists: { data: [] } },
       showWhich: "none",
       showSubmit: false,
@@ -147,23 +175,30 @@ export default {
       timer: "",
       filterPms: { id: "", page: 1, wasDone: false, type: "sell" },
       list: [],
-      submitPms:{type:'sell',price:'',way:'-1',total_number:'',min_number:''}
+      submitPms: {
+        type: "sell",
+        price: "",
+        way: "-1",
+        total_number: "",
+        min_number: ""
+      }
     };
   },
   created() {
     this.token = window.localStorage.getItem("token") || "";
     if (this.token) {
       this.sellerId = this.$route.query.id || "";
+      this.min = this.$route.query.min;
+      this.max = this.$route.query.max;
       this.getSellerInfo();
       this.getList();
     }
   },
-  filters:{
-    getPercent(done,total){
-      if(done == 0 || total == 0){
+  filters: {
+    getPercent(done, total) {
+      if (done == 0 || total == 0) {
         return 0;
       } else {
-
       }
     }
   },
@@ -236,34 +271,48 @@ export default {
         data: { id: id },
         headers: { Authorization: this.token }
       }).then(res => {
-        layer.close(i)
+        layer.close(i);
         if (res.data.type == "ok") {
           layer.msg(res.data.message);
           this.getList();
-        }else{
+        } else {
           layer.msg(res.data.message);
         }
       });
     },
-    legalSend(){
-      if(this.submitPms.way == '-1'){
-        layer.msg('请选择支付方式');return;
-      } else if(this.submitPms.price == ''){
-        layer.msg('请输入价格');return;
-      } else if(this.submitPms.min_number == ''){
-        layer.msg('请输入最小数量');return;
-      } else if(this.submitPms.total_number == ''){
-        layer.msg('请输入数量');return;
-      } else if((this.submitPms.min_number-0 -this.submitPms.total_number)>0){
-        layer.msg('最小数量不能大于总数量');return;
+    legalSend() {
+      if (this.submitPms.way == "-1") {
+        layer.msg("请选择支付方式");
+        return;
+      } else if (this.submitPms.price == "") {
+        layer.msg("请输入价格");
+        return;
+      } else if (this.submitPms.min_number == "") {
+        layer.msg("请输入最小数量");
+        return;
+      } else if (this.submitPms.min_number - 0 - this.min < 0) {
+        layer.msg("最小数量不能小于" + this.min);
+        return;
+      } else if (this.submitPms.total_number - 0 - this.max > 0) {
+        layer.msg("数量不能超出" + this.max);
+        return;
+      } else if (this.submitPms.total_number == "") {
+        layer.msg("请输入数量");
+        return;
+      } else if (
+        this.submitPms.min_number - 0 - this.submitPms.total_number >
+        0
+      ) {
+        layer.msg("最小数量不能大于总数量");
+        return;
       }
-      var pms = Object.assign({currency_id:this.currencyId},this.submitPms);
+      var pms = Object.assign({ currency_id: this.currencyId }, this.submitPms);
       var i = layer.load();
       this.$http({
-        url:'/api/legal_send',
-        method:'post',
-        data:pms,
-        headers:{Authorization:this.token}
+        url: "/api/legal_send",
+        method: "post",
+        data: pms,
+        headers: { Authorization: this.token }
       }).then(res => {
         layer.close(i);
         layer.msg(res.data.message);
@@ -272,13 +321,17 @@ export default {
         this.filterPms.wasDone = false;
         this.filterPms.type = pms.type;
         this.getList();
-        this.submitPms = {type:'sell',way:'-1',price:'',min_number:'',total_number:''};
-        if(res.data.type == 'ok'){
+        this.submitPms = {
+          type: "sell",
+          way: "-1",
+          price: "",
+          min_number: "",
+          total_number: ""
+        };
+        if (res.data.type == "ok") {
         }
-      })
+      });
     }
-    
-    
   }
 };
 </script>
@@ -359,7 +412,7 @@ export default {
         cursor: pointer;
       }
       .now {
-        color: #8D75F7;
+        color: #8d75f7;
         font-weight: 600;
       }
     }
@@ -433,27 +486,26 @@ export default {
       padding: 20px 30px 26px 30px;
       background: #fff;
       line-height: 30px;
-      >.close{
+      > .close {
         position: absolute;
         top: 0;
         right: 0;
         padding: 2px 10px;
         cursor: pointer;
       }
-      >.tab{
+      > .tab {
         display: flex;
-        >div{
+        > div {
           margin-right: 50px;
-
         }
-        .now{
+        .now {
           font-weight: 600;
           padding-bottom: 3px;
           color: #2e1b85;
           border-bottom: 2px solid #2e1b85;
         }
       }
-      >.btn{
+      > .btn {
         background: #2e1b85;
         color: #fff;
         border-radius: 2px;
@@ -464,10 +516,10 @@ export default {
       > .flex {
         // display: flex;
         margin-bottom: 20px;
-        span{
+        span {
           width: 130px;
         }
-        input{
+        input {
           border-radius: 2px;
           border: 1px solid #ccc;
           padding: 0 16px;

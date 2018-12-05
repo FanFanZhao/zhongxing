@@ -61,6 +61,12 @@
         </div>
         
       </div>
+      <div class="flex notice" @mouseover="showNot = true;getNotice()" @mouseleave="showNot = false">
+        <img src="../assets/images/not.png" alt="">
+        <p :class="['scroll',{showNot:showNot}]">
+          <router-link :to="{path:'components/noticeDetail',query:{id:item.id}}" v-for="(item,index) in noticeList" :key="index">{{item.title}}</router-link>
+        </p>
+      </div>
       <div class="flex lang-box">
           <span @click="setLang('zh')">中</span>
           <span @click="setLang('en')">英</span>
@@ -81,10 +87,13 @@ export default {
       account_number: "",
       extension_code: "",
       token: "",
-      isShow: false
+      isShow: false,
+      noticeList:[],
+      showNot:false
     };
   },
   created() {
+    this.getNotice()
     this.token = window.localStorage.getItem("token") || "";
     this.account_number = window.localStorage.getItem("accountNum") || "";
     this.extension_code = window.localStorage.getItem("extension_code") || "";
@@ -109,6 +118,15 @@ export default {
     });
   },
   methods: {
+    getNotice(){
+      this.$http({
+        url:  '/api/news/list',
+        method:'post',
+        data:{language:this.$i18n.locale == 'zh'?1:2}
+      }).then(res => {
+        this.noticeList = res.data.message.list;
+      })
+    },
     setLang(lang) {
       var l = window.localStorage.getItem("locale") || "zh";
       if (l == lang) {
@@ -161,6 +179,46 @@ export default {
 </script>
 
 <style lang='scss' scoped>
+.notice{
+  position: relative;
+  margin: 0 10px 0 20px;
+  padding: 12.5px 10px;
+  height: 45px;
+  cursor: pointer;
+  img{
+    width: 20px;
+    height: 20px;
+  }
+  >.showNot{
+    padding-top: 10px;
+    height: 200px;
+    transition: all .3s;
+    overflow: scroll;
+  }
+  >p{
+    position: absolute;
+    
+    width: 220px;
+    border-radius: 4px;
+    box-shadow: 0 2px 3px #ccc;
+    top: 45px;
+    left: -100px;
+    background: #fff;
+    z-index: 999;
+    height: 200px;
+    overflow: auto;
+    transition: all .3s;
+    height: 0;
+    overflow: hidden;
+    a{
+      display: block;
+      font-size: 12px;
+      line-height: 32px;
+      color: #333;
+      border-bottom: 1px dashed #eee;
+    }
+  }
+}
 .lang-box{
   margin-left: 20px;
   span{
