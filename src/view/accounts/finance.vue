@@ -7,6 +7,7 @@
             <div class="hide-min" >
                 <input type="checkbox" id="min" v-model="hideMin" :checked='hideMin' style="margin:0 5px 0 30px">
                 <label for="min" class="ft16">{{$t('account.hideSm')}}</label>
+                <input type="text" v-model="keyword" :placeholder="$t('inpCur')" class='search'>
                 <router-link  class="fr" style="font-size:14px;color:#563BD1;margin-left:50px" to="/allRec">{{$t('account.allRec')}}</router-link>
             </div>
             <p class="fr right_text mt20">
@@ -25,7 +26,7 @@
                <p class="flex1 tc">{{$t('do')}}</p>
            </div>
            <ul class="content_ul">
-               <li v-for="(item,index) in asset_list" :key="index" :hidden='(item.change_balance - 0 -minBalance)<=0&&hideMin'>
+               <li v-for="(item,index) in asset_list" :key="index" :hidden='(item.change_balance - 0 -minBalance)<=0&&hideMin&&search(item.currency_name)':style='{display:search(item.currency_name)?"none":"block"}'>
                     <div class="content_li flex alcenter between bdr-part">
                    <p class="flex1 tc">{{item.currency_name}}</p>
                    <p class="flex1 tc">{{item.change_balance}}</p>
@@ -167,6 +168,7 @@ export default {
             min_number:'',
             currency:'',
             asset_list:[],
+            keyword:'',
             tip_list:[
                 '请勿向上述地址充值任何非USDT资产，否则资产将不可找回。','USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。','请勿向上述地址充值任何非USDT资产，否则资产将不可找回。','USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。'
             ],
@@ -192,6 +194,23 @@ export default {
          }   
     },
     methods:{
+        search(name){
+            var l = this.keyword.length;
+            if(l){
+                if(l>name.length){
+                return true;
+                } else {
+                if(name.slice(0,l) == this.keyword){
+                    return false;
+                } else {
+                    return true;
+                }
+                }
+            } else {
+                return false;
+            }
+      
+            },
         //刷新页面
         refresh(){
             this.$http({
@@ -600,6 +619,14 @@ export default {
 };
 </script>
 <style scoped lang="scss"> 
+.search{
+    font-size: 14px;
+    line-height: 30px;
+    margin-left: 16px;
+    padding: 0 14px;
+    border: 1px solid #ddd;
+    border-radius: 2px;
+}
     .no_open{
         color: #aaa;
         cursor: not-allowed!important;
