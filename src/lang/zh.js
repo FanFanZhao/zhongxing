@@ -23,7 +23,7 @@ export default {
   alipay:'支付宝',
   wechat:'微信',
   bankcard:'银行卡',
-
+  inpCur:'请输入币种名称',
 
   header:{
     home:'首页',

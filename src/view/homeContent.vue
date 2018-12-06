@@ -340,9 +340,9 @@ export default {
         }
       })
       } else {
-        if(this.$i8n.locale == 'zh'){
+        if(this.$i18n.locale == 'zh'){
 
-          layer.msg('请先登录')
+          layer.msg('请先登录') 
         } else {
           layer.msg('Please sign in')
         }

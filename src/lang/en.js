@@ -23,6 +23,7 @@ export default {
   alipay:'Alipay',
   wechat:'WeChat',
   bankcard:'Bank card',
+  inpCur:"Please enter a currency name",
   header:{
     home:'Home',
     c2c:'C2C Transaction',

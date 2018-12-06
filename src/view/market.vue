@@ -1,11 +1,8 @@
 <template>
     <div class="market clr-part">
-		<div class="m_title  clear">
-            <span class=" fl">{{$t('market.market')}}</span>
-            <div class="m_search fr hide">
-               <input type="text" >
-               <img src="../assets/images/search.png" alt="">
-            </div>
+		<div class="m_title  flex" style="padding:20px 0 ">
+            <span style="width:100px">{{$t('market.market')}}</span>
+            <el-input v-model="keyword" size="mini" clearable :placeholder="$t('inpCur')"></el-input>
         </div>
         <div class="m_filter">
             <div class="tabtitle ft14 curPer flex around">
@@ -53,7 +50,7 @@
         <!-- <div class="line"></div> -->
         <ul class="coin-wrap scroll">
           <li v-for="(market,index) in marketList " :key="index" >
-            <p v-for="(itm,idx) in market"  :key="itm.id" v-if="testItem(itm.legal_name,itm.added)" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market,itm.now_price,$event)">
+            <p v-for="(itm,idx) in market"  :key="itm.id" v-if="search(itm.currency_name)&&testItem(itm.legal_name,itm.added)" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market,itm.now_price,$event)">
               <span class="w36"><img :src="itm.logo" alt=""><i><em class="deep_blue bold">{{itm.currency_name}}</em><em class="light_blue bold">/{{itm.legal_name}}</em></i></span>
               <span class="w30 tr deep_blue bold nowPrice" :data-name='itm.currency_id+"/"+itm.legal_id'>{{itm.now_price || 0}}</span>
               <span :class="{'green':itm.change>=0}" class="bold">{{(itm.change>0?'+':'')+(itm.change-0).toFixed(2)}}%</span>
@@ -86,7 +83,8 @@ export default {
       myAdd:[],
       token:'',
       nowLegal:'',
-      showAdd:false
+      showAdd:false,
+      keyword:''
     };
   },
   created: function() {
@@ -104,7 +102,23 @@ export default {
     var that = this;
   },
   methods: {
-    
+    search(name){
+      var l = this.keyword.length;
+      if(l){
+        if(l>name.length){
+          return false;
+        } else {
+          if(name.slice(0,l) == this.keyword){
+            return true;
+          } else {
+            return false;
+          }
+        }
+      } else {
+        return true;
+      }
+      
+    },
     testItem(name,added){
       
       if(this.showAdd){
@@ -145,7 +159,7 @@ export default {
           this.getMyAdd()
         })
       } else {
-        if(this.$i8n.locale == 'zh'){
+        if(this.$i18n.locale == 'zh'){
 
           layer.msg('请先登录')
         } else {
