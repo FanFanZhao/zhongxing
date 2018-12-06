@@ -298,6 +298,7 @@ export default {
     start:'Start trading'
   },
   account:{
+    hideSm:"Hide small assets",
     assets:'Assets',
     taccount:'Trading account',
     laccount:'Legal account',
@@ -333,6 +334,7 @@ export default {
     choosecoin:'Select the currency',
     huanum:'Transfer number',
     mrecord:'Financial records',
+    allRec:"All financial records",
     transfer:'Transfer'
   },
   set:{

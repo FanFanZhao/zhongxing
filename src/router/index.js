@@ -184,6 +184,10 @@ export default new Router({
 					component:() => import('../view/c2c/OrderDetail.vue')
 				},
 				{
+					path:'/allRec',
+					component:() => import('../view/accounts/allRec.vue')
+				},
+				{
 					path:'/c2cDetail',
 					component:() => import('../view/c2c/C2cDetail.vue')
 				},

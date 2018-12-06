@@ -6,11 +6,12 @@
             </p>
             <div class="hide-min" >
                 <input type="checkbox" id="min" v-model="hideMin" :checked='hideMin' style="margin:0 5px 0 30px">
-                <label for="min" class="ft14">隐藏小额资产</label>
+                <label for="min" class="ft16">{{$t('account.hideSm')}}</label>
+                <router-link  class="fr" style="font-size:14px;color:#563BD1;margin-left:50px" to="/allRec">{{$t('account.allRec')}}</router-link>
             </div>
-            <p class="fr right_text">
+            <p class="fr right_text mt20">
                 <!-- <span class="record" @click="record">财务记录</span> -->
-                <span class="address" @click="withdraw_address">{{$t('account.upaddress')}}</span>
+                <span class="address ft14" @click="withdraw_address">{{$t('account.upaddress')}}</span>
             </p>
         </div>
         <div class="content  ft12">

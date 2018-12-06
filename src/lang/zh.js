@@ -306,6 +306,7 @@ export default {
     start:'开始交易'
   },
   account:{
+    hideSm:'隐藏小额资产',
     assets:'资产',
     taccount:'交易账户',
     laccount:'法币账户',
@@ -340,6 +341,7 @@ export default {
     choosecoin:'选择币种',
     huanum:'划转数量',
     mrecord:'财务记录',
+    allRec:'总财务记录',
     transfer:'划转'
   },
   set:{
