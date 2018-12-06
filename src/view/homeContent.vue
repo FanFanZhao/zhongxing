@@ -12,16 +12,10 @@
         <!-- <home-login></home-login> -->
         <div class="swiper-container banner_wrap swiper-container-horizontal">
             <div class="swiper-wrapper">
-               <div class="swiper-slide sliders">
-                   <a href="">
-                   <img src="../../static/imgs/banners04.jpg" />
-                   </a>
+               <div class="swiper-slide sliders" v-for="(item,index) in pics" :key="index">
+                   <img :src="item.pic" alt="">
                </div>
-               <div class="swiper-slide sliders">
-                   <a href="">
-                   <img src="../../static/imgs/banners05.jpg" />
-                   </a>
-               </div>
+              
             </div>
              <div class="swiper-pagination swiper-pagination02"></div>
         </div>
@@ -51,39 +45,11 @@
                <li v-for="item in noticeList" :key="item.id" class="fl notice_li" @click="$router.push({path:'components/noticeDetail',query:{id:item.id}})"><a class="notice_a ft14" :data-id='item.id'>{{item.title}}</a></li>
            </ul>
         </div>
-        <!-- <div class="active-data clearfix">
-            <div class="data high">
-                <div class="name">最高价</div>
-                <div class="content">{{coinKline.hight}}</div>
-            </div>
-            <div class="data high">
-                <div class="name">最低价</div>
-                <div class="content">{{coinKline.low}}</div>
-            </div>
-             <div class="data high">
-                <div class="name">开盘价</div>
-                <div class="content">{{coinKline.open}}</div>
-            </div>
-            <div class="data high">
-                <div class="name">收盘价</div>
-                <div class="content">{{coinKline.close}}</div>
-            </div>
-            <div class="data range">
-                <div class="name">涨跌幅</div>
-                <div class="content">-{{Math.floor(((coinKline.close-coinKline.open)/coinKline.open) * 100)/100 || 0}}%</div>
-            </div>
-            <div class="data vol">
-                <div class="name">成交量</div>
-                <div class="content">{{coinKline.volume}}</div>
-            </div>
-            <div class="time">24H</div>
-        </div> -->
-        <!-- <div id="chart" _echarts_instance_="ec_1533699609264" style="width: 100%; height: 320px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative; background: transparent;">
-            
-        </div> -->
+      
           <div class="coin-tab">
             <ul class="coins">
               <li v-for="(coin,index) in quotation" :key="index" @click="nowCoin = coin.name" :class="{activeCoin:nowCoin == coin.name}">{{$t('home.with')}}{{coin.name}}  {{$t('home.markets')}}<span class='' v-if="nowCoin == coin.name"></span></li>
+              <li :class="{activeCoin:nowCoin == '自选'}" @click="nowCoin ='自选'">{{$t('myMarkets')}}</li>
             </ul>
           </div>
         <div class="coins-list">
@@ -98,8 +64,8 @@
             <span>{{$t('home.trade')}}</span>
           </div>
           
-          <ul class="list-con scroll" v-for="(item,index) in quotation" :key="index" v-if="nowCoin == item.name">
-            <li v-for="(li,inde) in item.quotation" :key="inde" :data-name='li.currency_id+"/"+li.legal_id'>
+          <ul class="list-con scroll" v-for="(item,index) in quotation" :key="index">
+            <li v-for="(li,inde) in item.quotation" :key="inde" :data-name='li.currency_id+"/"+li.legal_id' v-if="(li.added&&nowCoin == $t('myMarkets')) ||li.legal_name == nowCoin">
               <div class="two-coin">
                 <img :src="li.logo" alt="" style="width:30px;">
                 <span style="font-weight:bold"><span class="high_blue">{{li.currency_name}}</span><span class="low_blue">/{{li.legal_name}}</span></span>
@@ -119,7 +85,12 @@
                 <span class="high_blue bold low_price">{{li.low_price}}</span>
               </div>
               <div class="count high_blue bold volume">{{li.volume == null?'0':li.volume}}</div>
-              <div @click="setCurrent(index,inde)" style="color:#563BD1">{{$t('home.trade')}}</div>
+              <div class=""  style="color:#563BD1;">
+                <span class=" fr el-icon-star-on" v-if="li.added" @click="addDelete('delete',li.currency_match_id)" style="line-height:30px;margin-left:20px"></span>
+                <span class=" fr el-icon-star-off" v-if="!li.added" style="line-height:30px;margin-left:20px" @click="addDelete('add',li.currency_match_id)"></span>
+                <span class="fr" @click="setCurrent(index,inde)">{{$t('home.trade')}}</span>
+                <!-- <span :hah='testMy(li.currency_id,li.legal_id)'>{{li.currency_id +''+li.legal_id}}</span> -->
+              </div>
               <!-- <div>
                 <span @click="setData({currency_id:item.id,legal_id:li.currency_id,currency_name:item.name,leg_name:li.name,isShow:index})">交易 </span>
               </div> -->
@@ -260,13 +231,14 @@ import "@/assets/style/index.css";
 import Swiper from "swiper";
 import "swiper/dist/css/swiper.min.css";
 import indexHeader from "@/view/indexHeader";
-import homeLogin from "@/view/homeLogin";
+import homeLogin from "@/view/homeLogin"; 
 // var echarts = require("echarts");
 export default {
   name: "homeContent",
   components: { indexHeader, homeLogin },
   data() {
     return {
+      pics:[],
       quotation: [],
       nowCoin: "",
       //   banner_imgs:[
@@ -283,18 +255,29 @@ export default {
       swiperList: [],
       coinList: [],
       coin_list: [],
-      account_number: ""
+      account_number: "",
+      token:'',
+      myAdd:[]
     };
   },
   created() {
+    // this.getMyAdd();
     // this.init(this.initKline);
+    this.token = window.localStorage.getItem('token') || '';
+    if(this.token){
+      this.getMyAdd()
+    } else {
+      this.getQuotation()
+    }
     this.account_number = window.localStorage.getItem("accountNum") || "";
-    this.getQuotation();
+    
     eventBus.$on("loginSuccess", function() {
       location.reload();
     });
   },
   mounted() {
+    this.getSwiper();
+    
     var mySwiper = new Swiper(".swiper-container01", {
       // 如果需要分页器
       pagination: ".swiper-pagination01",
@@ -306,16 +289,7 @@ export default {
       observer: true, //修改swiper自己或子元素时，自动初始化swiper
       observeParents: true //修改swiper的父元素时，自动初始化swiper
     });
-    var mySwiper02 = new Swiper(".banner_wrap", {
-      // direction: 'vertical',
-      loop: true,
-      autoplay: 2000,
-      // 如果需要分页器
-      pagination: ".swiper-pagination02",
-      paginationClickable: true,
-      observer: true, //修改swiper自己或子元素时，自动初始化swiper
-      observeParents: true //修改swiper的父元素时，自动初始化swiper
-    });
+    
     // this.setChart();
     this.$http({
       url: '/api/' + "news/list",
@@ -350,6 +324,80 @@ export default {
     this.connect();
   },
   methods: {
+    getMyAdd(){
+      if(this.token){
+
+        this.$http({
+        url:'/api/user_match/list',
+       
+        headers: { Authorization: this.token}
+      }).then(res => {
+        if(res.data.type == 'ok'){
+          var list = res.data.message;
+            this.myAdd = list;
+            
+            this.getQuotation();
+        }
+      })
+      } else {
+        if(this.$i8n.locale == 'zh'){
+
+          layer.msg('请先登录')
+        } else {
+          layer.msg('Please sign in')
+        }
+      }
+    },
+    testMy(c,l){
+      if(this.myAdd.length){
+        var cid  = c;
+        var lid = l;
+        var s = this.myAdd.filter(function(item){
+          return (item.currencyId == cid&&item.legalId == lid);
+        })
+        if(s.length){
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    },
+    addDelete(url,id){
+      if(this.token){
+
+          this.$http({
+          url:'/api/user_match/'+url,
+          method:'post',
+          data:{id:id},
+          headers: { Authorization: this.token}
+        }).then(res => {
+          layer.msg(res.data.message);
+          this.getMyAdd()
+        })
+      } else {
+        layer.msg('请先登录')
+      }
+    },
+    getSwiper(){
+      this.$http({
+        url:'/api/news/pcPic'
+      }).then(res => {
+        console.log(res);
+        this.pics = res.data.message;
+        var mySwiper02 = new Swiper(".banner_wrap", {
+      // direction: 'vertical',
+      loop: true,
+      autoplay: 2000,
+      // 如果需要分页器
+      pagination: ".swiper-pagination02",
+      paginationClickable: true,
+      observer: true, //修改swiper自己或子元素时，自动初始化swiper
+      observeParents: true //修改swiper的父元素时，自动初始化swiper
+    });
+      })
+    },
     setData(obj) {
       window.localStorage.setItem("tradeData", JSON.stringify(obj));
       this.$router.push("/dealCenter");
@@ -449,6 +497,19 @@ export default {
         layer.close(i);
         console.log(res.data);
         if (res.data.type == "ok" && res.data.message.length != 0) {
+          var msg = res.data.message;
+          if(this.myAdd.length){
+
+            msg.forEach((item,index) => {
+              this.myAdd.forEach((ite,ind) => {
+                if(item.id == ite.legalId){
+                  item.quotation.find((c) => {
+                    return c.currency_id == ite.currencyId;
+                  }).added = true
+                }
+              })
+            })
+          }
           this.quotation = res.data.message;
           this.nowCoin = this.quotation[0].name;
           let msg = res.data.message[0];
@@ -620,6 +681,10 @@ export default {
 .swiper-container {
   // height: 310px;
 }
+.swiper-slide>img{
+  width: 100%;
+  height: 590px;
+}
 .swiper-container a {
   display: block;
   // height: 310px;
@@ -660,7 +725,7 @@ export default {
   line-height: 51px;
   text-align: center;
   margin-top: 0;
-
+  border: 1px solid #563bd1;
   .list-title {
     display: flex;
     padding: 0 30px;
@@ -684,7 +749,7 @@ export default {
     background: #f0f0f0;
     max-height: 400px;
     overflow-y: scroll;
-    border: 1px solid #563bd1;
+    // border: 1px solid #563bd1;
     border-top: none;
 
     li {

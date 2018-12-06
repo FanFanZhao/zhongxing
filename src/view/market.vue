@@ -1,7 +1,8 @@
 <template>
     <div class="market clr-part">
 		<div class="m_title  clear">
-            <span class=" fl">市场</span>
+            <span class=" fl">{{$t('home.markets')}}</span>
+           
             <div class="m_search fr hide">
                <input type="text" >
                <img src="../assets/images/search.png" alt="">
@@ -14,13 +15,14 @@
                 <!-- <span class="active">USDT</span>
                 <span>JNB</span>
                 <span>JNB</span> -->
-                <span v-for="(tab,index) in tabList" :key="index" :class="['bdr-part',{'active': (index == isShow)}]" @click="changeType(index,tab.name,tab.id)">{{tab.name}}</span>
+                <span v-for="(tab,index) in tabList" :key="index" :class="['bdr-part',{'active': (index == isShow&&!showAdd)}]" @click="changeType(index,tab.name,tab.id)">{{tab.name}}</span>
+                <span @click="showAdd=true" :class="['bdr-part',{'active': showAdd}]">{{$t('myMarkets')}}</span>
             </div>
         </div>
         <div class="coin-title clear clr-part">
             <div>
                 <div class="flex tc" @click="arrSort('at')">
-                  <span>币种</span>
+                  <span>{{$t('home.pair')}}</span>
                   <div class="down-up">
                     <div   :class="['el-icon-caret-top',{bold:sortKey == 'at'&&directions == 'up'}]" @click="directions = 'up';arrSort('at','up')"></div>
                      <div  :class="['el-icon-caret-bottom',{bold:sortKey == 'at'&&directions == 'down'}]" @click="directions = 'down';arrSort('at','down')"></div>
@@ -30,7 +32,7 @@
             </div>
             <div>
                 <div class="flex tc" @click="arrSort('now_price')">
-                  <span>最新价</span>
+                  <span>{{$t('home.price')}}</span>
                   <div class="down-up">
                     <div   :class="['el-icon-caret-top',{bold:sortKey == 'now_price'&&directions == 'up'}]" @click="directions = 'up';arrSort('now_price','up')"></div>
                      <div  :class="['el-icon-caret-bottom',{bold:sortKey == 'now_price'&&directions == 'down'}]" @click="directions = 'down';arrSort('now_price','down')"></div>
@@ -40,7 +42,7 @@
             </div>
             <div>
                  <div class="flex tc" @click="arrSort('change')">
-                   <span>涨幅</span>
+                   <span>{{$t('home.change')}}</span>
                    <div class="down-up">
                      <div   :class="['el-icon-caret-top',{bold:sortKey == 'change'&&directions == 'up'}]" @click="directions = 'up';arrSort('change')"></div>
                      <div  :class="['el-icon-caret-bottom',{bold:sortKey == 'change'&&directions == 'down'}]" @click="directions = 'down';arrSort('change')"></div>
@@ -51,11 +53,13 @@
         </div>
         <!-- <div class="line"></div> -->
         <ul class="coin-wrap scroll">
-          <li v-for="(market,index) in marketList " :key="index" v-show="(index == isShow )" >
-            <p v-for="(itm,idx) in market"  :key="itm.id" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market,itm.now_price,$event)">
+          <li v-for="(market,index) in marketList " :key="index" >
+            <p v-for="(itm,idx) in market"  :key="itm.id" v-if="testItem(itm.legal_name,itm.added)" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market,itm.now_price,$event)">
               <span class="w36"><img :src="itm.logo" alt=""><i><em class="deep_blue bold">{{itm.currency_name}}</em><em class="light_blue bold">/{{itm.legal_name}}</em></i></span>
               <span class="w30 tr deep_blue bold nowPrice" :data-name='itm.currency_id+"/"+itm.legal_id'>{{itm.now_price || 0}}</span>
               <span :class="{'green':itm.change>=0}" class="bold">{{(itm.change>0?'+':'')+(itm.change-0).toFixed(2)}}%</span>
+              <span class="  el-icon-star-on star" v-if="itm.added" @click="addDelete('delete',itm.currency_match_id)" ></span>
+                <span class="  el-icon-star-off star" v-if="!itm.added"  @click="addDelete('add',itm.currency_match_id)"></span>
             </p>
           </li>
         </ul>
@@ -79,15 +83,80 @@ export default {
       currency_name: "",
       legal_name: "",
       directions:'',
-      sortKey:'none'
+      sortKey:'none',
+      myAdd:[],
+      token:'',
+      nowLegal:'',
+      showAdd:false
     };
   },
   created: function() {
     // this.init();
     this.token = localStorage.getItem("token") || "";
     //法币列表
-    var load = layer.load();
-    this.$http({
+    if(this.token){
+      this.getMyAdd()
+    } else {
+      this.getList()
+    }
+    
+  },
+  mounted() {
+    var that = this;
+  },
+  methods: {
+    
+    testItem(name,added){
+      
+      if(this.showAdd){
+        return added
+      } else {
+        return name == this.nowLegal
+      }
+    },
+    getMyAdd(){
+      if(this.token){
+
+          this.$http({
+          url:'/api/user_match/list',
+        
+          headers: { Authorization: this.token}
+        }).then(res => {
+          if(res.data.type == 'ok'){
+            var list = res.data.message;
+              this.myAdd = list;
+              
+              this.getList();
+          }
+        })
+      } else {
+        layer.msg('请先登录')
+      }
+    },
+    addDelete(url,id){
+      if(this.token){
+
+          this.$http({
+          url:'/api/user_match/'+url,
+          method:'post',
+          data:{id:id},
+          headers: { Authorization: this.token}
+        }).then(res => {
+          layer.msg(res.data.message);
+          this.getMyAdd()
+        })
+      } else {
+        if(this.$i8n.locale == 'zh'){
+
+          layer.msg('请先登录')
+        } else {
+          layer.msg('Please sign in')
+        }
+      }
+    },
+    getList(){
+      var load = layer.load();
+      this.$http({
       url: "/api/" + "currency/quotation",
       method: "get",
       data: {}
@@ -97,6 +166,18 @@ export default {
       if (res.data.type == "ok") {
         this.tabList = res.data.message;
         var msg = res.data.message;
+        if(this.myAdd.length){
+
+            msg.forEach((item,index) => {
+              this.myAdd.forEach((ite,ind) => {
+                if(item.id == ite.legalId){
+                  item.quotation.find((c) => {
+                    return c.currency_id == ite.currencyId;
+                  }).added = true
+                }
+              })
+            })
+          }
         var arr_quota = [];
         for (var i = 0; i < msg.length; i++) {
           arr_quota[i] = msg[i].quotation;
@@ -113,6 +194,7 @@ export default {
           this.exName = this.tabList[0].name;
         }
         this.currency_name = msg[0].name;
+        // this.nowLegal = msg[0].name;
         this.$store.state.priceScale = 100000;
 
         //默认法币id和name和行情交易对
@@ -122,6 +204,7 @@ export default {
           var legal_id = arr_quota[0][0].legal_id;
           var currency_id = arr_quota[0][0].currency_id;
           var legal_name = arr_quota[0][0].legal_name;
+          this.nowLegal = arr_quota[0][0].legal_name;
           var currency_name = arr_quota[0][0].currency_name;
            var now_price = arr_quota[0][0].now_price;
           var tradeDatas = {
@@ -135,6 +218,7 @@ export default {
           var localData = JSON.parse(window.localStorage.getItem("tradeData"));
           this.$store.state.symbol =
             localData.currency_name + "/" + localData.legal_name;
+            this.nowLegal = localData.legal_name;
           var tradeDatas = {
             currency_id: localData.currency_id,
             legal_id: localData.legal_id,
@@ -159,11 +243,7 @@ export default {
         this.connect();
       }
     });
-  },
-  mounted() {
-    var that = this;
-  },
-  methods: {
+    },
     arrSort(k,d){
       console.log(d);
       d = this.directions;
@@ -241,6 +321,8 @@ export default {
       //	this.$store.state.symbol=list.name+'/'+this.exName
     },
     changeType(index, legal_name, currency_id) {
+      this.nowLegal = legal_name;
+      this.showAdd = false;
       this.directions = '';
       this.sortKey = '';
       this.isShow = index;
@@ -370,6 +452,9 @@ export default {
 </script>
 
 <style scoped>
+.coin-wrap li span.star{
+  width:12%;line-height:30px;font-size: 14px;
+}
 .m_title {
   line-height: 30px;
   padding: 0 20px;
@@ -446,7 +531,7 @@ export default {
   /* background: #eee; */
 }
 .coin-wrap li {
-  height: 30px;
+  /* height: 30px; */
   line-height: 30px;
   cursor: pointer;
   font-size: 12px;
@@ -459,17 +544,17 @@ export default {
   height: 30px;
 }
 .coin-wrap li span.w36 {
-  width: 36%;
+  width: 30%;
 }
 .coin-wrap li span.w36 i {
   padding-left: 5px;
 }
 .coin-wrap li span.w30 {
-  width: 30%;
+  width: 24%;
   text-align: right;
 }
 .coin-wrap li span:first-child {
-  padding-left: 18px;
+  /* padding-left: 18px; */
   text-align: left;
   /* display: flex; */
 }

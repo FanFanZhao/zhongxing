@@ -4,6 +4,10 @@
             <p class="fl">总资产折合：<span class="asset_num">{{total}}</span><span class="asset_name"> USDT</span><span class="ft12 "> ≈ <span>{{totalCNY}}</span>CNY</span>
             <!-- <label class="min_lab ft14"><input type="checkbox" />隐藏小额资产</label><i></i><label class="inp_lab"><input  type="text"/><i></i></label> -->
             </p>
+            <div class="hide-min" >
+                <input type="checkbox" id="min" v-model="hideMin" :checked='hideMin' style="margin:0 5px 0 30px">
+                <label for="min" class="ft14">隐藏小额资产</label>
+            </div>
             <p class="fr right_text">
                 <!-- <span class="record" @click="record">财务记录</span> -->
                 <span class="address" @click="withdraw_address">提币地址管理</span>
@@ -20,7 +24,7 @@
                <p class="flex1 tc">操作</p>
            </div>
            <ul class="content_ul">
-               <li v-for="(item,index) in asset_list" :key="index">
+               <li v-for="(item,index) in asset_list" :key="index" :hidden='(item.change_balance - 0 -minBalance)<=0&&hideMin'>
                     <div class="content_li flex alcenter between bdr-part">
                    <p class="flex1 tc">{{item.currency_name}}</p>
                    <p class="flex1 tc">{{item.change_balance}}</p>
@@ -139,6 +143,8 @@ export default {
     name:'finance',
     data(){
         return{
+            minBalance:'',
+            hideMin:false,  
             recData:[],
             token:'',
             flags:false,
@@ -538,7 +544,8 @@ export default {
             headers: {'Authorization':  that.token},
             }).then(res=>{
                 layer.close(load)
-                console.log(res.data)
+                console.log(res.data);
+                that.minBalance = res.data.message.min_balance;
                 that.asset_list=res.data.message.change_wallet.balance;
                 that.total = res.data.message.change_wallet.total;
                 that.totalCNY = res.data.message.change_wallet.totalCNY;

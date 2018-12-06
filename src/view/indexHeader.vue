@@ -56,7 +56,7 @@
           <div class="account_number">{{account_number}} ({{$t('header.code')}} {{extension_code}})</div>
           <div class="links">
             <router-link to="/userCenter">{{$t('header.center')}}</router-link>
-            <div @click="signOut">{{$t('header.complaint')}}</div>
+            <div @click="signOut">{{$t('header.out')}}</div>
           </div>
         </div>
         
