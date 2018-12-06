@@ -20,6 +20,9 @@ export default {
   status:'状态',
   rate:'手续费',
   back:'返回',
+  alipay:'支付宝',
+  wechat:'微信',
+  bankcard:'银行卡',
 
 
   header:{
@@ -118,6 +121,15 @@ export default {
     emailbox:'邮箱',
     surebind:'确认绑定',
   },
+  bdphone:{
+    bindphone:'绑定手机号',
+    phone:'手机号',
+  },
+  lgpwd:{
+    setpwd:'修改密码',
+    renewpwd:'请再次输入新密码',
+
+  },
   security:{
     lever:'您的账号安全等级 : ',
     wan:'完善更多资料，保证账号安全',
@@ -210,6 +222,33 @@ export default {
     placeorder:'下单',
     inwant:'请输入要',
     total:'总额',
+  },
+  shop:{
+    myshop:'我的店铺',
+    name:'名称',
+    tolegal:'所属法币',
+    retime:'注册时间',
+    balance:'商家余额',
+    goshop:'进入店铺',
+    allorder:'总成单',
+    dayorder:'30日成单',
+    comorder:'完成单',
+    comrate:'完成率',
+    release:'发布',
+    email:'邮箱认证',
+    phone:'手机',
+    truename:'实名认证',
+    high:'高级认证',
+    type:'类型',
+    mysell:'我的出售',
+    mybuy:'我的求购',
+    abnormal:'异常',
+    seeorder:'查看订单',
+    choosetype:'请选择类型',
+    sell:'出售',
+    buy:'求购',
+    pchoose:'请选择',
+    minnum:'最小交易数量',
   },
   market:{
     market:'市场',
@@ -309,6 +348,7 @@ export default {
     pwdliu:'密码不能小于六位!',
     slogin:'登录成功',
     noemail:'您的邮箱不符合规则',
+    phonenot:'您输入的手机号账号不符合规则!',
     nophone:'请输入手机号',
     nemail:'请输入邮箱',
     inpwd:'请输入密码',
@@ -343,6 +383,23 @@ export default {
     intermediate:'中',
     high:'高',
     strong:'强',
+    buymoney:'请输入欲购买总额',
+    buynum:'请输入欲购买数量',
+    sellmoney:'请输入欲出售总额',
+    sellnum:'请输入欲出售数量',
+    tname:'请先进行实名认证再下单',
+    payset:'请先设置收款方式',
+    mpay:'请选择支付方式',
+    mprice:'请输入价格',
+    mnum:'请输入数量',
+    minnum:'请输入最小数量',
+    lessnum:'最小数量不能小于',
+    morenum:'数量不能超出',
+    notnum:'数量不能大于总数量'
+
+
+
+
     
 
 

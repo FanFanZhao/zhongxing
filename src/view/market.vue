@@ -425,6 +425,7 @@ export default {
       console.log(arr);
       this.$store.state.priceScale = Math.pow(10, arr.length); //根据最新价小数点后几位改变价格精度
       this.$store.state.symbol = currency_name + "/" + legal_name; //交易对
+      console.log( this.$store.state.symbol);
       var tradeDatas = {
         currency_id: currency_id,
         legal_id: legal_id,

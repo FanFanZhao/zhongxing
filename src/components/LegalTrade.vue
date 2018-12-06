@@ -290,16 +290,16 @@
 					if(_this.nums<=0){
 						if(this.type == 'sell' ){
 							if (_this.types == 'trade') {
-								return	layer.msg('请输入欲购买总额');
+								return	layer.msg(_this.$t('lay.buymoney'));
 							}else{
-								return layer.msg('请输入欲购买数量');
+								return layer.msg(_this.$t('lay.buynum'));
 							}
 						}else {
 							if (_this.types == 'trade') {
 							
-								return layer.msg('请输入欲出售总额');
+								return layer.msg(_this.$t('lay.sellmoney'));
 							}else{
-							    return layer.msg('请输入欲出售数量');
+							    return layer.msg(_this.$t('lay.sellnum'));
 							}
 						}
 					}
@@ -326,10 +326,10 @@
 									review_status = res.data.message.review_status;
 									is_Billing =  res.data.message.is_Billing;
 									if(review_status!=2){
-									layer.msg('请先进行实名认证再下单');
+									layer.msg(_this.$t('lay.tname'));
 									return false;
 								}else if(is_Billing == 0){
-									layer.msg('请先设置收款方式');
+									layer.msg(_this.$t('lay.payset'));
 									setTimeout(() => {
 										 this.$router.push('/userSetting');
 									}, 1000);

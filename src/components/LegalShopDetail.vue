@@ -5,49 +5,49 @@
         <div class="logo white">{{info.name.charAt(0)}}</div>
         <div>
           <div>{{info.name}}</div>
-          <div>注册时间：{{info.create_time}}</div>
+          <div>{{$t('shop.retime')}}：{{info.create_time}}</div>
         </div>
       </div>
       <div class="top-b flex">
         <div>
           <div>{{info.total}}</div>
-          <div>总成单</div>
+          <div>{{$t('shop.allorder')}}</div>
         </div>
         <div>
           <div>{{info.thirtyDays}}</div>
-          <div>30日成单</div>
+          <div>{{$t('shop.dayorder')}}</div>
         </div>
         <div>
           <div>{{info.done}}</div>
-          <div>完成单</div>
+          <div>{{$t('shop.comorder')}}</div>
         </div>
         <div>
           <div>{{(info.done == 0 || info.total == 0)?0:(((info.done-0)/(info.total-0)-0)*100).toFixed(4)}}%</div>
-          <div>完成率</div>
+          <div>{{$t('shop.comrate')}}</div>
         </div>
       </div>
       <div class="submit flex">
-        <div @click="showSubmit = true">发布</div>
+        <div @click="showSubmit = true">{{$t('shop.release')}}</div>
       </div>
     </div>
     <div class="md flex clr-part bg-part ft14">
       <div>
-        <span>邮箱认证</span>
+        <span>{{$t('shop.email')}}</span>
         <img v-if="info.prove_email == 1" src="../assets/images/success.png" alt>
         <img v-else src="../assets/images/icon_error.png" alt>
       </div>
       <div>
-        <span>手机</span>
+        <span>{{$t('shop.phone')}}</span>
         <img v-if="info.prove_mobile == 1" src="../assets/images/success.png" alt>
         <img v-else src="../assets/images/icon_error.png" alt>
       </div>
       <div>
-        <span>实名认证</span>
+        <span>{{$t('shop.truename')}}</span>
         <img v-if="info.prove_real == 1" src="../assets/images/success.png" alt>
         <img v-else src="../assets/images/icon_error.png" alt>
       </div>
       <div>
-        <span>高级认证</span>
+        <span>{{$t('shop.high')}}</span>
         <img v-if="info.prove_level == 1" src="../assets/images/success.png" alt>
         <img v-else src="../assets/images/icon_error.png" alt>
       </div>
@@ -55,40 +55,39 @@
     <div class="list bg-part clr-part ft14">
       <div class="tab">
         <div class="flex">
-          <div>类型：</div>
+          <div>{{$t('shop.type')}}：</div>
           <div>
             <span
               :class="{'now':filterPms.type == 'sell'}"
               @click="filterPms.type = 'sell';getList()"
-            >我的出售</span>
+            >{{$t('shop.mysell')}}</span>
             <span
               :class="{'now':filterPms.type == 'buy'}"
               @click="filterPms.type = 'buy';getList()"
-            >我的求购</span>
+            >{{$t('shop.mybuy')}}</span>
           </div>
         </div>
         <div class="flex">
-          <div>状态：</div>
+          <div>{{$t('status')}}：</div>
           <div>
             <span
               :class="{'now':filterPms.wasDone == false}"
               @click="filterPms.wasDone = false;getList()"
-            >未完成</span>
+            >{{$t('legal.nofinish')}}</span>
             <span
               :class="{'now':filterPms.wasDone == true}"
               @click="filterPms.wasDone = true;getList()"
-            >已完成</span>
+            >{{$t('legal.finished')}}</span>
           </div>
         </div>
       </div>
       <div class="ul-head">
-        <div class="w10">币种</div>
-        <div class="w15">数量</div>
-        <div class="w25">限额</div>
-        <div class="w10">单价</div>
-        <div class="w10">支付方式</div>
-        <div class="w10">已付款</div>
-        <div>操作</div>
+        <div class="w10">{{$t('market.currency')}}</div>
+        <div class="w15">{{$t('number')}}</div>
+        <div class="w20">{{$t('legal.limit')}}</div>
+        <div class="w15">{{$t('price')}}</div>
+        <div class="w10">{{$t('legal.pay')}}</div>
+        <div>{{$t('do')}}</div>
       </div>
       <ul :class="[showWhich+'-box']">
         <li
@@ -99,21 +98,19 @@
         >
           <div class="w10">{{item.currency_name}}</div>
           <div class="w15">{{item.surplus_number}}</div>
-          <div
-            class="w25"
-          >{{(item.limitation.min-0).toFixed(4)}}-{{(item.limitation.max-0).toFixed(4)}}</div>
-          <div class="w10">{{item.price}}</div>
+          <div class="w20">{{(item.limitation.min-0).toFixed(4)}}-{{(item.limitation.max-0).toFixed(4)}}</div>
+          <div class="w15">{{item.price}}</div>
           <div class="w10">{{item.way_name}}</div>
           <div class="w10">{{item.wait_confirm}}</div>
           <div>
-            <span @click="changeOrder('error_send',item.id)" v-if="item.is_done!=1">异常</span>
-            <span @click="changeOrder('back_send',item.id)" v-if="item.is_done!=1">撤回</span>
-            <router-link tag="span" :to="{path:'/shopLegalRecord',query:{id:item.id}}">查看订单</router-link>
+            <span @click="changeOrder('error_send',item.id)" v-if="item.is_done!=1">{{$t('shop.abnormal')}}</span>
+            <span @click="changeOrder('back_send',item.id)" v-if="item.is_done!=1">{{$t('revoke')}}</span>
+            <router-link tag="span" :to="{path:'/shopLegalRecord',query:{id:item.id}}">{{$t('shop.seeorder')}}</router-link>
           </div>
         </li>
       </ul>
-      <div class="more" @click="getList(true)" v-if="list.length">加载更多</div>
-      <div class="more" v-else>暂无更多</div>
+      <div class="more" @click="getList(true)" v-if="list.length">{{$t('more')}}</div>
+      <div class="more" v-else>{{$t('nomore')}}</div>
     </div>
     <div class="submit-box" v-if="showSubmit">
       <div class="content">
@@ -122,40 +119,40 @@
           @click="showSubmit = false;submitPms = {type:'sell',way:'-1',price:'',min_number:'',total_number:''}"
         >X</div>
         <div class="tab">
-          <div>请选择类型：</div>
-          <div :class="{'now':submitPms.type == 'sell'}" @click="submitPms.type = 'sell'">出售</div>
-          <div :class="{'now':submitPms.type == 'buy'}" @click="submitPms.type = 'buy'">求购</div>
+          <div>{{$t('shop.choosetype')}}：</div>
+          <div :class="{'now':submitPms.type == 'sell'}" @click="submitPms.type = 'sell'">{{$t('shop.sell')}}</div>
+          <div :class="{'now':submitPms.type == 'buy'}" @click="submitPms.type = 'buy'">{{$t('shop.buy')}}</div>
         </div>
         <div class="flex">
-          <span>币种：</span>
+          <span>{{$t('market.currency')}}：</span>
           <span>{{info.currency_name}}</span>
         </div>
         <div class="flex">
-          <span>限额：</span>
+          <span>{{$t('legal.limit')}}：</span>
           <span>{{min}} - {{max}}</span>
         </div>
         <div class="flex">
-          <span>支付方式：</span>
+          <span>{{$t('legal.pay')}}：</span>
           <select name id v-model="submitPms.way">
-            <option value="-1">请选择</option>
-            <option value="ali_pay">支付宝</option>
-            <option value="we_chat">微信</option>
-            <option value="bank">银行卡</option>
+            <option value="-1">{{$t('shop.pchoose')}}</option>
+            <option value="ali_pay">{{$t('alipay')}}</option>
+            <option value="we_chat">{{$t('wechat')}}</option>
+            <option value="bank">{{$t('bankcard')}}</option>
           </select>
         </div>
         <div class="flex">
-          <span>单价：</span>
+          <span>{{$t('price')}}：</span>
           <input type="number" v-model="submitPms.price">
         </div>
         <div class="flex">
-          <span>数量：</span>
+          <span>{{$t('number')}}：</span>
           <input type="number" v-model="submitPms.total_number">
         </div>
         <div class="flex">
-          <span>最小交易数量：</span>
+          <span>{{$t('minnum')}}：</span>
           <input type="number" v-model="submitPms.min_number">
         </div>
-        <div class="btn" @click="legalSend">发布</div>
+        <div class="btn" @click="legalSend">{{$t('shop.release')}}</div>
       </div>
     </div>
   </div>
@@ -228,6 +225,7 @@ export default {
       });
     },
     getList(more = false) {
+      var that = this;
       var pms = {};
       if (!more) {
         this.filterPms.page = 1;
@@ -254,7 +252,7 @@ export default {
               this.list = this.list.concat(msg.data);
               this.filterPms.page += 1;
             } else {
-              layer.msg("没有更多了");
+              layer.msg(that.$t('nomore'));
             }
           } else {
             this.list = msg.data;
@@ -283,29 +281,30 @@ export default {
       });
     },
     legalSend() {
+      var that = this;
       if (this.submitPms.way == "-1") {
-        layer.msg("请选择支付方式");
+        layer.msg(that.$t('lay.mpay'));
         return;
       } else if (this.submitPms.price == "") {
-        layer.msg("请输入价格");
+        layer.msg(that.$t('lay.mprice'));
         return;
       } else if (this.submitPms.min_number == "") {
-        layer.msg("请输入最小数量");
+        layer.msg(that.$t('lay.minnum'));
         return;
       } else if (this.submitPms.min_number - 0 - this.min < 0) {
-        layer.msg("最小数量不能小于" + this.min);
+        layer.msg(that.$t('lay.lessnum') + this.min);
         return;
       } else if (this.submitPms.total_number - 0 - this.max > 0) {
-        layer.msg("数量不能超出" + this.max);
+        layer.msg(that.$t('lay.morenum') + this.max);
         return;
       } else if (this.submitPms.total_number == "") {
-        layer.msg("请输入数量");
+        layer.msg(that.$t('lay.mnum'));
         return;
       } else if (
         this.submitPms.min_number - 0 - this.submitPms.total_number >
         0
       ) {
-        layer.msg("最小数量不能大于总数量");
+        layer.msg(that.$t('lay.notnum'));
         return;
       }
       var pms = Object.assign({ currency_id: this.currencyId }, this.submitPms);

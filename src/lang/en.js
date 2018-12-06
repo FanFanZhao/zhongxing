@@ -20,6 +20,9 @@ export default {
   status:'status',
   rate:'Service Charge',
   back:'Return',
+  alipay:'Alipay',
+  wechat:'WeChat',
+  bankcard:'Bank card',
   header:{
     home:'Home',
     c2c:'C2C Transaction',
@@ -114,6 +117,14 @@ export default {
     emailbox:'mailbox',
     surebind:'Confirm binding',
   },
+  bdphone:{
+    bindphone:'Bind mobile phone number',
+    phone:'Mobile phone no.',
+  },
+  lgpwd:{
+    setpwd:'Change the password',
+    renewpwd:'Please enter your new password again',
+  },
   security:{
     lever:'Your Account Security Level：',
     wan:'Improve more information to ensure account security',
@@ -206,6 +217,33 @@ export default {
     placeorder:'Place an order',
     inwant:'Please input',
     total:'Total money',
+  },
+  shop:{
+    myshop:'My shops',
+    name:'name',
+    tolegal:'Subordinate to the fiat',
+    retime:'Registration time',
+    balance:'Merchants balance',
+    goshop:'Enter the store',
+    allorder:'Total Transaction Order',
+    dayorder:'Orders for 30 days',
+    comorder:'Completed order',
+    comrate:'Completion rate',
+    release:'Release',
+    email:'Mailbox authentication',
+    phone:'Phone',
+    truename:'Real name authentication',
+    high:'Advanced authentication',
+    type:'type',
+    mysell:'My sale',
+    mybuy:'My purchase',
+    abnormal:'abnormal',
+    seeorder:'View order',
+    choosetype:'Please select type',
+    sell:'Sell',
+    buy:'Purchase',
+    pchoose:'Please choose',
+    minnum:'Minimum transaction volume',
   },
   market:{
     market:'Market',
@@ -305,6 +343,7 @@ export default {
     pwdliu:'Password must not be less than six!',
     slogin:'Login successfully',
     noemail:'Your mailbox does not conform to the rules',
+    phonenot:'The mobile phone number and account you entered do not conform to the rules!',
     nophone:'Please enter cell phone number.',
     nemail:'Please input the mailbox.',
     inpwd:'Please input a password',
@@ -339,6 +378,27 @@ export default {
     intermediate:'intermediate',
     high:'high',
     strong:'strong',
+    buymoney:'Please enter the total amount you want to purchase.',
+    buynum:'Please enter the quantity you want to buy.',
+    sellmoney:'Please enter the total amount you want to sell.',
+    sellnum:'Please enter the quantity you want to sell.',
+    tname:'Please authenticate by real name before placing an order.',
+    payset:'Please set up the method of collecting money first.',
+    mpay:'Please choose the mode of payment.',
+    mprice:'Please enter the price.',
+    number:'Please input quantity.',
+    minnum:'Please enter the minimum quantity',
+    lessnum:'Minimum quantity not less than ',
+    morenum:'The quantity should not exceed ',
+    notnum:'Quantity should not be greater than total quantity'
+
+
+
+
+
+
+
+
   }
 
 

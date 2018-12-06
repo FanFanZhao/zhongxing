@@ -204,7 +204,7 @@
 							},
 							{
 								value: "60",
-								period: "60min",
+								period: "60分钟",
 								text: "1hour",
 								chartType: 1
 							},
@@ -214,6 +214,8 @@
 								text: "1day",
 								chartType: 1
 							}
+
+							
 							// {
 							// 	value: "1W",
 							// 	period: "1W",
@@ -235,7 +237,7 @@
 								.addClass("my2")
 								.text(v.text)
 
-							if(v.text=='1分钟'){
+							if(v.text=='1min'){
 								button.css({"background-color":"#9194a4",'color':'#fff'})
 								localStorage.setItem('tim','1')  //默认为1分钟
 							}
