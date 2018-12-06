@@ -3,7 +3,7 @@
     <div class="title bg-part ft16">{{$t('legal.traderecord')}}</div>
     <div class="filter-box bg-part ft14">
       <div>
-        <span>{{$t('legal.tradetype')}}：</span>
+        <span>{{$t('legal.tredetype')}}：</span>
         <span :class="{'select':filterPms.type == 'sell'}" @click="filterPms.type = 'sell';getList()">{{$t('legal.buy')}}</span>
         <span :class="{'select':filterPms.type  == 'buy'}" @click="filterPms.type  = 'buy';getList()">{{$t('legal.sell')}}</span>
       </div>

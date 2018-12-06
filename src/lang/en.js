@@ -24,6 +24,7 @@ export default {
   wechat:'WeChat',
   bankcard:'Bank card',
   inpCur:"Please enter a currency name",
+  minAm:"Minimum amount",
   header:{
     home:'Home',
     c2c:'C2C Transaction',

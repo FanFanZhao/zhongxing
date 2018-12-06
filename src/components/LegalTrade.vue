@@ -38,9 +38,9 @@
 					<div class="flex alcenter">{{(item.limitation.min-0).toFixed(2)}}-{{(item.limitation.max-0).toFixed(2)}}CNY</div>
 					<div class="flex alcenter">{{item.price}}</div>
 					<div class="flex alcenter">
-						<img v-if="item.way_name == '支付宝'" src="../assets/images/zfb_icon.png" />
-						<img v-if="item.way_name == '微信'" src="../assets/images/wx_icon.png" />
-						<img v-if="item.way_name == '银行'" src="../assets/images/bank_icon.png" />
+						<img  src="../assets/images/zfb_icon.png" />
+						<img src="../assets/images/wx_icon.png" />
+						<img src="../assets/images/bank_icon.png" />
 					</div>
 					<div class="flex alcenter end"  @click="buySell(item.price,item.limitation.min,item.limitation.max,item.id,item.type,item.surplus_number)">
 						<button class="btn">{{classify}}</button>
@@ -514,6 +514,8 @@
 							font-size: 14px;
 						}
 						>img {
+							width: 20px;
+							margin: 0 6px;
 						}
 
 						>span {

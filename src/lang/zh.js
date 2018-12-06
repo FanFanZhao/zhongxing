@@ -24,7 +24,7 @@ export default {
   wechat:'微信',
   bankcard:'银行卡',
   inpCur:'请输入币种名称',
-
+  minAm:'最小数量',
   header:{
     home:'首页',
     c2c:'C2C交易',

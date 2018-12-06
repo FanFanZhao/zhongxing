@@ -131,7 +131,7 @@
           <span>{{$t('legal.limit')}}：</span>
           <span>{{min}} - {{max}}</span>
         </div>
-        <div class="flex">
+        <!-- <div class="flex">
           <span>{{$t('legal.pay')}}：</span>
           <select name id v-model="submitPms.way">
             <option value="-1">{{$t('shop.pchoose')}}</option>
@@ -139,7 +139,7 @@
             <option value="we_chat">{{$t('wechat')}}</option>
             <option value="bank">{{$t('bankcard')}}</option>
           </select>
-        </div>
+        </div> -->
         <div class="flex">
           <span>{{$t('price')}}：</span>
           <input type="number" v-model="submitPms.price">
@@ -149,7 +149,7 @@
           <input type="number" v-model="submitPms.total_number">
         </div>
         <div class="flex">
-          <span>{{$t('minnum')}}：</span>
+          <span>{{$t('minAm')}}：</span>
           <input type="number" v-model="submitPms.min_number">
         </div>
         <div class="btn" @click="legalSend">{{$t('shop.release')}}</div>
@@ -282,10 +282,7 @@ export default {
     },
     legalSend() {
       var that = this;
-      if (this.submitPms.way == "-1") {
-        layer.msg(that.$t('lay.mpay'));
-        return;
-      } else if (this.submitPms.price == "") {
+      if (this.submitPms.price == "") {
         layer.msg(that.$t('lay.mprice'));
         return;
       } else if (this.submitPms.min_number == "") {
