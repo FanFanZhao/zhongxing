@@ -14,12 +14,12 @@
                         <span class="register-item">{{$t('code')}}</span>
                         <div class="code-box flex">
                             <input type="text" class="input-main input-content" maxlength="16" v-model="phoneCode" id="pwd" >
-                        <button type="button" @click="setTime" class="redBg">获取验证码</button>
+                        <button type="button" @click="setTime" class="redBg">{{$t('forget.getcode')}}</button>
                         </div>
                     </div>
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
-                        <button class="register-button curPer redBg" type="button" @click="check">确认绑定</button>
+                        <button class="register-button curPer redBg" type="button" @click="check">{{$t('bdemail.surebind')}}</button>
                         
                     </div>
                    
@@ -61,15 +61,16 @@ export default {
       });
     },
     setTime(e) {
+      var that = this;
       if (e.target.disabled) {
         return;
       } else {
         var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if (this.account_number == "") {
-          layer.tips("请输入邮箱", "#account");
+          layer.tips(that.$t('lay.nemail'), "#account");
           return;
         } else if (!emreg.test(this.account_number)) {
-          layer.tips("您输入的邮箱账号不符合规则!", "#account");
+          layer.tips(that.$t('lay.noemail'), "#account");
           return;
         }
 
@@ -77,11 +78,11 @@ export default {
         var time = 60;
         var timer = null;
         timer = setInterval(function() {
-          e.target.innerHTML = time + "秒";
+          e.target.innerHTML = time + "S";
           e.target.disabled = true;
           if (time == 0) {
             clearInterval(timer);
-            e.target.innerHTML = "验证码";
+            e.target.innerHTML = that.$t('code');
             e.target.disabled = false;
             return;
           }
@@ -90,6 +91,7 @@ export default {
       }
     },
     check() {
+      var that = this;
       var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
       let user_string = this.account_number;
       var isEmail = emreg.test(user_string);
@@ -97,14 +99,12 @@ export default {
       var data = {};
 
       if (user_string == "") {
-        console.log("请输入账号");
-
-        layer.tips("请输入邮箱!", "#account");
+        layer.tips(that.$t('lay.nemail'), "#account");
         return;
       } else if (this.phoneCode == "") {
         // console.log('请输入验证码');
 
-        layer.tips("请输入验证码!", "#pwd");
+        layer.tips(that.$t('register.codenum'), "#pwd");
         return;
       } 
       console.log(data);

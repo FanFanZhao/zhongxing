@@ -117,6 +117,15 @@ export default {
     emailbox:'邮箱',
     surebind:'确认绑定',
   },
+  bdphone:{
+    bindphone:'绑定手机号',
+    phone:'手机号',
+  },
+  lgpwd:{
+    setpwd:'修改密码',
+    renewpwd:'请再次输入新密码',
+
+  },
   security:{
     lever:'您的账号安全等级 : ',
     wan:'完善更多资料，保证账号安全',
@@ -307,6 +316,7 @@ export default {
     pwdliu:'密码不能小于六位!',
     slogin:'登录成功',
     noemail:'您的邮箱不符合规则',
+    phonenot:'您输入的手机号账号不符合规则!',
     nophone:'请输入手机号',
     nemail:'请输入邮箱',
     inpwd:'请输入密码',
@@ -341,6 +351,16 @@ export default {
     intermediate:'中',
     high:'高',
     strong:'强',
+    buymoney:'请输入欲购买总额',
+    buynum:'请输入欲购买数量',
+    sellmoney:'请输入欲出售总额',
+    sellnum:'请输入欲出售数量',
+    tname:'请先进行实名认证再下单',
+    payset:'请先设置收款方式',
+    
+
+
+
     
 
 

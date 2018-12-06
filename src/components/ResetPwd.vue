@@ -4,21 +4,21 @@
         <div class="content-wrap">
             <div class="account">
                 <div class="main">
-                    <p class="main_title">修改密码</p>
+                    <p class="main_title">{{$t('lgpwd.setpwd')}}</p>
                     <div class="register-input pass-box">
-                        <span class="register-item">请输入原密码</span>
+                        <span class="register-item">{{$t('lpwd.oldpwd')}}</span>
                         <input :type="showold?'text':'password'" class="input-main input-content" maxlength="20" v-model="oldPwd" id="account">
                         <img src="../assets/images/showpass.png" alt="" v-if="showold" @click="showold = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showold" @click="showold = true">
                     </div>
                      <div class="register-input pass-box">
-                        <span class="register-item">请输入新密码</span>
+                        <span class="register-item">{{$t('lpwd.newpwd')}}</span>
                         <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="pwd" id="pwd">
                         <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                     </div>
                      <div class="register-input pass-box">
-                        <span class="register-item">请再次输入新密码</span>
+                        <span class="register-item">{{$t('lpwd.repwd')}}</span>
                         <input :type="showrepass?'text':'password'" class="input-main input-content" maxlength="16" v-model="rePwd" id="rePwd">
                         <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showrepass" @click="showrepass = true">
@@ -32,7 +32,7 @@
                     </div> -->
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
-                        <button type="button" class="register-button curPer redBg" @click="reset" >重置密码</button>
+                        <button type="button" class="register-button curPer redBg" @click="reset" >{{$t('lpwd.rpwd')}}</button>
                         
                     </div>
                     
@@ -53,7 +53,7 @@ export default {
       pwd: "",
       rePwd: "",
       code: "",
-      resetSeconds: "发送验证码",
+      resetSeconds: this.$t('send'),
       showpass:false,
       showrepass:false,
       showold:false
@@ -100,7 +100,8 @@ export default {
     //   });
     // },
     reset() {
-       var regPsws = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/;
+      var that = this;
+      var regPsws = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/;
       let msg = "";
       let oldpassword = this.oldPwd;
 
@@ -108,25 +109,25 @@ export default {
       let re_password = this.rePwd;
       let login_password_code = this.code;
       if (oldpassword == "") {
-        layer.msg('请输入原密码')
+        layer.msg(that.$t('lpwd.oldpwd'))
         return;
       } else if(password == ''){
-        layer.msg('请输入新密码');
+        layer.msg(that.$t('lpwd.newpwd'));
         return;
       } else if(password.length<6||password.length>16){
-        layer.msg('密码在6到16位之间');
+        layer.msg(that.$t('register.pwd'));
         return;
       }
       else if(!regPsws.test(password)){
-        layer.msg('密码必须由数字和字母组合');
+        layer.msg(that.$t('register.pwd'));
         return;
       }
       else if(re_password == ''){
-        layer.msg('请再次输入新密码');
+        layer.msg(that.$t('lgpwd.renewpwd'));
         return;
       }
       else if (password != re_password) {
-        layer.msg("两次输入的密码不一致");
+        layer.msg(that.$t('lay.twopwd'));
         return;
       }
        else {

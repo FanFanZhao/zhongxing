@@ -84,6 +84,7 @@ export default {
       }
     },
     getList(more = false) {
+      var that = this;
       var pms = {};
       if (!more) {
         this.filterPms.page = 1;
@@ -109,7 +110,7 @@ export default {
             if (msg.data.length) {
               this.list = this.list.concat(msg.data);
             } else {
-              layer.msg("暂无更多");
+              layer.msg(that.$t('nomore'));
             }
           } else {
             this.list = msg.data;
