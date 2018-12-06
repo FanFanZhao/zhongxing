@@ -103,9 +103,15 @@ export default {
     setpwd:'Setting up the password of French currency funds',
     resetpwd:'Replacement of the code for French currency funds',
     oldpwd:'Please input the original password.',
+    newpwd:'Please input the new password.',
     repwd:'Please enter your password again.',
     spwd:'Set password',
     rpwd:'Reset password',
+  },
+  bdemail:{
+    bindemail:'Bind mailbox',
+    emailbox:'mailbox',
+    surebind:'Confirm binding',
   },
   security:{
     lever:'Your Account Security Level：',
@@ -328,6 +334,9 @@ export default {
     nameplease:'Please input your name!',
     idplease:'Please input ID card number!',
     comid:'Please upload the complete certificate!',
+    intermediate:'intermediate',
+    high:'high',
+    strong:'strong',
   }
 
 

@@ -12,7 +12,7 @@
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showold" @click="showold = true">
                     </div>
                      <div class="register-input pass-box">
-                        <span class="register-item">{{$t('lpwd.oldpwd')}}</span>
+                        <span class="register-item">{{$t('lpwd.newpwd')}}</span>
                         <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="pwd" id="pwd">
                         <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
@@ -70,16 +70,16 @@ export default {
       let password = this.pwd;
       let re_password = this.rePwd;
       if(this.paypassword==1&&oldpassword==''){
-        return layer.msg('请输入与原密码')
+        return layer.msg(this.$t('lpwd.oldpwd'))
       }
       if(this.paypassword==1&&(oldpassword.length<6||oldpassword.length>20)){
-        return layer.msg('密码6-20位，由数字或字母组成')
+        return layer.msg(this.$t('lay.pwdlength'))
       }
       if(password.length>20||password.length<6||re_password.length>20||re_password.length<6){
-        return layer.msg('密码6-20位，由数字或字母组成');
+        return layer.msg(this.$t('lay.pwdlength'));
       } 
       if (password != re_password) {
-        return layer.msg("两次输入的密码不一致");
+        return layer.msg(this.$t('lay.twopwd'));
       }
       if(this.paypassword==0){
         this.$http({

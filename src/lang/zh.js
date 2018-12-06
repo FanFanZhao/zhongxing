@@ -107,10 +107,15 @@ export default {
     setpwd:'设置法币资金密码',
     resetpwd:'重置法币资金密码',
     oldpwd:'请输入原密码',
+    newpwd:'请输入新密码',
     repwd:'请再次输入密码',
     spwd:'设置密码',
     rpwd:'重置密码',
-
+  },
+  bdemail:{
+    bindemail:'绑定邮箱',
+    emailbox:'邮箱',
+    surebind:'确认绑定',
   },
   security:{
     lever:'您的账号安全等级 : ',
@@ -333,6 +338,9 @@ export default {
     nameplease:'请输入姓名!',
     idplease:'请输入证件号!',
     comid:'请上传完整的证件!',
+    intermediate:'中',
+    high:'高',
+    strong:'强',
     
 
 
