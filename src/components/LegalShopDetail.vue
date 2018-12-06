@@ -87,6 +87,7 @@
         <div class="w25">限额</div>
         <div class="w10">单价</div>
         <div class="w10">支付方式</div>
+        <div class="w10">已付款</div>
         <div>操作</div>
       </div>
       <ul :class="[showWhich+'-box']">
@@ -103,6 +104,7 @@
           >{{(item.limitation.min-0).toFixed(4)}}-{{(item.limitation.max-0).toFixed(4)}}</div>
           <div class="w10">{{item.price}}</div>
           <div class="w10">{{item.way_name}}</div>
+          <div class="w10">{{item.wait_confirm}}</div>
           <div>
             <span @click="changeOrder('error_send',item.id)" v-if="item.is_done!=1">异常</span>
             <span @click="changeOrder('back_send',item.id)" v-if="item.is_done!=1">撤回</span>

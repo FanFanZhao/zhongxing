@@ -15,7 +15,7 @@
                 <span>JNB</span>
                 <span>JNB</span> -->
                 <span v-for="(tab,index) in tabList" :key="index" :class="['bdr-part',{'active': (index == isShow&&!showAdd)}]" @click="changeType(index,tab.name,tab.id)">{{tab.name}}</span>
-                <span @click="showAdd=true" :class="['bdr-part',{'active': showAdd}]">{{$t('myMarkets')}}</span>
+                <span @click="showAdd=true" :class="['bdr-part',{'active': showAdd}]">{{$t('home.myMarkets')}}</span>
             </div>
         </div>
         <div class="coin-title clear clr-part">
@@ -477,7 +477,7 @@ export default {
   padding: 10px 0 15px;
 }
 .tabtitle {
-  padding: 0 20px;
+  padding: 0 14px;
 }
 .tabtitle span {
   flex: 1;

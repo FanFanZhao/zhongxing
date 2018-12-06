@@ -49,7 +49,7 @@
           <div class="coin-tab">
             <ul class="coins">
               <li v-for="(coin,index) in quotation" :key="index" @click="nowCoin = coin.name" :class="{activeCoin:nowCoin == coin.name}">{{$t('home.with')}}{{coin.name}}  {{$t('home.markets')}}<span class='' v-if="nowCoin == coin.name"></span></li>
-              <li :class="{activeCoin:nowCoin == '自选'}" @click="nowCoin ='自选'">{{$t('myMarkets')}}</li>
+              <li :class="{activeCoin:nowCoin == '自选'}" @click="nowCoin ='自选'">{{$t('home.myMarkets')}}</li>
             </ul>
           </div>
         <div class="coins-list">
@@ -65,7 +65,7 @@
           </div>
           
           <ul class="list-con scroll" v-for="(item,index) in quotation" :key="index">
-            <li v-for="(li,inde) in item.quotation" :key="inde" :data-name='li.currency_id+"/"+li.legal_id' v-if="(li.added&&nowCoin == $t('myMarkets')) ||li.legal_name == nowCoin">
+            <li v-for="(li,inde) in item.quotation" :key="inde" :data-name='li.currency_id+"/"+li.legal_id' v-if="(li.added&&nowCoin == $t('home.myMarkets')) ||li.legal_name == nowCoin">
               <div class="two-coin">
                 <img :src="li.logo" alt="" style="width:30px;">
                 <span style="font-weight:bold"><span class="high_blue">{{li.currency_name}}</span><span class="low_blue">/{{li.legal_name}}</span></span>

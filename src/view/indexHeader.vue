@@ -69,7 +69,7 @@
       </div>
       <div class="flex lang-box">
           <span @click="setLang('zh')">中</span>
-          <span @click="setLang('en')">英</span>
+          <span @click="setLang('en')">En</span>
         </div>
       <!-- <div class=" theme flex">
           <img src="../assets/images/dark.png"  @click="$changeTheme('light')" alt="">
@@ -134,7 +134,7 @@ export default {
       } else {
         window.localStorage.setItem('locale',lang);
         this.$i18n.locale = lang;
-        // window.location.reload();
+        window.location.reload();
       }
     },
     goHome() {

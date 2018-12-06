@@ -43,6 +43,7 @@ export default {
   },
   home:{
     with:'对',
+    myMarkets:'自选',
     markets:"交易区",
     pair:'币种对',
     market:"",
@@ -279,6 +280,7 @@ export default {
     choosecoin:'选择币种',
     huanum:'划转数量',
     mrecord:'财务记录',
+    transfer:'划转'
   },
   set:{
     secset:'安全设置',

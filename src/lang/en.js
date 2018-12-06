@@ -39,6 +39,7 @@ export default {
     center:'Personal center'
   },
   home:{
+    myMarkets:'My markets',
     with:'',
     markets:"Markets",
     market:"Market",
@@ -276,6 +277,7 @@ export default {
     choosecoin:'Select the currency',
     huanum:'Transfer number',
     mrecord:'Financial records',
+    transfer:'Transfer'
   },
   set:{
     secset:'Security Settings',
