@@ -418,6 +418,7 @@ export default {
     }
     > .ul-head {
       height: 30px;
+      overflow: hidden;
       > div {
         // text-align: center;
         float: left;

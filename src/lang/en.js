@@ -185,6 +185,7 @@ export default {
     time:'time',
     contact:'Contact information',
     buyer:'Buyer',
+    seller:'Seller',
     ordertime:'Order time',
     reference:'Reference number',
     ceilorder:'Cancel transaction',
@@ -216,6 +217,8 @@ export default {
     placeorder:'Place an order',
     inwant:'Please input',
     total:'Total money',
+    ceilnot:'If the buyer has paid you, please do not cancel the transaction.',
+    shopaccount:'Merchant account',
   },
   shop:{
     myshop:'My shops',
@@ -243,6 +246,18 @@ export default {
     buy:'Purchase',
     pchoose:'Please choose',
     minnum:'Minimum transaction volume',
+    ordercom:'Order completed',
+    orderceil:'Order cancelled',
+    buyerpayed:'Buyer has paid, please confirm after verification',
+    sellerwait:'Please wait for confirmation from the seller.',
+    receivepay:'Confirm receipt',
+    onsell:'Online sale',
+    onbuy:'Buying online',
+    fatotal:'Total legal tender',
+    sceil:'automatic cancellation',
+    nomin:'No less than the minimum limit',
+    nomax:'Do not exceed the maximum limit',
+    nomaxnum:'Do not exceed the maximum quantity'
   },
   market:{
     market:'Market',
@@ -280,6 +295,7 @@ export default {
     start:'Start trading'
   },
   account:{
+    assets:'Assets',
     taccount:'Trading account',
     laccount:'Legal account',
     totalassets:'Total assets conversion',

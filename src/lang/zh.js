@@ -190,6 +190,7 @@ export default {
     time:'时间',
     contact:'联系方式',
     buyer:'买家',
+    seller:'卖家',
     ordertime:'下单时间',
     reference:'参考号',
     ceilorder:'取消交易',
@@ -221,6 +222,10 @@ export default {
     placeorder:'下单',
     inwant:'请输入要',
     total:'总额',
+    ceilnot:'如果买家已向您付款请千万不要取消交易',
+    shopaccount:'商家账户',
+    
+
   },
   shop:{
     myshop:'我的店铺',
@@ -248,6 +253,21 @@ export default {
     buy:'求购',
     pchoose:'请选择',
     minnum:'最小交易数量',
+    ordercom:'订单已完成',
+    orderceil:'订单已取消',
+    buyerpayed:'买家已付款，请核实后确认',
+    sellerwait:'请等待卖家确认',
+    receivepay:'确认已收款',
+    onsell:'在线出售',
+    onbuy:'在线购买',
+    fatotal:'法币总额',
+    sceil:'秒后自动取消',
+    nomin:'不能低于最低限额',
+    nomax:'不能超出最大限额',
+    nomaxnum:'不能超出最大数量'
+  },
+  lgset:{
+    lgset:'法币交易设置',
   },
   market:{
     market:'市场',
@@ -285,6 +305,7 @@ export default {
     start:'开始交易'
   },
   account:{
+    assets:'资产',
     taccount:'交易账户',
     laccount:'法币账户',
     totalassets:'总资产折合',

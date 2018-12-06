@@ -10,7 +10,7 @@
                 <div class="account-content">
                     <div class="tc hide" style="padding-top: 150px;">
                         <img src="../assets/images/nodata.png" alt=""> 
-                        <p class="fColor2 ft18">暂无数据</p>
+                        <p class="fColor2 ft18">{{$t('nodata')}}</p>
                     </div>
                     <div>
                         <ul class="noticeList">
