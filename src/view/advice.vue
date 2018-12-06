@@ -1,24 +1,24 @@
 <template>
     <div class="advice_wrap bg-part">
-       <div class="title ft16">留言记录</div>
+       <div class="title ft16">{{$t('ad.adrecord')}}</div>
        <ul>
            <li v-for="(item,index) in lists" :key="index">
                <div class="list-item">
                <div class="mb10 flex between">
-               <h2 class="creat">发布：{{item.content}}</h2>
+               <h2 class="creat">{{$t('ad.release')}}：{{item.content}}</h2>
                <span class="fr ft12">{{item.create_time}}</span>
                </div>
                 <div class=" flex between">
-               <p class="ft14 reply">回复：{{item.reply_content||'暂无'}}</p>
+               <p class="ft14 reply">{{$t('ad.reply')}}：{{item.reply_content||$t('ad.none')}}</p>
                <span class="fr ft12">{{item.reply_time||''}}</span>
                </div>
                </div>
            </li>
            <li class="more tc ft14 mb10 gray" @click="getMore">{{more}}</li>
        </ul>
-       <div class="title ft16">发布留言</div>
-       <textarea class="texta ft14" v-model="texta" placeholder="请填写留言内容"></textarea>
-       <div class="tc submit_btn blue_bg ft16" @click="submit">提交</div>
+       <div class="title ft16">{{$t('ad.releaseit')}}</div>
+       <textarea class="texta ft14" v-model="texta" :placeholder="$t('ad.con')"></textarea>
+       <div class="tc submit_btn blue_bg ft16" @click="submit">{{$t('ad.up')}}</div>
     </div>
 </template>
 <script>
@@ -28,7 +28,7 @@ export default {
              texta:'',
              token:'',
              lists:[],
-             more:'加载更多',
+             more:this.$t('ad.more'),
              page:1
          }
      },
@@ -39,7 +39,7 @@ export default {
      methods:{
          submit(){
              if(this.texta == ''){
-                 layer.msg('请填写留言内容');
+                 layer.msg(this.$t('lay.pliu'));
                  return;
              }
              var i = layer.load();
@@ -77,10 +77,10 @@ export default {
                 if(res.data.type == 'ok'){
                     console.log(res);
                     if(res.data.message.data.length>0){
-                      this.more = '加载更多'
+                      this.more = this.$t('nomore')
                         this.lists = this.lists.concat(res.data.message.data);
                     }else{
-                      this.more = '没有更多了'
+                      this.more = this.$t('nomore')
                     }
                 }
                 
@@ -89,7 +89,7 @@ export default {
              //加载更多
              getMore(){
                  this.page++;
-                 this.more = '加载中...'
+                 this.more = this.$t('nomore')
                  this.getlist(this.page)
              } 
      }

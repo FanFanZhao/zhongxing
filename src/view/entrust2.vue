@@ -10,68 +10,68 @@
         </div>
         <div class="content" v-show="isUrl==0" >
             <ul class="list-title fColor2 ft12 clear bdr-part">
-                <li class="fl w20">时间</li>
-                <li class="fl w12">交易对</li>
-                <li class="fl w12">方向</li>
-                <li class="fl w12">价格</li>
-                <li class="fl w14">数量</li>
-                <li class="fl w20">委托总额</li>
-                <li class="fl w8 tr">操作</li>
+                <li class="fl w20">{{$t('time')}}</li>
+                <li class="fl w12">{{$t('center.pairs')}}</li>
+                <li class="fl w12">{{$t('center.direction')}}</li>
+                <li class="fl w12">{{$t('price')}}</li>
+                <li class="fl w14">{{$t('number')}}</li>
+                <li class="fl w20">{{$t('center.dealtotal')}}</li>
+                <li class="fl w8 tr">{{$t('do')}}</li>
             </ul>
             <div class="container scroll" >
                 <ul class="list-item ft12" v-if="flags01&&enList01.length>0">
                     <li v-for="item in enList01" class="clear">
                         <span class="fl w20">{{item.create_time}}</span>
                         <span class="fl w12">{{item.currency_name}}/{{item.legal_name}}</span>
-                        <span class="fl w12" :class="{'green': item.typeInfo == 'in'}">{{item.typeInfo=='in'?'买入':'卖出'}}</span>
+                        <span class="fl w12" :class="{'green': item.typeInfo == 'in'}">{{item.typeInfo=='in'?$t('center.inbuy'):$t('center.outsell')}}</span>
                         <span class="fl w12">{{item.price}}</span>
                         <span class="fl w14">{{item.number}}</span>
                         <span class="fl w20">{{item.total_price}}</span>
-                        <span class="fl w8 tr curPer ceilColor" @click="revoke(item.id)">撤销</span>
+                        <span class="fl w8 tr curPer ceilColor" @click="revoke(item.id)">{{$t('revoke')}}</span>
                     </li>
                 </ul>
                 <ul class="list-item ft12" v-if="flags02&&enList02.length>0">
                     <li v-for="item in enList02" class="clear">
                         <span class="fl w20">{{item.create_time}}</span>
                         <span class="fl w12">{{item.currency_name}}/{{item.legal_name}}</span>
-                        <span class="fl w12" :class="{'green': item.typeInfo == 'in'}">{{item.typeInfo=='in'?'买入':'卖出'}}</span>
+                        <span class="fl w12" :class="{'green': item.typeInfo == 'in'}">{{item.typeInfo=='in'?$t('center.inbuy'):$t('center.outsell')}}</span>
                         <span class="fl w12">{{item.price}}</span>
                         <span class="fl w14">{{item.number}}</span>
                         <span class="fl w20">{{item.total_price}}</span>
-                        <span class="fl w8 tr curPer ceilColor" @click="revoke(item.id)">撤销</span>
+                        <span class="fl w8 tr curPer ceilColor" @click="revoke(item.id)">{{$t('revoke')}}</span>
                     </li>
                 </ul>
                 <div class="getmore tc fColor1 ft14 mt10 curPer" @click="getMore" v-if="!loading && enList01.length>9||enList02.length>9">{{more}}</div>
                 <div class="tc" v-if="loading">
                     <img src="@/assets/images/loading.gif" alt=""  class="lodw20">
-                    <p class="ft12 baseColor">加载中...</p>
+                    <p class="ft12 baseColor">{{$t('loading')}}...</p>
                 </div>
                 <div class="no_data tc" v-if="flags01==true && enList01.length<=0">
                 <img src="@/assets/images/nodata.png" alt="">
-                <p class="fColor2 ft18">暂无数据</p> 
+                <p class="fColor2 ft18">{{$t('nodata')}}</p> 
             </div>
             <div class="no_data tc" v-if="flags02==true && enList02.length<=0">
                 <img src="@/assets/images/nodata.png" alt="">
-                <p class="fColor2 ft18">暂无数据</p> 
+                <p class="fColor2 ft18">{{$t('nodata')}}</p> 
             </div>
             <div class="no_data tc" v-if="enList01.length<=0 && enList02.length<=0 && flags01==false&&flags02 == false">
                 <img src="@/assets/images/nodata.png" alt="">
-                <p class="fColor2 ft18">暂无数据</p> 
+                <p class="fColor2 ft18">{{$t('nodata')}}</p> 
             </div>
             </div>
             
         </div>
         <div class="content" v-show="isUrl==1">
             <ul class="list-title fColor2 ft12 clear bdr-part">
-                <li class="fl w20">时间</li>
-                <li class="fl w10">交易对</li>
-                <li class="fl w8">数量</li>
-                <li class="fl w10">价格</li>
-                <li class="fl w8">委托总额</li>
-                <li class="fl w10">成交均价</li>
-                <li class="fl w10">状态</li>
-                <li class="fl w10">手续费</li>
-                <li class="fl w8 tr">方向</li>
+                <li class="fl w20">{{$t('time')}}</li>
+                <li class="fl w10">{{$t('center.pairs')}}</li>
+                <li class="fl w8">{{$t('number')}}</li>
+                <li class="fl w10">{{$t('price')}}</li>
+                <li class="fl w8">{{$t('center.dealtotal')}}</li>
+                <li class="fl w10">{{$t('center.tprice')}}</li>
+                <li class="fl w10">{{$t('status')}}</li>
+                <li class="fl w10">{{$t('rate')}}</li>
+                <li class="fl w8 tr">{{$t('center.direction')}}</li>
             </ul>
             <div class="container scroll" v-if="hisList.length>0">
                 <ul class="list-item ft12">
@@ -82,20 +82,20 @@
                         <span class="fl w10">{{item.price}}</span>
                         <span class="fl w8">{{(item.price * item.number) | numFilter}}</span>
                         <span class="fl w10">{{item.price}}</span>
-                        <span class="fl w10">已成交</span>
-                        <span class="fl w10">{{item.type=='in'? item.in_fee||'无':item.out_fee||'无'}}</span>
-                        <span class="fl w8 tr" :class="item.type=='out'?'redColor':''">{{item.type=='in'?'买入':'卖出'}}</span>
+                        <span class="fl w10">{{$t('center.contran')}}</span>
+                        <span class="fl w10">{{item.type=='in'? item.in_fee||$t('center.nothing'):item.out_fee||$t('center.nothing')}}</span>
+                        <span class="fl w8 tr" :class="item.type=='out'?'redColor':''">{{item.type=='in'?$t('center.inbuy'):$t('center.outsell')}}</span>
                     </li>
                 </ul>
                 <div class="getmore tc fColor1 ft14 mt10 curPer" @click="getMore01" v-if="!loading && hisList.length>9">{{more01}}</div>
                 <div class="tc" v-if="loading">
                     <img src="@/assets/images/loading.gif" alt="" class="lodw20">
-                    <p class="ft12 baseColor">加载中...</p>
+                    <p class="ft12 baseColor">{{$t('loading')}}...</p>
                 </div>
             </div>
             <div class="no_data tc" v-if="hisList.length<=0">
                 <img src="@/assets/images/nodata.png" alt="">
-                <p class="fColor2 ft18">暂无数据</p>   
+                <p class="fColor2 ft18">{{$t('nodata')}}</p>   
             </div>
         </div>
     </div>
@@ -112,14 +112,14 @@ export default {
       page01: 1,
       url: "entrust",
       type: "in",
-      more: "加载更多",
-      more01: "加载更多",
+      more: this.$t('more'),
+      more01: this.$t('more'),
       loading: false,
       urlList: [
-        { title: "当前委托", url: "transaction_in" },
-        { title: "历史委托", url: "transaction_complete" }
+        { title: this.$t('center.cdel'), url: "transaction_in" },
+        { title: this.$t('center.hdeal'), url: "transaction_complete" }
       ],
-      wayList: [{ title: "买入", type: "in" }, { title: "卖出", type: "out" }, { title: "全部", type: "all" }],
+      wayList: [{ title: this.$t('center.inbuy'), type: "in" }, { title: this.$t('center.outsell'), type: "out" }, { title: this.$t('center.all'), type: "all" }],
       enList: [],
       enList01: [],
       enList02: [],
@@ -140,7 +140,7 @@ export default {
       this.isUrl = index;
       this.url = url;
       this.page = 1;
-      this.more = "加载更多";
+      this.more = this.$t('more');
       if (index == 0) {
         this.getdata(this.urls, this.types);
       } else if (index == 1) {
@@ -151,7 +151,7 @@ export default {
       var that = this;
       this.page = 1;
       // this.type = type;
-      this.more = "加载更多";
+      this.more = this.$t('more');
       this.isChoosed = index;
       if (index == 1) {
         this.flags02 = true;
@@ -199,7 +199,7 @@ export default {
         return;
       }
       var that = this;
-      layer.confirm("确认要撤单吗？", ["确定", "取消"], () => {
+      layer.confirm(that.revoke, [that.sure, that.ceil], () => {
         // var id = id;
         that
           .$http({
@@ -230,6 +230,7 @@ export default {
 
     getdata(url, type) {
       // console.log(type);
+      var that = this;
       var page = this.page;
       if(!this.token){
         return;
@@ -260,7 +261,7 @@ export default {
               var newEist = mlist;
               console.log(newEist.length);
               if (newEist.length <= 0) {
-                this.more = "没有更多数据了...";
+                this.more = that.$t('nomore');
                 return;
               } else {
                 this.enList01 = this.enList01.concat(newEist);
@@ -284,7 +285,7 @@ export default {
               console.log(newEist.length)
               var newEist = mlist;
               if (newEist.length <= 0) {
-                this.more = "没有更多数据了...";
+                this.more = that.$t('nomore');
                 return;
               } else {
                 this.enList02 = this.enList02.concat(newEist);
@@ -326,7 +327,7 @@ export default {
           } else {
             var newhist = mlist;
             if (newhist.length <= 0) {
-              this.more = "没有更多数据了...";
+              this.more = that.$t('nomore');
               return;
             } else {
               this.hisList = this.hisList.concat(newhist);
@@ -386,6 +387,7 @@ export default {
   line-height: 40px;
   border-bottom: 1px solid #ccc;
   height: 40px;
+  overflow: hidden;
 }
 .no_data {
   padding: 50px 0;

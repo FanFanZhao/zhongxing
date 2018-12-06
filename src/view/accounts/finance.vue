@@ -1,7 +1,7 @@
 <template>
     <div class="bgf8 bg-part clr-part main-wrap scroll">
         <div class="header bgf8 bg-part">
-            <p class="fl">总资产折合：<span class="asset_num">{{total}}</span><span class="asset_name"> USDT</span><span class="ft12 "> ≈ <span>{{totalCNY}}</span>CNY</span>
+            <p class="fl">{{$t('account.totalassets')}}：<span class="asset_num">{{total}}</span><span class="asset_name"> USDT</span><span class="ft12 "> ≈ <span>{{totalCNY}}</span>CNY</span>
             <!-- <label class="min_lab ft14"><input type="checkbox" />隐藏小额资产</label><i></i><label class="inp_lab"><input  type="text"/><i></i></label> -->
             </p>
             <div class="hide-min" >
@@ -10,18 +10,18 @@
             </div>
             <p class="fr right_text">
                 <!-- <span class="record" @click="record">财务记录</span> -->
-                <span class="address" @click="withdraw_address">提币地址管理</span>
+                <span class="address" @click="withdraw_address">{{$t('account.upaddress')}}</span>
             </p>
         </div>
         <div class="content  ft12">
            <div class="content_top flex alcenter fColor2">
-               <p class="flex1 tc">币种<i></i></p>
-               <p class="flex1 tc">可用</p>
-               <p class="flex1 tc">冻结</p>
-               <p class="flex1 tc">折合(CNY)</p>
+               <p class="flex1 tc">{{$t('market.currency')}}<i></i></p>
+               <p class="flex1 tc">{{$t('center.available')}}</p>
+               <p class="flex1 tc">{{$t('account.freezes')}}</p>
+               <p class="flex1 tc">{{$t('account.conversion')}}(CNY)</p>
                <!-- <p class="flex1 tc">BTC估值<i></i></p> -->
                <!-- <p class="flex1 tc">锁仓</p> -->
-               <p class="flex1 tc">操作</p>
+               <p class="flex1 tc">{{$t('do')}}</p>
            </div>
            <ul class="content_ul">
                <li v-for="(item,index) in asset_list" :key="index" :hidden='(item.change_balance - 0 -minBalance)<=0&&hideMin'>
@@ -32,45 +32,45 @@
                    <p class="flex1 tc">{{item.cny_price}}</p>
                    <!-- <p class="flex1 tc">{{item.lock_position}}</p> -->
                    <p class="flex1 tc operation">
-                       <span v-if="item.is_recharge==0" @click="noopen" class="no_open">充币</span>
-                       <span v-if="item.is_recharge==1" @click="excharge(index,item.currency)">充币</span>
-                       <span v-if="item.is_pick_up==0" @click="noopen" class="no_open">提币</span>
-                       <span v-if="item.is_pick_up==1" @click="withdraw(index,item.currency,item.currency_name)">提币</span>
-                       <span @click="rec(index,item.currency)">记录</span>
+                       <span v-if="item.is_recharge==0" @click="noopen" class="no_open">{{$t('account.charging')}}</span>
+                       <span v-if="item.is_recharge==1" @click="excharge(index,item.currency)">{{$t('account.charging')}}</span>
+                       <span v-if="item.is_pick_up==0" @click="noopen" class="no_open">{{$t('account.withdraw')}}</span>
+                       <span v-if="item.is_pick_up==1" @click="withdraw(index,item.currency,item.currency_name)">{{$t('account.withdraw')}}</span>
+                       <span @click="rec(index,item.currency)">{{$t('account.record')}}</span>
                    </p>
                    </div>
                    <!--充币区-->
                    <div class="hide_div bdr-part" v-if="index == active">
-                       <p class="fColor2 ft12">充币地址</p>
-                       <p class="mt50 mb50"><span class="ft18  excharge_address" :class="{'bg':flags}">{{excharge_address}}</span><span id="copy" @click="copy" class="copy ft14">复制</span><span class="ewm_wrap"><span class="ewm ft14" @click="show_ewm">二维码</span>
+                       <p class="fColor2 ft12">{{$t('account.cgaddress')}}</p>
+                       <p class="mt50 mb50"><span class="ft18  excharge_address" :class="{'bg':flags}">{{excharge_address}}</span><span id="copy" @click="copy" class="copy ft14">{{$t('account.copy')}}</span><span class="ewm_wrap"><span class="ewm ft14" @click="show_ewm">{{$t('account.code')}}</span>
                          <div class="ewm_img" id="code" :class="{'hide':isHide}">
                              
                          </div>
                          <!-- <img class="ewm_img" :class="{'hide':isHide}" src="../../assets/images/ewm.jpg" /> -->
                        </span></p>
                        <!-- <p class="ft12 fColor2 mb50">查看<span class="excharge_record">充币记录</span>跟踪状态</p> -->
-                       <p class="ft12 fColor2 mb15 mt80">温馨提示</p>
+                       <p class="ft12 fColor2 mb15 mt80">{{$t('account.notice')}}</p>
                        <ul class="tips_ul ft12 fColor2">
                            <!-- <li class="tips_li" style="list-style:disc inside" v-for="item in tip_list">{{item}}</li> -->
                            <li>
-                                • 请勿向上述地址充值任何非{{item.currency_name}}资产，否则资产将不可找回。<br>
-                                •  {{item.currency_name}}充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。<br>
-                                • 您充值至上述地址后，需要整个网络节点的确认，1次网络确认后到账，6次网络确认后可提币。<br>
-                                • 最小充值金额：{{rate}} {{item.currency_name}} ，小于最小金额的充值将不会上账且无法退回。<br>
-                                • 您的充值地址不会经常改变，可以重复充值；如有更改，我们会尽量通过网站公告或邮件通知您。<br>
-                                • 请务必确认电脑及浏览器安全，防止信息被篡改或泄露。
+                                • {{$t('account.a1')}}{{item.currency_name}}{{$t('account.a2')}}<br>
+                                • {{item.currency_name}} {{$t('account.a3')}}<br>
+                                • {{$t('account.a4')}}<br>
+                                • {{$t('account.a5')}}：{{rate}} {{item.currency_name}} ，{{$t('account.a6')}}<br>
+                                • {{$t('account.a7')}}<br>
+                                • {{$t('account.a8')}}
                            </li>
                        </ul>
                    </div>
                    <!--提币区-->
                    <div class="hide_div bdr-part" v-if="index == active01">
-                       <p class="fColor2 ft12 mb15">提币地址</p>
+                       <p class="fColor2 ft12 mb15">{{$t('account.whaddress')}}</p>
                        <!-- <input class="address_inp clr-part  mb30" type="text" v-model="address" /> -->
                        <select class="address_inp clr-part  mb30" v-model="address">
-                           <option value="">选择提币地址</option>
+                           <option value="">{{$t('account.chaddress')}}</option>
                            <option :value="item.address" v-for="(item,index) in addressList" :key="index">{{item.address}}</option>
                        </select>
-                       <p class="fColor2 ft12 mb15 flex between alcenter"><span>数量</span><span>可用：<span class="use_num">{{balance}} {{coinname}}</span><span></span></span></p>
+                       <p class="fColor2 ft12 mb15 flex between alcenter"><span>{{$t('number')}}</span><span>{{$t('center.available')}}：<span class="use_num">{{balance}} {{coinname}}</span><span></span></span></p>
                        <label class="num_lab flex between mb30">
                             <input class="clr-part" type="text" :placeholder="min_number" v-model="number" />
                             <span>{{coinname}}</span>
@@ -78,34 +78,34 @@
                        <div class="flex mb30">
                            <div class="left_inp_wrap flex1">
                                <p class="fColor2 ft12 mb15">
-                                   <span>手续费</span>
-                                   <span>范围：<span>{{ratenum}}</span></span>
+                                   <span>{{$t('rate')}}</span>
+                                   <span>{{$t('account.range')}}：<span>{{ratenum}}</span></span>
                                </p>
                                <label class="range_lab flex alcenter between"><input class="clr-part" disabled  type="text" v-model="rate" /><span>{{coinname}}</span></label>
                            </div>
                            <div class="right_inp_wrap flex1">
                                <p class=" mb15">
-                                   <span class="fColor2 ft12">到账数量</span>
+                                   <span class="fColor2 ft12">{{$t('account.havenum')}}</span>
                                </p>
                                <label class="get_lab flex alcenter between"><input class="clr-part" disabled v-model="reachnum" type="number" /><span>{{coinname}}</span></label>
                            </div>
                        </div>
-                        <p class="fColor2 ft12 mb15">提币密码</p>
+                        <p class="fColor2 ft12 mb15">{{$t('account.uppwd')}}</p>
                        <input class="address_inp clr-part  mb30" type="password" v-model="password" />
                        <div class="flex">
                         <div class="flex2">
                        <!-- <p class="ft12 fColor2 mb15">温馨提示</p> -->
                        <ul class="tips_ul ft12 fColor2" style="list-style:disc inside">
-                           <li>最小提币数量为：{{min_number}}{{item.currency_name}}。</li>
+                           <li>{{$t('account.minnum')}}：{{min_number}}{{item.currency_name}}。</li>
                            <li>
-                                为保障资金安全，当您账户安全策略变更、密码修改、我们会对提币进行人工审核，请耐心等待工作人员电话或邮件联系。
+                                {{$t('account.call')}}
                            </li>
                            <li>
-                                请务必确认电脑及浏览器安全，防止信息被篡改或泄露
+                                {{$t('account.a8')}}
                            </li>
                        </ul>
                        </div>
-                       <div class="flex1 tc"><button class="withdraw_btn" @click="mention">提币</button></div>
+                       <div class="flex1 tc"><button class="withdraw_btn" @click="mention">{{$t('account.withdraw')}}</button></div>
                        
                        </div>
                    </div>
@@ -113,9 +113,9 @@
                    <div class="hide_div bdr-part rec-box" v-if="index == active02">
                        <div class="rec-con">
                         <div class="rec-title">
-                            <span>数量</span>
-                            <span>记录</span>
-                            <span>时间</span>
+                            <span>{{$t('number')}}</span>
+                            <span>{{$t('account.record')}}</span>
+                            <span>{{$t('time')}}</span>
                         </div>
                         <ul class="rec-list">
                             <li v-for="(reItem,reIndex) in recData" v-if="recData.length !=0" :key="reIndex">
@@ -124,7 +124,7 @@
                                 <span>{{reItem.create_time}}</span>
                             </li>
                             <li class="no_rec mt10 light_blue" v-if="recData.length !=0" @click="more(item.currency)">{{moreLog}}</li>
-                            <li class="no_rec mt10 light_blue" v-show="recData.length ==0">暂无记录</li>
+                            <li class="no_rec mt10 light_blue" v-show="recData.length ==0">{{$t('nodata')}}</li>
                         </ul>
                        </div>
                    </div>
@@ -173,7 +173,7 @@ export default {
                 '请勿向上述地址充值任何非USDT资产，否则资产将不可找回。','USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。','请勿向上述地址充值任何非USDT资产，否则资产将不可找回。','USDT充币仅支持simple send的方法，使用其他方法（send all）的充币暂时无法上账，请您谅解。'
             ],
             page:1,
-            moreLog:'加载更多',
+            moreLog:this.$t('more'),
             rete:'',
             total:'',
             totalCNY:'',
@@ -193,28 +193,29 @@ export default {
     methods:{
         //刷新页面
         refresh(){
-                    this.$http({
-                        url: '/api/wallet/refresh',
-                        method:'get',
-                        data:{},
-                        headers:{'Authorization':this.token}
-                    }).then( res => {
-                        if(res.data.type == 'ok'){
-                            
-                        }
-                    })
+            this.$http({
+                url: '/api/wallet/refresh',
+                method:'get',
+                data:{},
+                headers:{'Authorization':this.token}
+            }).then( res => {
+                if(res.data.type == 'ok'){
+                    
+                }
+            })
         },
          
         goRecord(){
             this.$router.push({name:'coinRecord'})
         },
         init(){
-             var clipboard = new Clipboard('.copy')
+            var that = this;
+            var clipboard = new Clipboard('.copy')
             clipboard.on('success', function (e) {
-               layer.alert('复制成功')
+               layer.alert(that.$t('lay.copys'))
             });
             clipboard.on('error', function (e) {
-                alert('复制失败')
+                alert(that.$t('lay.fcopy'))
             });
         },
         getRate(currency){
@@ -371,16 +372,16 @@ export default {
                             console.log(res);
                             this.recData = this.recData.concat(res.data.message.list);
                             if(res.data.message.list.length != 0){
-                                this.moreLog = '加载更多'
+                                this.moreLog = this.$t('more')
                             }else{
-                                this.moreLog = '没有更多记录了'
+                                this.moreLog = this.$t('nomore')
                             }
                         }
                     })
         },
         //加载更多记录
         more(currency){
-            this.moreLog = '加载中...'
+            this.moreLog = this.$t('loading')
             this.page++;
             this.getLog(currency);
         },
@@ -416,7 +417,7 @@ export default {
             })
         },
         noopen(){
-           layer.msg('暂未开放')
+           layer.msg(this.$t('lay.notopen'))
         },
         // 提币按钮
         mention() {
@@ -427,20 +428,20 @@ export default {
             var rate = this.rate;
             var min_number = this.minnumber;
             if(!address){
-                layer.alert('请选择提币地址');
+                layer.alert(that.$t('lay.caddress'));
                 return;
             } 
             if(!number){
-                layer.alert('请输入提币数量');
+                layer.alert(that.$t('lay.cnumber'));
                 return;
             } 
             if(!this.password){
-                 layer.alert('请输入提币密码');
+                 layer.alert(that.$t('lay.cpwd'));
                 return;
             }
             if((number-0)<min_number){
                 console.log(number,min_number)
-                return layer.alert('输入的提币数量小于最小值');
+                return layer.alert(that.$t('lay.minnum'));
             }
             // if(rate=='' || rate>=1){
             //     layer.alert('请输入0-1之间的提币手续费');
@@ -495,12 +496,12 @@ export default {
                 });
           clipboard.on("success", function (e) {
                         that.flags = true;
-                        layer.msg('复制成功');
+                        layer.msg(that.$t('lay.copys'));
                         
                     });
                     clipboard.on("error", function (e) {
                         that.flags = false;
-                         layer.msg('请重新复制')
+                         layer.msg(that.$t('lay.fcopy'))
                     });
         },
         record(){

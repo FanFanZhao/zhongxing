@@ -5,13 +5,13 @@
         <div class="content-wrap">
             <div class="account">
                 <div class="main" >
-                    <p class="main_title">绑定邮箱</p>
+                    <p class="main_title">{{$t('bdemail.bindemail')}}</p>
                     <div class="register-input">
-                        <span class="register-item">邮箱</span>
+                        <span class="register-item">{{$t('bdemail.emailbox')}}</span>
                         <input type="text" class="input-main input-content" maxlength="20" v-model="account_number" id="account">
                     </div>
                      <div class="register-input code-input" >
-                        <span class="register-item">验证码</span>
+                        <span class="register-item">{{$t('code')}}</span>
                         <div class="code-box flex">
                             <input type="text" class="input-main input-content" maxlength="16" v-model="phoneCode" id="pwd" >
                         <button type="button" @click="setTime" class="redBg">获取验证码</button>

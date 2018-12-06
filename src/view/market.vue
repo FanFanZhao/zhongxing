@@ -1,8 +1,7 @@
 <template>
     <div class="market clr-part">
 		<div class="m_title  clear">
-            <span class=" fl">{{$t('home.markets')}}</span>
-           
+            <span class=" fl">{{$t('market.market')}}</span>
             <div class="m_search fr hide">
                <input type="text" >
                <img src="../assets/images/search.png" alt="">
@@ -22,30 +21,30 @@
         <div class="coin-title clear clr-part">
             <div>
                 <div class="flex tc" @click="arrSort('at')">
-                  <span>{{$t('home.pair')}}</span>
+                  <span>{{$t('market.currency')}}</span>
                   <div class="down-up">
-                    <div   :class="['el-icon-caret-top',{bold:sortKey == 'at'&&directions == 'up'}]" @click="directions = 'up';arrSort('at','up')"></div>
-                     <div  :class="['el-icon-caret-bottom',{bold:sortKey == 'at'&&directions == 'down'}]" @click="directions = 'down';arrSort('at','down')"></div>
+                    <div :class="['el-icon-caret-top curPer',{bold:sortKey == 'at'&&directions == 'up'}]" @click="directions = 'up';arrSort('at','up')"></div>
+                    <div :class="['el-icon-caret-bottom curPer',{bold:sortKey == 'at'&&directions == 'down'}]" @click="directions = 'down';arrSort('at','down')"></div>
                   </div>
                 </div>
                 <!-- <img src="../assets/images/select0.png" alt=""> -->
             </div>
             <div>
                 <div class="flex tc" @click="arrSort('now_price')">
-                  <span>{{$t('home.price')}}</span>
+                  <span>{{$t('market.lastprice')}}</span>
                   <div class="down-up">
-                    <div   :class="['el-icon-caret-top',{bold:sortKey == 'now_price'&&directions == 'up'}]" @click="directions = 'up';arrSort('now_price','up')"></div>
-                     <div  :class="['el-icon-caret-bottom',{bold:sortKey == 'now_price'&&directions == 'down'}]" @click="directions = 'down';arrSort('now_price','down')"></div>
+                    <div :class="['el-icon-caret-top curPer',{bold:sortKey == 'now_price'&&directions == 'up'}]" @click="directions = 'up';arrSort('now_price','up')"></div>
+                    <div :class="['el-icon-caret-bottom curPer',{bold:sortKey == 'now_price'&&directions == 'down'}]" @click="directions = 'down';arrSort('now_price','down')"></div>
                   </div>
                 </div>
                 <!-- <img src="../assets/images/select0.png" alt=""> -->
             </div>
             <div>
                  <div class="flex tc" @click="arrSort('change')">
-                   <span>{{$t('home.change')}}</span>
+                   <span>{{$t('market.change')}}</span>
                    <div class="down-up">
-                     <div   :class="['el-icon-caret-top',{bold:sortKey == 'change'&&directions == 'up'}]" @click="directions = 'up';arrSort('change')"></div>
-                     <div  :class="['el-icon-caret-bottom',{bold:sortKey == 'change'&&directions == 'down'}]" @click="directions = 'down';arrSort('change')"></div>
+                     <div :class="['el-icon-caret-top curPer',{bold:sortKey == 'change'&&directions == 'up'}]" @click="directions = 'up';arrSort('change')"></div>
+                     <div :class="['el-icon-caret-bottom curPer',{bold:sortKey == 'change'&&directions == 'down'}]" @click="directions = 'down';arrSort('change')"></div>
                    </div>
                  </div>
                 <!-- <img src="../assets/images/select0.png" alt=""> -->
@@ -434,9 +433,7 @@ export default {
         isShow: this.isShow,
         now_price:now_price
       };
-      console.log('33333333333333333333');
-      console.log(now_price);
-      console.log('ppppppppppppppppppppppppppppp');
+      
       console.log($('.coin-wrap').children().eq(index).children().eq(idx).children().eq(1).text());
       var sco_price = $('.coin-wrap').children().eq(index).children().eq(idx).children().eq(1).text()
       //向exchange组件传最新价

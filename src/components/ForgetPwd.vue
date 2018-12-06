@@ -5,43 +5,43 @@
         <div class="content-wrap">
             <div class="account">
                 <div class="main" v-if="!showReset">
-                    <p class="main_title">忘记密码</p>
+                    <p class="main_title">{{$t('forget.fpwd')}}</p>
                     <div class="register-input">
-                        <span class="register-item">账号</span>
+                        <span class="register-item">{{$t('accounts')}}</span>
                          <select name="" v-if="isMb" class="chooseTel" v-model="areaCode" ref="select">
                         <option :value="index" v-for="(item,index) in country" :key="index">{{item.area_code}} {{item.name_cn}}</option>
                       </select>
                         <input type="text" class="input-main input-content" maxlength="20" v-model="account_number" id="account">
                     </div>
                      <div class="register-input code-input" >
-                        <span class="register-item">验证码</span>
+                        <span class="register-item">{{$t('code')}}</span>
                         <div class="code-box">
                             <input type="text" class="input-main input-content" maxlength="16" v-model="phoneCode" id="pwd" >
-                        <button type="button" @click="setTime" class="redBg">获取验证码</button>
+                        <button type="button" @click="setTime" class="redBg">{{$t('forget.getcode')}}</button>
                         </div>
                     </div>
                     <div style="margin-top: 10px;">
                         <span class="register-item"></span>
-                        <button class="register-button curPer redBg" type="button" @click="check">确认</button>
+                        <button class="register-button curPer redBg" type="button" @click="check">{{$t('confirm')}}</button>
                         
                     </div>
                    
                 </div>
                 <div class="main" v-if="showReset">
-                    <div class="main_title">设置密码</div>
+                    <div class="main_title">{{$t('forget.setpwd')}}</div>
                     <div class="register-input pass-box">
-                        <span class="register-item">请输入密码</span>
+                        <span class="register-item">{{$t('forget.inpwd')}}</span>
                         <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
                         <img src="../assets/images/showpass.png" alt="" v-if="showpass" @click="showpass = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showpass" @click="showpass = true">
                     </div>
                     <div class="register-input pass-box">
-                        <span class="register-item">请再次输入密码</span>
+                        <span class="register-item">{{$t('forget.repwd')}}</span>
                         <input :type="showrepass?'text':'password'" class="input-main input-content" maxlength="16" v-model="re_password" id="repwd">
                         <img src="../assets/images/showpass.png" alt="" v-if="showrepass" @click="showrepass = false">
                         <img src="../assets/images/hidepass.png" alt="" v-if="!showrepass" @click="showrepass = true">
                     </div>
-                    <button class="register-button curPer redBg" type="button" @click="resetPass" style="margin-top:20px">确认</button>
+                    <button class="register-button curPer redBg" type="button" @click="resetPass" style="margin-top:20px">{{$t('confirm')}}</button>
                 </div>
             </div>
         </div>
@@ -93,6 +93,7 @@ export default {
       });
     },
     setTime(e) {
+      var that = this;
       if (e.target.disabled) {
         return;
       } else {
@@ -100,7 +101,7 @@ export default {
         var url = "sms_send";
         var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if (this.account_number == "") {
-          layer.tips("请输入账号", "#account");
+          layer.tips(that.$t('lay.paccount'), "#account");
           return;
         } 
         // else if (reg.test(this.account_number)) {
@@ -118,11 +119,11 @@ export default {
         var time = 60;
         var timer = null;
         timer = setInterval(function() {
-          e.target.innerHTML = time + "秒";
+          e.target.innerHTML = time + "S";
           e.target.disabled = true;
           if (time == 0) {
             clearInterval(timer);
-            e.target.innerHTML = "验证码";
+            e.target.innerHTML = that.$t('code');
             e.target.disabled = false;
             return;
           }
@@ -131,6 +132,7 @@ export default {
       }
     },
     check() {
+      var that = this;
       // var reg = /^1[345678]\d{9}$/;
       var emreg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
       let user_string = this.account_number;
@@ -140,14 +142,13 @@ export default {
       var data = {};
 
       if (user_string == "") {
-        console.log("请输入账号");
 
-        layer.tips("请输入账号!", "#account");
+        layer.tips(that.$t('lay.paccount'), "#account");
         return;
       } else if (this.phoneCode == "") {
         // console.log('请输入验证码');
 
-        layer.tips("请输入验证码!", "#pwd");
+        layer.tips(that.$t('lay.notcode'), "#pwd");
         return;
       } else if (isEmail) {
         url = "user/check_email";
@@ -181,22 +182,23 @@ export default {
       });
     },
     resetPass() {
+      var that = this;
       var regPsws = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,16}$/;
       if (this.password == "") {
-        layer.msg("请输入密码");
+        layer.msg(that.$t('lay.inpwd'));
         return;
       }else if(this.password.length<6||this.password.length>16){
-        layer.msg('密码只能在6-16位之间');
+        layer.msg(that.$t('lay.pwdlength'));
         return;
       } else if(!regPsws.test(this.password)){
-        layer.msg('密码必须由数字和字母组成');
+        layer.msg(that.$t('lay.pwdcom'));
         return;
       }
       else if (this.re_password == "") {
-        layer.msg("请再次输入密码");
+        layer.msg(that.$t('lay.repwd'));
         return;
       } else if (this.password !== this.re_password) {
-        layer.msg("两次输入的密码不一致");
+        layer.msg(that.$t('lay.twoped'));
         return;
       } else {
         let data = {

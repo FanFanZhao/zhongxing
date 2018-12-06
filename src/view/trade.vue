@@ -12,22 +12,22 @@
             <div class="w50 fl first brcolor bdr-part">
                
                 <div class="ft14">
-                    <div class="available clear 1 " v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
-                    或 <span class="redColor curPer" @click="goNext('register')">注册</span>
-                    开始交易
+                    <div class="available clear 1 " v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">{{$t('logins')}}</span>
+                    {{$t('center.or')}} <span class="redColor curPer" @click="goNext('register')">{{$t('registers')}}</span>
+                    {{$t('center.start')}}
                     </div>
                     <div class="clear available bdr-part" v-else>
-                        <span class="fl 1">可用 {{user_legal}} {{legal_name}}</span>
+                        <span class="fl 1">{{$t('center.available')}} {{user_legal}} {{legal_name}}</span>
                         <!-- <span class="fr redColor curPer" @click="goNext('account')">充币</span> -->
                     </div>
                     <div class="mt40 input-item clear">
-                        <label>买入价</label>
+                        <label>{{$t('center.buyprice')}}</label>
                         <input class="clr-part bg-main bdr-part" type="number" v-model="buyPrice" min="0" @keydown.69.prevent  :disabled="disabled" v-if="!disabled">
                         <input class="clr-part bg-main bdr-part" type="number" v-model="lastPrice02" @keydown.69.prevent  :disabled="disabled" v-if="disabled">
                         <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
-                        <label>买入量</label>
+                        <label>{{$t('center.buynumber')}}</label>
                         <input class="clr-part bg-main bdr-part" type="number" min="0" v-model="buyNum" @keydown.69.prevent  @keyup="numFilter($event)">
                         <span>{{currency_name}}</span>
                     </div>
@@ -37,28 +37,28 @@
                     </div> -->
                     <!-- <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div> -->
                     <el-slider v-model="value1" :min="0" :max="100" show-stops :show-tooltip="true" :format-tooltip="formatTooltip01" :step="25" :disabled="address?current == 0?buyPrice=='':lastPrice02==0?true:false:true" @change="changeVal"></el-slider>
-                    <div class="mt50 1 ft16">交易额 {{buyTotal}} {{legal_name}}</div>
-                    <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">买{{currency_name}}</div>
+                    <div class="mt50 1 ft16">{{$t('center.tradetotal')}} {{buyTotal}} {{legal_name}}</div>
+                    <div class="sell_btn curPer mt40 tc greenBack 1 ft16" @click="buyCoin">{{$t('center.buyin')}}{{currency_name}}</div>
                 </div>
             </div>
             <div class="w50 fl second">
                 <div class="ft14">
-                    <div class="available clear 1 bdr-part" v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
-                    或 <span class="redColor curPer" @click="goNext('register')">注册</span>
-                    开始交易
+                    <div class="available clear 1 bdr-part" v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">{{$t('logins')}}</span>
+                    {{$t('center.or')}} <span class="redColor curPer" @click="goNext('register')">{{$t('registers')}}</span>
+                    {{$t('center.start')}}
                     </div>
                     <div class="clear available bdr-part" v-else>
-                        <span class="fl 1">可用 {{user_currency}} {{currency_name}}</span>
+                        <span class="fl 1">{{$t('center.available')}} {{user_currency}} {{currency_name}}</span>
                         <!-- <span class="fr redColor curPer" @click="goNext('account')">充币</span> -->
                     </div>
                     <div class="mt40 input-item clear">
-                        <label>卖出价</label>
+                        <label>{{$t('center.sellprice')}}</label>
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="sellPrice" v-if="!disabled" min="0">
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent v-model="lastPrice01" :disabled='disabled' v-if="disabled">
                         <span>{{legal_name}}</span>
                     </div>
                     <div class="mt40 input-item clear">
-                        <label>卖出量</label>
+                        <label>{{$t('center.sellnumber')}}</label>
                         <input class="clr-part bg-main bdr-part" type="number" @keydown.69.prevent  @keyup="numFilter($event)" v-model="sellNum" min="0">
                         <span>{{currency_name}}</span>
                     </div>
@@ -68,60 +68,11 @@
                     </div> -->
                     <!-- <div class="attion tr 1">范围 (0.000001,20,精度: 0.000001)</div> -->
                     <el-slider v-model="value2" :min="0" :max="100" :show-tooltip="true" show-stops :step="25" :format-tooltip="formatTooltip02"  :disabled="address?current == 0?sellPrice=='':lastPrice01==0?true:false:true" @change="changeVal2"></el-slider>
-                    <div class="mt50 1 ft16">交易额 {{sellTotal}} {{legal_name}}</div>
-                    <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">卖{{currency_name}}</div>
+                    <div class="mt50 1 ft16">{{$t('center.tradetotal')}} {{sellTotal}} {{legal_name}}</div>
+                    <div class="sell_btn curPer mt40 tc redBack 1 ft16" @click="sellCoin">{{$t('center.sellout')}}{{currency_name}}</div>
                 </div>
             </div>
         </div>
-        <!-- 市价交易 -->
-        <!-- <div class="content clear" v-if="showNone" >
-            <div class="w50 fl first">
-                <div class="ft14">
-                   <div class="available clear 1" v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
-                    或 <span class="redColor curPer" @click="goNext('register')">注册</span>
-                    开始交易
-                    </div>
-                    <div class="clear available" v-else>
-                        <span class="fl 1">可用 {{user_currency}} {{currency_name}}</span>
-                        <span class="fr redColor curPer" @click="goNext('account')">充币</span>
-                    </div>
-                    <div class="mt40 input-item clear">
-                        <label>买入价</label>
-                        <input type="number" value="以市场最低价买入" @keydown.69.prevent  disabled>
-                        <span>{{currency_name}}</span>
-                    </div>
-                    <div class="mt40 input-item clear">
-                        <label>买入量</label>
-                        <input type="number"  @keydown.69.prevent  @keyup="numFilter($event)">
-                        <span>{{legal_name}}</span>
-                    </div>
-                    <div class="sell_btn curPer mt40 tc greenBack 1 ft16">买{{legal_name}}</div>
-                </div>
-            </div>
-            <div class="w50 fl second">
-                <div class="ft14">
-                   <div class="available clear 1" v-if="address.length<=0"><span class="redColor curPer" @click="goNext('login')">登录</span>
-                    或 <span class="redColor curPer" @click="goNext('register')">注册</span>
-                    开始交易
-                    </div>
-                    <div class="clear available" v-else>
-                        <span class="fl 1">可用 {{user_legal}} {{legal_name}}</span>
-                        <span class="fr redColor curPer" @click="goNext('account')">充币</span>
-                    </div>
-                    <div class="mt40 input-item clear">
-                        <label>卖出价</label>
-                        <input type="number" value="以市场最优价格卖出" @keydown.69.prevent disabled>
-                        <span>{{currency_name}}</span>
-                    </div>
-                    <div class="mt40 input-item clear">
-                        <label>卖出量</label>
-                        <input type="number" @keydown.69.prevent  @keyup="numFilter($event)">
-                        <span>{{legal_name}}</span>
-                    </div>
-                    <div class="sell_btn curPer mt40 tc redBack 1 ft16">卖{{legal_name}}</div>
-                </div>
-            </div>
-        </div>   -->
     </div>
 </template>
 
@@ -153,7 +104,7 @@ export default {
       sellPrice: "",
       buyInfo: { buyPrice: 0, buyNum: 0, pwd: "", url: "transaction/in" },
       sellInfo: { sellPrice: 0, sellNum: 0, pwd: "", url: "transaction/out" },
-      tradetype: [{ typetext: "限价交易" }, { typetext: "市价交易" }],
+      tradetype: [{ typetext: this.$t('center.xian') }, { typetext: this.$t('center.shi') }],
       value1: 0,
       value2: 0,
       disable: false,
@@ -355,23 +306,23 @@ export default {
       var that = this;
       if (!this.disabled) {
         if (!this.buyPrice || this.buyPrice <= 0) {
-          layer.msg("请输入买入价");
+          layer.msg(that.$t('lay.inprice'));
           return;
         }
         
       }else{
           if(this.lastPrice02<=0){
-            layer.msg("买入价不能为0");
+            layer.msg(that.$t('lay.noinprice'));
             return;
           }
       }
       
       if (!this.buyNum || this.buyNum <= 0) {
-        layer.msg("请输入买入量");
+        layer.msg(that.$t('lay.innumber'));
         return;
       }
       if(this.address == ''){
-        layer.msg('请登录');
+        layer.msg(that.$t('lay.plogin'));
         setTimeout(function(){
            that.$router.push('/components/login');
         },1000);
@@ -431,21 +382,21 @@ export default {
       var that = this;
       if (!this.disabled) {
         if (!this.sellPrice || this.sellPrice <= 0) {
-          layer.msg("请输入卖出价");
+          layer.msg(that.$t('lay.outprice'));
           return;
         }
       }else{
         if(this.lastPrice01<=0){
-          layer.msg("卖出价不能为0");
+          layer.msg(that.$t('lay.outinprice'));
           return;
         }
       }
       if (!this.sellNum || this.sellNum <= 0) {
-        layer.msg("请输入卖出量");
+        layer.msg(that.$t('lay.outnumber'));
         return;
       }
       if(this.address == ''){
-        layer.msg('请登录');
+        layer.msg(that.$t('lay.plogin'));
         setTimeout(function(){
            that.$router.push('/components/login')
         },1000);
@@ -504,7 +455,7 @@ export default {
     },
     //买入、卖出记录
     buy_sell(legals_id, currencys_id) {
-      console.log("啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊");
+      // console.log("啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊");
       var i = layer.load();
       this.$http({
         url: "/api/" + "transaction/deal",

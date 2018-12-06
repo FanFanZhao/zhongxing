@@ -176,11 +176,11 @@ export default {
             }
             console.log(this.bar)
             if(this.bar==50){
-              this.lever='中';
+              this.lever=this.$t('lay.intermediate');
             }else if(this.bar==75){
-              this.lever='高'; 
+              this.lever=this.$t('lay.high'); 
             }else if(this.bar==100){
-              this.lever='强';
+              this.lever=this.$t('lay.strong');
             }
             this.widthBar='width:'+this.bar+'%';
           }
@@ -200,11 +200,11 @@ export default {
       });
       clipboard.on("success", function(e) {
         that.flags = true;
-        layer.msg("复制成功");
+        layer.msg(that.$t('lay.copys'));
       });
       clipboard.on("error", function(e) {
         that.flags = false;
-        layer.msg("请重新复制");
+        layer.msg(that.$t('lay.recopy'));
       });
     }
   }
