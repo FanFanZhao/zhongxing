@@ -390,6 +390,7 @@ export default {
       // direction: 'vertical',
       loop: true,
       autoplay: 2000,
+      disableOnInteraction:false,
       // 如果需要分页器
       pagination: ".swiper-pagination02",
       paginationClickable: true,
