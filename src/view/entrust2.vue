@@ -199,7 +199,7 @@ export default {
         return;
       }
       var that = this;
-      layer.confirm(that.revoke, [that.sure, that.ceil], () => {
+      layer.confirm(that.$t('lay.revoke'),{btn: [that.$t('lay.sure'), that.$t('lay.ceil')]}, () => {
         // var id = id;
         that
           .$http({

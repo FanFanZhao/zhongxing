@@ -2,7 +2,7 @@
     <div id="register-box" class="bg-main clr-part">
         <indexHeader></indexHeader>
         <div class="reg-content">
-            <div class="title">{{$t('regidters')}}</div>
+            <div class="title">{{$t('registers')}}</div>
             <div class="tab">
                 <span :class='{active:isMb}' @click="setIsMb(true)">{{$t('register.phone')}}</span>
                 <span :class="{active:!isMb}" @click="setIsMb(false)">{{$t('register.email')}}</span>

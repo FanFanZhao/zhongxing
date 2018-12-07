@@ -56,6 +56,7 @@ export default {
     min:'Minimum Price',
     volume:'Volume',
     trade:'Trade',
+    gotrade:'To deal',
     c1:'Global Digital Asset Allocation and Transaction Services',
     c2:'Global Project Development and Operational Management System',
     c3:'There are local trading service centers in many countries',
