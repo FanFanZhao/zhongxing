@@ -500,6 +500,9 @@
 					}else if(resolution.indexOf('W')!=-1||resolution.indexOf('M')!=-1){
 						resolution=resolution
 					}
+					if(resolution == '1D'){
+						resolution = '1day'
+					}
 					$.ajax({
 						// url:'http://ice.adminchao.com/api/deal/info?' +
 						url:'/api/currency/new_timeshar?' +
