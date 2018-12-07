@@ -4,7 +4,7 @@
       <div class="logo flex alcenter mr20" @click="goHome">
         <img src="../assets/images/new_logo01.png" alt>
       </div>
-      <span class="mr60 titles" @click="goHome">一带一路</span>
+      <span class="mr60 titles" @click="goHome">{{$t('header.projectName')}}</span>
       <router-link to="/" exact>{{$t('header.home')}}</router-link>
       <router-link to="/legalTrade" v-if="token">{{$t('header.c2c')}}</router-link>
       <div v-else @click="goLogin()">{{$t('header.c2c')}}</div>

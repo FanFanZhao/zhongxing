@@ -26,6 +26,7 @@ export default {
   inpCur:'请输入币种名称',
   minAm:'最小数量',
   header:{
+    projectName:'一带一路',
     home:'首页',
     c2c:'C2C交易',
     currency:'币币交易',

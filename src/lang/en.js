@@ -26,6 +26,7 @@ export default {
   inpCur:"Please enter a currency name",
   minAm:"Minimum amount",
   header:{
+    projectName:'one belt one road',
     home:'Home',
     c2c:'C2C Transaction',
     currency:'Currency Transaction',
