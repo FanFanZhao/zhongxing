@@ -28,6 +28,10 @@
         <span>{{msg.user_cash_info.bank_name}}:{{msg.user_cash_info.bank_account}}</span>
       </div>
       <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='buy'">
+        <span>{{$t('legal.deposit')}}：</span>
+        <span>{{msg.bank_address}}</span>
+      </div>
+      <div class="flex" v-if="msg.is_sure == 0||msg.is_sure == 3&&msg.type =='buy'">
         <span>{{$t('legal.wechat')}}：</span>
         <span>{{msg.user_cash_info.wechat_account}}</span>
       </div>
@@ -201,7 +205,7 @@ export default {
     line-height: 40px;
     
     span:first-child {
-      width: 140px;
+      min-width: 144px;
     }
     > .btns {
       padding: 20px 0;

@@ -86,7 +86,7 @@
         <div class="w15">{{$t('number')}}</div>
         <div class="w20">{{$t('legal.limit')}}</div>
         <div class="w15">{{$t('price')}}</div>
-        <div class="w10">{{$t('legal.pay')}}</div>
+        <div class="w15">{{$t('legal.pay')}}</div>
         <div class="w10">{{$t('legal.payed')}}</div>
         <div>{{$t('do')}}</div>
       </div>
@@ -101,7 +101,11 @@
           <div class="w15">{{item.surplus_number}}</div>
           <div class="w20">{{(item.limitation.min-0).toFixed(4)}}-{{(item.limitation.max-0).toFixed(4)}}</div>
           <div class="w15">{{item.price}}</div>
-          <div class="w10">{{item.way_name}}</div>
+          <div class="w15 flex">
+            <img  src="../assets/images/zfb_icon.png" />
+						<img src="../assets/images/wx_icon.png" />
+						<img src="../assets/images/bank_icon.png" />
+          </div>
           <div class="w10">{{item.wait_confirm}}</div>
           <div>
             <span @click="changeOrder('error_send',item.id)" v-if="item.is_done!=1">{{$t('shop.abnormal')}}</span>
@@ -341,6 +345,11 @@ export default {
   width: 1200px;
   // background: #f8f8f8;
   line-height: 30px;
+  .w15 img{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
   > .top {
     background: #f8f8f8;
     line-height: 36px;

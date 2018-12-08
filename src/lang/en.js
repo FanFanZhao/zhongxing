@@ -165,6 +165,7 @@ export default {
     up:'submit'
   },
   legal:{
+    deposit:'Bank of deposit',
     buy:'Purchase',
     sell:'Sell',
     shoper:'business',

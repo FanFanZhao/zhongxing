@@ -18,24 +18,7 @@
               <div class="swiper-pagination" slot="pagination"></div>
             </swiper>
         </div>
-        <!-- <div class="carousel">
-            <div class="swiper-container swiper-container01 swiper-container-horizontal">
-                <div class="swiper-wrapper">
-                    <div class="swiper-slide" :class="{active:index==curSwiper}" v-for="(item ,index) in swiperList" style="width: 232px; margin-right: 10px;" @mouseover="mouseEnter(index)">
-                        <p class="name">{{item.symbol}}</p>
-                        <p class="last">{{item.quotes.USD.price}}</p>
-                        <p class="range" :class="{red:item.quotes.USD.percent_change_24h>=0}">
-                            <i class="iconfont icon-u-arrow3-loss" v-if="item.quotes.USD.percent_change_24h<0"></i>
-                            <i class="iconfont icon-u-arrow3-right" v-else></i>
-                            {{item.quotes.USD.percent_change_24h}}%
-                        </p>
-                    </div>
-                </div>   
-                <div class="swiper-pagination01"></div>
-            </div>
-            <div slot="button-prev" class="swiper-button-prev" tabindex="0" role="button" aria-label="Previous slide"></div>
-            <div slot="button-next" class="swiper-button-next" tabindex="0" role="button" aria-label="Next slide"></div>
-        </div> -->
+        
       <div style="background:#fff!important;color:#333!important">
 
      
@@ -282,19 +265,7 @@ export default {
   mounted() {
     this.getSwiper();
     
-    var mySwiper = new Swiper(".swiper-container01", {
-      // 如果需要分页器
-      pagination: ".swiper-pagination01",
-      paginationClickable: true,
-      // 如果需要前进后退按钮
-      slidesPerView: 5,
-      nextButton: ".swiper-button-next",
-      prevButton: ".swiper-button-prev",
-      observer: true, //修改swiper自己或子元素时，自动初始化swiper
-      observeParents: true //修改swiper的父元素时，自动初始化swiper
-    });
     
-    // this.setChart();
     this.$http({
       url: '/api/' + "news/list",
       method: "post",
@@ -411,7 +382,6 @@ export default {
       console.log("socket");
       that.$socket.emit("login", this.$makeSocketId());
       that.$socket.on("daymarket", msg => {
-        console.log(msg);
         var cname = msg.currency_id+'/'+msg.legal_id;
         var now_price = msg.now_price;
         var change = (msg.change-0).toFixed(2);

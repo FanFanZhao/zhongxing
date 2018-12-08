@@ -168,6 +168,7 @@ export default {
     up:'提交'
   },
   legal:{
+    deposit:'开户行',
     buy:'购买',
     sell:'出售',
     shoper:'商家',
