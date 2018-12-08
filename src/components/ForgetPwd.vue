@@ -4,7 +4,7 @@
     <div class="contentBK">
         <div class="content-wrap">
             <div class="account">
-                <div class="main" v-if="!showReset">
+                <div class="main">
                     <p class="main_title">{{$t('forget.fpwd')}}</p>
                     <div class="register-input">
                         <span class="register-item">{{$t('accounts')}}</span>
@@ -20,15 +20,15 @@
                         <button type="button" @click="setTime" class="redBg">{{$t('forget.getcode')}}</button>
                         </div>
                     </div>
-                    <div style="margin-top: 10px;">
+                    <!-- <div style="margin-top: 10px;">
                         <span class="register-item"></span>
                         <button class="register-button curPer redBg" type="button" @click="check">{{$t('confirm')}}</button>
                         
-                    </div>
+                    </div> -->
                    
                 </div>
-                <div class="main" v-if="showReset">
-                    <div class="main_title">{{$t('forget.setpwd')}}</div>
+                <div class="main">
+                    <!-- <div class="main_title">{{$t('forget.setpwd')}}</div> -->
                     <div class="register-input pass-box">
                         <span class="register-item">{{$t('forget.inpwd')}}</span>
                         <input :type="showpass?'text':'password'" class="input-main input-content" maxlength="16" v-model="password" id="pwd">
@@ -253,7 +253,7 @@ export default {
 }
 .main {
   position: relative;
-  padding: 0 0 60px 30px;
+  padding: 0 0 0 30px;
 }
 .main_title {
   font-size: 36px;

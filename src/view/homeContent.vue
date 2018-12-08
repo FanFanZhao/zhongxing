@@ -10,14 +10,13 @@
         </div> -->
         <!-- <home-login></home-login> -->
         <!-- <home-login></home-login> -->
-        <div class="swiper-container banner_wrap swiper-container-horizontal">
-            <div class="swiper-wrapper">
-               <div class="swiper-slide sliders" v-for="(item,index) in pics" :key="index">
-                   <img :src="item.pic" alt="">
-               </div>
-              
-            </div>
-             <div class="swiper-pagination swiper-pagination02"></div>
+        <div class="swiper-container banner_wrap swiper-container-horizontal" v-if="pics.length">
+            <swiper :options='options'>
+              <swiper-slide v-for="(item,index) in pics" :key="index">
+                  <img :src="item.pic" alt="">
+              </swiper-slide>
+              <div class="swiper-pagination" slot="pagination"></div>
+            </swiper>
         </div>
         <!-- <div class="carousel">
             <div class="swiper-container swiper-container01 swiper-container-horizontal">
@@ -228,8 +227,6 @@
 import "@/assets/style/iconfont2.css";
 import "@/assets/style/iconfont.css";
 import "@/assets/style/index.css";
-import Swiper from "swiper";
-import "swiper/dist/css/swiper.min.css";
 import indexHeader from "@/view/indexHeader";
 import homeLogin from "@/view/homeLogin"; 
 // var echarts = require("echarts");
@@ -239,6 +236,13 @@ export default {
   data() {
     return {
       pics:[],
+      options:{
+        autoplay:true,
+        loop:true,
+        pagination:{
+          el: '.swiper-pagination'
+        }
+      },
       quotation: [],
       nowCoin: "",
       //   banner_imgs:[
@@ -381,22 +385,13 @@ export default {
       }
     },
     getSwiper(){
+      var url = this.$i18n.locale == 'zh'?'pcPic':'pcEngPic';
       this.$http({
-        url:'/api/news/pcPic'
+        url:'/api/news/'+url
       }).then(res => {
         console.log(res);
         this.pics = res.data.message;
-        var mySwiper02 = new Swiper(".banner_wrap", {
-      // direction: 'vertical',
-      loop: true,
-      autoplay: 2000,
-      disableOnInteraction:false,
-      // 如果需要分页器
-      pagination: ".swiper-pagination02",
-      paginationClickable: true,
-      observer: true, //修改swiper自己或子元素时，自动初始化swiper
-      observeParents: true //修改swiper的父元素时，自动初始化swiper
-    });
+        
       })
     },
     setData(obj) {

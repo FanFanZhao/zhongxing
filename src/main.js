@@ -12,6 +12,11 @@ import "@/assets/style/common.scss"
 import VueSocketio from 'vue-socket.io'
 import echarts from 'echarts'
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+
+// require styles
+import './assets/style/swiper.min.css'
+
+Vue.use(VueAwesomeSwiper, /* { default global options } */)
 import store from './store'
 import {Slider,Input,Row,Col,Button,Form,FormItem,Radio,RadioGroup,Select,Option,Tabs,TabPane,Dialog,Card,Icon} from 'element-ui'
 Vue.use(Form)
@@ -30,7 +35,7 @@ Vue.use(Tabs)
 Vue.use(TabPane)
 Vue.use(Dialog)
 Vue.use(Card)
-Vue.use(VueAwesomeSwiper)
+
 Vue.prototype.$echarts = echarts
 // Vue.prototype.url = 'http://47.75.200.255:8080/'
 Vue.prototype.url = 'https://www.beltandroad.io/'

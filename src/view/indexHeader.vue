@@ -61,8 +61,8 @@
         </div>
         
       </div>
-      <div class="flex notice" @mouseover="showNot = true;getNotice()" @mouseleave="showNot = false">
-        <img src="../assets/images/not.png" alt="">
+      <div class="flex notice" @mouseover="showNot = true" @mouseleave="showNot = false">
+        <img src="../assets/images/not.png" alt="" @mouseover='getNotice'>
         <p :class="['scroll',{showNot:showNot}]">
           <router-link :to="{path:'components/noticeDetail',query:{id:item.id}}" v-for="(item,index) in noticeList" :key="index">{{item.title}}</router-link>
         </p>
@@ -288,7 +288,7 @@ export default {
     }
     > a,
     > div {
-      margin-right: 30px;
+      margin-right: 25px;
       height: 45px;
       cursor: pointer;
 
