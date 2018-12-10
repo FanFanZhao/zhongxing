@@ -34,16 +34,18 @@
         </div>
         <div class="content" style="overflow:hidden">
             <ul class="list-title fColor2 ft14 clear bdr-part">
-                <li class="fl w12">{{$t('time')}}</li>
-                <li class="fl w12">{{$t('price')}}</li>
-                <li class="fl w12">{{$t('center.volume')}}</li>
+                <li class="fl w12" style="width:36%">{{$t('time')}}</li>
+                <li class="fl w12" style="width:30%">{{$t('price')}}</li>
+                <li class="fl w12" style="width:12%">{{$t('center.direction')}}</li>
+                <li class="fl w12" style="width:22%">{{$t('center.volume')}}</li>
             </ul>
             <div class="containers scroll" v-if="deList.length>0">
                 <ul v-for="itm in deList" class="list-item color ft12">
                     <li class="clear flex clr-part bg-hov">
-                        <span class=" ">{{itm.time}}</span>
-                        <span class="green">{{itm.price}}</span>
-                        <span class="">{{itm.number}}</span>
+                        <span class=" " style="width:36%">{{itm.time}}</span>
+                        <span :class="[itm.way == 1?'redColor':'ceilColor']" style="width:30%">{{itm.price}}</span>
+                        <span style="width:12%" :class="[itm.way == 1?'redColor':'ceilColor']">{{itm.way == 1?'卖出':'买入'}}</span>
+                        <span class="" style="width:22%">{{itm.number}}</span>
                     </li>
                 </ul>
             </div>
@@ -295,7 +297,7 @@ export default {
 .no_data{padding: 50px 0;}
 .containers{height: 330px;overflow: auto;}
 .list-item li{line-height: 30px; display: flex;}
-.list-item li span{display: inline-block; float: left; width: 33.3%;text-align: center;}
+.list-item li span{display: inline-block; float: left; text-align: center;}
 
 /* .list-item li:hover{background-color: #eee; color: #de5959;} */
 .list-item li span.green{color: #36a792}

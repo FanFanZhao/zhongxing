@@ -2,7 +2,7 @@
   <div class="k-line-area bg-1d1d29">
     <div class="flex ft12">
 			<span class="ft16 bold">{{$store.state.symbol}}</span>
-      <span>{{$t('market.change')}}：{{(change-0).toFixed(2)}}%</span>
+      <span>{{$t('market.change')}}：{{(change-0)}}%</span>
       <span>{{$t('home.high')}}：{{(high-0).toFixed(6)}}</span>
       <span>{{$t('home.min')}}：{{(low-0).toFixed(6)}}</span>
       <span>24h{{$t('home.volume')}}：{{(volume-0).toFixed(2)}}</span>
