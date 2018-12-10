@@ -545,7 +545,7 @@ export default {
   border-bottom: none;
 }
 .coin-title .flex{
-  justify-content: center;
+  padding-left: 20px;
 }
 .coin-title>div {
   width: 33.3%;

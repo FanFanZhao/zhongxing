@@ -180,7 +180,8 @@
               <h1 class="ft26 bold mb30">多平台终端接入</h1>
               <p class="ft16 bold mb10">覆盖IOS、Android、Windows多个平台，支持全业务功能</p>
             </div> -->
-            <img class="imgs05" src="../assets/images/content.jpg" />
+            <img v-if="$i18n.locale == 'zh'" class="imgs05" src="../assets/images/content.jpg" />
+            <img v-else class="imgs05" src="../assets/images/enhome1.jpg" alt="">
         </div>
         <!--马上交易-->
         <div class="go_transfer">
@@ -274,7 +275,6 @@ export default {
       }
     })
       .then(res => {
-        console.log(res);
         if (res.data.type == 'ok') {
           var list = res.data.message.list;
           if(list.length>4){
@@ -360,7 +360,6 @@ export default {
       this.$http({
         url:'/api/news/'+url
       }).then(res => {
-        console.log(res);
         this.pics = res.data.message;
         
       })
@@ -379,7 +378,6 @@ export default {
     },
     connect() {
       var that = this;
-      console.log("socket");
       that.$socket.emit("login", this.$makeSocketId());
       that.$socket.on("daymarket", msg => {
         var cname = msg.currency_id+'/'+msg.legal_id;
@@ -396,23 +394,7 @@ export default {
           .css("color", "#459e80")
           .html('+'+change+'%');
         }
-        console.log(cname);
-        // var zf = 0;
-        // if (toprice - yesprice == 0) {
-        //   zf = "0%";
-        // } else if (toprice == 0) {
-        //   zf = "-100";
-        // } else if (yesprice) {
-        //   zf = "+100%";
-        // } else {
-        //   zf = ((toprice - yesprice) / yesprice / 100).toFixed(2);
-        //   if (zf > 0) {
-        //     zf = "+" + zf + "%";
-        //   } else {
-        //     zf = zf + "%";
-        //   }
-        // }
-        // var zf = toprice - yesprice;
+       
         $("li[data-name='" + cname + "']")
           .find(".yester span")
           .html((now_price-0).toFixed(8));
@@ -449,7 +431,8 @@ export default {
         legal_id: quo.legal_id,
         currency_name: quo.currency_name,
         legal_name: quo.legal_name,
-        isShow: index
+        isShow: index,
+        change:quo.change
       };
       window.localStorage.setItem("tradeData", JSON.stringify(tradeData));
       this.$router.push('/dealCenter');
@@ -461,7 +444,6 @@ export default {
         method: "get"
       }).then(res => {
         layer.close(i);
-        console.log(res.data);
         if (res.data.type == "ok" && res.data.message.length != 0) {
           var msg = res.data.message;
           if(this.myAdd.length){
@@ -485,7 +467,8 @@ export default {
             legal_id: quo.legal_id,
             currency_name: quo.currency_name,
             legal_name: quo.legal_name,
-            isShow: 0
+            isShow: 0,
+            change:quo.change
           };
           if (!window.localStorage.getItem("tradeData")) {
             window.localStorage.setItem("tradeData", JSON.stringify(tradeData));
@@ -517,8 +500,7 @@ export default {
             this.coinKline = res.data.message.day[0].data;
             this.coinKlineList = res.data.message.day;
           }
-          console.log(res.data.message.day[0].data);
-          console.log(res.data.message.day);
+         
         }
       });
     },
@@ -541,7 +523,6 @@ export default {
       var date = [];
       var data = [1, 2, 4, 5, 6, 7, 8];
       var now = new Date();
-      console.log(that.coinKlineList);
       for (var i in that.coinKlineList) {
         let temp = that.timestampToTime(that.coinKlineList[i].timestamp);
         console.log(temp);
