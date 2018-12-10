@@ -51,7 +51,7 @@
         <!-- <div class="line"></div> -->
         <ul class="coin-wrap scroll">
           <li v-for="(market,index) in marketList " :key="index" >
-            <p v-for="(itm,idx) in market"  :key="itm.id" v-if="search(itm.currency_name)&&testItem(itm.legal_name,itm.added)" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market,itm.now_price,$event)">
+            <p v-for="(itm,idx) in market"  :key="itm.id" v-if="search(itm.currency_name)&&testItem(itm.legal_name,itm.added)" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market,itm.now_price,itm.change,$event)">
               <span class="w36"><img :src="itm.logo" alt=""><i><em class="deep_blue bold">{{itm.currency_name}}</em><em class="light_blue bold">/{{itm.legal_name}}</em></i></span>
               <span class="w30 tr deep_blue bold nowPrice" :data-name='itm.currency_id+"/"+itm.legal_id'>{{toCny?filterRate(itm.legal_name,itm.now_price):itm.now_price || 0}}</span>
               <span :class="{'green':itm.change>=0}" class="bold">{{(itm.change>0?'+':'')+(itm.change-0).toFixed(2)}}%</span>
@@ -249,12 +249,14 @@ export default {
           this.nowLegal = arr_quota[0][0].legal_name;
           var currency_name = arr_quota[0][0].currency_name;
            var now_price = arr_quota[0][0].now_price;
+           var chang = arr_quota[0][0].change;
           var tradeDatas = {
             currency_id: currency_id,
             legal_id: legal_id,
             currency_name: currency_name,
             legal_name: legal_name,
-            now_price:now_price
+            now_price:now_price,
+            change:chang
           };
         } else {
           var localData = JSON.parse(window.localStorage.getItem("tradeData"));
@@ -456,6 +458,7 @@ export default {
       index,
       market,
       now_price,
+      change,
       event
     ) {
       console.log($('.coin-wrap').children().eq(index).children().eq(idx).children().eq(1).text());
@@ -480,7 +483,8 @@ export default {
         currency_name: currency_name,
         legal_name: legal_name,
         isShow: this.isShow,
-        now_price:now_price
+        now_price:now_price,
+        change:change
       };
       
       console.log($('.coin-wrap').children().eq(index).children().eq(idx).children().eq(1).text());

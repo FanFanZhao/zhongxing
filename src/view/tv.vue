@@ -30,15 +30,15 @@ export default {
       grid: "#f7f8fa",
       theme: "",
       csspath: "bundles/new.css",
-      high: "",
-      low: "",
-      open: "",
-      close: "",
-			volume: "",
+      high: 0,
+      low: 0,
+      open: 0,
+      close: 0,
+			volume: 0,
 			currencyId:'',
 			legalId:'',
-			change:'',
-			nowPrice:''
+			change:0,
+			nowPrice:0
     };
   },
   created() {
@@ -46,7 +46,9 @@ export default {
 			var localData = JSON.parse(window.localStorage.getItem("tradeData"));
 			this.currencyId = localData.currency_id;
 			this.legalId = localData.legal_id;
-			this.change = localData.change;
+      this.change = localData.change;
+      console.log('1',localData.change);
+      
       this.$store.state.symbol =
         localData.currency_name + "/" + localData.legal_name;
     }
@@ -75,8 +77,17 @@ export default {
   },
   mounted() {
     var that = this;
+    eventBus.$on('toTrade',msg => {
+      if(msg){
+        that.legalId =msg.legal_id ;
+        that.currencyId =msg.currency_id ;
+        that.change = msg.change;
+        console.log(msg,'1',that.change);
+      }
+    })
     $(".chart-page").css("background", "#131a21");
     var theme = window.localStorage.getItem("theme") || "";
+    this.getChange();
     if (theme == "dark") {
       that.bg = "#181b2a";
       that.grid = "#f7f8fa";
@@ -666,6 +677,7 @@ export default {
                 item.low = Number(item.low);
                 item.volume = Number(item.volume);
                 thethis.open = item.open;
+                thethis.low = item.low;
                 thethis.close = item.close;
                 thethis.high = item.high;
                 thethis.volume = item.volume;
