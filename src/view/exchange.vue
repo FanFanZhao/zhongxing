@@ -44,7 +44,7 @@
                     <li class="clear flex clr-part bg-hov">
                         <span class=" " style="width:36%">{{itm.time}}</span>
                         <span :class="[itm.way == 1?'redColor':'ceilColor']" style="width:30%">{{itm.price}}</span>
-                        <span style="width:12%" :class="[itm.way == 1?'redColor':'ceilColor']">{{itm.way == 1?'卖出':'买入'}}</span>
+                        <span style="width:12%" :class="[itm.way == 1?'redColor':'ceilColor']">{{itm.way == 1?$t('center.inbuy'):$t('center.outsell')}}</span>
                         <span class="" style="width:22%">{{itm.number}}</span>
                     </li>
                 </ul>
