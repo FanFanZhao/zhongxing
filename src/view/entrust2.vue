@@ -8,7 +8,7 @@
                 <span v-for="(way,index) in wayList" :class="{'active': index == isChoosed}" @click="wayChoose(index,way.type)">{{way.title}}</span>
             </div>
         </div>
-        <div class="content" v-show="isUrl==0" >
+        <div class="content" v-show="isUrl==0">
             <ul class="list-title fColor2 ft12 clear bdr-part">
                 <li class="fl w20">{{$t('time')}}</li>
                 <li class="fl w12">{{$t('center.pairs')}}</li>
