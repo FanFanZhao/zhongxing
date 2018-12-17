@@ -45,30 +45,7 @@ export default {
         this.id = this.$route.query.id;
         var locale = window.localStorage.getItem('locale');
         var id = this.id;
-        this.$http({
-            url:  '/api/news/detail?'+'id='+id,
-            method:'post',
-            headers: { 'Authorization': window.localStorage.getItem('token') }
-        }).then(res=>{
-            res = res.data;
-            if(res.type  === 'ok'){
-                console.log('uuuuu')
-                console.log(res.message)
-                this.title=res.message.title;
-                this.content=res.message.content;
-                this.abstract=res.message.abstract;
-                var time=res.message.create_time;
-                console.log(res.message.update_time,time)
-                this.create_time= this.timestampToTime(time);
-                
-                // this.setProperty(this.timestampToTime(res.message.update_time));
-                console.log('ppp')
-            }else{
-                layer.msg(res.message);
-            }
-        }).catch(error=>{
-            console.log(error)
-        })
+        this.getData()
 
     },
     mounted(){
@@ -80,7 +57,35 @@ export default {
         //     tags[i].style.background='transparent'
         // }
     },
+    watch:{
+        $route(){
+            if(this.$route.query.id != this.id){
+                this.id = this.$route.query.id;
+                this.$nextTick(() => {
+                    this.getData()
+                })
+            }
+        }
+    },
     methods:{
+        getData(){
+            var id = this.id;
+            this.$http({
+            url:  '/api/news/detail?'+'id='+id,
+            method:'post',
+            headers: { 'Authorization': window.localStorage.getItem('token') }
+        }).then(res=>{
+            res = res.data;
+            if(res.type  === 'ok'){
+                
+                this.title=res.message.title;
+                this.content=res.message.content;
+                this.abstract=res.message.abstract;
+                var time=res.message.create_time;
+                this.create_time= this.timestampToTime(time);
+            }
+        })
+        },
         goBefore(){
             this.$router.back(-1);
         },

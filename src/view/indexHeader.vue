@@ -64,7 +64,8 @@
       <div class="flex notice" @mouseover="showNot = true" @mouseleave="showNot = false">
         <img src="../assets/images/not.png" alt="" @mouseover='getNotice'>
         <p :class="['scroll',{showNot:showNot}]">
-          <router-link :to="{path:'components/noticeDetail',query:{id:item.id}}" v-for="(item,index) in noticeList" :key="index">{{item.title}}</router-link>
+          <!-- <router-link :to="{path:'/components/noticeDetail',query:{id:item.id}}" v-for="(item,index) in noticeList" :key="index">{{item.title}}</router-link> -->
+          <span v-for="(item,index) in noticeList" :key="index" @click="$router.push({path:'/components/noticeDetail',query:{id:item.id}})">{{item.title}}</span>
         </p>
       </div>
       <div class="flex lang-box">
@@ -210,12 +211,16 @@ export default {
     transition: all .3s;
     height: 0;
     overflow: hidden;
-    a{
+    span{
       display: block;
+      margin: 0 10px;
       font-size: 12px;
       line-height: 32px;
       color: #333;
       border-bottom: 1px dashed #eee;
+      &:hover{
+        color: #d45858;
+      }
     }
   }
 }

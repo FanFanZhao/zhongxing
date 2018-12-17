@@ -3,7 +3,7 @@
 		<div class="m_title  flex" style="padding:20px 0 ">
             <span style="width:100px">{{$t('market.market')}}</span>
             <el-input v-model="keyword" size="mini" clearable :placeholder="$t('inpCur')"></el-input>
-            <div class="tocny" @click="getRates()" :style="{color:toCny?'#563BD1':'#ccc'}">CNY</div>
+            <div class="tocny" @click="toCny = !toCny" :style="{color:toCny?'#563BD1':'#ccc'}">CNY</div>
         </div>
         <div class="m_filter">
             <div class="tabtitle ft14 curPer flex around">
@@ -51,9 +51,9 @@
         <!-- <div class="line"></div> -->
         <ul class="coin-wrap scroll">
           <li v-for="(market,index) in marketList " :key="index" >
-            <p v-for="(itm,idx) in market"  :key="itm.id" v-if="search(itm.currency_name)&&testItem(itm.legal_name,itm.added)" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market,itm.now_price,itm.change,$event)">
+            <p v-for="(itm,idx) in market"  :key="itm.id" v-if="search(itm.currency_name)&&testItem(itm.legal_name,itm.added)" :class="{'bg-hov':true,'bg-even':idx%2 !=0,'bg-sel':(idx===ids)||(currency_index==itm.currency_name&&legal_index==itm.legal_name)}" :data-id='itm.id' :data-index='idx' @click="quota_shift(idx,itm.currency_id,itm.legal_id,itm.currency_name,itm.legal_name,itm,index,market,itm.now_price,itm.change,itm.volume,$event)">
               <span class="w36"><img :src="itm.logo" alt=""><i><em class="deep_blue bold">{{itm.currency_name}}</em><em class="light_blue bold">/{{itm.legal_name}}</em></i></span>
-              <span class="w30 tr deep_blue bold nowPrice" :data-name='itm.currency_id+"/"+itm.legal_id'>{{toCny?filterRate(itm.legal_name,itm.now_price):itm.now_price || 0}}</span>
+              <span class="w30 tr deep_blue bold nowPrice" :data-name='itm.currency_id+"/"+itm.legal_id'>{{toCny?itm.now_cny_price:itm.now_price || 0}}</span>
               <span :class="[itm.change>0?'green':'redColor']" class="bold">{{(itm.change>0?'+':'')+(itm.change-0).toFixed(2)}}%</span>
               <span class="  el-icon-star-on star" v-if="itm.added" @click="addDelete('delete',itm.currency_match_id)" ></span>
                 <span class="  el-icon-star-off star" v-if="!itm.added"  @click="addDelete('add',itm.currency_match_id)"></span>
@@ -256,7 +256,8 @@ export default {
             currency_name: currency_name,
             legal_name: legal_name,
             now_price:now_price,
-            change:chang
+            change:chang,
+            volume:arr_quota[0][0].volume
           };
         } else {
           var localData = JSON.parse(window.localStorage.getItem("tradeData"));
@@ -331,6 +332,7 @@ export default {
             })
             if(i != -1){
               item[i].now_price = msg.now_price;
+              item[i].now_cny_price = msg.now_cny_price;
               item[i].change = (msg.change-0).toFixed(2);
             }
           })
@@ -459,6 +461,7 @@ export default {
       market,
       now_price,
       change,
+      volume,
       event
     ) {
       console.log($('.coin-wrap').children().eq(index).children().eq(idx).children().eq(1).text());
@@ -484,7 +487,8 @@ export default {
         legal_name: legal_name,
         isShow: this.isShow,
         now_price:now_price,
-        change:change
+        change:change,
+        volume:volume
       };
       
       console.log($('.coin-wrap').children().eq(index).children().eq(idx).children().eq(1).text());

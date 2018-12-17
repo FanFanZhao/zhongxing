@@ -47,7 +47,7 @@ export default {
 			this.currencyId = localData.currency_id;
 			this.legalId = localData.legal_id;
       this.change = localData.change;
-      console.log('1',localData.change);
+      this.volume = localData.volume;
       
       this.$store.state.symbol =
         localData.currency_name + "/" + localData.legal_name;
@@ -82,7 +82,8 @@ export default {
         that.legalId =msg.legal_id ;
         that.currencyId =msg.currency_id ;
         that.change = msg.change;
-        console.log(msg,'1',that.change);
+        that.volume = msg.volume;
+        // console.log(msg,'1',that.change);
       }
     })
     $(".chart-page").css("background", "#131a21");
@@ -127,8 +128,11 @@ export default {
 			this.$socket.emit("login", this.$makeSocketId());
 			this.$socket.on("daymarket", msg => {
 				if(msg.type == 'daymarket'&&msg.currency_id == this.currencyId&&msg.legal_id == this.legalId){
+          console.log(msg);
+          
 					this.change = msg.change;
 					this.nowPrice = msg.now_price;
+          this.volume = msg.volume;
 				}
 			})
 		},
@@ -151,7 +155,7 @@ export default {
           obj.close = Number(msg.close);
           that.close = obj.close;
           obj.volume = Number(msg.volume);
-          that.volume = obj.volume;
+          // that.volume = obj.volume;
           obj.time = Number(msg.time);
           real(obj);
         }
@@ -680,7 +684,7 @@ export default {
                 thethis.low = item.low;
                 thethis.close = item.close;
                 thethis.high = item.high;
-                thethis.volume = item.volume;
+                // thethis.volume = item.volume;
               });
               onHistoryCallback(res.data, { noData: false });
               onHistoryCallback([], { noData: true });
