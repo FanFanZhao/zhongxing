@@ -123,7 +123,7 @@ export default {
       this.$http({
         url:  '/api/news/list',
         method:'post',
-        data:{language:this.$i18n.locale == 'zh'?1:2}
+        data:{language:this.$i18n.locale == 'zh'?1:2,c_id:22}
       }).then(res => {
         this.noticeList = res.data.message.list;
       })
