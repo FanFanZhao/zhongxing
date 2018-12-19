@@ -218,7 +218,7 @@ export default {
     transaction:'transaction',
     sellall:'Sell all',
     buyall:'Buy all',
-    conactceil:'Please contact the merchant for payment within 24 hours. If the payment exceeds 24 hours, it will be cancelled automatically.',
+    conactceil:'Please contact the merchant for payment within 30 minutes. If the payment exceeds 30 minutes, it will be cancelled automatically.',
     autoceil:'automatic cancellation',
     placeorder:'Place an order',
     inwant:'Please input',

@@ -221,7 +221,7 @@ export default {
     transaction:'交易',
     sellall:'全部卖出',
     buyall:'全部买入',
-    conactceil:'请在24小时内联系商家付款，超出24小时将自动取消',
+    conactceil:'请在30分钟内联系商家付款，超出30分钟将自动取消',
     autoceil:'自动取消',
     placeorder:'下单',
     inwant:'请输入要',
