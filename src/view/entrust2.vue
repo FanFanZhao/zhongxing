@@ -16,7 +16,7 @@
                 <li class="fl w12">{{$t('price')}}</li>
                 <li class="fl w14">{{$t('number')}}</li>
                 <li class="fl w20">{{$t('center.dealtotal')}}</li>
-                <li class="fl w8 tr">{{$t('do')}}</li>
+                <li class="fl  tr">{{$t('do')}}</li>
             </ul>
             <div class="container scroll" >
                 <ul class="list-item ft12" v-if="flags01&&enList01.length>0">
@@ -27,7 +27,11 @@
                         <span class="fl w12">{{item.price}}</span>
                         <span class="fl w14">{{item.number}}</span>
                         <span class="fl w20">{{item.total_price}}</span>
-                        <span class="fl w8 tr curPer ceilColor" @click="revoke(item.id)">{{$t('revoke')}}</span>
+                        <div class=" fl">
+
+                          <span class="fl  tr curPer ceilColor" @click="revoke(item.id)">{{$t('revoke')}}</span>
+                          <span class="fl tr curPer ceilColor" @click="revokes(item.id)" style='margin-left:15px'>{{$t('revokes')}}</span>
+                        </div>
                     </li>
                 </ul>
                 <ul class="list-item ft12" v-if="flags02&&enList02.length>0">
@@ -38,7 +42,11 @@
                         <span class="fl w12">{{item.price}}</span>
                         <span class="fl w14">{{item.number}}</span>
                         <span class="fl w20">{{item.total_price}}</span>
-                        <span class="fl w8 tr curPer ceilColor" @click="revoke(item.id)">{{$t('revoke')}}</span>
+                        <div class="fl">
+
+                          <span class="fl  tr curPer ceilColor" @click="revoke(item.id)">{{$t('revoke')}}</span>
+                          <span class="fl  tr curPer ceilColor" @click="revokes(item.id)" style='margin-left:15px'>{{$t('revokes')}}</span>
+                        </div>
                     </li>
                 </ul>
                 <div class="getmore tc fColor1 ft14 mt10 curPer" @click="getMore" v-if="!loading && enList01.length>9||enList02.length>9">{{more}}</div>
@@ -214,6 +222,35 @@ export default {
           })
           .then(res => {
             res = res.data;
+            if (res.type === "ok") {
+              layer.msg(res.message);
+              that.getdata(that.urls, that.types);
+            } else {
+              layer.msg(res.message);
+            }
+          })
+      });
+    },
+    revokes(id) {
+      if(!this.token){
+        return;
+      }
+      var that = this;
+      layer.confirm(that.$t('lay.revokes'),{btn: [that.$t('lay.sure'), that.$t('lay.ceil')]}, () => {
+        // var id = id;
+        that
+          .$http({
+            url: "/api/" + "transaction_dels",
+            method: "post",
+            data: {
+              // address:that.address,
+              type: that.types,
+              id: id
+            },
+            headers: { Authorization: this.token }
+          })
+          .then(res => {
+            res = res.data;
             // console.log(res);
             if (res.type === "ok") {
               layer.msg(res.message);
@@ -222,9 +259,7 @@ export default {
               layer.msg(res.message);
             }
           })
-          .catch(error => {
-            // console.log(error)
-          });
+          
       });
     },
 

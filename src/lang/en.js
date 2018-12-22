@@ -15,6 +15,7 @@ export default {
   number:'number',
   do:'operation',
   revoke:'revoke',
+  revokes:'Bulk revocation',
   nodata:'No data',
   loading:'Loading',
   status:'status',
@@ -25,6 +26,13 @@ export default {
   bankcard:'Bank card',
   inpCur:"Please enter a currency name",
   minAm:"Minimum amount",
+  change:{
+    changeEmail:"Change email",
+    changePhone:"Change phone",
+    newPhone:'New phone',
+    newEmail:"New email",
+    select:"Select country"
+  },
   header:{
     projectName:'one belt one road',
     home:'Home',
@@ -361,6 +369,7 @@ export default {
     up:'submit',
   },
   lay:{
+    
     paccount:'Please input account number!',
     notcode:'Verification code cannot be empty!',
     pwdliu:'Password must not be less than six!',
@@ -382,6 +391,7 @@ export default {
     outnumber:'Please enter sales volume.',
     plogin:'Please login',
     revoke:'Are you sure you want to withdraw the bill?',
+    revokes:"Confirm bulk revocation?",
     sure:'confirm',
     ceil:'cancel',
     notopen:'Not yet open',

@@ -157,17 +157,17 @@ export default {
         headers: { Authorization: this.token }
       }).then(res => {
         layer.close(load);
-        console.log(res);
-        console.log(res.data.message.list);
+        
         if (res.data.type == "ok") {
-          console.log(res);
+          var list = res.data.message.list;
           if(refresh){
-            this.recData = res.data.message.list;
+            this.recData = list;
           } else {
 
-            this.recData = this.recData.concat(res.data.message.list);
+            this.recData = this.recData.concat(list);
           }
-          if (res.data.message.list.length != 0) {
+          if (list.length != 0) {
+            this.page+=1;
             this.moreLog = this.$t('more');
           } else {
             this.moreLog = this.$t('nomore')
@@ -177,7 +177,8 @@ export default {
     },
     transfer(){
         console.log(this.transferPms.number)
-        if(this.transferPms.number == ''){
+        if(this.transferPms.number== ''){
+          
             layer.msg(this.$t('lay.huanum'));return;
         } else {
             let data = {};
@@ -199,7 +200,7 @@ export default {
                 layer.msg(res.data.message)
                 if(res.data.type == 'ok'){
                     this.init();
-                    this.getLog();
+                    this.getLog(true);
                 }
             })
         }

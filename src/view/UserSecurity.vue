@@ -34,7 +34,8 @@
                 <span  class="fr red ml25 mouseDefault"></span>
                 <span  class="fr red mouseDefault"></span>
                 <router-link class="fr red" to="/components/bindPhone" v-if="account == '未绑定'">{{$t('security.gobind')}}</router-link>
-                <span class="fr" v-else>{{$t('security.havebind')}}</span>
+                <!-- <span class="fr" v-else>{{$t('security.set')}}</span> -->
+                <router-link v-else  class="fr" to="/changePhone">{{$t('security.set')}}</router-link>
             </li>
             <li class="bdr-part">
                 <img  :src="esrc">
@@ -45,7 +46,8 @@
                 <span  class="fr red ml25 mouseDefault"></span>
                 <span  class="fr red mouseDefault"></span>
                 <router-link class="fr red" to="/components/bindEmail" v-if="email == '未绑定'">{{$t('security.gobind')}}</router-link>
-                <span class="fr" v-else>{{$t('security.havebind')}}</span>
+                <!-- <span class="fr" v-else>{{$t('security.havebind')}}</span> -->
+                <router-link  v-else  class="fr" to="/changeEmail">{{$t('security.set')}}</router-link>
             </li>
             <li class="bdr-part"><img  src="@/assets/images/success.png">
                 <span  class="ml20">{{$t('security.logpwd')}}</span>

@@ -15,6 +15,7 @@ export default {
   number:'数量',
   do:'操作',
   revoke:'撤销',
+  revokes:'批量撤销',
   nodata:'暂无数据',
   loading:'加载中',
   status:'状态',
@@ -25,6 +26,13 @@ export default {
   bankcard:'银行卡',
   inpCur:'请输入币种名称',
   minAm:'最小数量',
+  change:{
+    changeEmail:"更换邮箱",
+    changePhone:"更换手机",
+    newPhone:'新手机号',
+    newEmail:"新邮箱",
+    select:"选择国籍"
+  },
   header:{
     projectName:'一带一路',
     home:'首页',
@@ -89,7 +97,7 @@ export default {
     phone:"手机号注册",
     email:"邮箱注册",
     phonenum:'请输入手机号',
-    emailnum:'请输入有幸',
+    emailnum:'请输入邮箱',
     codenum:'请输入验证码',
     notice:'(请先查看免责条款，并勾选选项框，才可点击发送验证码)',
     sendcode:'发送验证码',
@@ -369,6 +377,7 @@ export default {
     up:'提交',
   },
   lay:{
+    
     paccount:'请输入账号!',
     notcode:'验证码不能为空!',
     pwdliu:'密码不能小于六位!',
@@ -390,6 +399,7 @@ export default {
     outnumber:'请输入卖出量',
     plogin:'请登录',
     revoke:'确认要撤单么？',
+    revokes:"确认批量撤销此交易对？",
     sure:'确定',
     ceil:'取消',
     notopen:'暂未开放',

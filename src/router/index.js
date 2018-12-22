@@ -75,6 +75,14 @@ export default new Router({
 					component:() => import ('../components/LegalTrade.vue')
 				},
 				{
+					path:'/changePhone',
+					component:() => import ('../components/ChangePhone.vue')
+				},
+				{
+					path:'/changeEmail',
+					component:() => import ('../components/ChangeEmail.vue')
+				},
+				{
 					path:'/legalPay',
 					component:() => import ('../components/LegalPay.vue')
 				},
@@ -136,6 +144,7 @@ export default new Router({
 					name: 'dealCenter',
 					component: dealCenter
 				},
+				
 				{
 					path: '/HelpCenter',
 					name: 'HelpCenter',
@@ -286,11 +295,11 @@ export default new Router({
 			]
 		},
 
-		// {
-		// 	path:'/dealCenter',
-		// 	name:'dealCenter',
-		// 	component:dealCenter
-		// },
+		{
+			path:'/changePhone',
+			name:'changePhone',
+			component:() => import('../components/ChangePhone.vue')
+		},
          
 		{
 			path: '/components/login',
