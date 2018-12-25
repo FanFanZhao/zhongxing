@@ -2,7 +2,7 @@
   <div id="changephone" class="bg-main">
     <h1>{{$t('change.changePhone')}}</h1>
     <el-form>
-      <el-form-item :label="$t('register.emailnum')">
+      <el-form-item :label="$t('change.enterEmail')">
         <el-input v-model="email"></el-input>
       </el-form-item>
       <el-form-item :label="$t('register.codenum')">
@@ -92,7 +92,7 @@ export default {
         }
       } else {
         if(typeof (this.pms.new_phone-0) == 'number'){
-          data = {user_string:this.pms.new_phone,front:this.front,type:'login'};
+          data = {user_string:this.pms.new_phone,front:this.front};
           url = 'sms_send';
         } else {
           layer.msg(this.$t('lay.phonenot'))

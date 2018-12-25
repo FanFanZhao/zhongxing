@@ -29,6 +29,8 @@ export default {
   change:{
     changeEmail:"更换邮箱",
     changePhone:"更换手机",
+    enterEmail:"请输入绑定邮箱",
+    enterPhone:"请输入绑定手机号",
     newPhone:'新手机号',
     newEmail:"新邮箱",
     select:"选择国籍"

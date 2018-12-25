@@ -29,6 +29,8 @@ export default {
   change:{
     changeEmail:"Change email",
     changePhone:"Change phone",
+    enterEmail:"Please enter the binding  email.",
+    enterPhone:"Please enter the binding  phone.",
     newPhone:'New phone',
     newEmail:"New email",
     select:"Select country"

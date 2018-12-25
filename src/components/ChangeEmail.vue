@@ -2,7 +2,7 @@
   <div id="changeemail" class="bg-main">
     <h1>{{$t('change.changeEmail')}}</h1>
     <el-form>
-      <el-form-item :label="$t('register.phonenum')">
+      <el-form-item :label="$t('change.enterPhone')">
         <el-input v-model="phone">
           <template slot="prepend">
             <el-select v-model="front" clearable filterable :placeholder="$t('change.select')">
@@ -41,7 +41,7 @@
         </el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="danger" class="change" :disabled="pms.phone_code == ''||pms.new_email == ''||pms.email_code == ''">{{$t('confirm')}}</el-button>
+        <el-button type="danger" class="change" :disabled="pms.phone_code == ''||pms.new_email == ''||pms.email_code == ''" @click="change">{{$t('confirm')}}</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     setTip(key) {
-      var time = 3;
+      var time = 31;
       var timer = setInterval(() => {
         time--;
         this[key] = time + "" + "s";
@@ -83,11 +83,11 @@ export default {
     sendCode(which) {
       var reg = '';
       var data = {};
-      var url = 'sms_amend';
+      var url = 'sms_mail';
       if (which == "email") {
         var reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
         if(reg.test(this.pms.new_email)){
-          data = {user_string:this.phone,type:'login',front:this.front}
+          data = {user_string:this.pms.new_email,front:this.front}
         } else {
           layer.msg(this.$t('lay.noemail'));return;
         }
