@@ -46,11 +46,11 @@
           <ul v-for="itm in deList" class="list-item color ft12">
             <li class="clear flex clr-part bg-hov">
               <span class style="width:36%">{{itm.time}}</span>
-              <span :class="[itm.way == 2?'redColor':'ceilColor']" style="width:30%">{{itm.price}}</span>
+              <span :class="[itm.way == 1?'redColor':'ceilColor']" style="width:30%">{{itm.price}}</span>
               <span
                 style="width:12%"
-                :class="[itm.way == 2?'redColor':'ceilColor']"
-              >{{itm.way == 1?$t('center.inbuy'):$t('center.outsell')}}</span>
+                :class="[itm.way == 1?'redColor':'ceilColor']"
+              >{{itm.way == 2?$t('center.inbuy'):$t('center.outsell')}}</span>
               <span class style="width:22%">{{itm.number}}</span>
             </li>
           </ul>
