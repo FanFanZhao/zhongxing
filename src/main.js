@@ -43,7 +43,7 @@ window.eventBus = new Vue()
 let bus = new Vue()
 Vue.prototype.bus = bus
 // Vue.use(VueSocketio, 'http://47.52.195.212:2220/');
-Vue.use(VueSocketio, 'https://www.beltandroad.io:2220/');
+Vue.use(VueSocketio, 'https://socket.beltandroad.io:2220');
 Vue.prototype.$changeTheme = function (type) {
 	var head = document.querySelector('head');
 	var link = document.querySelector('link#darkTheme');
