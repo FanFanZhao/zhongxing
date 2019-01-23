@@ -191,7 +191,13 @@ export default {
     },
     computed:{
          reachnum(){
-             return this.number - this.rate;
+             var n = this.number -0 - this.rate;
+            if(n<=0){
+                return 0;
+            } else {
+                return n;
+            }
+           
          }   
     },
     methods:{
