@@ -191,7 +191,7 @@ export default {
     },
     computed:{
          reachnum(){
-             return this.number - this.number*this.rate;
+             return this.number - this.rate;
          }   
     },
     methods:{
