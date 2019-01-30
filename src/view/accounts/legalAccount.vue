@@ -18,14 +18,14 @@
           </div>
         </div>
         <div class="transfer bg-part" style="margin-top:20px;padding:20px 30px">
-            <div class="direction flex">
+            <div class="direction flex alcenter">
                 <div>{{transferPms.type == 1?$t('account.legal'):$t('account.trade')}}</div>
-                <img src="../../assets/images/transfer.png" alt="" @click="transferPms.type == 1?transferPms.type =2:transferPms.type =1">
+                <img class="arrow" src="../../assets/images/transfer.png" alt="" @click="transferPms.type == 1?transferPms.type =2:transferPms.type =1">
                 <div>{{transferPms.type == 1?$t('account.trade'):$t('account.legal')}}</div>
             </div>
             <div class="flex">
                 <span>{{$t('account.choosecoin')}}：</span>
-                <select name="" id="" style="padding:3px 16px" ref="select" @change="selectChange">
+                <select name="" id="" style="padding:3px 16px" ref="select" @change="selectChange" v-model="currencyId">
                     <option v-for="(item,index) in coins" :key="index" :value="item.currency">{{item.currency_name}}</option>
                 </select>
             </div>
@@ -215,6 +215,10 @@ export default {
 };
 </script>
 <style scoped lang='scss'>
+.arrow{
+  width: 100px;
+  height: 15px;
+}
 .legal_name {
   /* background: #1b1e2e; */
   padding: 5px 0;
